@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Chela's Academy</title>
+<style>
+  :root{
+    --bg:#0f1419; --card:#171d26; --card2:#1e2733; --border:#2a3441;
+    --text:#eef2f6; --muted:#93a2b3; --accent:#e0a53a; --accent2:#c98a1f;
+    --good:#3fb375; --bad:#e0563f; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);min-height:100vh}
+  .wrap{max-width:640px;margin:0 auto;padding:16px 16px 60px}
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:10}
+  header.top h1{font-size:18px;margin:0;letter-spacing:.3px}
+  header.top h1 span{color:var(--accent)}
+  .btn{background:var(--accent);color:#1a1206;border:none;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;font-size:14px}
+  .btn:hover{background:var(--accent2)}
+  .btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn.small{padding:6px 10px;font-size:12px}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  input,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:15px}
+  label{font-size:13px;color:var(--muted);display:block;margin:14px 0 6px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+  .hidden{display:none !important}
+  .lang-toggle{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .lang-toggle button{background:transparent;color:var(--muted);border:none;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}
+  .lang-toggle button.active{background:var(--accent);color:#1a1206}
+  .ring{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0}
+  .module-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:var(--card2);cursor:pointer}
+  .module-row.locked{opacity:.45;cursor:not-allowed}
+  .module-row .badge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+  .module-row .badge.done{background:var(--good);color:#06210f}
+  .module-row .badge.locked{background:#333;color:#888}
+  .module-row .badge.open{background:var(--accent);color:#1a1206}
+  .module-row .info{flex:1;min-width:0}
+  .module-row .info .t{font-weight:700;font-size:14.5px}
+  .module-row .info .s{font-size:12px;color:var(--muted)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#3a2a10;color:var(--accent);margin-left:6px}
+  .pill.crit{background:#3a1414;color:#ff8a70}
+  .track-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:22px 0 10px}
+  .lesson-box{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:18px;font-size:15.5px;line-height:1.55;min-height:120px}
+  .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px}
+  .dots{display:flex;gap:6px;justify-content:center;margin:14px 0}
+  .dots span{width:7px;height:7px;border-radius:50%;background:var(--border)}
+  .dots span.active{background:var(--accent)}
+  .q-block{margin-bottom:20px}
+  .q-title{font-weight:700;margin-bottom:10px;font-size:15px}
+  .opt{display:block;width:100%;text-align:left;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);margin-bottom:8px;cursor:pointer;font-size:14.5px}
+  .opt.selected{border-color:var(--accent);background:#2a2313}
+  .opt.correct{border-color:var(--good);background:#123a24}
+  .opt.wrong{border-color:var(--bad);background:#3a1414}
+  .flash{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:26px;min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;cursor:pointer}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px;border-bottom:1px solid var(--border);text-align:left}
+  th{color:var(--muted);font-weight:600}
+  .muted{color:var(--muted);font-size:13px}
+  .center{text-align:center}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--border);padding:10px 16px;border-radius:10px;font-size:13px;z-index:50}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Chela's <span>Academy</span></h1>
+  <div style="display:flex;gap:8px;align-items:center">
+    <div class="lang-toggle">
+      <button id="btn-lang-es">ES</button><button id="btn-lang-en">EN</button>
+    </div>
+    <button class="btn secondary small hidden" id="btn-logout" data-t-en="Log out" data-t-es="Salir">Salir</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- LOGIN -->
+  <div id="view-login" class="card">
+    <h2 data-t-en="Sign in" data-t-es="Iniciar sesión">Iniciar sesión</h2>
+    <label data-t-en="Your name" data-t-es="Tu nombre">Tu nombre</label>
+    <input id="login-name" placeholder="Nombre completo" autocomplete="name">
+    <label data-t-en="Your role" data-t-es="Tu rol">Tu rol</label>
+    <select id="login-role">
+      <option value="Server">Server</option>
+      <option value="Bartender">Bartender</option>
+      <option value="Busser">Busser</option>
+      <option value="Host">Host</option>
+      <option value="Manager">Manager</option>
+    </select>
+    <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Start training" data-t-es="Comenzar entrenamiento">Comenzar entrenamiento</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="view-dashboard" class="hidden">
+    <div class="card" style="display:flex;align-items:center;gap:16px">
+      <div class="ring" id="progress-ring">0%</div>
+      <div>
+        <div style="font-weight:800;font-size:16px" id="dash-name"></div>
+        <div class="muted" id="dash-role"></div>
+      </div>
+    </div>
+    <div id="admin-link-box" class="hidden card" style="text-align:center">
+      <button class="btn secondary" id="btn-go-admin" data-t-en="View team progress" data-t-es="Ver progreso del equipo">Ver progreso del equipo</button>
+    </div>
+    <div id="module-list"></div>
+  </div>
+
+  <!-- MODULE (lessons / flashcards / quiz) -->
+  <div id="view-module" class="hidden">
+    <button class="btn secondary small" id="btn-back-dash" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+    <div class="card" style="margin-top:12px">
+      <h2 id="mod-title" style="margin-top:0"></h2>
+
+      <div id="mod-lessons">
+        <div class="lesson-box" id="lesson-text"></div>
+        <div class="dots" id="lesson-dots"></div>
+        <div class="nav-row">
+          <button class="btn secondary" id="btn-lesson-prev" data-t-en="Previous" data-t-es="Anterior">Anterior</button>
+          <button class="btn" id="btn-lesson-next" data-t-en="Next" data-t-es="Siguiente">Siguiente</button>
+        </div>
+      </div>
+
+      <div id="mod-flash" class="hidden">
+        <div class="flash" id="flash-card"></div>
+        <div class="dots" id="flash-dots"></div>
+        <div class="nav-row">
+          <button class="btn secondary" id="btn-flash-prev" data-t-en="Previous" data-t-es="Anterior">Anterior</button>
+          <button class="btn" id="btn-flash-next" data-t-en="Take the quiz" data-t-es="Ir al examen">Ir al examen</button>
+        </div>
+      </div>
+
+      <div id="mod-quiz" class="hidden">
+        <p class="muted" id="quiz-pass-note"></p>
+        <div id="quiz-body"></div>
+        <button class="btn" id="btn-quiz-submit" style="width:100%" data-t-en="Check answers" data-t-es="Revisar respuestas">Revisar respuestas</button>
+        <div id="quiz-result" class="hidden" style="margin-top:14px;text-align:center"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="view-admin" class="hidden">
+    <button class="btn secondary small" id="btn-back-dash2" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <h2 style="margin:0" data-t-en="Team Progress" data-t-es="Progreso del Equipo">Progreso del Equipo</h2>
+        <button class="btn small" id="btn-export-csv" data-t-en="Export CSV" data-t-es="Exportar CSV">Exportar CSV</button>
+      </div>
+      <p class="muted" data-t-en="Progress is stored per device unless a Google Sheet sync is configured (see README)." data-t-es="El progreso se guarda por dispositivo, a menos que se configure sincronización con Google Sheet (ver README).">—</p>
+      <div style="overflow-x:auto">
+        <table id="admin-table">
+          <thead><tr>
+            <th data-t-en="Name" data-t-es="Nombre">Nombre</th>
+            <th data-t-en="Role" data-t-es="Rol">Rol</th>
+            <th data-t-en="Progress" data-t-es="Progreso">Progreso</th>
+            <th data-t-en="Critical OK" data-t-es="Críticos OK">Críticos OK</th>
+            <th data-t-en="Updated" data-t-es="Actualizado">Actualizado</th>
+          </tr></thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="modules.js"></script>
+<script>
+/* ================= Config ================= */
+const REPORT_URL = ""; // Paste your Google Apps Script Web App URL here to sync progress centrally (see README.md)
+
+const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Manager:"MANAGER" };
+
+/* ================= State ================= */
+let lang = localStorage.getItem("chelas_lang") || "es";
+let currentUser = null;   // { name, role }
+let currentModuleList = [];
+let activeModule = null;
+let lessonIdx = 0, flashIdx = 0;
+let quizAnswers = {};
+
+/* ================= Helpers ================= */
+const $ = (id) => document.getElementById(id);
+const t = (obj) => obj[lang] || obj.en || "";
+
+function loadUsers(){ return JSON.parse(localStorage.getItem("chelas_users") || "{}"); }
+function saveUsers(u){ localStorage.setItem("chelas_users", JSON.stringify(u)); }
+
+function getUserRecord(name){
+  const users = loadUsers();
+  return users[name.toLowerCase()];
+}
+function upsertUserRecord(name, role){
+  const users = loadUsers();
+  const key = name.toLowerCase();
+  if(!users[key]) users[key] = { name, role, progress: {}, updated: new Date().toISOString() };
+  else { users[key].role = role; }
+  saveUsers(users);
+  return users[key];
+}
+function saveProgress(name, moduleId, passed, score, critical){
+  const users = loadUsers();
+  const key = name.toLowerCase();
+  if(!users[key]) return;
+  users[key].progress[moduleId] = { passed, score, critical, date: new Date().toISOString() };
+  users[key].updated = new Date().toISOString();
+  saveUsers(users);
+  if(REPORT_URL){
+    fetch(REPORT_URL, {
+      method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, role: users[key].role, moduleId, passed, score, critical, date: users[key].updated })
+    }).catch(()=>{});
+  }
+}
+
+function applyStaticTranslations(){
+  document.querySelectorAll("[data-t-en]").forEach(el=>{
+    const val = el.getAttribute(lang === "en" ? "data-t-en" : "data-t-es");
+    if(val) el.textContent = val;
+  });
+  $("btn-lang-es").classList.toggle("active", lang === "es");
+  $("btn-lang-en").classList.toggle("active", lang === "en");
+}
+
+/* ================= Login ================= */
+$("btn-login").addEventListener("click", () => {
+  const name = $("login-name").value.trim();
+  const role = $("login-role").value;
+  if(!name){ alert(lang==="es" ? "Escribe tu nombre" : "Enter your name"); return; }
+  const rec = upsertUserRecord(name, role);
+  currentUser = { name: rec.name, role: rec.role };
+  localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
+  showDashboard();
+});
+
+$("btn-logout").addEventListener("click", () => {
+  localStorage.removeItem("chelas_current_user");
+  currentUser = null;
+  location.reload();
+});
+
+/* ================= Dashboard ================= */
+function getModulesForRole(role){
+  const track = ROLE_TRACK[role];
+  return MODULES.filter(m => m.track === "CORE" || m.track === track);
+}
+
+function isModulePassed(name, moduleId){
+  const rec = getUserRecord(name);
+  return !!(rec && rec.progress[moduleId] && rec.progress[moduleId].passed);
+}
+
+function isModuleUnlocked(list, idx, name){
+  if(idx === 0) return true;
+  return isModulePassed(name, list[idx-1].id);
+}
+
+function showDashboard(){
+  $("view-login").classList.add("hidden");
+  $("view-module").classList.add("hidden");
+  $("view-admin").classList.add("hidden");
+  $("view-dashboard").classList.remove("hidden");
+  $("btn-logout").classList.remove("hidden");
+
+  $("dash-name").textContent = currentUser.name;
+  $("dash-role").textContent = currentUser.role;
+  $("admin-link-box").classList.toggle("hidden", currentUser.role !== "Manager");
+
+  currentModuleList = getModulesForRole(currentUser.role);
+  const passedCount = currentModuleList.filter(m => isModulePassed(currentUser.name, m.id)).length;
+  const pct = Math.round((passedCount / currentModuleList.length) * 100);
+  const ring = $("progress-ring");
+  ring.style.background = `conic-gradient(var(--accent) ${pct*3.6}deg, var(--card2) 0deg)`;
+  ring.textContent = pct + "%";
+
+  const listEl = $("module-list");
+  listEl.innerHTML = "";
+  let lastTrack = null;
+  currentModuleList.forEach((m, idx) => {
+    if(m.track !== lastTrack){
+      lastTrack = m.track;
+      const h = document.createElement("div");
+      h.className = "track-title";
+      h.textContent = m.track === "CORE" ? (lang==="es" ? "Fundamentos (CORE)" : "Core Fundamentals") : m.track;
+      listEl.appendChild(h);
+    }
+    const unlocked = isModuleUnlocked(currentModuleList, idx, currentUser.name);
+    const passed = isModulePassed(currentUser.name, m.id);
+    const row = document.createElement("div");
+    row.className = "module-row" + (unlocked ? "" : " locked");
+    const rec = getUserRecord(currentUser.name);
+    const scoreInfo = rec && rec.progress[m.id] ? rec.progress[m.id].score : null;
+    row.innerHTML = `
+      <div class="badge ${passed ? "done" : (unlocked ? "open" : "locked")}">${passed ? "✓" : (unlocked ? m.id : "🔒")}</div>
+      <div class="info">
+        <div class="t">${t(m.title)} ${m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : ""}</div>
+        <div class="s">${passed ? (lang==="es"?`Aprobado — ${scoreInfo}%`:`Passed — ${scoreInfo}%`) : (unlocked ? (lang==="es"?"Disponible":"Available") : (lang==="es"?"Bloqueado":"Locked"))}</div>
+      </div>`;
+    if(unlocked){
+      row.addEventListener("click", () => openModule(m));
+    }
+    listEl.appendChild(row);
+  });
+}
+
+/* ================= Module: lessons -> flashcards -> quiz ================= */
+function openModule(m){
+  activeModule = m;
+  lessonIdx = 0; flashIdx = 0; quizAnswers = {};
+  $("view-dashboard").classList.add("hidden");
+  $("view-admin").classList.add("hidden");
+  $("view-module").classList.remove("hidden");
+  $("mod-title").textContent = t(m.title);
+  $("mod-lessons").classList.remove("hidden");
+  $("mod-flash").classList.add("hidden");
+  $("mod-quiz").classList.add("hidden");
+  renderLesson();
+}
+
+function renderLesson(){
+  const m = activeModule;
+  $("lesson-text").textContent = t(m.lessons[lessonIdx]);
+  const dots = $("lesson-dots");
+  dots.innerHTML = "";
+  m.lessons.forEach((_, i) => {
+    const d = document.createElement("span");
+    if(i === lessonIdx) d.className = "active";
+    dots.appendChild(d);
+  });
+  $("btn-lesson-prev").disabled = lessonIdx === 0;
+  $("btn-lesson-next").textContent = (lessonIdx === m.lessons.length - 1)
+    ? (lang==="es" ? (m.flashcards && m.flashcards.length ? "Tarjetas" : "Ir al examen") : (m.flashcards && m.flashcards.length ? "Flashcards" : "Take the quiz"))
+    : (lang==="es" ? "Siguiente" : "Next");
+}
+$("btn-lesson-prev").addEventListener("click", () => { if(lessonIdx>0){ lessonIdx--; renderLesson(); } });
+$("btn-lesson-next").addEventListener("click", () => {
+  const m = activeModule;
+  if(lessonIdx < m.lessons.length - 1){ lessonIdx++; renderLesson(); return; }
+  $("mod-lessons").classList.add("hidden");
+  if(m.flashcards && m.flashcards.length){
+    $("mod-flash").classList.remove("hidden");
+    renderFlash();
+  } else {
+    startQuiz();
+  }
+});
+
+function renderFlash(){
+  const m = activeModule;
+  const f = m.flashcards[flashIdx];
+  const card = $("flash-card");
+  card.dataset.showBack = "false";
+  card.textContent = t(f.front);
+  card.onclick = () => {
+    const showBack = card.dataset.showBack === "true";
+    card.dataset.showBack = showBack ? "false" : "true";
+    card.textContent = showBack ? t(f.front) : t(f.back);
+  };
+  const dots = $("flash-dots");
+  dots.innerHTML = "";
+  m.flashcards.forEach((_, i) => {
+    const d = document.createElement("span");
+    if(i === flashIdx) d.className = "active";
+    dots.appendChild(d);
+  });
+  $("btn-flash-prev").disabled = flashIdx === 0;
+}
+$("btn-flash-prev").addEventListener("click", () => { if(flashIdx>0){ flashIdx--; renderFlash(); } });
+$("btn-flash-next").addEventListener("click", () => {
+  const m = activeModule;
+  if(flashIdx < m.flashcards.length - 1){ flashIdx++; renderFlash(); return; }
+  $("mod-flash").classList.add("hidden");
+  startQuiz();
+});
+
+function startQuiz(){
+  const m = activeModule;
+  $("mod-quiz").classList.remove("hidden");
+  $("quiz-result").classList.add("hidden");
+  $("btn-quiz-submit").classList.remove("hidden");
+  $("quiz-pass-note").textContent = (lang==="es"
+    ? `Necesitas ${m.pass}% para aprobar.` + (m.critical ? " Este módulo es crítico y requiere 100%." : "")
+    : `You need ${m.pass}% to pass.` + (m.critical ? " This is a critical module requiring 100%." : ""));
+  quizAnswers = {};
+  const body = $("quiz-body");
+  body.innerHTML = "";
+  m.quiz.forEach((q, qi) => {
+    const block = document.createElement("div");
+    block.className = "q-block";
+    block.innerHTML = `<div class="q-title">${qi+1}. ${t(q.q)}</div>`;
+    q.options.forEach((opt, oi) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "opt";
+      b.textContent = t(opt);
+      b.addEventListener("click", () => {
+        quizAnswers[qi] = oi;
+        block.querySelectorAll(".opt").forEach(x => x.classList.remove("selected"));
+        b.classList.add("selected");
+      });
+      block.appendChild(b);
+    });
+    body.appendChild(block);
+  });
+}
+
+$("btn-quiz-submit").addEventListener("click", () => {
+  const m = activeModule;
+  if(Object.keys(quizAnswers).length < m.quiz.length){
+    alert(lang==="es" ? "Responde todas las preguntas." : "Answer all questions.");
+    return;
+  }
+  let correct = 0;
+  const blocks = document.querySelectorAll("#quiz-body .q-block");
+  m.quiz.forEach((q, qi) => {
+    const opts = blocks[qi].querySelectorAll(".opt");
+    opts.forEach((o, oi) => {
+      if(oi === q.correct) o.classList.add("correct");
+      else if(oi === quizAnswers[qi] && oi !== q.correct) o.classList.add("wrong");
+    });
+    if(quizAnswers[qi] === q.correct) correct++;
+  });
+  const score = Math.round((correct / m.quiz.length) * 100);
+  const passed = score >= m.pass;
+  saveProgress(currentUser.name, m.id, passed, score, !!m.critical);
+
+  const result = $("quiz-result");
+  result.classList.remove("hidden");
+  result.innerHTML = `
+    <div style="font-size:22px;font-weight:800;color:${passed ? "var(--good)" : "var(--bad)"}">${score}%</div>
+    <div style="margin:8px 0">${passed ? (lang==="es"?"¡Aprobado! 🎉":"Passed! 🎉") : (lang==="es"?"No aprobado — inténtalo de nuevo.":"Not passed — try again.")}</div>
+    <button class="btn" id="btn-quiz-continue">${passed ? (lang==="es"?"Continuar":"Continue") : (lang==="es"?"Reintentar":"Retry")}</button>
+  `;
+  $("btn-quiz-submit").classList.add("hidden");
+  $("btn-quiz-continue").addEventListener("click", () => {
+    if(passed) showDashboard();
+    else startQuiz();
+  });
+});
+
+$("btn-back-dash").addEventListener("click", showDashboard);
+$("btn-back-dash2").addEventListener("click", showDashboard);
+
+/* ================= Admin / Progreso ================= */
+$("btn-go-admin").addEventListener("click", () => {
+  $("view-dashboard").classList.add("hidden");
+  $("view-admin").classList.remove("hidden");
+  renderAdmin();
+});
+
+function renderAdmin(){
+  const users = loadUsers();
+  const tbody = $("admin-tbody");
+  tbody.innerHTML = "";
+  Object.values(users).forEach(u => {
+    const total = getModulesForRole(u.role).length;
+    const passedCount = getModulesForRole(u.role).filter(m => u.progress[m.id] && u.progress[m.id].passed).length;
+    const criticalMods = getModulesForRole(u.role).filter(m => m.critical);
+    const criticalOk = criticalMods.every(m => u.progress[m.id] && u.progress[m.id].passed);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.name}</td>
+      <td>${u.role}</td>
+      <td>${passedCount}/${total}</td>
+      <td>${criticalMods.length === 0 ? "—" : (criticalOk ? "✅" : "❌")}</td>
+      <td>${new Date(u.updated).toLocaleDateString()}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+$("btn-export-csv").addEventListener("click", () => {
+  const users = loadUsers();
+  let csv = "Name,Role,Module,Passed,Score,Critical,Date\n";
+  Object.values(users).forEach(u => {
+    Object.entries(u.progress).forEach(([moduleId, p]) => {
+      csv += `"${u.name}","${u.role}","${moduleId}","${p.passed}","${p.score}","${p.critical}","${p.date}"\n`;
+    });
+  });
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "chelas-academy-progreso.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* ================= Language ================= */
+function setLang(l){
+  lang = l;
+  localStorage.setItem("chelas_lang", l);
+  applyStaticTranslations();
+  if(!$("view-dashboard").classList.contains("hidden")) showDashboard();
+  if(!$("view-module").classList.contains("hidden") && activeModule) openModule(activeModule);
+  if(!$("view-admin").classList.contains("hidden")) renderAdmin();
+}
+$("btn-lang-es").addEventListener("click", () => setLang("es"));
+$("btn-lang-en").addEventListener("click", () => setLang("en"));
+
+/* ================= Boot ================= */
+applyStaticTranslations();
+const saved = JSON.parse(localStorage.getItem("chelas_current_user") || "null");
+if(saved){
+  currentUser = saved;
+  showDashboard();
+} else {
+  $("view-login").classList.remove("hidden");
+}
+</script>
+</body>
+</html>

@@ -79,17 +79,11 @@
   <!-- LOGIN -->
   <div id="view-login" class="card">
     <h2 data-t-en="Sign in" data-t-es="Iniciar sesión">Iniciar sesión</h2>
-    <label data-t-en="Your name" data-t-es="Tu nombre">Tu nombre</label>
-    <input id="login-name" placeholder="Nombre completo" autocomplete="name">
-    <label data-t-en="Your role" data-t-es="Tu rol">Tu rol</label>
-    <select id="login-role">
-      <option value="Server">Server</option>
-      <option value="Bartender">Bartender</option>
-      <option value="Busser">Busser</option>
-      <option value="Host">Host</option>
-      <option value="Manager">Manager</option>
-    </select>
+    <label data-t-en="Work email" data-t-es="Correo de trabajo">Correo de trabajo</label>
+    <input id="login-email" type="email" placeholder="nombre@chelas.com" autocomplete="email">
+    <p class="muted" id="login-error" style="color:var(--bad);display:none;margin-top:10px"></p>
     <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Start training" data-t-es="Comenzar entrenamiento">Comenzar entrenamiento</button>
+    <p class="muted" style="margin-top:14px" data-t-en="Your role is assigned by your manager. If your email isn't recognized, ask them to add you." data-t-es="Tu rol lo asigna tu gerente. Si tu correo no es reconocido, pídele que te agregue.">—</p>
   </div>
 
   <!-- DASHBOARD -->
@@ -148,11 +142,12 @@
         <h2 style="margin:0" data-t-en="Team Progress" data-t-es="Progreso del Equipo">Progreso del Equipo</h2>
         <button class="btn small" id="btn-export-csv" data-t-en="Export CSV" data-t-es="Exportar CSV">Exportar CSV</button>
       </div>
-      <p class="muted" data-t-en="Progress is stored per device unless a Google Sheet sync is configured (see README)." data-t-es="El progreso se guarda por dispositivo, a menos que se configure sincronización con Google Sheet (ver README).">—</p>
+      <p class="muted" data-t-en="This table reflects this device. The full team's progress is logged in the 'Chela's Academy - Progress' Google Sheet." data-t-es="Esta tabla refleja este dispositivo. El progreso de todo el equipo queda registrado en el Google Sheet 'Chela's Academy - Progress'.">—</p>
       <div style="overflow-x:auto">
         <table id="admin-table">
           <thead><tr>
             <th data-t-en="Name" data-t-es="Nombre">Nombre</th>
+            <th data-t-en="Email" data-t-es="Correo">Correo</th>
             <th data-t-en="Role" data-t-es="Rol">Rol</th>
             <th data-t-en="Progress" data-t-es="Progreso">Progreso</th>
             <th data-t-en="Critical OK" data-t-es="Críticos OK">Críticos OK</th>
@@ -169,7 +164,7 @@
 <script src="modules.js"></script>
 <script>
 /* ================= Config ================= */
-const REPORT_URL = ""; // Paste your Google Apps Script Web App URL here to sync progress centrally (see README.md)
+const REPORT_URL = ""; // REQUIRED: paste your Google Apps Script Web App URL here (login + progress sync depend on it, see README.md)
 
 const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Manager:"MANAGER" };
 
@@ -188,21 +183,21 @@ const t = (obj) => obj[lang] || obj.en || "";
 function loadUsers(){ return JSON.parse(localStorage.getItem("chelas_users") || "{}"); }
 function saveUsers(u){ localStorage.setItem("chelas_users", JSON.stringify(u)); }
 
-function getUserRecord(name){
+function getUserRecord(email){
   const users = loadUsers();
-  return users[name.toLowerCase()];
+  return users[email.toLowerCase()];
 }
-function upsertUserRecord(name, role){
+function upsertUserRecord(email, name, role){
   const users = loadUsers();
-  const key = name.toLowerCase();
-  if(!users[key]) users[key] = { name, role, progress: {}, updated: new Date().toISOString() };
-  else { users[key].role = role; }
+  const key = email.toLowerCase();
+  if(!users[key]) users[key] = { email: key, name, role, progress: {}, updated: new Date().toISOString() };
+  else { users[key].name = name; users[key].role = role; }
   saveUsers(users);
   return users[key];
 }
-function saveProgress(name, moduleId, passed, score, critical){
+function saveProgress(email, moduleId, passed, score, critical){
   const users = loadUsers();
-  const key = name.toLowerCase();
+  const key = email.toLowerCase();
   if(!users[key]) return;
   users[key].progress[moduleId] = { passed, score, critical, date: new Date().toISOString() };
   users[key].updated = new Date().toISOString();
@@ -211,9 +206,33 @@ function saveProgress(name, moduleId, passed, score, critical){
     fetch(REPORT_URL, {
       method: "POST", mode: "no-cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, role: users[key].role, moduleId, passed, score, critical, date: users[key].updated })
+      body: JSON.stringify({ email: key, name: users[key].name, role: users[key].role, moduleId, passed, score, critical, date: users[key].updated })
     }).catch(()=>{});
   }
+}
+
+/* ================= Roster (Google Sheet) ================= */
+function loadRosterCache(){ return JSON.parse(localStorage.getItem("chelas_roster_cache") || "[]"); }
+function saveRosterCache(roster){ localStorage.setItem("chelas_roster_cache", JSON.stringify(roster)); }
+
+async function fetchRoster(){
+  if(!REPORT_URL) return null;
+  try{
+    const res = await fetch(REPORT_URL + "?action=roster");
+    const data = await res.json();
+    if(data && Array.isArray(data.roster)){
+      saveRosterCache(data.roster);
+      return data.roster;
+    }
+    return null;
+  }catch(err){
+    return null;
+  }
+}
+
+function findInRoster(roster, email){
+  const target = email.trim().toLowerCase();
+  return roster.find(r => r.email.trim().toLowerCase() === target);
 }
 
 function applyStaticTranslations(){
@@ -226,12 +245,46 @@ function applyStaticTranslations(){
 }
 
 /* ================= Login ================= */
-$("btn-login").addEventListener("click", () => {
-  const name = $("login-name").value.trim();
-  const role = $("login-role").value;
-  if(!name){ alert(lang==="es" ? "Escribe tu nombre" : "Enter your name"); return; }
-  const rec = upsertUserRecord(name, role);
-  currentUser = { name: rec.name, role: rec.role };
+function showLoginError(msg){
+  const el = $("login-error");
+  el.textContent = msg;
+  el.style.display = "block";
+}
+
+$("btn-login").addEventListener("click", async () => {
+  const email = $("login-email").value.trim().toLowerCase();
+  $("login-error").style.display = "none";
+  if(!email){ showLoginError(lang==="es" ? "Escribe tu correo" : "Enter your email"); return; }
+
+  if(!REPORT_URL){
+    showLoginError(lang==="es"
+      ? "Configuración pendiente: el administrador debe conectar el Google Sheet primero (ver README)."
+      : "Setup pending: the admin needs to connect the Google Sheet first (see README).");
+    return;
+  }
+
+  $("btn-login").disabled = true;
+  let roster = await fetchRoster();
+  if(!roster) roster = loadRosterCache();
+  $("btn-login").disabled = false;
+
+  if(!roster || !roster.length){
+    showLoginError(lang==="es"
+      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu gerente."
+      : "Couldn't reach the access list. Try again or tell your manager.");
+    return;
+  }
+
+  const entry = findInRoster(roster, email);
+  if(!entry){
+    showLoginError(lang==="es"
+      ? "Tu correo no está registrado. Pide a tu gerente que te agregue en el Google Sheet."
+      : "Your email isn't registered. Ask your manager to add you to the Google Sheet.");
+    return;
+  }
+
+  const rec = upsertUserRecord(entry.email, entry.name, entry.role);
+  currentUser = { email: rec.email, name: rec.name, role: rec.role };
   localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
   showDashboard();
 });
@@ -248,14 +301,14 @@ function getModulesForRole(role){
   return MODULES.filter(m => m.track === "CORE" || m.track === track);
 }
 
-function isModulePassed(name, moduleId){
-  const rec = getUserRecord(name);
+function isModulePassed(email, moduleId){
+  const rec = getUserRecord(email);
   return !!(rec && rec.progress[moduleId] && rec.progress[moduleId].passed);
 }
 
-function isModuleUnlocked(list, idx, name){
+function isModuleUnlocked(list, idx, email){
   if(idx === 0) return true;
-  return isModulePassed(name, list[idx-1].id);
+  return isModulePassed(email, list[idx-1].id);
 }
 
 function showDashboard(){
@@ -270,7 +323,7 @@ function showDashboard(){
   $("admin-link-box").classList.toggle("hidden", currentUser.role !== "Manager");
 
   currentModuleList = getModulesForRole(currentUser.role);
-  const passedCount = currentModuleList.filter(m => isModulePassed(currentUser.name, m.id)).length;
+  const passedCount = currentModuleList.filter(m => isModulePassed(currentUser.email, m.id)).length;
   const pct = Math.round((passedCount / currentModuleList.length) * 100);
   const ring = $("progress-ring");
   ring.style.background = `conic-gradient(var(--accent) ${pct*3.6}deg, var(--card2) 0deg)`;
@@ -287,11 +340,11 @@ function showDashboard(){
       h.textContent = m.track === "CORE" ? (lang==="es" ? "Fundamentos (CORE)" : "Core Fundamentals") : m.track;
       listEl.appendChild(h);
     }
-    const unlocked = isModuleUnlocked(currentModuleList, idx, currentUser.name);
-    const passed = isModulePassed(currentUser.name, m.id);
+    const unlocked = isModuleUnlocked(currentModuleList, idx, currentUser.email);
+    const passed = isModulePassed(currentUser.email, m.id);
     const row = document.createElement("div");
     row.className = "module-row" + (unlocked ? "" : " locked");
-    const rec = getUserRecord(currentUser.name);
+    const rec = getUserRecord(currentUser.email);
     const scoreInfo = rec && rec.progress[m.id] ? rec.progress[m.id].score : null;
     row.innerHTML = `
       <div class="badge ${passed ? "done" : (unlocked ? "open" : "locked")}">${passed ? "✓" : (unlocked ? m.id : "🔒")}</div>
@@ -425,7 +478,7 @@ $("btn-quiz-submit").addEventListener("click", () => {
   });
   const score = Math.round((correct / m.quiz.length) * 100);
   const passed = score >= m.pass;
-  saveProgress(currentUser.name, m.id, passed, score, !!m.critical);
+  saveProgress(currentUser.email, m.id, passed, score, !!m.critical);
 
   const result = $("quiz-result");
   result.classList.remove("hidden");
@@ -463,6 +516,7 @@ function renderAdmin(){
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${u.name}</td>
+      <td>${u.email}</td>
       <td>${u.role}</td>
       <td>${passedCount}/${total}</td>
       <td>${criticalMods.length === 0 ? "—" : (criticalOk ? "✅" : "❌")}</td>
@@ -473,10 +527,10 @@ function renderAdmin(){
 
 $("btn-export-csv").addEventListener("click", () => {
   const users = loadUsers();
-  let csv = "Name,Role,Module,Passed,Score,Critical,Date\n";
+  let csv = "Name,Email,Role,Module,Passed,Score,Critical,Date\n";
   Object.values(users).forEach(u => {
     Object.entries(u.progress).forEach(([moduleId, p]) => {
-      csv += `"${u.name}","${u.role}","${moduleId}","${p.passed}","${p.score}","${p.critical}","${p.date}"\n`;
+      csv += `"${u.name}","${u.email}","${u.role}","${moduleId}","${p.passed}","${p.score}","${p.critical}","${p.date}"\n`;
     });
   });
   const blob = new Blob([csv], { type: "text/csv" });

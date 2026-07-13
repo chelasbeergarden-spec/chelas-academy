@@ -67,12 +67,12 @@ Actualiza esos módulos en `modules.js` en cuanto tengas la información.
 
 Ya existen dos Google Sheets listos para usar:
 
-- **[Chela's Academy - Roster](https://docs.google.com/spreadsheets/d/1SSIl6sG4UW2vFnGfwf9_NdxjwZEq9UYbd4w9GxfIH30/edit)** — aquí decides quién puede entrenar y con qué rol. Columnas: `Email, Name, Role`. Para dar de alta a alguien, solo agrega una fila (borra la fila de ejemplo). `Role` debe ser exactamente uno de: `Server`, `Bartender`, `Busser`, `Host`, `Manager`.
-- **[Chela's Academy - Progress](https://docs.google.com/spreadsheets/d/1eeLUOidILlzIL8lmzzSoin7erQkrnW9hXxcSF1fVU9E/edit)** — aquí la app registra sola cada módulo aprobado de todo el equipo (no la edites a mano).
+- **[Chela's Academy - Roster](https://docs.google.com/spreadsheets/d/1FnZPgj779euovst35DYaSJSeubyAOGFBtwOp3t3v5IQ/edit)** — aquí decides quién puede entrenar y con qué rol. Columnas: `Email, Name, Role`. Para dar de alta a alguien, solo agrega una fila (borra la fila de ejemplo). `Role` debe ser exactamente uno de: `Server`, `Bartender`, `Busser`, `Host`, `Manager`.
+- **[Chela's Academy - Progress](https://docs.google.com/spreadsheets/d/1X6vdkUoIZLdJbb332zgHJx8yV74EpRIrppWrDYG8lNY/edit)** — aquí la app registra sola cada módulo aprobado de todo el equipo (no la edites a mano).
 
 El código que conecta la app con ambos Sheets ya está escrito en **`apps-script/Code.gs`** (con los IDs de ambos Sheets ya integrados — no hay que configurar nada ahí). Falta un único paso manual que Google exige hacer desde tu cuenta (no se puede automatizar):
 
-1. Abre el **[Roster](https://docs.google.com/spreadsheets/d/1SSIl6sG4UW2vFnGfwf9_NdxjwZEq9UYbd4w9GxfIH30/edit)**.
+1. Abre el **[Roster](https://docs.google.com/spreadsheets/d/1FnZPgj779euovst35DYaSJSeubyAOGFBtwOp3t3v5IQ/edit)**.
 2. Ve a **Extensiones → Apps Script**.
 3. Borra el contenido de ejemplo y pega todo el contenido de `apps-script/Code.gs` (está en este repo).
 4. Click **Implementar → Nueva implementación**. Tipo: **Aplicación web**. Ejecutar como: **Yo**. Quién tiene acceso: **Cualquiera**.

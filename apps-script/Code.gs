@@ -8,8 +8,8 @@
 // Web app > Execute as: Me > Who has access: Anyone. Copia la URL resultante
 // y pégala en index.html en la línea REPORT_URL = "".
 
-var ROSTER_SHEET_ID = '1SSIl6sG4UW2vFnGfwf9_NdxjwZEq9UYbd4w9GxfIH30';
-var PROGRESS_SHEET_ID = '1eeLUOidILlzIL8lmzzSoin7erQkrnW9hXxcSF1fVU9E';
+var ROSTER_SHEET_ID = '1FnZPgj779euovst35DYaSJSeubyAOGFBtwOp3t3v5IQ';
+var PROGRESS_SHEET_ID = '1X6vdkUoIZLdJbb332zgHJx8yV74EpRIrppWrDYG8lNY';
 
 function doGet(e) {
   if (e.parameter.action === 'roster') {

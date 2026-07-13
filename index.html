@@ -207,6 +207,17 @@ const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Ho
 const ALL_TRACKS = ["CORE", "SERVER", "BARTENDER", "BUSSER", "HOST", "MANAGER"];
 const TRACK_LABEL = { CORE: { en: "Core", es: "Core" }, SERVER: { en: "Server", es: "Server" }, BARTENDER: { en: "Bartender", es: "Bartender" }, BUSSER: { en: "Busser", es: "Busser" }, HOST: { en: "Host", es: "Host" }, MANAGER: { en: "Manager", es: "Manager" } };
 
+// Normalizes a role string from the Roster (any casing/spacing) to the exact
+// canonical value the app expects (e.g. "manager" / " MANAGER " -> "Manager").
+// Returns null if it doesn't match any known role.
+function normalizeRole(rawRole){
+  if(!rawRole) return null;
+  const target = rawRole.trim().toLowerCase();
+  const known = Object.keys(ROLE_TRACK); // Server, Bartender, Busser, Host, Manager
+  const match = known.find(r => r.toLowerCase() === target);
+  return match || null;
+}
+
 /* ================= State ================= */
 let lang = localStorage.getItem("chelas_lang") || "es";
 let currentUser = null;   // { name, email, role }
@@ -329,7 +340,15 @@ $("btn-login").addEventListener("click", async () => {
     return;
   }
 
-  const rec = upsertUserRecord(entry.email, entry.name, entry.role);
+  const normalizedRole = normalizeRole(entry.role);
+  if(!normalizedRole){
+    showLoginError(lang==="es"
+      ? `El rol "${entry.role}" en el Roster no es válido. Pide a tu gerente que lo corrija a uno de: Server, Bartender, Busser, Host, Manager.`
+      : `The role "${entry.role}" in the Roster isn't valid. Ask your manager to fix it to one of: Server, Bartender, Busser, Host, Manager.`);
+    return;
+  }
+
+  const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
   currentUser = { email: rec.email, name: rec.name, role: rec.role };
   localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
   showDashboard();
@@ -683,11 +702,29 @@ $("btn-lang-es").addEventListener("click", () => setLang("es"));
 $("btn-lang-en").addEventListener("click", () => setLang("en"));
 
 /* ================= Boot ================= */
+async function refreshCurrentUserFromRoster(){
+  if(!currentUser || !REPORT_URL) return;
+  const roster = await fetchRoster();
+  if(!roster) return;
+  const entry = findInRoster(roster, currentUser.email);
+  if(!entry) return; // stay logged in with cached role if they were since removed; login screen will catch it next fresh login
+  const normalizedRole = normalizeRole(entry.role);
+  if(!normalizedRole) return; // invalid role in the sheet; keep the last known-good role until it's fixed
+  if(entry.name !== currentUser.name || normalizedRole !== currentUser.role){
+    const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
+    currentUser = { email: rec.email, name: rec.name, role: rec.role };
+    localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
+    if(!$("view-dashboard").classList.contains("hidden")) showDashboard();
+    if(!$("view-admin").classList.contains("hidden")) renderAdmin();
+  }
+}
+
 applyStaticTranslations();
 const saved = JSON.parse(localStorage.getItem("chelas_current_user") || "null");
 if(saved){
   currentUser = saved;
   showDashboard();
+  refreshCurrentUserFromRoster();
 } else {
   $("view-login").classList.remove("hidden");
 }

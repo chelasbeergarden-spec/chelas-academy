@@ -88,6 +88,26 @@
   th{color:var(--muted);font-weight:700}
   .muted{color:var(--muted);font-size:13px}
   .center{text-align:center}
+
+  /* Onboarding */
+  .onb-add{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .onb-add input, .onb-add select{width:auto;flex:1;min-width:140px}
+  .onb-candidate{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;background:var(--card);overflow:hidden}
+  .onb-cand-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+  .onb-cand-head .info{flex:1;min-width:0}
+  .onb-cand-head .name{font-weight:700;font-size:15px}
+  .onb-cand-head .meta{font-size:12.5px;color:var(--muted)}
+  .onb-bar-wrap{width:90px;height:8px;border-radius:20px;background:#e6e6e2;overflow:hidden;flex-shrink:0}
+  .onb-bar{height:100%;background:var(--good)}
+  .onb-pct{font-size:12px;font-weight:700;color:var(--muted);width:34px;text-align:right;flex-shrink:0}
+  .onb-remove{background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 4px;flex-shrink:0}
+  .onb-phases{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+  .onb-candidate.open .onb-phases{display:block}
+  .onb-phase{margin-top:14px}
+  .onb-phase-title{font-weight:700;font-size:13.5px;color:var(--header);margin-bottom:8px}
+  .onb-item{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;margin-bottom:7px;cursor:pointer}
+  .onb-item input{width:16px;height:16px;margin-top:2px;flex-shrink:0;cursor:pointer}
+  .onb-item.checked span{color:var(--muted);text-decoration:line-through}
 </style>
 </head>
 <body>
@@ -100,6 +120,7 @@
       <button id="btn-lang-es">ES</button><button id="btn-lang-en">EN</button>
     </div>
     <button class="btn ghost small hidden" id="btn-go-admin" data-t-en="Progress" data-t-es="Progreso">Progreso</button>
+    <button class="btn ghost small hidden" id="btn-go-onboarding" data-t-en="Onboarding" data-t-es="Onboarding">Onboarding</button>
     <button class="btn ghost small hidden" id="btn-logout" data-t-en="Log out" data-t-es="Salir">Salir</button>
   </div>
 </header>
@@ -193,6 +214,28 @@
           <tbody id="admin-tbody"></tbody>
         </table>
       </div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING -->
+  <div id="view-onboarding" class="hidden">
+    <button class="btn secondary small" id="btn-back-dash3" style="margin-top:16px" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+    <div class="card" style="margin-top:12px">
+      <h2 style="margin:0 0 4px" data-t-en="Onboarding — New Hires" data-t-es="Onboarding — Nuevos Ingresos">Onboarding — Nuevos Ingresos</h2>
+      <p class="muted" data-t-en="Track each candidate from offer to their 90-day check-in. Saved on this device." data-t-es="Da seguimiento a cada candidato desde la oferta hasta su evaluación de 90 días. Se guarda en este dispositivo.">—</p>
+      <div class="onb-add">
+        <input type="text" id="onb-new-name" data-t-en-ph="Candidate name" data-t-es-ph="Nombre del candidato" placeholder="Nombre del candidato">
+        <select id="onb-new-role">
+          <option value="">— Rol —</option>
+          <option value="Server">Server</option>
+          <option value="Bartender">Bartender</option>
+          <option value="Busser">Busser</option>
+          <option value="Host">Host</option>
+          <option value="Manager">Manager</option>
+        </select>
+        <button class="btn small" id="btn-onb-add" data-t-en="+ Add candidate" data-t-es="+ Añadir candidato">+ Añadir candidato</button>
+      </div>
+      <div id="onb-list"></div>
     </div>
   </div>
 
@@ -440,11 +483,13 @@ function showDashboard(){
   $("view-login").classList.add("hidden");
   $("view-module").classList.add("hidden");
   $("view-admin").classList.add("hidden");
+  $("view-onboarding").classList.add("hidden");
   $("view-dashboard").classList.remove("hidden");
   $("btn-logout").classList.remove("hidden");
   $("header-username").classList.remove("hidden");
   $("header-username").textContent = currentUser.name;
   $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Manager");
+  $("btn-go-onboarding").classList.toggle("hidden", currentUser.role !== "Manager");
 
   userTracks = getUserTracks(currentUser.role);
   if(!userTracks.includes(activeTrack)) activeTrack = userTracks[0];
@@ -644,10 +689,12 @@ $("btn-quiz-submit").addEventListener("click", () => {
 
 $("btn-back-dash").addEventListener("click", showDashboard);
 $("btn-back-dash2").addEventListener("click", showDashboard);
+$("btn-back-dash3").addEventListener("click", showDashboard);
 
 /* ================= Admin / Progreso ================= */
 $("btn-go-admin").addEventListener("click", () => {
   $("view-dashboard").classList.add("hidden");
+  $("view-onboarding").classList.add("hidden");
   $("track-tabs").classList.add("hidden");
   $("view-admin").classList.remove("hidden");
   renderAdmin();
@@ -693,6 +740,154 @@ $("btn-export-csv").addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
+/* ================= Onboarding ================= */
+const ONBOARDING_PHASES = [
+  { id: "f0", title: { en: "Phase 0 — Interview & Offer", es: "Fase 0 — Entrevista y Oferta" }, items: [
+    { en: "Confirmed role, pay, and start date (verbally + in writing)", es: "Confirmar puesto, salario y fecha de inicio (verbal + por escrito)" },
+    { en: "Explained the next steps (ADP email → 7shifts email → app access on day 1)", es: "Explicar los próximos pasos (correo ADP → correo 7shifts → acceso a la app el día 1)" },
+    { en: "Communicated dress code / what to bring on day 1", es: "Comunicar código de vestimenta / qué traer el día 1" },
+    { en: "Added to the Roster sheet with email + assigned role", es: "Añadido a la hoja de Roster con correo + rol asignado" }
+  ]},
+  { id: "f1", title: { en: "Phase 1 — Pre-boarding", es: "Fase 1 — Pre-boarding" }, items: [
+    { en: "Sent the ADP + 7shifts welcome packet", es: "Enviado el paquete de bienvenida ADP + 7shifts" },
+    { en: "ADP registration completed (Associate ID + PRC)", es: "Registro de ADP completado (Associate ID + PRC)" },
+    { en: "I-9 documents uploaded correctly", es: "Documentos I-9 subidos correctamente" },
+    { en: "7shifts account registered + app downloaded", es: "Cuenta de 7shifts registrada + app descargada" },
+    { en: "Reminder sent 48h before day 1 (time, who to ask for, where to park/enter)", es: "Recordatorio enviado 48h antes del día 1 (hora, a quién buscar, dónde entrar/estacionar)" }
+  ]},
+  { id: "f2", title: { en: "Phase 2 — Day 1: Orientation", es: "Fase 2 — Día 1: Orientación" }, items: [
+    { en: "Welcome + physical tour (kitchen, staff restroom, emergency exit, time clock)", es: "Bienvenida + recorrido físico (cocina, baño de personal, salida de emergencia, reloj)" },
+    { en: "Introduced to the team by name and role", es: "Presentado al equipo por nombre y rol" },
+    { en: "Uniform/apron and Toast POS credentials handed out", es: "Uniforme/delantal y credenciales de Toast POS entregadas" },
+    { en: "Chela's Academy account confirmed + first login done together", es: "Cuenta de Chela's Academy confirmada + primer login hecho juntos" },
+    { en: "5-minute conversation about the 4 culture pillars", es: "Conversación de 5 minutos sobre los 4 pilares de cultura" },
+    { en: "Buddy (same-role teammate) assigned for the first week", es: "Compañero guía (buddy) del mismo rol asignado para la primera semana" }
+  ]},
+  { id: "f3", title: { en: "Phase 3 — Week 1: Shadowing & CORE", es: "Fase 3 — Semana 1: Sombra y CORE" }, items: [
+    { en: "At least 2 shadow shifts with the buddy completed", es: "Al menos 2 turnos de sombra con el buddy completados" },
+    { en: "All 5 CORE modules passed in Chela's Academy", es: "Los 5 módulos CORE aprobados en Chela's Academy" },
+    { en: "Started the role-specific track", es: "Track de su rol iniciado" },
+    { en: "End-of-week check-in with the manager done", es: "Check-in de fin de semana con el gerente realizado" }
+  ]},
+  { id: "f4", title: { en: "Phase 4 — Days 2–30: Certification", es: "Fase 4 — Días 2–30: Certificación" }, items: [
+    { en: "Full role track completed in Chela's Academy", es: "Track completo de su rol completado en Chela's Academy" },
+    { en: "Critical modules (allergy / alcohol service) passed at 100%", es: "Módulos críticos (alergias / alcohol) aprobados al 100%" },
+    { en: "RVA training completed within the legal deadline", es: "Entrenamiento RVA completado dentro del plazo legal" },
+    { en: "Weekly progress reviewed by the GM during month 1", es: "Progreso revisado semanalmente por el GM durante el mes 1" }
+  ]},
+  { id: "f5", title: { en: "Phase 5 — 30 / 60 / 90-Day Review", es: "Fase 5 — Evaluación 30 / 60 / 90" }, items: [
+    { en: "Day 30 check-in done (training complete + how they feel on the team)", es: "Check-in día 30 hecho (entrenamiento completo + cómo se siente en el equipo)" },
+    { en: "Day 60 performance feedback given (speed, sales, teamwork)", es: "Retroalimentación de desempeño día 60 dada (velocidad, ventas, trabajo en equipo)" },
+    { en: "Day 90 probation period confirmed in writing", es: "Período de prueba de día 90 confirmado por escrito" }
+  ]}
+];
+
+function loadOnboarding(){ return JSON.parse(localStorage.getItem("chelas_onboarding") || '{"candidates":[],"progress":{}}'); }
+function saveOnboarding(data){ localStorage.setItem("chelas_onboarding", JSON.stringify(data)); }
+let onbOpenId = null;
+
+function onbTotalItems(){ return ONBOARDING_PHASES.reduce((n, p) => n + p.items.length, 0); }
+
+function onbCandidateProgress(data, id){
+  const prog = data.progress[id] || {};
+  let checked = 0;
+  ONBOARDING_PHASES.forEach(phase => {
+    phase.items.forEach((_, i) => { if(prog[phase.id] && prog[phase.id][i]) checked++; });
+  });
+  return checked;
+}
+
+function renderOnboarding(){
+  const data = loadOnboarding();
+  const list = $("onb-list");
+  list.innerHTML = "";
+  const total = onbTotalItems();
+  data.candidates.slice().reverse().forEach(c => {
+    const checked = onbCandidateProgress(data, c.id);
+    const pct = Math.round((checked / total) * 100);
+    const wrap = document.createElement("div");
+    wrap.className = "onb-candidate" + (onbOpenId === c.id ? " open" : "");
+
+    const head = document.createElement("div");
+    head.className = "onb-cand-head";
+    head.innerHTML = `
+      <div class="info">
+        <div class="name">${c.name}</div>
+        <div class="meta">${c.role || (lang==="es" ? "Sin rol asignado" : "No role assigned")}</div>
+      </div>
+      <div class="onb-bar-wrap"><div class="onb-bar" style="width:${pct}%"></div></div>
+      <div class="onb-pct">${pct}%</div>
+      <button class="onb-remove" title="${lang==="es" ? "Eliminar" : "Remove"}">×</button>
+    `;
+    head.addEventListener("click", (e) => {
+      if(e.target.closest(".onb-remove")) return;
+      onbOpenId = onbOpenId === c.id ? null : c.id;
+      renderOnboarding();
+    });
+    head.querySelector(".onb-remove").addEventListener("click", () => {
+      const d = loadOnboarding();
+      d.candidates = d.candidates.filter(x => x.id !== c.id);
+      delete d.progress[c.id];
+      saveOnboarding(d);
+      renderOnboarding();
+    });
+    wrap.appendChild(head);
+
+    const phasesEl = document.createElement("div");
+    phasesEl.className = "onb-phases";
+    ONBOARDING_PHASES.forEach(phase => {
+      const phaseEl = document.createElement("div");
+      phaseEl.className = "onb-phase";
+      const titleEl = document.createElement("div");
+      titleEl.className = "onb-phase-title";
+      titleEl.textContent = t(phase.title);
+      phaseEl.appendChild(titleEl);
+      phase.items.forEach((item, i) => {
+        const isChecked = !!(data.progress[c.id] && data.progress[c.id][phase.id] && data.progress[c.id][phase.id][i]);
+        const row = document.createElement("label");
+        row.className = "onb-item" + (isChecked ? " checked" : "");
+        row.innerHTML = `<input type="checkbox" ${isChecked ? "checked" : ""}><span>${t(item)}</span>`;
+        row.querySelector("input").addEventListener("change", (e) => {
+          const d = loadOnboarding();
+          d.progress[c.id] = d.progress[c.id] || {};
+          d.progress[c.id][phase.id] = d.progress[c.id][phase.id] || {};
+          d.progress[c.id][phase.id][i] = e.target.checked;
+          saveOnboarding(d);
+          renderOnboarding();
+        });
+        phaseEl.appendChild(row);
+      });
+      phasesEl.appendChild(phaseEl);
+    });
+    wrap.appendChild(phasesEl);
+
+    list.appendChild(wrap);
+  });
+}
+
+$("btn-go-onboarding").addEventListener("click", () => {
+  $("view-dashboard").classList.add("hidden");
+  $("view-admin").classList.add("hidden");
+  $("track-tabs").classList.add("hidden");
+  $("view-onboarding").classList.remove("hidden");
+  renderOnboarding();
+});
+
+$("btn-onb-add").addEventListener("click", () => {
+  const nameInput = $("onb-new-name");
+  const roleSelect = $("onb-new-role");
+  const name = nameInput.value.trim();
+  if(!name) return;
+  const data = loadOnboarding();
+  const id = "c_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7);
+  data.candidates.push({ id, name, role: roleSelect.value, createdAt: Date.now() });
+  saveOnboarding(data);
+  nameInput.value = "";
+  roleSelect.value = "";
+  onbOpenId = id;
+  renderOnboarding();
+});
+
 /* ================= Language ================= */
 function setLang(l){
   lang = l;
@@ -701,6 +896,7 @@ function setLang(l){
   if(!$("view-dashboard").classList.contains("hidden")) showDashboard();
   if(!$("view-module").classList.contains("hidden") && activeModule) openModule(activeModule);
   if(!$("view-admin").classList.contains("hidden")) renderAdmin();
+  if(!$("view-onboarding").classList.contains("hidden")) renderOnboarding();
 }
 $("btn-lang-es").addEventListener("click", () => setLang("es"));
 $("btn-lang-en").addEventListener("click", () => setLang("en"));

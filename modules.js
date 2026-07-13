@@ -9,6 +9,7 @@ const MODULES = [
   {
     id: "C1",
     track: "CORE",
+    category: "Servicio",
     title: { en: "Welcome & Chela's Culture", es: "Bienvenida y Cultura Chela's" },
     lessons: [
       { en: "Welcome to Chela's Coctelería (Miami)! This app is how you'll train — at your own pace, on your phone.", es: "¡Bienvenido/a a Chela's Coctelería (Miami)! Esta app es tu entrenamiento — a tu propio ritmo, desde el teléfono." },
@@ -31,6 +32,7 @@ const MODULES = [
   {
     id: "C2",
     track: "CORE",
+    category: "Alergias",
     title: { en: "Allergens", es: "Alérgenos" },
     lessons: [
       { en: "We have TWO fryers. French fries/chips are fried in the NON-seafood fryer, so they are safe from shellfish/fish cross-contact.", es: "Tenemos DOS freidoras. Las papas fritas se cocinan en la freidora SIN mariscos, así que están libres de contacto cruzado con mariscos/pescado." },
@@ -58,6 +60,7 @@ const MODULES = [
   {
     id: "C3",
     track: "CORE",
+    category: "Alergias",
     title: { en: "Hygiene & Safety", es: "Higiene y Seguridad" },
     lessons: [
       { en: "Wash hands frequently: before shift, after breaks, after touching your face/phone, after trash, and between tasks.", es: "Lávate las manos con frecuencia: antes del turno, después de descansos, después de tocarte la cara/teléfono, después de la basura y entre tareas." },
@@ -80,6 +83,7 @@ const MODULES = [
   {
     id: "C4",
     track: "CORE",
+    category: "Servicio",
     title: { en: "Customer Service Standards", es: "Estándares de Servicio al Cliente" },
     lessons: [
       { en: "Greet every guest within 60 seconds of being seated, with a warm, genuine welcome.", es: "Saluda a cada huésped dentro de los primeros 60 segundos de sentarse, con una bienvenida cálida y genuina." },
@@ -102,6 +106,7 @@ const MODULES = [
   {
     id: "C5",
     track: "CORE",
+    category: "Servicio",
     title: { en: "POS Basics (Toast)", es: "Fundamentos del POS (Toast)" },
     lessons: [
       { en: "Log in with your personal PIN — never share it. Every action in Toast is tracked to you.", es: "Inicia sesión con tu PIN personal — nunca lo compartas. Toda acción en Toast queda registrada a tu nombre." },
@@ -126,6 +131,7 @@ const MODULES = [
   {
     id: "S1",
     track: "SERVER",
+    category: "Servicio",
     title: { en: "About Chela's & Floor Plan", es: "Sobre Chela's y Plano del Piso" },
     lessons: [
       { en: "Chela's Coctelería is more than a Miami restaurant: it's a one-of-a-kind experience blending entertainment, craft cocktails, and a chef-driven menu that fuses Latin American flavors with American staples. Our mission is to deliver exceptional hospitality and memorable moments every shift.", es: "Chela's Coctelería es más que un restaurante en Miami: es una experiencia única que combina entretenimiento, cócteles artesanales, y un menú creado por el chef que fusiona sabores latinoamericanos con clásicos americanos. Nuestra misión es ofrecer hospitalidad excepcional y momentos memorables en cada turno." },
@@ -145,6 +151,7 @@ const MODULES = [
   {
     id: "S2",
     track: "SERVER",
+    category: "Servicio",
     title: { en: "Greeting Standards & Menu Tour", es: "Saludo y Recorrido de Menú" },
     lessons: [
       { en: "The Initial Greet is about making a strong first impression: be warm, friendly, and make eye contact with everyone at the table.", es: "El Saludo Inicial busca causar una gran primera impresión: sé cálido, amigable, y haz contacto visual con todos en la mesa." },
@@ -166,6 +173,7 @@ const MODULES = [
   {
     id: "S3",
     track: "SERVER",
+    category: "Servicio",
     title: { en: "Steps of Service", es: "Pasos de Servicio" },
     lessons: [
       { en: "Greet & Water — within 2 minutes: introduce yourself, offer bottled or house water. Menu Tour — during the greet: point out apps, mains, desserts; suggest specialty cocktails.", es: "Saludo y Agua — dentro de 2 minutos: preséntate, ofrece agua embotellada o de la casa. Recorrido de Menú — durante el saludo: señala entradas, platos fuertes, postres; sugiere cócteles especiales." },
@@ -188,6 +196,7 @@ const MODULES = [
   {
     id: "S4",
     track: "SERVER",
+    category: "Alergias",
     title: { en: "Allergy Procedure", es: "Procedimiento de Alergias" },
     lessons: [
       { en: "Guest safety is our top priority — a single mistake can put a guest's health at risk. Common allergens: Shellfish & Fish (shrimp, lobster, crab, mussels, clams, squid, octopus, cobia, tuna, mahi-mahi) — high presence in ceviches, Camarones Saltados, poke bowl, Catch of the Day tacos, Seafood Chicharrones, Coctel de Camaron.", es: "La seguridad del huésped es nuestra prioridad — un solo error puede poner en riesgo la salud de alguien. Alérgenos comunes: Mariscos y Pescado (camarón, langosta, cangrejo, mejillones, almejas, calamar, pulpo, cobia, atún, mahi-mahi) — presentes en ceviches, Camarones Saltados, poke bowl, tacos Catch of the Day, Chicharrones de Mariscos, Coctel de Camarón." },
@@ -209,6 +218,7 @@ const MODULES = [
   {
     id: "S5",
     track: "SERVER",
+    category: "Menú",
     title: { en: "Menu Guide", es: "Guía de Menú" },
     lessons: [
       { en: "Starters include Oysters* (fresh dozen, mignonette with malagueta peppers), Coctel de Camaron, Mexican Chicken Wings, Chela's Nachos, Seafood Chicharrones, Guac & Chips Bowl, Esquites, Chips & Salsa, Mini Short Rib Empanaditas, Guac Tuna Tartare*, and the Chela's Sampler Tower (great for groups).", es: "Las entradas incluyen Ostras* (docena fresca, mignonette con pimienta malagueta), Coctel de Camarón, Alitas de Pollo Mexicanas, Nachos Chela's, Chicharrones de Mariscos, Guacamole con Chips, Esquites, Chips & Salsa, Mini Empanaditas de Short Rib, Tuna Tartare con Guac*, y la Chela's Sampler Tower (ideal para grupos)." },
@@ -239,6 +249,7 @@ const MODULES = [
   {
     id: "S6",
     track: "SERVER",
+    category: "Bebidas",
     title: { en: "Beverage Guide", es: "Guía de Bebidas" },
     lessons: [
       { en: "Signature cocktails include Bajapanty (butterfly pea flower rum, lychee, lime, soda), Smoke Some (mezcal, ancho chile, smoked pineapple), Gran Reserva Old Fashioned (barrel-aged, Zacapa 23 rum), and The Spicy One (Don Julio Blanco, mezcal, passion fruit, jalapeño). After-dinner: Espresso Martini, Chela's Carajillo (Licor 43 + Coffee Papis espresso), and Irish Coffee.", es: "Cócteles insignia: Bajapanty (ron con flor de mariposa, lychee, limón, soda), Smoke Some (mezcal, chile ancho, piña ahumada), Gran Reserva Old Fashioned (añejado en barril, ron Zacapa 23), y The Spicy One (Don Julio Blanco, mezcal, maracuyá, jalapeño). Después de la cena: Espresso Martini, Chela's Carajillo (Licor 43 + espresso Coffee Papis), e Irish Coffee." },
@@ -267,6 +278,7 @@ const MODULES = [
   {
     id: "S7",
     track: "SERVER",
+    category: "Servicio",
     title: { en: "POS: Checks, Allergies & Payments", es: "POS: Cuentas, Alergias y Pagos" },
     lessons: [
       { en: "Opening a check: log in with your server number, select the table from the floor plan, enter guest count accurately, and confirm you're logged under the correct server name.", es: "Abrir una cuenta: inicia sesión con tu número de server, selecciona la mesa desde el plano, ingresa el número de huéspedes correctamente, y confirma que estás en tu propio nombre de server." },
@@ -286,6 +298,7 @@ const MODULES = [
   {
     id: "S8",
     track: "SERVER",
+    category: "Alcohol",
     title: { en: "Responsible Alcohol Service", es: "Servicio Responsable de Alcohol" },
     lessons: [
       { en: "Official policy FOH-BAR-ALC-001 (Florida). Card anyone who looks 35 or younger — no exceptions.", es: "Política oficial FOH-BAR-ALC-001 (Florida). Pide identificación a cualquiera que aparente 35 años o menos — sin excepciones." },
@@ -307,6 +320,7 @@ const MODULES = [
   {
     id: "S9",
     track: "SERVER",
+    category: "Práctico",
     title: { en: "Training Program & Certification", es: "Programa de Entrenamiento y Certificación" },
     lessons: [
       { en: "Training consists of 1 Kitchen/Expo shift, 1 Bar shift, 1 Busser shift, and 4 Server training shifts (8 hours each). Each shift ends with a test.", es: "El entrenamiento consiste en 1 turno de Cocina/Expo, 1 turno de Bar, 1 turno de Busser, y 4 turnos de entrenamiento de Server (8 horas cada uno). Cada turno termina con una prueba." },
@@ -328,6 +342,7 @@ const MODULES = [
   {
     id: "BT1",
     track: "BARTENDER",
+    category: "Servicio",
     title: { en: "Bar Setup & Station Organization", es: "Montaje de Barra y Organización de Estación" },
     lessons: [
       { en: "Set up your station before opening: ice, garnishes, glassware, and tools within reach and organized consistently.", es: "Prepara tu estación antes de abrir: hielo, guarniciones, cristalería y herramientas al alcance y organizadas de forma consistente." },
@@ -343,6 +358,7 @@ const MODULES = [
   {
     id: "BT2",
     track: "BARTENDER",
+    category: "Bebidas",
     title: { en: "Cocktail Pours, Glassware & Garnish", es: "Medidas de Cóctel, Cristalería y Guarnición" },
     lessons: [
       { en: "This module is pending final details from Chela's (exact pours, glassware, and garnish per cocktail). It will be added here once confirmed.", es: "Este módulo está pendiente de los detalles finales de Chela's (medidas exactas, cristalería y guarnición por cóctel). Se agregará aquí una vez confirmado." },
@@ -358,6 +374,7 @@ const MODULES = [
   {
     id: "BT3",
     track: "BARTENDER",
+    category: "Bebidas",
     title: { en: "Bar Menu Knowledge", es: "Conocimiento del Menú de Barra" },
     lessons: [
       { en: "Know the full drink menu, key ingredients, and be ready to make recommendations based on guest taste.", es: "Conoce todo el menú de bebidas, ingredientes clave, y está listo para recomendar según el gusto del huésped." },
@@ -373,6 +390,7 @@ const MODULES = [
   {
     id: "BT4",
     track: "BARTENDER",
+    category: "Servicio",
     title: { en: "POS for Bar Orders", es: "POS para Pedidos de Barra" },
     lessons: [
       { en: "Ring every drink into Toast as it's made — this keeps tabs accurate and supports our alcohol policy.", es: "Registra cada bebida en Toast al hacerla — esto mantiene las cuentas precisas y apoya nuestra política de alcohol." },
@@ -388,6 +406,7 @@ const MODULES = [
   {
     id: "BT5",
     track: "BARTENDER",
+    category: "Bebidas",
     title: { en: "Water Service", es: "Servicio de Agua" },
     lessons: [
       { en: "Our water brand is Saratoga — available still or sparkling. Know how to present and offer it correctly.", es: "Nuestra marca de agua es Saratoga — disponible sin gas o con gas. Sepa cómo presentarla y ofrecerla correctamente." }
@@ -402,6 +421,7 @@ const MODULES = [
   {
     id: "BT6",
     track: "BARTENDER",
+    category: "Servicio",
     title: { en: "Bar Cleanliness & Sanitation", es: "Limpieza y Sanitización de Barra" },
     lessons: [
       { en: "Wipe down the bar top and tools regularly. Change bar rags/towels often and keep ice bins covered and separate from bottle wells.", es: "Limpia la barra y las herramientas con regularidad. Cambia los paños de barra frecuentemente y mantén los depósitos de hielo cubiertos y separados de las botellas." }
@@ -416,6 +436,7 @@ const MODULES = [
   {
     id: "BT7",
     track: "BARTENDER",
+    category: "Práctico",
     title: { en: "Speed & Efficiency During Rush", es: "Velocidad y Eficiencia en Horas Pico" },
     lessons: [
       { en: "Batch similar drinks, pre-stock garnishes before a rush, and call out orders clearly to teammates.", es: "Agrupa bebidas similares, pre-abastece guarniciones antes de la hora pico, y comunica los pedidos con claridad a tus compañeros." }
@@ -430,6 +451,7 @@ const MODULES = [
   {
     id: "BT8",
     track: "BARTENDER",
+    category: "Alcohol",
     title: { en: "Responsible Alcohol Service", es: "Servicio Responsable de Alcohol" },
     lessons: [
       { en: "Official policy FOH-BAR-ALC-001 (Florida). Card anyone who looks 35 or younger — no exceptions.", es: "Política oficial FOH-BAR-ALC-001 (Florida). Pide identificación a cualquiera que aparente 35 años o menos — sin excepciones." },
@@ -451,6 +473,7 @@ const MODULES = [
   {
     id: "BT9",
     track: "BARTENDER",
+    category: "Servicio",
     title: { en: "Closing & Inventory Duties", es: "Tareas de Cierre e Inventario" },
     lessons: [
       { en: "Count and log bottles, restock for the next shift, and secure the bar before leaving.", es: "Cuenta y registra las botellas, reabastece para el siguiente turno, y asegura la barra antes de irte." },
@@ -468,6 +491,7 @@ const MODULES = [
   {
     id: "B1",
     track: "BUSSER",
+    category: "Servicio",
     title: { en: "Busser Role Overview", es: "Resumen del Rol de Busser" },
     lessons: [
       { en: "Bussers keep the floor moving — clearing, resetting tables quickly, and supporting servers so guests are seated fast.", es: "Los bussers mantienen el piso en movimiento — recogiendo, montando mesas rápidamente y apoyando a los servers para que los huéspedes se sienten rápido." }
@@ -482,6 +506,7 @@ const MODULES = [
   {
     id: "B2",
     track: "BUSSER",
+    category: "Práctico",
     title: { en: "Table Reset Standards", es: "Estándares de Montaje de Mesa" },
     lessons: [
       { en: "Clear plates from the right when possible, wipe the table fully, and reset with clean, aligned settings before the next guest is seated.", es: "Retira los platos por la derecha cuando sea posible, limpia bien la mesa, y monta con vajilla limpia y alineada antes de que se siente el próximo huésped." }
@@ -496,6 +521,7 @@ const MODULES = [
   {
     id: "B3",
     track: "BUSSER",
+    category: "Servicio",
     title: { en: "Floor Plan & Section Awareness", es: "Plano del Piso y Conocimiento de Secciones" },
     lessons: [
       { en: "Sections (left to right): Florida Room 101–109 · Bar 21–24, 31–34, 35 · Centro 41–48 (48 is the round 8-top, near the HOST stand) · Jungle 51–53, 61–63, 71–73, 81–85 · Exterior 401–410 and 501–510.", es: "Secciones (de izquierda a derecha): Florida Room 101–109 · Bar 21–24, 31–34, 35 · Centro 41–48 (48 es la mesa redonda de 8, cerca del podio de HOST) · Jungle 51–53, 61–63, 71–73, 81–85 · Exterior 401–410 y 501–510." }
@@ -510,6 +536,7 @@ const MODULES = [
   {
     id: "B4",
     track: "BUSSER",
+    category: "Servicio",
     title: { en: "Communication with Servers & Kitchen", es: "Comunicación con Servers y Cocina" },
     lessons: [
       { en: "Let servers know when a table is reset and ready, and flag the kitchen/expo if a table needs extra time before food fires.", es: "Avisa a los servers cuando una mesa está lista, y avisa a cocina/expo si una mesa necesita más tiempo antes de que salgan los platos." }
@@ -524,6 +551,7 @@ const MODULES = [
   {
     id: "B5",
     track: "BUSSER",
+    category: "Alergias",
     title: { en: "Safety & Sanitation", es: "Seguridad y Sanitización" },
     lessons: [
       { en: "Use separate bins for trash vs. dishware, carry trays properly to avoid spills, and report any hazard immediately.", es: "Usa contenedores separados para basura vs. vajilla, carga las bandejas correctamente para evitar derrames, y reporta cualquier peligro de inmediato." }
@@ -538,6 +566,7 @@ const MODULES = [
   {
     id: "B6",
     track: "BUSSER",
+    category: "Práctico",
     title: { en: "Closing Side Work", es: "Side Work de Cierre" },
     lessons: [
       { en: "Restock service stations, break down and clean bus bins, and confirm all sections are reset before clocking out.", es: "Reabastece las estaciones de servicio, vacía y limpia los contenedores de bussing, y confirma que todas las secciones estén listas antes de marcar salida." }
@@ -554,6 +583,7 @@ const MODULES = [
   {
     id: "H1",
     track: "HOST",
+    category: "Servicio",
     title: { en: "Host Role Overview", es: "Resumen del Rol de Host" },
     lessons: [
       { en: "The Host is the first and last impression — warm welcome, accurate seating, and smooth waitlist management.", es: "El Host es la primera y última impresión — bienvenida cálida, asignación de mesas precisa y manejo fluido de la lista de espera." }
@@ -568,6 +598,7 @@ const MODULES = [
   {
     id: "H2",
     track: "HOST",
+    category: "Servicio",
     title: { en: "Floor Plan & Seating Rotation", es: "Plano del Piso y Rotación de Asientos" },
     lessons: [
       { en: "Sections (left to right): Florida Room 101–109 · Bar 21–24, 31–34, 35 · Centro 41–48 (48 is the round 8-top) · Jungle 51–53, 61–63, 71–73, 81–85 · Exterior 401–410 and 501–510.", es: "Secciones (de izquierda a derecha): Florida Room 101–109 · Bar 21–24, 31–34, 35 · Centro 41–48 (48 es la mesa redonda de 8) · Jungle 51–53, 61–63, 71–73, 81–85 · Exterior 401–410 y 501–510." },
@@ -583,6 +614,7 @@ const MODULES = [
   {
     id: "H3",
     track: "HOST",
+    category: "Servicio",
     title: { en: "Reservations & Party Policy", es: "Reservaciones y Política de Grupos" },
     lessons: [
       { en: "This module is pending final details from Chela's: the reservation system/software used, max party size without a reservation, and the no-show/cancellation policy. It will be added once confirmed.", es: "Este módulo está pendiente de detalles finales de Chela's: el sistema/software de reservaciones, el tamaño máximo de grupo sin reservación, y la política de no-show/cancelación. Se agregará una vez confirmado." },
@@ -598,6 +630,7 @@ const MODULES = [
   {
     id: "H4",
     track: "HOST",
+    category: "Práctico",
     title: { en: "Greeting & Guest Experience", es: "Saludo y Experiencia del Huésped" },
     lessons: [
       { en: "Make eye contact, smile, and welcome guests warmly the moment they walk in — even if you're mid-task.", es: "Haz contacto visual, sonríe y da la bienvenida cálida al huésped en el momento en que entra — incluso si estás en medio de otra tarea." }
@@ -612,6 +645,7 @@ const MODULES = [
   {
     id: "H5",
     track: "HOST",
+    category: "Servicio",
     title: { en: "Waitlist Management", es: "Manejo de Lista de Espera" },
     lessons: [
       { en: "Give realistic wait times, keep the waitlist updated in real time, and communicate proactively with waiting guests.", es: "Da tiempos de espera realistas, mantén la lista de espera actualizada en tiempo real, y comunica proactivamente con los huéspedes que esperan." }
@@ -626,6 +660,7 @@ const MODULES = [
   {
     id: "H6",
     track: "HOST",
+    category: "Servicio",
     title: { en: "Phone Etiquette", es: "Etiqueta Telefónica" },
     lessons: [
       { en: "Answer within 3 rings, greet warmly with the restaurant name, speak clearly, and confirm details before hanging up.", es: "Contesta dentro de 3 timbres, saluda cálidamente con el nombre del restaurante, habla con claridad, y confirma los detalles antes de colgar." }
@@ -640,6 +675,7 @@ const MODULES = [
   {
     id: "H7",
     track: "HOST",
+    category: "Servicio",
     title: { en: "Coordinating with the FOH Team", es: "Coordinación con el Equipo de FOH" },
     lessons: [
       { en: "Communicate large parties, VIPs, or special occasions to servers and managers ahead of time so the team can prepare.", es: "Comunica grupos grandes, VIPs, u ocasiones especiales a servers y gerentes con anticipación para que el equipo pueda prepararse." }
@@ -656,6 +692,7 @@ const MODULES = [
   {
     id: "MG1",
     track: "MANAGER",
+    category: "Servicio",
     title: { en: "Leadership & Role Overview", es: "Liderazgo y Resumen del Rol" },
     lessons: [
       { en: "Managers set the tone for the shift — lead by example, support the team, and hold standards consistently.", es: "Los gerentes marcan el tono del turno — lideran con el ejemplo, apoyan al equipo, y mantienen los estándares de forma consistente." }
@@ -670,6 +707,7 @@ const MODULES = [
   {
     id: "MG2",
     track: "MANAGER",
+    category: "Servicio",
     title: { en: "Staff Scheduling & Training Oversight", es: "Programación de Personal y Supervisión de Entrenamiento" },
     lessons: [
       { en: "Track each trainee's progress through Chela's Academy and make sure new hires complete CORE + their track before working solo.", es: "Da seguimiento al progreso de cada trainee en Chela's Academy y asegúrate de que los nuevos empleados completen CORE + su track antes de trabajar solos." }
@@ -684,6 +722,7 @@ const MODULES = [
   {
     id: "MG3",
     track: "MANAGER",
+    category: "Servicio",
     title: { en: "Opening & Closing Management Duties", es: "Tareas de Gerencia de Apertura y Cierre" },
     lessons: [
       { en: "Opening: walk the floor, check staffing and stock. Closing: reconcile POS, secure cash/alcohol, and complete the closing checklist.", es: "Apertura: recorre el piso, revisa personal y stock. Cierre: concilia el POS, asegura efectivo/alcohol, y completa la lista de cierre." }
@@ -698,6 +737,7 @@ const MODULES = [
   {
     id: "MG4",
     track: "MANAGER",
+    category: "Servicio",
     title: { en: "Guest Complaints & Escalations", es: "Quejas de Huéspedes y Escalaciones" },
     lessons: [
       { en: "Take escalated complaints personally and calmly, empower the team to solve small issues, and document repeat problems.", es: "Atiende personalmente y con calma las quejas escaladas, empodera al equipo para resolver problemas pequeños, y documenta problemas recurrentes." }
@@ -712,6 +752,7 @@ const MODULES = [
   {
     id: "MG5",
     track: "MANAGER",
+    category: "Servicio",
     title: { en: "POS Manager Functions", es: "Funciones de Gerente en el POS" },
     lessons: [
       { en: "Managers can process voids, comps, and overrides in Toast — always log the reason and keep authority limited to legitimate business needs.", es: "Los gerentes pueden procesar anulaciones, cortesías y anulaciones especiales en Toast — siempre registra la razón y limita la autoridad a necesidades legítimas del negocio." }
@@ -726,6 +767,7 @@ const MODULES = [
   {
     id: "MG6",
     track: "MANAGER",
+    category: "Alcohol",
     title: { en: "Responsible Alcohol Service — Manager", es: "Servicio Responsable de Alcohol — Gerente" },
     lessons: [
       { en: "Official policy FOH-BAR-ALC-001 (Florida). Managers are the final authority on carding disputes and cut-off overrides — only the Manager on Duty (MOD) may override a cut-off.", es: "Política oficial FOH-BAR-ALC-001 (Florida). Los gerentes son la autoridad final en disputas de identificación y anulaciones de corte — solo el Gerente en Turno (MOD) puede anular un corte." },
@@ -746,6 +788,7 @@ const MODULES = [
   {
     id: "MG7",
     track: "MANAGER",
+    category: "Servicio",
     title: { en: "Inventory & Vendor Management", es: "Inventario y Gestión de Proveedores" },
     lessons: [
       { en: "Track stock levels, place orders proactively, and verify deliveries against invoices before accepting them.", es: "Da seguimiento a los niveles de stock, haz pedidos proactivamente, y verifica las entregas contra las facturas antes de aceptarlas." }
@@ -760,6 +803,7 @@ const MODULES = [
   {
     id: "MG8",
     track: "MANAGER",
+    category: "Práctico",
     title: { en: "Reviewing Team Progress in Chela's Academy", es: "Revisión del Progreso del Equipo en Chela's Academy" },
     lessons: [
       { en: "Use the 'Progreso' admin table in the app to see each team member's module completion and export a CSV for records.", es: "Usa la tabla de administración 'Progreso' en la app para ver la finalización de módulos de cada miembro del equipo y exportar un CSV para tus registros." },

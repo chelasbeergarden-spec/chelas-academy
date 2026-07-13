@@ -6,104 +6,141 @@
 <title>Chela's Academy</title>
 <style>
   :root{
-    --bg:#0f1419; --card:#171d26; --card2:#1e2733; --border:#2a3441;
-    --text:#eef2f6; --muted:#93a2b3; --accent:#e0a53a; --accent2:#c98a1f;
-    --good:#3fb375; --bad:#e0563f; --radius:14px;
+    --header:#2f6b66; --tabs:#3a7d77; --bg:#f4f4f2; --card:#ffffff; --border:#e2e2de;
+    --text:#22302e; --muted:#6b7a77; --accent:#e0a53a; --accent2:#c98a1f;
+    --good:#2f9e63; --bad:#d94f3d; --radius:14px;
+    --cat-menu:#c9922c; --cat-bebidas:#2f7fb0; --cat-servicio:#3a7d77; --cat-alcohol:#c0483a; --cat-practico:#4c8a4c; --cat-alergias:#b0552f;
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg);color:var(--text);min-height:100vh}
-  .wrap{max-width:640px;margin:0 auto;padding:16px 16px 60px}
-  header.top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:10}
-  header.top h1{font-size:18px;margin:0;letter-spacing:.3px}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 60px}
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--header);color:#fff}
+  header.top h1{font-size:19px;margin:0;letter-spacing:.3px;font-weight:800}
   header.top h1 span{color:var(--accent)}
-  .btn{background:var(--accent);color:#1a1206;border:none;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;font-size:14px}
+  .header-right{display:flex;gap:10px;align-items:center}
+  .user-chip{font-size:13px;color:#dff1ee;font-weight:600}
+  .btn{background:var(--accent);color:#241a08;border:none;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;font-size:14px}
   .btn:hover{background:var(--accent2)}
-  .btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn.secondary{background:#fff;color:var(--text);border:1px solid var(--border)}
+  .btn.ghost{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
   .btn.small{padding:6px 10px;font-size:12px}
   .btn:disabled{opacity:.4;cursor:not-allowed}
-  input,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:15px}
+  input{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:15px}
   label{font-size:13px;color:var(--muted);display:block;margin:14px 0 6px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
   .hidden{display:none !important}
-  .lang-toggle{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden}
-  .lang-toggle button{background:transparent;color:var(--muted);border:none;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}
-  .lang-toggle button.active{background:var(--accent);color:#1a1206}
-  .ring{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0}
-  .module-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:var(--card2);cursor:pointer}
-  .module-row.locked{opacity:.45;cursor:not-allowed}
-  .module-row .badge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
-  .module-row .badge.done{background:var(--good);color:#06210f}
-  .module-row .badge.locked{background:#333;color:#888}
-  .module-row .badge.open{background:var(--accent);color:#1a1206}
-  .module-row .info{flex:1;min-width:0}
-  .module-row .info .t{font-weight:700;font-size:14.5px}
-  .module-row .info .s{font-size:12px;color:var(--muted)}
-  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#3a2a10;color:var(--accent);margin-left:6px}
-  .pill.crit{background:#3a1414;color:#ff8a70}
-  .track-title{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:22px 0 10px}
-  .lesson-box{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:18px;font-size:15.5px;line-height:1.55;min-height:120px}
+  .lang-toggle{display:flex;border:1px solid rgba(255,255,255,.35);border-radius:10px;overflow:hidden}
+  .lang-toggle button{background:transparent;color:#eaf5f3;border:none;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}
+  .lang-toggle button.active{background:var(--accent);color:#241a08}
+  .ring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;background:#fff;border:3px solid var(--border)}
+
+  /* Tabs (tracks) */
+  .tabs{display:flex;background:var(--tabs);overflow-x:auto;white-space:nowrap}
+  .tabs button{background:transparent;border:none;color:#d9ece9;padding:14px 18px;font-weight:700;font-size:14.5px;cursor:pointer;border-bottom:3px solid transparent}
+  .tabs button .cnt{font-weight:600;opacity:.85;font-size:12.5px}
+  .tabs button.active{color:#fff;border-bottom-color:var(--accent)}
+
+  .login-wrap{max-width:420px;margin:60px auto 0}
+
+  /* Search + filters */
+  .search-row{margin:16px 0 10px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .filter-pill{background:#fff;border:1px solid var(--border);color:var(--text);border-radius:20px;padding:8px 16px;font-size:13.5px;font-weight:600;cursor:pointer}
+  .filter-pill.active{background:var(--header);color:#fff;border-color:var(--header)}
+  .track-summary{background:#eef4f3;border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--text);margin-bottom:14px;font-weight:600}
+
+  .cat-badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;color:#fff;text-transform:uppercase;letter-spacing:.3px}
+  .cat-badge.Menú{background:var(--cat-menu)}
+  .cat-badge.Bebidas{background:var(--cat-bebidas)}
+  .cat-badge.Servicio{background:var(--cat-servicio)}
+  .cat-badge.Alcohol{background:var(--cat-alcohol)}
+  .cat-badge.Práctico{background:var(--cat-practico)}
+  .cat-badge.Alergias{background:var(--cat-alergias)}
+
+  .module-card{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;background:var(--card);cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .module-card.locked{opacity:.55;cursor:not-allowed}
+  .module-card .icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+  .module-card .icon.done{background:var(--good);color:#fff}
+  .module-card .icon.locked{background:#e6e6e2;color:#9aa3a1}
+  .module-card .icon.open{background:var(--header);color:#fff}
+  .module-card .info{flex:1;min-width:0}
+  .module-card .info .idline{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px}
+  .module-card .info .t{font-weight:700;font-size:15.5px;margin-bottom:3px}
+  .module-card .info .s{font-size:12.5px;color:var(--muted)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f4e3c4;color:#8a5a12;margin-left:6px}
+  .pill.crit{background:#f5d8d2;color:#a1341f}
+
+  .lesson-box{background:#fbfbf9;border:1px solid var(--border);border-radius:12px;padding:20px;font-size:15.5px;line-height:1.6;min-height:120px}
   .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px}
   .dots{display:flex;gap:6px;justify-content:center;margin:14px 0}
   .dots span{width:7px;height:7px;border-radius:50%;background:var(--border)}
   .dots span.active{background:var(--accent)}
   .q-block{margin-bottom:20px}
   .q-title{font-weight:700;margin-bottom:10px;font-size:15px}
-  .opt{display:block;width:100%;text-align:left;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);margin-bottom:8px;cursor:pointer;font-size:14.5px}
-  .opt.selected{border-color:var(--accent);background:#2a2313}
-  .opt.correct{border-color:var(--good);background:#123a24}
-  .opt.wrong{border-color:var(--bad);background:#3a1414}
-  .flash{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:26px;min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;cursor:pointer}
+  .opt{display:block;width:100%;text-align:left;padding:11px 14px;border-radius:10px;border:1px solid var(--border);background:#fbfbf9;color:var(--text);margin-bottom:8px;cursor:pointer;font-size:14.5px}
+  .opt.selected{border-color:var(--accent);background:#fbeed2}
+  .opt.correct{border-color:var(--good);background:#e2f5e9}
+  .opt.wrong{border-color:var(--bad);background:#fbe4e0}
+  .flash{background:#fbfbf9;border:1px solid var(--border);border-radius:12px;padding:26px;min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;cursor:pointer}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px;border-bottom:1px solid var(--border);text-align:left}
-  th{color:var(--muted);font-weight:600}
+  th{color:var(--muted);font-weight:700}
   .muted{color:var(--muted);font-size:13px}
   .center{text-align:center}
-  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--border);padding:10px 16px;border-radius:10px;font-size:13px;z-index:50}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <h1>Chela's <span>Academy</span></h1>
-  <div style="display:flex;gap:8px;align-items:center">
+  <h1>Chela's <span>Training</span></h1>
+  <div class="header-right">
+    <span class="user-chip hidden" id="header-username"></span>
     <div class="lang-toggle">
       <button id="btn-lang-es">ES</button><button id="btn-lang-en">EN</button>
     </div>
-    <button class="btn secondary small hidden" id="btn-logout" data-t-en="Log out" data-t-es="Salir">Salir</button>
+    <button class="btn ghost small hidden" id="btn-go-admin" data-t-en="Progress" data-t-es="Progreso">Progreso</button>
+    <button class="btn ghost small hidden" id="btn-logout" data-t-en="Log out" data-t-es="Salir">Salir</button>
   </div>
 </header>
+
+<div class="tabs hidden" id="track-tabs"></div>
 
 <div class="wrap">
 
   <!-- LOGIN -->
-  <div id="view-login" class="card">
-    <h2 data-t-en="Sign in" data-t-es="Iniciar sesión">Iniciar sesión</h2>
-    <label data-t-en="Work email" data-t-es="Correo de trabajo">Correo de trabajo</label>
-    <input id="login-email" type="email" placeholder="nombre@chelas.com" autocomplete="email">
-    <p class="muted" id="login-error" style="color:var(--bad);display:none;margin-top:10px"></p>
-    <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Start training" data-t-es="Comenzar entrenamiento">Comenzar entrenamiento</button>
-    <p class="muted" style="margin-top:14px" data-t-en="Your role is assigned by your manager. If your email isn't recognized, ask them to add you." data-t-es="Tu rol lo asigna tu gerente. Si tu correo no es reconocido, pídele que te agregue.">—</p>
+  <div id="view-login" class="hidden">
+    <div class="card login-wrap">
+      <h2 data-t-en="Sign in" data-t-es="Iniciar sesión">Iniciar sesión</h2>
+      <label data-t-en="Work email" data-t-es="Correo de trabajo">Correo de trabajo</label>
+      <input id="login-email" type="email" placeholder="nombre@chelas.com" autocomplete="email">
+      <p class="muted" id="login-error" style="color:var(--bad);display:none;margin-top:10px"></p>
+      <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Start training" data-t-es="Comenzar entrenamiento">Comenzar entrenamiento</button>
+      <p class="muted" style="margin-top:14px" data-t-en="Your role is assigned by your manager. If your email isn't recognized, ask them to add you." data-t-es="Tu rol lo asigna tu gerente. Si tu correo no es reconocido, pídele que te agregue.">—</p>
+    </div>
   </div>
 
   <!-- DASHBOARD -->
   <div id="view-dashboard" class="hidden">
-    <div class="card" style="display:flex;align-items:center;gap:16px">
+    <div class="card" style="display:flex;align-items:center;gap:16px;margin-top:16px">
       <div class="ring" id="progress-ring">0%</div>
       <div>
         <div style="font-weight:800;font-size:16px" id="dash-name"></div>
         <div class="muted" id="dash-role"></div>
       </div>
     </div>
-    <div id="admin-link-box" class="hidden card" style="text-align:center">
-      <button class="btn secondary" id="btn-go-admin" data-t-en="View team progress" data-t-es="Ver progreso del equipo">Ver progreso del equipo</button>
+
+    <div class="search-row">
+      <input id="search-input" data-t-en-ph="Search module…" data-t-es-ph="Buscar módulo…" placeholder="Buscar módulo…">
     </div>
+    <div class="filters" id="filter-pills"></div>
+    <div class="track-summary" id="track-summary"></div>
     <div id="module-list"></div>
   </div>
 
   <!-- MODULE (lessons / flashcards / quiz) -->
   <div id="view-module" class="hidden">
-    <button class="btn secondary small" id="btn-back-dash" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+    <button class="btn secondary small" id="btn-back-dash" style="margin-top:16px" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
     <div class="card" style="margin-top:12px">
       <h2 id="mod-title" style="margin-top:0"></h2>
 
@@ -136,7 +173,7 @@
 
   <!-- ADMIN -->
   <div id="view-admin" class="hidden">
-    <button class="btn secondary small" id="btn-back-dash2" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+    <button class="btn secondary small" id="btn-back-dash2" style="margin-top:16px" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
     <div class="card" style="margin-top:12px">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
         <h2 style="margin:0" data-t-en="Team Progress" data-t-es="Progreso del Equipo">Progreso del Equipo</h2>
@@ -167,11 +204,16 @@
 const REPORT_URL = "https://script.google.com/macros/s/AKfycbw-wzlDSi_ErKPzxc3Ek_C5XTuGux3KUCx9su4I3FZTAR-FjjUlhQnSFHbUO1rYT-IVPw/exec";
 
 const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Manager:"MANAGER" };
+const ALL_TRACKS = ["CORE", "SERVER", "BARTENDER", "BUSSER", "HOST", "MANAGER"];
+const TRACK_LABEL = { CORE: { en: "Core", es: "Core" }, SERVER: { en: "Server", es: "Server" }, BARTENDER: { en: "Bartender", es: "Bartender" }, BUSSER: { en: "Busser", es: "Busser" }, HOST: { en: "Host", es: "Host" }, MANAGER: { en: "Manager", es: "Manager" } };
 
 /* ================= State ================= */
 let lang = localStorage.getItem("chelas_lang") || "es";
-let currentUser = null;   // { name, role }
-let currentModuleList = [];
+let currentUser = null;   // { name, email, role }
+let userTracks = [];      // tracks this user can see as tabs
+let activeTrack = "CORE";
+let activeFilter = "Todos";
+let searchQuery = "";
 let activeModule = null;
 let lessonIdx = 0, flashIdx = 0;
 let quizAnswers = {};
@@ -240,6 +282,10 @@ function applyStaticTranslations(){
     const val = el.getAttribute(lang === "en" ? "data-t-en" : "data-t-es");
     if(val) el.textContent = val;
   });
+  document.querySelectorAll("[data-t-en-ph]").forEach(el=>{
+    const val = el.getAttribute(lang === "en" ? "data-t-en-ph" : "data-t-es-ph");
+    if(val) el.placeholder = val;
+  });
   $("btn-lang-es").classList.toggle("active", lang === "es");
   $("btn-lang-en").classList.toggle("active", lang === "en");
 }
@@ -295,10 +341,20 @@ $("btn-logout").addEventListener("click", () => {
   location.reload();
 });
 
-/* ================= Dashboard ================= */
-function getModulesForRole(role){
+/* ================= Tracks / Tabs ================= */
+function getUserTracks(role){
+  if(role === "Manager") return ALL_TRACKS.slice();
   const track = ROLE_TRACK[role];
-  return MODULES.filter(m => m.track === "CORE" || m.track === track);
+  return ["CORE", track];
+}
+
+function getModulesForTrack(track){
+  return MODULES.filter(m => m.track === track);
+}
+
+function isCoreFullyPassed(email){
+  const core = getModulesForTrack("CORE");
+  return core.every(m => isModulePassed(email, m.id));
 }
 
 function isModulePassed(email, moduleId){
@@ -306,51 +362,117 @@ function isModulePassed(email, moduleId){
   return !!(rec && rec.progress[moduleId] && rec.progress[moduleId].passed);
 }
 
-function isModuleUnlocked(list, idx, email){
-  if(idx === 0) return true;
+function isModuleUnlockedInTrack(list, idx, email, track){
+  if(idx === 0){
+    if(track === "CORE") return true;
+    return isCoreFullyPassed(email);
+  }
   return isModulePassed(email, list[idx-1].id);
 }
 
+function trackProgress(track, email){
+  const list = getModulesForTrack(track);
+  const passed = list.filter(m => isModulePassed(email, m.id)).length;
+  return { passed, total: list.length };
+}
+
+function renderTabs(){
+  const tabsEl = $("track-tabs");
+  tabsEl.innerHTML = "";
+  tabsEl.classList.remove("hidden");
+  userTracks.forEach(track => {
+    const { passed, total } = trackProgress(track, currentUser.email);
+    const b = document.createElement("button");
+    b.className = track === activeTrack ? "active" : "";
+    b.innerHTML = `${t(TRACK_LABEL[track])} <span class="cnt">${passed}/${total}</span>`;
+    b.addEventListener("click", () => {
+      activeTrack = track;
+      activeFilter = "Todos";
+      searchQuery = "";
+      $("search-input").value = "";
+      renderTabs();
+      renderModuleList();
+    });
+    tabsEl.appendChild(b);
+  });
+}
+
+function renderFilters(){
+  const list = getModulesForTrack(activeTrack);
+  const cats = Array.from(new Set(list.map(m => m.category)));
+  const pillsEl = $("filter-pills");
+  pillsEl.innerHTML = "";
+  const allBtn = document.createElement("button");
+  allBtn.className = "filter-pill" + (activeFilter === "Todos" ? " active" : "");
+  allBtn.textContent = lang === "es" ? "Todos" : "All";
+  allBtn.addEventListener("click", () => { activeFilter = "Todos"; renderFilters(); renderModuleList(); });
+  pillsEl.appendChild(allBtn);
+  cats.forEach(cat => {
+    const b = document.createElement("button");
+    b.className = "filter-pill" + (activeFilter === cat ? " active" : "");
+    b.textContent = cat;
+    b.addEventListener("click", () => { activeFilter = cat; renderFilters(); renderModuleList(); });
+    pillsEl.appendChild(b);
+  });
+}
+
+/* ================= Dashboard ================= */
 function showDashboard(){
   $("view-login").classList.add("hidden");
   $("view-module").classList.add("hidden");
   $("view-admin").classList.add("hidden");
   $("view-dashboard").classList.remove("hidden");
   $("btn-logout").classList.remove("hidden");
+  $("header-username").classList.remove("hidden");
+  $("header-username").textContent = currentUser.name;
+  $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Manager");
+
+  userTracks = getUserTracks(currentUser.role);
+  if(!userTracks.includes(activeTrack)) activeTrack = userTracks[0];
 
   $("dash-name").textContent = currentUser.name;
   $("dash-role").textContent = currentUser.role;
-  $("admin-link-box").classList.toggle("hidden", currentUser.role !== "Manager");
 
-  currentModuleList = getModulesForRole(currentUser.role);
-  const passedCount = currentModuleList.filter(m => isModulePassed(currentUser.email, m.id)).length;
-  const pct = Math.round((passedCount / currentModuleList.length) * 100);
+  const allUserModules = userTracks.flatMap(getModulesForTrack);
+  const passedTotal = allUserModules.filter(m => isModulePassed(currentUser.email, m.id)).length;
+  const pct = allUserModules.length ? Math.round((passedTotal / allUserModules.length) * 100) : 0;
   const ring = $("progress-ring");
-  ring.style.background = `conic-gradient(var(--accent) ${pct*3.6}deg, var(--card2) 0deg)`;
+  ring.style.background = `conic-gradient(var(--accent) ${pct*3.6}deg, #eee 0deg)`;
   ring.textContent = pct + "%";
+
+  renderTabs();
+  renderFilters();
+  renderModuleList();
+}
+
+function renderModuleList(){
+  const list = getModulesForTrack(activeTrack);
+  const { passed, total } = trackProgress(activeTrack, currentUser.email);
+  const summaryEl = $("track-summary");
+  summaryEl.textContent = `${t(TRACK_LABEL[activeTrack])} — ${lang==="es" ? `${passed} de ${total} módulos completados en esta sección` : `${passed} of ${total} modules completed in this section`}`;
+
+  const q = ($("search-input").value || "").trim().toLowerCase();
+  searchQuery = q;
 
   const listEl = $("module-list");
   listEl.innerHTML = "";
-  let lastTrack = null;
-  currentModuleList.forEach((m, idx) => {
-    if(m.track !== lastTrack){
-      lastTrack = m.track;
-      const h = document.createElement("div");
-      h.className = "track-title";
-      h.textContent = m.track === "CORE" ? (lang==="es" ? "Fundamentos (CORE)" : "Core Fundamentals") : m.track;
-      listEl.appendChild(h);
-    }
-    const unlocked = isModuleUnlocked(currentModuleList, idx, currentUser.email);
-    const passed = isModulePassed(currentUser.email, m.id);
-    const row = document.createElement("div");
-    row.className = "module-row" + (unlocked ? "" : " locked");
+  list.forEach((m, idx) => {
+    if(activeFilter !== "Todos" && m.category !== activeFilter) return;
+    if(searchQuery && !t(m.title).toLowerCase().includes(searchQuery)) return;
+
+    const unlocked = isModuleUnlockedInTrack(list, idx, currentUser.email, activeTrack);
+    const passedMod = isModulePassed(currentUser.email, m.id);
     const rec = getUserRecord(currentUser.email);
     const scoreInfo = rec && rec.progress[m.id] ? rec.progress[m.id].score : null;
+
+    const row = document.createElement("div");
+    row.className = "module-card" + (unlocked ? "" : " locked");
     row.innerHTML = `
-      <div class="badge ${passed ? "done" : (unlocked ? "open" : "locked")}">${passed ? "✓" : (unlocked ? m.id : "🔒")}</div>
+      <div class="icon ${passedMod ? "done" : (unlocked ? "open" : "locked")}">${passedMod ? "✓" : (unlocked ? "▶" : "🔒")}</div>
       <div class="info">
-        <div class="t">${t(m.title)} ${m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : ""}</div>
-        <div class="s">${passed ? (lang==="es"?`Aprobado — ${scoreInfo}%`:`Passed — ${scoreInfo}%`) : (unlocked ? (lang==="es"?"Disponible":"Available") : (lang==="es"?"Bloqueado":"Locked"))}</div>
+        <div class="idline"><span class="cat-badge ${m.category}">${m.category}</span></div>
+        <div class="t">${m.id} — ${t(m.title)} ${m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : ""}</div>
+        <div class="s">${passedMod ? (lang==="es"?`Aprobado — ${scoreInfo}%`:`Passed — ${scoreInfo}%`) : (unlocked ? (lang==="es"?`${m.pass}% para aprobar`:`${m.pass}% to pass`) : (lang==="es"?"Bloqueado — aprueba el anterior":"Locked — pass the previous one"))}</div>
       </div>`;
     if(unlocked){
       row.addEventListener("click", () => openModule(m));
@@ -359,6 +481,8 @@ function showDashboard(){
   });
 }
 
+$("search-input").addEventListener("input", renderModuleList);
+
 /* ================= Module: lessons -> flashcards -> quiz ================= */
 function openModule(m){
   activeModule = m;
@@ -366,6 +490,7 @@ function openModule(m){
   $("view-dashboard").classList.add("hidden");
   $("view-admin").classList.add("hidden");
   $("view-module").classList.remove("hidden");
+  $("track-tabs").classList.add("hidden");
   $("mod-title").textContent = t(m.title);
   $("mod-lessons").classList.remove("hidden");
   $("mod-flash").classList.add("hidden");
@@ -500,6 +625,7 @@ $("btn-back-dash2").addEventListener("click", showDashboard);
 /* ================= Admin / Progreso ================= */
 $("btn-go-admin").addEventListener("click", () => {
   $("view-dashboard").classList.add("hidden");
+  $("track-tabs").classList.add("hidden");
   $("view-admin").classList.remove("hidden");
   renderAdmin();
 });
@@ -509,9 +635,11 @@ function renderAdmin(){
   const tbody = $("admin-tbody");
   tbody.innerHTML = "";
   Object.values(users).forEach(u => {
-    const total = getModulesForRole(u.role).length;
-    const passedCount = getModulesForRole(u.role).filter(m => u.progress[m.id] && u.progress[m.id].passed).length;
-    const criticalMods = getModulesForRole(u.role).filter(m => m.critical);
+    const tracks = getUserTracks(u.role);
+    const userModules = tracks.flatMap(getModulesForTrack);
+    const total = userModules.length;
+    const passedCount = userModules.filter(m => u.progress[m.id] && u.progress[m.id].passed).length;
+    const criticalMods = userModules.filter(m => m.critical);
     const criticalOk = criticalMods.every(m => u.progress[m.id] && u.progress[m.id].passed);
     const tr = document.createElement("tr");
     tr.innerHTML = `

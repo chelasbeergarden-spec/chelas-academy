@@ -483,6 +483,10 @@ function renderModuleList(){
     const passedMod = isModulePassed(currentUser.email, m.id);
     const rec = getUserRecord(currentUser.email);
     const scoreInfo = rec && rec.progress[m.id] ? rec.progress[m.id].score : null;
+    const lockedByCore = !unlocked && idx === 0 && activeTrack !== "CORE";
+    const lockedLabel = lockedByCore
+      ? (lang==="es" ? "Bloqueado — termina todos los módulos de CORE primero" : "Locked — finish all CORE modules first")
+      : (lang==="es" ? "Bloqueado — aprueba el anterior" : "Locked — pass the previous one");
 
     const row = document.createElement("div");
     row.className = "module-card" + (unlocked ? "" : " locked");
@@ -491,7 +495,7 @@ function renderModuleList(){
       <div class="info">
         <div class="idline"><span class="cat-badge ${m.category}">${m.category}</span></div>
         <div class="t">${m.id} — ${t(m.title)} ${m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : ""}</div>
-        <div class="s">${passedMod ? (lang==="es"?`Aprobado — ${scoreInfo}%`:`Passed — ${scoreInfo}%`) : (unlocked ? (lang==="es"?`${m.pass}% para aprobar`:`${m.pass}% to pass`) : (lang==="es"?"Bloqueado — aprueba el anterior":"Locked — pass the previous one"))}</div>
+        <div class="s">${passedMod ? (lang==="es"?`Aprobado — ${scoreInfo}%`:`Passed — ${scoreInfo}%`) : (unlocked ? (lang==="es"?`${m.pass}% para aprobar`:`${m.pass}% to pass`) : lockedLabel)}</div>
       </div>`;
     if(unlocked){
       row.addEventListener("click", () => openModule(m));

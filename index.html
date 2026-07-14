@@ -414,21 +414,13 @@ function getModulesForTrack(track){
   return MODULES.filter(m => m.track === track);
 }
 
-function isCoreFullyPassed(email){
-  const core = getModulesForTrack("CORE");
-  return core.every(m => isModulePassed(email, m.id));
-}
-
 function isModulePassed(email, moduleId){
   const rec = getUserRecord(email);
   return !!(rec && rec.progress[moduleId] && rec.progress[moduleId].passed);
 }
 
 function isModuleUnlockedInTrack(list, idx, email, track){
-  if(idx === 0){
-    if(track === "CORE") return true;
-    return isCoreFullyPassed(email);
-  }
+  if(idx === 0) return true;
   return isModulePassed(email, list[idx-1].id);
 }
 
@@ -528,10 +520,7 @@ function renderModuleList(){
     const passedMod = isModulePassed(currentUser.email, m.id);
     const rec = getUserRecord(currentUser.email);
     const scoreInfo = rec && rec.progress[m.id] ? rec.progress[m.id].score : null;
-    const lockedByCore = !unlocked && idx === 0 && activeTrack !== "CORE";
-    const lockedLabel = lockedByCore
-      ? (lang==="es" ? "Bloqueado — termina todos los módulos de CORE primero" : "Locked — finish all CORE modules first")
-      : (lang==="es" ? "Bloqueado — aprueba el anterior" : "Locked — pass the previous one");
+    const lockedLabel = lang==="es" ? "Bloqueado — aprueba el anterior" : "Locked — pass the previous one";
 
     const row = document.createElement("div");
     row.className = "module-card" + (unlocked ? "" : " locked");

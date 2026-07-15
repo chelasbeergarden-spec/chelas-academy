@@ -140,7 +140,7 @@
       <input id="login-email" type="email" placeholder="nombre@chelas.com" autocomplete="email">
       <p class="muted" id="login-error" style="color:var(--bad);display:none;margin-top:10px"></p>
       <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Start training" data-t-es="Comenzar entrenamiento">Comenzar entrenamiento</button>
-      <p class="muted" style="margin-top:14px" data-t-en="Your role is assigned by your manager. If your email isn't recognized, ask them to add you." data-t-es="Tu rol lo asigna tu gerente. Si tu correo no es reconocido, pídele que te agregue.">—</p>
+      <p class="muted" style="margin-top:14px" data-t-en="Your role is assigned by your manager. If your email isn't recognized, ask them to add you." data-t-es="Tu rol lo asigna tu manager. Si tu correo no es reconocido, pídele que te agregue.">—</p>
     </div>
   </div>
 
@@ -382,7 +382,7 @@ $("btn-login").addEventListener("click", async () => {
 
   if(!roster || !roster.length){
     showLoginError(lang==="es"
-      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu gerente."
+      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu manager."
       : "Couldn't reach the access list. Try again or tell your manager.");
     return;
   }
@@ -390,7 +390,7 @@ $("btn-login").addEventListener("click", async () => {
   const entry = findInRoster(roster, email);
   if(!entry){
     showLoginError(lang==="es"
-      ? "Tu correo no está registrado. Pide a tu gerente que te agregue en el Google Sheet."
+      ? "Tu correo no está registrado. Pide a tu manager que te agregue en el Google Sheet."
       : "Your email isn't registered. Ask your manager to add you to the Google Sheet.");
     return;
   }
@@ -398,7 +398,7 @@ $("btn-login").addEventListener("click", async () => {
   const normalizedRole = normalizeRole(entry.role);
   if(!normalizedRole){
     showLoginError(lang==="es"
-      ? `El rol "${entry.role}" en el Roster no es válido. Pide a tu gerente que lo corrija a uno de: Server, Bartender, Busser, Host, Manager.`
+      ? `El rol "${entry.role}" en el Roster no es válido. Pide a tu manager que lo corrija a uno de: Server, Bartender, Busser, Host, Manager.`
       : `The role "${entry.role}" in the Roster isn't valid. Ask your manager to fix it to one of: Server, Bartender, Busser, Host, Manager.`);
     return;
   }
@@ -837,7 +837,7 @@ const ONBOARDING_PHASES = [
     { en: "At least 2 shadow shifts with the buddy completed", es: "Al menos 2 turnos de sombra con el buddy completados" },
     { en: "All 5 CORE modules passed in Chela's Academy", es: "Los 5 módulos CORE aprobados en Chela's Academy" },
     { en: "Started the role-specific track", es: "Track de su rol iniciado" },
-    { en: "End-of-week check-in with the manager done", es: "Check-in de fin de semana con el gerente realizado" }
+    { en: "End-of-week check-in with the manager done", es: "Check-in de fin de semana con el manager realizado" }
   ]},
   { id: "f4", title: { en: "Phase 4 — Days 2–30: Certification", es: "Fase 4 — Días 2–30: Certificación" }, items: [
     { en: "Full role track completed in Chela's Academy", es: "Track completo de su rol completado en Chela's Academy" },

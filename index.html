@@ -71,7 +71,7 @@
   .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f4e3c4;color:#8a5a12;margin-left:6px}
   .pill.crit{background:#f5d8d2;color:#a1341f}
 
-  .lesson-box{background:#fbfbf9;border:1px solid var(--border);border-radius:12px;padding:20px;font-size:15.5px;line-height:1.6;min-height:120px}
+  .lesson-box{background:#fbfbf9;border:1px solid var(--border);border-radius:12px;padding:20px;font-size:15.5px;line-height:1.7;min-height:120px;white-space:pre-line}
   .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px}
   .dots{display:flex;gap:6px;justify-content:center;margin:14px 0}
   .dots span{width:7px;height:7px;border-radius:50%;background:var(--border)}
@@ -641,6 +641,17 @@ $("btn-flash-next").addEventListener("click", () => {
   startQuiz();
 });
 
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let quizOptionOrder = [];
+
 function startQuiz(){
   const m = activeModule;
   $("mod-quiz").classList.remove("hidden");
@@ -650,19 +661,21 @@ function startQuiz(){
     ? `Necesitas ${m.pass}% para aprobar.` + (m.critical ? " Este módulo es crítico y requiere 100%." : "")
     : `You need ${m.pass}% to pass.` + (m.critical ? " This is a critical module requiring 100%." : ""));
   quizAnswers = {};
+  quizOptionOrder = m.quiz.map(q => shuffleArray(q.options.map((_, i) => i)));
   const body = $("quiz-body");
   body.innerHTML = "";
   m.quiz.forEach((q, qi) => {
     const block = document.createElement("div");
     block.className = "q-block";
     block.innerHTML = `<div class="q-title">${qi+1}. ${t(q.q)}</div>`;
-    q.options.forEach((opt, oi) => {
+    quizOptionOrder[qi].forEach((realIdx) => {
+      const opt = q.options[realIdx];
       const b = document.createElement("button");
       b.type = "button";
       b.className = "opt";
       b.textContent = t(opt);
       b.addEventListener("click", () => {
-        quizAnswers[qi] = oi;
+        quizAnswers[qi] = realIdx;
         block.querySelectorAll(".opt").forEach(x => x.classList.remove("selected"));
         b.classList.add("selected");
       });
@@ -682,9 +695,10 @@ $("btn-quiz-submit").addEventListener("click", () => {
   const blocks = document.querySelectorAll("#quiz-body .q-block");
   m.quiz.forEach((q, qi) => {
     const opts = blocks[qi].querySelectorAll(".opt");
-    opts.forEach((o, oi) => {
-      if(oi === q.correct) o.classList.add("correct");
-      else if(oi === quizAnswers[qi] && oi !== q.correct) o.classList.add("wrong");
+    opts.forEach((o, displayIdx) => {
+      const realIdx = quizOptionOrder[qi][displayIdx];
+      if(realIdx === q.correct) o.classList.add("correct");
+      else if(realIdx === quizAnswers[qi] && realIdx !== q.correct) o.classList.add("wrong");
     });
     if(quizAnswers[qi] === q.correct) correct++;
   });
@@ -697,6 +711,7 @@ $("btn-quiz-submit").addEventListener("click", () => {
   result.innerHTML = `
     <div style="font-size:22px;font-weight:800;color:${passed ? "var(--good)" : "var(--bad)"}">${score}%</div>
     <div style="margin:8px 0">${passed ? (lang==="es"?"¡Aprobado! 🎉":"Passed! 🎉") : (lang==="es"?"No aprobado — inténtalo de nuevo.":"Not passed — try again.")}</div>
+    ${passed ? trackCompleteBanner(m.track) : ""}
     <button class="btn" id="btn-quiz-continue">${passed ? (lang==="es"?"Continuar":"Continue") : (lang==="es"?"Reintentar":"Retry")}</button>
   `;
   $("btn-quiz-submit").classList.add("hidden");
@@ -705,6 +720,15 @@ $("btn-quiz-submit").addEventListener("click", () => {
     else startQuiz();
   });
 });
+
+function trackCompleteBanner(track){
+  const { passed, total } = trackProgress(track, currentUser.email);
+  if(passed < total) return "";
+  const label = t(TRACK_LABEL[track]);
+  return `<div style="margin:14px 0;padding:14px 16px;background:#eef4f3;border:1px solid var(--border);border-radius:12px;font-weight:700">
+    🎉 ${lang==="es" ? `¡Felicidades! Completaste todo el track de ${label}.` : `Congratulations! You completed the entire ${label} track.`}
+  </div>`;
+}
 
 $("policy-checkbox").addEventListener("change", (e) => {
   $("btn-policy-confirm").disabled = !e.target.checked;
@@ -718,6 +742,7 @@ $("btn-policy-confirm").addEventListener("click", () => {
   result.innerHTML = `
     <div style="font-size:22px;font-weight:800;color:var(--good)">✓</div>
     <div style="margin:8px 0">${lang==="es" ? "Confirmado — gracias." : "Confirmed — thank you."}</div>
+    ${trackCompleteBanner(m.track)}
     <button class="btn" id="btn-policy-continue">${lang==="es" ? "Continuar" : "Continue"}</button>
   `;
   $("btn-policy-confirm").classList.add("hidden");

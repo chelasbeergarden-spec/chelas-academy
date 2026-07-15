@@ -243,6 +243,7 @@
           <option value="Bartender">Bartender</option>
           <option value="Busser">Busser</option>
           <option value="Host">Host</option>
+          <option value="Kitchen">Kitchen</option>
           <option value="Manager">Manager</option>
         </select>
         <button class="btn small" id="btn-onb-add" data-t-en="+ Add candidate" data-t-es="+ Añadir candidato">+ Añadir candidato</button>
@@ -258,9 +259,9 @@
 /* ================= Config ================= */
 const REPORT_URL = "https://script.google.com/macros/s/AKfycbw-wzlDSi_ErKPzxc3Ek_C5XTuGux3KUCx9su4I3FZTAR-FjjUlhQnSFHbUO1rYT-IVPw/exec";
 
-const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Manager:"MANAGER" };
-const ALL_TRACKS = ["CORE", "SERVER", "BARTENDER", "BUSSER", "HOST", "MANAGER"];
-const TRACK_LABEL = { CORE: { en: "Core", es: "Core" }, SERVER: { en: "Server", es: "Server" }, BARTENDER: { en: "Bartender", es: "Bartender" }, BUSSER: { en: "Busser", es: "Busser" }, HOST: { en: "Host", es: "Host" }, MANAGER: { en: "Manager", es: "Manager" } };
+const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Kitchen:"KITCHEN", Manager:"MANAGER" };
+const ALL_TRACKS = ["CORE", "SERVER", "BARTENDER", "BUSSER", "HOST", "KITCHEN", "MANAGER"];
+const TRACK_LABEL = { CORE: { en: "Core", es: "Core" }, SERVER: { en: "Server", es: "Server" }, BARTENDER: { en: "Bartender", es: "Bartender" }, BUSSER: { en: "Busser", es: "Busser" }, HOST: { en: "Host", es: "Host" }, KITCHEN: { en: "Kitchen", es: "Cocina" }, MANAGER: { en: "Manager", es: "Manager" } };
 
 // Normalizes a role string from the Roster (any casing/spacing) to the exact
 // canonical value the app expects (e.g. "manager" / " MANAGER " -> "Manager").
@@ -465,6 +466,7 @@ function renderTabs(){
       searchQuery = "";
       $("search-input").value = "";
       renderTabs();
+      renderFilters();
       renderModuleList();
     });
     tabsEl.appendChild(b);

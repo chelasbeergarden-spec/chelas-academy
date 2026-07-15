@@ -169,6 +169,21 @@ const MODULES = [
     ],
     pass: 80
   },
+  {
+    id: "CPOL",
+    track: "CORE",
+    category: "Servicio",
+    title: { en: "Company Policies", es: "Políticas de la Empresa" },
+    policyOnly: true,
+    lessons: [
+      { es: "Uniforme: [pendiente confirmar con Chela's — ej. color/tipo de camisa, delantal, calzado cerrado requerido, gafete]. Preséntate a tu turno con el uniforme completo y limpio; si te falta una pieza, avisa a tu gerente antes de que empiece el turno, no durante.", en: "Uniform: [pending confirmation from Chela's — e.g. shirt color/type, apron, closed-toe shoes required, name tag]. Arrive at your shift in a complete, clean uniform; if you're missing a piece, tell your manager before the shift starts, not during it." },
+      { es: "Horarios de comida y descansos: [pendiente confirmar con Chela's — duración exacta del descanso, si es pagado o no, cada cuántas horas de turno aplica]. Coordina tu descanso con tu gerente para no dejar el piso descubierto.", en: "Meal and break times: [pending confirmation from Chela's — exact break length, whether it's paid, how many hours of a shift trigger it]. Coordinate your break with your manager so the floor is never left uncovered." },
+      { es: "Descuento de empleado: [pendiente confirmar con Chela's — porcentaje de descuento, si aplica solo cuando no estás trabajando, límites por visita]. Pregunta a tu gerente los detalles exactos antes de usarlo.", en: "Employee discount: [pending confirmation from Chela's — discount percentage, whether it only applies when you're off shift, any per-visit limits]. Ask your manager for the exact details before using it." },
+      { es: "Evaluaciones de desempeño: [pendiente confirmar con Chela's — con qué frecuencia se evalúa, y el puntaje/calificación mínima que se espera mantener]. Tu progreso en Chela's Academy es parte de cómo se mide tu desempeño, pero no es lo único.", en: "Performance reviews: [pending confirmation from Chela's — how often you're reviewed, and the minimum score/rating you're expected to maintain]. Your progress in Chela's Academy is part of how performance is measured, but not the only part." },
+      { es: "Política de audífonos: no está permitido el uso de audífonos durante tu turno, en ninguna posición de FOH o BOH. Necesitas estar disponible para escuchar a huéspedes, compañeros y llamados de cocina en todo momento — un audífono puesto es una señal inmediata de que no estás atento al piso.", en: "Headphones policy: headphones are not allowed during your shift, in any FOH or BOH position. You need to be available to hear guests, coworkers, and kitchen calls at all times — wearing headphones is an immediate sign that you're not paying attention to the floor." }
+    ],
+    pass: 100
+  },
 
   // ===================== SERVER (11) =====================
   {

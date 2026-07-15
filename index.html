@@ -108,6 +108,9 @@
   .onb-item{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;margin-bottom:7px;cursor:pointer}
   .onb-item input{width:16px;height:16px;margin-top:2px;flex-shrink:0;cursor:pointer}
   .onb-item.checked span{color:var(--muted);text-decoration:line-through}
+
+  .policy-check{display:flex;align-items:flex-start;gap:11px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:#fbfbf9;cursor:pointer;font-size:15px;line-height:1.5}
+  .policy-check input{width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
 </style>
 </head>
 <body>
@@ -188,6 +191,15 @@
         <div id="quiz-body"></div>
         <button class="btn" id="btn-quiz-submit" style="width:100%" data-t-en="Check answers" data-t-es="Revisar respuestas">Revisar respuestas</button>
         <div id="quiz-result" class="hidden" style="margin-top:14px;text-align:center"></div>
+      </div>
+
+      <div id="mod-policy" class="hidden">
+        <label class="policy-check">
+          <input type="checkbox" id="policy-checkbox">
+          <span data-t-en="I have read and understood these company policies." data-t-es="He leído y entiendo estas políticas de la empresa.">He leído y entiendo estas políticas de la empresa.</span>
+        </label>
+        <button class="btn" id="btn-policy-confirm" style="width:100%;margin-top:14px" disabled data-t-en="Confirm" data-t-es="Confirmar">Confirmar</button>
+        <div id="policy-result" class="hidden" style="margin-top:14px;text-align:center"></div>
       </div>
     </div>
   </div>
@@ -521,6 +533,12 @@ function renderModuleList(){
     const rec = getUserRecord(currentUser.email);
     const scoreInfo = rec && rec.progress[m.id] ? rec.progress[m.id].score : null;
     const lockedLabel = lang==="es" ? "Bloqueado — aprueba el anterior" : "Locked — pass the previous one";
+    const pendingLabel = m.policyOnly
+      ? (lang==="es" ? "Confirma que leíste las políticas" : "Confirm you've read the policies")
+      : (lang==="es" ? `${m.pass}% para aprobar` : `${m.pass}% to pass`);
+    const passedLabel = m.policyOnly
+      ? (lang==="es" ? "Confirmado" : "Confirmed")
+      : (lang==="es" ? `Aprobado — ${scoreInfo}%` : `Passed — ${scoreInfo}%`);
 
     const row = document.createElement("div");
     row.className = "module-card" + (unlocked ? "" : " locked");
@@ -529,7 +547,7 @@ function renderModuleList(){
       <div class="info">
         <div class="idline"><span class="cat-badge ${m.category}">${m.category}</span></div>
         <div class="t">${m.id} — ${t(m.title)} ${m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : ""}</div>
-        <div class="s">${passedMod ? (lang==="es"?`Aprobado — ${scoreInfo}%`:`Passed — ${scoreInfo}%`) : (unlocked ? (lang==="es"?`${m.pass}% para aprobar`:`${m.pass}% to pass`) : lockedLabel)}</div>
+        <div class="s">${passedMod ? passedLabel : (unlocked ? pendingLabel : lockedLabel)}</div>
       </div>`;
     if(unlocked){
       row.addEventListener("click", () => openModule(m));
@@ -552,6 +570,11 @@ function openModule(m){
   $("mod-lessons").classList.remove("hidden");
   $("mod-flash").classList.add("hidden");
   $("mod-quiz").classList.add("hidden");
+  $("mod-policy").classList.add("hidden");
+  $("policy-checkbox").checked = false;
+  $("btn-policy-confirm").disabled = true;
+  $("policy-result").classList.add("hidden");
+  $("btn-policy-confirm").classList.remove("hidden");
   renderLesson();
 }
 
@@ -566,8 +589,11 @@ function renderLesson(){
     dots.appendChild(d);
   });
   $("btn-lesson-prev").disabled = lessonIdx === 0;
-  $("btn-lesson-next").textContent = (lessonIdx === m.lessons.length - 1)
-    ? (lang==="es" ? (m.flashcards && m.flashcards.length ? "Tarjetas" : "Ir al examen") : (m.flashcards && m.flashcards.length ? "Flashcards" : "Take the quiz"))
+  const isLast = lessonIdx === m.lessons.length - 1;
+  $("btn-lesson-next").textContent = isLast
+    ? (m.policyOnly
+        ? (lang==="es" ? "Continuar" : "Continue")
+        : (lang==="es" ? (m.flashcards && m.flashcards.length ? "Tarjetas" : "Ir al examen") : (m.flashcards && m.flashcards.length ? "Flashcards" : "Take the quiz")))
     : (lang==="es" ? "Siguiente" : "Next");
 }
 $("btn-lesson-prev").addEventListener("click", () => { if(lessonIdx>0){ lessonIdx--; renderLesson(); } });
@@ -575,6 +601,10 @@ $("btn-lesson-next").addEventListener("click", () => {
   const m = activeModule;
   if(lessonIdx < m.lessons.length - 1){ lessonIdx++; renderLesson(); return; }
   $("mod-lessons").classList.add("hidden");
+  if(m.policyOnly){
+    $("mod-policy").classList.remove("hidden");
+    return;
+  }
   if(m.flashcards && m.flashcards.length){
     $("mod-flash").classList.remove("hidden");
     renderFlash();
@@ -674,6 +704,24 @@ $("btn-quiz-submit").addEventListener("click", () => {
     if(passed) showDashboard();
     else startQuiz();
   });
+});
+
+$("policy-checkbox").addEventListener("change", (e) => {
+  $("btn-policy-confirm").disabled = !e.target.checked;
+});
+
+$("btn-policy-confirm").addEventListener("click", () => {
+  const m = activeModule;
+  saveProgress(currentUser.email, m.id, true, 100, false);
+  const result = $("policy-result");
+  result.classList.remove("hidden");
+  result.innerHTML = `
+    <div style="font-size:22px;font-weight:800;color:var(--good)">✓</div>
+    <div style="margin:8px 0">${lang==="es" ? "Confirmado — gracias." : "Confirmed — thank you."}</div>
+    <button class="btn" id="btn-policy-continue">${lang==="es" ? "Continuar" : "Continue"}</button>
+  `;
+  $("btn-policy-confirm").classList.add("hidden");
+  $("btn-policy-continue").addEventListener("click", showDashboard);
 });
 
 $("btn-back-dash").addEventListener("click", showDashboard);

@@ -416,8 +416,15 @@ $("btn-logout").addEventListener("click", () => {
 });
 
 /* ================= Tracks / Tabs ================= */
-function getUserTracks(role){
-  if(role === "Manager") return ALL_TRACKS.slice();
+// QA test accounts: full access to every track, every module unlocked, no gating.
+// Remove an email here (or the whole list) once QA testing is done.
+const QA_TEST_EMAILS = ["freddyb@hotlimekitchen.com"];
+function isQAUser(email){
+  return !!email && QA_TEST_EMAILS.includes(email.trim().toLowerCase());
+}
+
+function getUserTracks(role, email){
+  if(role === "Manager" || isQAUser(email)) return ALL_TRACKS.slice();
   const track = ROLE_TRACK[role];
   return ["CORE", track];
 }
@@ -432,6 +439,7 @@ function isModulePassed(email, moduleId){
 }
 
 function isModuleUnlockedInTrack(list, idx, email, track){
+  if(isQAUser(email)) return true;
   if(idx === 0) return true;
   return isModulePassed(email, list[idx-1].id);
 }
@@ -495,7 +503,7 @@ function showDashboard(){
   $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Manager");
   $("btn-go-onboarding").classList.toggle("hidden", currentUser.role !== "Manager");
 
-  userTracks = getUserTracks(currentUser.role);
+  userTracks = getUserTracks(currentUser.role, currentUser.email);
   if(!userTracks.includes(activeTrack)) activeTrack = userTracks[0];
 
   $("dash-name").textContent = currentUser.name;
@@ -767,7 +775,7 @@ function renderAdmin(){
   const tbody = $("admin-tbody");
   tbody.innerHTML = "";
   Object.values(users).forEach(u => {
-    const tracks = getUserTracks(u.role);
+    const tracks = getUserTracks(u.role, u.email);
     const userModules = tracks.flatMap(getModulesForTrack);
     const total = userModules.length;
     const passedCount = userModules.filter(m => u.progress[m.id] && u.progress[m.id].passed).length;

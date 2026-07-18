@@ -111,6 +111,42 @@
 
   .policy-check{display:flex;align-items:flex-start;gap:11px;padding:16px 18px;border:1px solid var(--border);border-radius:12px;background:#fbfbf9;cursor:pointer;font-size:15px;line-height:1.5}
   .policy-check input{width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+
+  /* ─── ADMIN PANEL ─── */
+  .admin-pin-overlay{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px}
+  .admin-pin-box{background:#fff;border-radius:20px;padding:36px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.28)}
+  .admin-pin-box .lock-icon{font-size:38px;margin-bottom:10px}
+  .admin-pin-box h2{margin:0 0 6px;font-size:20px;color:var(--header)}
+  .admin-pin-box .sub{color:var(--muted);margin:0 0 20px;font-size:13.5px}
+  .pin-field{width:100%;text-align:center;font-size:20px;letter-spacing:6px;padding:13px 14px;border-radius:12px;border:2px solid var(--border);outline:none;background:#f7f8f7;margin-bottom:12px;font-family:monospace}
+  .pin-field:focus{border-color:var(--header)}
+  .admin-header-row{display:flex;align-items:center;justify-content:space-between;margin:16px 0 6px}
+  .admin-header-row h2{margin:0;font-size:18px;color:var(--header)}
+  .admin-tab-bar{display:flex;border-bottom:2px solid var(--border);margin:0 -18px 20px;padding:0 18px;overflow-x:auto}
+  .admin-tab{background:none;border:none;border-bottom:3px solid transparent;padding:11px 16px;font-weight:700;font-size:13.5px;color:var(--muted);cursor:pointer;margin-bottom:-2px;white-space:nowrap}
+  .admin-tab.active{color:var(--header);border-bottom-color:var(--header)}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:20px}
+  .stat-box{background:#eef4f3;border-radius:12px;padding:14px 10px;text-align:center}
+  .stat-box .sv{font-size:26px;font-weight:800;color:var(--header);line-height:1.1}
+  .stat-box .sl{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
+  .roster-card{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:#fff}
+  .rav{width:40px;height:40px;border-radius:50%;background:var(--header);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .roster-card .ri{flex:1;min-width:0}
+  .roster-card .rn{font-weight:700;font-size:14.5px;margin-bottom:2px}
+  .roster-card .rm{font-size:12px;color:var(--muted)}
+  .role-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;background:#e4f0ee;color:var(--header);margin-left:5px}
+  .add-form{background:#f0f5f4;border:1px solid #cce0dc;border-radius:12px;padding:16px;margin-bottom:20px}
+  .add-form h3{margin:0 0 12px;font-size:14px;color:var(--header);font-weight:700}
+  .add-form .form-row{display:flex;gap:8px;flex-wrap:wrap}
+  .add-form .form-row input,.add-form .form-row select{flex:1;min-width:130px}
+  .prog-bar-wrap{display:inline-block;width:90px;height:6px;background:#e0e6e4;border-radius:20px;overflow:hidden;vertical-align:middle;margin-right:6px}
+  .prog-bar{height:100%;background:var(--good);border-radius:20px}
+  .edit-inline{background:#f4f7f6;border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px;display:none}
+  .edit-inline.show{display:block}
+  .edit-inline .form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .edit-inline .form-row input,.edit-inline .form-row select{flex:1;min-width:120px}
+  .del-confirm{background:#fdecea;border:1px solid #f5c4bf;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:13px;display:none;align-items:center;justify-content:space-between;gap:8px}
+  .del-confirm.show{display:flex}
 </style>
 </head>
 <body>
@@ -125,6 +161,7 @@
     <button class="btn ghost small hidden" id="btn-go-admin" data-t-en="Progress" data-t-es="Progreso">Progreso</button>
     <button class="btn ghost small hidden" id="btn-go-onboarding" data-t-en="Onboarding" data-t-es="Onboarding">Onboarding</button>
     <button class="btn ghost small hidden" id="btn-logout" data-t-en="Log out" data-t-es="Salir">Salir</button>
+    <button class="btn ghost small" id="btn-open-admin-panel" title="Admin Panel" style="padding:7px 9px;font-size:15px">⚙</button>
   </div>
 </header>
 
@@ -252,6 +289,38 @@
     </div>
   </div>
 
+  <!-- ADMIN PANEL (PIN-protected) -->
+  <div id="view-admin-panel" class="hidden">
+    <div class="admin-header-row">
+      <button class="btn secondary small" id="btn-admin-panel-back">← Salir</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">🔐 Admin Panel</span>
+      <button class="btn secondary small" id="btn-admin-lock-session">🔒 Bloquear</button>
+    </div>
+    <div class="card" style="margin-top:4px">
+      <div class="admin-tab-bar">
+        <button class="admin-tab active" data-atab="progress">📊 Progreso del Equipo</button>
+        <button class="admin-tab" data-atab="roster">👥 Roster</button>
+      </div>
+      <div id="admin-panel-progress"></div>
+      <div id="admin-panel-roster" class="hidden"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PIN MODAL (outside .wrap) -->
+<div id="admin-pin-modal" class="hidden">
+  <div class="admin-pin-overlay">
+    <div class="admin-pin-box">
+      <div class="lock-icon">🔐</div>
+      <h2>Admin Panel</h2>
+      <p class="sub">Ingresa el PIN de administrador</p>
+      <input type="password" class="pin-field" id="admin-pin-input" placeholder="••••••" maxlength="30" autocomplete="off">
+      <p id="admin-pin-error" style="color:var(--bad);display:none;margin:0 0 14px;font-size:13px">PIN incorrecto. Inténtalo de nuevo.</p>
+      <button class="btn" id="btn-admin-pin-submit" style="width:100%;margin-bottom:10px">Entrar</button>
+      <button class="btn secondary" id="btn-admin-pin-cancel" style="width:100%">Cancelar</button>
+    </div>
+  </div>
 </div>
 
 <script src="modules.js"></script>
@@ -959,6 +1028,324 @@ $("btn-onb-add").addEventListener("click", () => {
   onbOpenId = id;
   renderOnboarding();
 });
+
+/* ================= Admin Panel (PIN-protected) ================= */
+const ADMIN_PIN = "chelas25"; // ← cambia esto al PIN que quieras
+let adminAuthenticated = false;
+let adminActiveTab = "progress";
+let adminRosterData = [];
+
+// ── Entrada al panel ──
+$("btn-open-admin-panel").addEventListener("click", () => {
+  if (adminAuthenticated) { showAdminPanel(); }
+  else { openPinModal(); }
+});
+
+function openPinModal() {
+  $("admin-pin-modal").classList.remove("hidden");
+  $("admin-pin-input").value = "";
+  $("admin-pin-error").style.display = "none";
+  setTimeout(() => $("admin-pin-input").focus(), 80);
+}
+function closePinModal() { $("admin-pin-modal").classList.add("hidden"); }
+
+$("btn-admin-pin-cancel").addEventListener("click", closePinModal);
+$("admin-pin-input").addEventListener("keydown", (e) => { if (e.key === "Enter") checkPin(); });
+$("btn-admin-pin-submit").addEventListener("click", checkPin);
+
+function checkPin() {
+  if ($("admin-pin-input").value.trim() === ADMIN_PIN) {
+    adminAuthenticated = true;
+    closePinModal();
+    showAdminPanel();
+  } else {
+    $("admin-pin-error").style.display = "block";
+    $("admin-pin-input").value = "";
+    $("admin-pin-input").focus();
+  }
+}
+
+// ── Mostrar / ocultar panel ──
+function showAdminPanel() {
+  ["view-login","view-dashboard","view-module","view-admin","view-onboarding"].forEach(id =>
+    $(id).classList.add("hidden"));
+  $("track-tabs").classList.add("hidden");
+  $("view-admin-panel").classList.remove("hidden");
+  switchAdminTab(adminActiveTab);
+}
+
+$("btn-admin-panel-back").addEventListener("click", () => {
+  $("view-admin-panel").classList.add("hidden");
+  if (currentUser) showDashboard(); else $("view-login").classList.remove("hidden");
+});
+
+$("btn-admin-lock-session").addEventListener("click", () => {
+  adminAuthenticated = false;
+  $("view-admin-panel").classList.add("hidden");
+  if (currentUser) showDashboard(); else $("view-login").classList.remove("hidden");
+});
+
+// ── Tabs ──
+document.querySelectorAll(".admin-tab[data-atab]").forEach(btn => {
+  btn.addEventListener("click", () => switchAdminTab(btn.dataset.atab));
+});
+
+function switchAdminTab(tab) {
+  adminActiveTab = tab;
+  document.querySelectorAll(".admin-tab[data-atab]").forEach(b =>
+    b.classList.toggle("active", b.dataset.atab === tab));
+  $("admin-panel-progress").classList.toggle("hidden", tab !== "progress");
+  $("admin-panel-roster").classList.toggle("hidden", tab !== "roster");
+  if (tab === "progress") loadAdminProgress();
+  if (tab === "roster")   loadAdminRoster();
+}
+
+// ── TAB: Progreso ──
+async function loadAdminProgress() {
+  const panel = $("admin-panel-progress");
+  panel.innerHTML = `<p class="muted center" style="padding:28px 0">Cargando datos del equipo…</p>`;
+  try {
+    const [progRes, rosterRes] = await Promise.all([
+      fetch(REPORT_URL + "?action=allProgress"),
+      fetch(REPORT_URL + "?action=roster")
+    ]);
+    const { progress = [] } = await progRes.json();
+    const { roster   = [] } = await rosterRes.json();
+
+    // Agregar por usuario: email -> { name, role, modules{}, lastActive }
+    const umap = {};
+    roster.forEach(r => {
+      umap[r.email] = { name: r.name, role: r.role, modules: {}, lastActive: null };
+    });
+    progress.forEach(p => {
+      if (!umap[p.email]) umap[p.email] = { name: p.name, role: p.role, modules: {}, lastActive: null };
+      const ex = umap[p.email].modules[p.moduleId];
+      const ts = new Date(p.date || p.timestamp).getTime();
+      if (!ex || ts > new Date(ex._ts || 0).getTime())
+        umap[p.email].modules[p.moduleId] = { passed: p.passed, score: p.score, _ts: ts };
+      if (!umap[p.email].lastActive || ts > new Date(umap[p.email].lastActive).getTime())
+        umap[p.email].lastActive = p.date || p.timestamp;
+    });
+
+    const entries = Object.entries(umap);
+    const stats = entries.map(([email, u]) => {
+      const tracks   = getUserTracks(u.role, email);
+      const allMods  = tracks.flatMap(getModulesForTrack);
+      const passed   = allMods.filter(m => u.modules[m.id] && u.modules[m.id].passed).length;
+      const critMods = allMods.filter(m => m.critical);
+      const critOk   = critMods.length > 0 && critMods.every(m => u.modules[m.id] && u.modules[m.id].passed);
+      const pct      = allMods.length ? Math.round((passed / allMods.length) * 100) : 0;
+      return { email, name: u.name, role: u.role, passed, total: allMods.length, pct, critOk, critTotal: critMods.length, lastActive: u.lastActive };
+    }).sort((a, b) => b.pct - a.pct);
+
+    const initiated   = stats.filter(u => Object.keys(umap[u.email].modules).length > 0).length;
+    const completed   = stats.filter(u => u.pct === 100).length;
+    const avgPct      = stats.length ? Math.round(stats.reduce((s, u) => s + u.pct, 0) / stats.length) : 0;
+
+    let html = `
+      <div class="stat-grid">
+        <div class="stat-box"><div class="sv">${entries.length}</div><div class="sl">En Roster</div></div>
+        <div class="stat-box"><div class="sv">${initiated}</div><div class="sl">Iniciaron</div></div>
+        <div class="stat-box"><div class="sv">${completed}</div><div class="sl">Completaron</div></div>
+        <div class="stat-box"><div class="sv">${avgPct}%</div><div class="sl">Promedio</div></div>
+      </div>
+      <div style="overflow-x:auto">
+      <table>
+        <thead><tr>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Progreso</th>
+          <th style="text-align:center">Críticos</th>
+          <th>Última actividad</th>
+        </tr></thead>
+        <tbody>`;
+
+    stats.forEach(u => {
+      const color    = u.pct === 100 ? "var(--good)" : u.pct >= 50 ? "var(--header)" : "var(--muted)";
+      const critBadge = u.critTotal === 0 ? "<span style='color:var(--muted)'>—</span>"
+                      : u.critOk ? "<span style='color:var(--good);font-size:15px'>✅</span>"
+                                 : "<span style='color:var(--bad);font-size:15px'>❌</span>";
+      const lastDate  = u.lastActive
+        ? new Date(u.lastActive).toLocaleDateString("es-US", { month: "short", day: "numeric" }) : "—";
+      html += `<tr>
+        <td style="font-weight:700">${u.name}<br><span style="font-size:11px;color:var(--muted);font-weight:400">${u.email}</span></td>
+        <td><span class="role-tag">${u.role}</span></td>
+        <td>
+          <span class="prog-bar-wrap"><span class="prog-bar" style="width:${u.pct}%"></span></span>
+          <span style="font-size:12px;font-weight:700;color:${color}">${u.pct}%</span>
+          <span style="font-size:11px;color:var(--muted)"> (${u.passed}/${u.total})</span>
+        </td>
+        <td style="text-align:center">${critBadge}</td>
+        <td style="font-size:12px;color:var(--muted)">${lastDate}</td>
+      </tr>`;
+    });
+
+    html += `</tbody></table></div>`;
+    panel.innerHTML = html;
+
+  } catch (err) {
+    panel.innerHTML = `<p style="color:var(--bad);text-align:center;padding:20px 0">Error cargando datos. Verifica la conexión con Google Sheets.</p>`;
+  }
+}
+
+// ── TAB: Roster ──
+async function loadAdminRoster() {
+  const panel = $("admin-panel-roster");
+  panel.innerHTML = `<p class="muted center" style="padding:28px 0">Cargando roster…</p>`;
+  try {
+    const res = await fetch(REPORT_URL + "?action=roster");
+    const data = await res.json();
+    adminRosterData = data.roster || [];
+    renderRosterPanel();
+  } catch (err) {
+    panel.innerHTML = `<p style="color:var(--bad);text-align:center;padding:20px 0">Error cargando roster.</p>`;
+  }
+}
+
+function renderRosterPanel() {
+  const VALID_ROLES = ["Server","Bartender","Busser","Host","Kitchen","Manager"];
+  const panel = $("admin-panel-roster");
+
+  let html = `
+    <div class="add-form">
+      <h3>+ Agregar persona al Roster</h3>
+      <div class="form-row">
+        <input type="email" id="new-user-email" placeholder="correo@ejemplo.com">
+        <input type="text"  id="new-user-name"  placeholder="Nombre completo">
+        <select id="new-user-role">
+          <option value="">— Rol —</option>
+          ${VALID_ROLES.map(r => `<option value="${r}">${r}</option>`).join("")}
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn small" id="btn-roster-add">Agregar</button>
+        <p id="roster-add-msg" style="margin:0;font-size:13px;display:none"></p>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:12px">
+      ${adminRosterData.length} persona${adminRosterData.length !== 1 ? "s" : ""} en el roster
+    </div>
+    <div id="roster-list">`;
+
+  adminRosterData.forEach(u => {
+    const safeId   = u.email.replace(/[@.+]/g, "_");
+    const initials = u.name.split(" ").slice(0,2).map(w => w[0] || "").join("").toUpperCase();
+    html += `
+      <div class="roster-card" id="rcard-${safeId}">
+        <div class="rav">${initials}</div>
+        <div class="ri">
+          <div class="rn">${u.name}<span class="role-tag">${u.role}</span></div>
+          <div class="rm">${u.email}</div>
+
+          <!-- Edit form (hidden) -->
+          <div class="edit-inline" id="edit-${safeId}">
+            <div class="form-row">
+              <input type="text"  id="ename-${safeId}"  value="${u.name}">
+              <select id="erole-${safeId}">
+                ${VALID_ROLES.map(r => `<option value="${r}"${r===u.role?" selected":""}>${r}</option>`).join("")}
+              </select>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn small" onclick="saveRosterEdit('${u.email}','${safeId}')">Guardar</button>
+              <button class="btn secondary small" onclick="closeEditForm('${safeId}')">Cancelar</button>
+            </div>
+          </div>
+
+          <!-- Delete confirm (hidden) -->
+          <div class="del-confirm" id="delconf-${safeId}">
+            <span>¿Eliminar a <strong>${u.name}</strong>?</span>
+            <div style="display:flex;gap:6px">
+              <button class="btn small" style="background:var(--bad);color:#fff" onclick="confirmDeleteRoster('${u.email}','${safeId}')">Sí, eliminar</button>
+              <button class="btn secondary small" onclick="closeDelConfirm('${safeId}')">No</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;flex-shrink:0;padding-top:2px">
+          <button class="btn secondary small" onclick="toggleEditForm('${safeId}')">✏️</button>
+          <button class="btn small" style="background:var(--bad);color:#fff" onclick="showDelConfirm('${safeId}')">×</button>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  panel.innerHTML = html;
+  $("btn-roster-add").addEventListener("click", addRosterUser);
+}
+
+// Helpers edit/delete
+function toggleEditForm(safeId) {
+  const f = $("edit-" + safeId);
+  f.classList.toggle("show");
+  $("delconf-" + safeId).classList.remove("show");
+}
+function closeEditForm(safeId) { $("edit-" + safeId).classList.remove("show"); }
+function showDelConfirm(safeId) {
+  $("delconf-" + safeId).classList.add("show");
+  $("edit-" + safeId).classList.remove("show");
+}
+function closeDelConfirm(safeId) { $("delconf-" + safeId).classList.remove("show"); }
+
+async function saveRosterEdit(email, safeId) {
+  const newName = $("ename-" + safeId).value.trim();
+  const newRole = $("erole-" + safeId).value;
+  if (!newName || !newRole) return;
+  fetch(REPORT_URL, {
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ action:"updateRoster", oldEmail:email, email:email, name:newName, role:newRole })
+  }).catch(()=>{});
+  const entry = adminRosterData.find(r => r.email === email);
+  if (entry) { entry.name = newName; entry.role = newRole; }
+  saveRosterCache(adminRosterData);
+  renderRosterPanel();
+}
+
+async function confirmDeleteRoster(email, safeId) {
+  fetch(REPORT_URL, {
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ action:"removeRoster", email })
+  }).catch(()=>{});
+  adminRosterData = adminRosterData.filter(r => r.email !== email);
+  saveRosterCache(adminRosterData);
+  renderRosterPanel();
+}
+
+async function addRosterUser() {
+  const email = $("new-user-email").value.trim().toLowerCase();
+  const name  = $("new-user-name").value.trim();
+  const role  = $("new-user-role").value;
+  const msg   = $("roster-add-msg");
+  const btn   = $("btn-roster-add");
+
+  msg.style.display = "none";
+  if (!email || !name || !role) {
+    msg.style.display = "block"; msg.style.color = "var(--bad)";
+    msg.textContent = "Completa todos los campos."; return;
+  }
+  if (adminRosterData.find(r => r.email === email)) {
+    msg.style.display = "block"; msg.style.color = "var(--bad)";
+    msg.textContent = "Este correo ya está en el roster."; return;
+  }
+  btn.disabled = true; btn.textContent = "Guardando…";
+  fetch(REPORT_URL, {
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ action:"addRoster", email, name, role })
+  }).catch(()=>{});
+  adminRosterData.push({ email, name, role });
+  saveRosterCache(adminRosterData);
+  msg.style.display = "block"; msg.style.color = "var(--good)";
+  msg.textContent = `✓ ${name} agregado como ${role}`;
+  $("new-user-email").value = "";
+  $("new-user-name").value  = "";
+  $("new-user-role").value  = "";
+  btn.disabled = false; btn.textContent = "Agregar";
+  renderRosterPanel();
+  $("roster-add-msg").style.display = "block";
+  $("roster-add-msg").style.color   = "var(--good)";
+  $("roster-add-msg").textContent   = `✓ ${name} agregado como ${role}`;
+}
 
 /* ================= Language ================= */
 function setLang(l){

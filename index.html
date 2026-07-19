@@ -120,6 +120,11 @@
   .admin-pin-box .sub{color:var(--muted);margin:0 0 20px;font-size:13.5px}
   .pin-field{width:100%;text-align:center;font-size:20px;letter-spacing:6px;padding:13px 14px;border-radius:12px;border:2px solid var(--border);outline:none;background:#f7f8f7;margin-bottom:12px;font-family:monospace}
   .pin-field:focus{border-color:var(--header)}
+  .pin-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;background:#f0f0ec;border:1px solid var(--border);border-radius:8px;padding:3px 9px;color:var(--muted);font-family:monospace;font-weight:700}
+  .pin-badge.set{color:var(--header);background:#eef4f3;border-color:#b8d6d3}
+  .pin-change-form{margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .pin-change-form input{max-width:110px;text-align:center;font-family:monospace;letter-spacing:4px;font-size:16px;padding:6px 10px}
+  .login-pin-step{margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
   .admin-header-row{display:flex;align-items:center;justify-content:space-between;margin:16px 0 6px}
   .admin-header-row h2{margin:0;font-size:18px;color:var(--header)}
   .admin-tab-bar{display:flex;border-bottom:2px solid var(--border);margin:0 -18px 20px;padding:0 18px;overflow-x:auto}
@@ -176,7 +181,17 @@
       <label data-t-en="Work email" data-t-es="Correo de trabajo">Correo de trabajo</label>
       <input id="login-email" type="email" placeholder="nombre@chelas.com" autocomplete="email">
       <p class="muted" id="login-error" style="color:var(--bad);display:none;margin-top:10px"></p>
-      <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Start training" data-t-es="Comenzar entrenamiento">Comenzar entrenamiento</button>
+      <button class="btn" id="btn-login" style="margin-top:18px;width:100%" data-t-en="Continue" data-t-es="Continuar">Continuar</button>
+
+      <!-- Paso 2: PIN (se muestra solo si el usuario tiene PIN asignado) -->
+      <div id="login-pin-step" class="login-pin-step hidden">
+        <label data-t-en="4-digit PIN" data-t-es="PIN de 4 dígitos">PIN de 4 dígitos</label>
+        <input type="password" id="login-pin" class="pin-field" placeholder="••••" maxlength="4" autocomplete="off" inputmode="numeric">
+        <p id="login-pin-error" style="color:var(--bad);display:none;margin-top:0;margin-bottom:12px;font-size:13px">PIN incorrecto. Inténtalo de nuevo.</p>
+        <button class="btn" id="btn-login-pin" style="width:100%;margin-bottom:10px" data-t-en="Enter" data-t-es="Entrar">Entrar</button>
+        <button class="btn secondary" id="btn-login-back" style="width:100%" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+      </div>
+
       <p class="muted" style="margin-top:14px" data-t-en="Your role is assigned by your manager. If your email isn't recognized, ask them to add you." data-t-es="Tu rol lo asigna tu manager. Si tu correo no es reconocido, pídele que te agregue.">—</p>
     </div>
   </div>
@@ -300,9 +315,11 @@
       <div class="admin-tab-bar">
         <button class="admin-tab active" data-atab="progress">📊 Progreso del Equipo</button>
         <button class="admin-tab" data-atab="roster">👥 Roster</button>
+        <button class="admin-tab" data-atab="config">⚙️ Config</button>
       </div>
       <div id="admin-panel-progress"></div>
       <div id="admin-panel-roster" class="hidden"></div>
+      <div id="admin-panel-config" class="hidden"></div>
     </div>
   </div>
 
@@ -432,52 +449,6 @@ function showLoginError(msg){
   el.textContent = msg;
   el.style.display = "block";
 }
-
-$("btn-login").addEventListener("click", async () => {
-  const email = $("login-email").value.trim().toLowerCase();
-  $("login-error").style.display = "none";
-  if(!email){ showLoginError(lang==="es" ? "Escribe tu correo" : "Enter your email"); return; }
-
-  if(!REPORT_URL){
-    showLoginError(lang==="es"
-      ? "Configuración pendiente: el administrador debe conectar el Google Sheet primero (ver README)."
-      : "Setup pending: the admin needs to connect the Google Sheet first (see README).");
-    return;
-  }
-
-  $("btn-login").disabled = true;
-  let roster = await fetchRoster();
-  if(!roster) roster = loadRosterCache();
-  $("btn-login").disabled = false;
-
-  if(!roster || !roster.length){
-    showLoginError(lang==="es"
-      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu manager."
-      : "Couldn't reach the access list. Try again or tell your manager.");
-    return;
-  }
-
-  const entry = findInRoster(roster, email);
-  if(!entry){
-    showLoginError(lang==="es"
-      ? "Tu correo no está registrado. Pide a tu manager que te agregue en el Google Sheet."
-      : "Your email isn't registered. Ask your manager to add you to the Google Sheet.");
-    return;
-  }
-
-  const normalizedRole = normalizeRole(entry.role);
-  if(!normalizedRole){
-    showLoginError(lang==="es"
-      ? `El rol "${entry.role}" en el Roster no es válido. Pide a tu manager que lo corrija a uno de: Server, Bartender, Busser, Host, Manager.`
-      : `The role "${entry.role}" in the Roster isn't valid. Ask your manager to fix it to one of: Server, Bartender, Busser, Host, Manager.`);
-    return;
-  }
-
-  const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
-  currentUser = { email: rec.email, name: rec.name, role: rec.role };
-  localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
-  showDashboard();
-});
 
 $("btn-logout").addEventListener("click", () => {
   localStorage.removeItem("chelas_current_user");
@@ -1030,7 +1001,9 @@ $("btn-onb-add").addEventListener("click", () => {
 });
 
 /* ================= Admin Panel (PIN-protected) ================= */
-const ADMIN_PIN = "chelas25"; // ← cambia esto al PIN que quieras
+// Admin PIN — guardado en localStorage; por defecto "1234"
+function getAdminPin() { return localStorage.getItem("chelas_admin_pin") || "1234"; }
+function setAdminPin(p) { localStorage.setItem("chelas_admin_pin", p); }
 let adminAuthenticated = false;
 let adminActiveTab = "progress";
 let adminRosterData = [];
@@ -1054,7 +1027,7 @@ $("admin-pin-input").addEventListener("keydown", (e) => { if (e.key === "Enter")
 $("btn-admin-pin-submit").addEventListener("click", checkPin);
 
 function checkPin() {
-  if ($("admin-pin-input").value.trim() === ADMIN_PIN) {
+  if ($("admin-pin-input").value.trim() === getAdminPin()) {
     adminAuthenticated = true;
     closePinModal();
     showAdminPanel();
@@ -1096,8 +1069,10 @@ function switchAdminTab(tab) {
     b.classList.toggle("active", b.dataset.atab === tab));
   $("admin-panel-progress").classList.toggle("hidden", tab !== "progress");
   $("admin-panel-roster").classList.toggle("hidden", tab !== "roster");
+  $("admin-panel-config").classList.toggle("hidden", tab !== "config");
   if (tab === "progress") loadAdminProgress();
   if (tab === "roster")   loadAdminRoster();
+  if (tab === "config")   renderConfigPanel();
 }
 
 // ── TAB: Progreso ──
@@ -1216,6 +1191,8 @@ function renderRosterPanel() {
           <option value="">— Rol —</option>
           ${VALID_ROLES.map(r => `<option value="${r}">${r}</option>`).join("")}
         </select>
+        <input type="text" id="new-user-pin" placeholder="PIN (4 díg.)" maxlength="4" inputmode="numeric"
+               style="max-width:120px;font-family:monospace;letter-spacing:3px;text-align:center">
       </div>
       <div style="display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap">
         <button class="btn small" id="btn-roster-add">Agregar</button>
@@ -1230,12 +1207,27 @@ function renderRosterPanel() {
   adminRosterData.forEach(u => {
     const safeId   = u.email.replace(/[@.+]/g, "_");
     const initials = u.name.split(" ").slice(0,2).map(w => w[0] || "").join("").toUpperCase();
+    const pinSet   = u.pin && u.pin.length >= 1;
     html += `
       <div class="roster-card" id="rcard-${safeId}">
         <div class="rav">${initials}</div>
         <div class="ri">
           <div class="rn">${u.name}<span class="role-tag">${u.role}</span></div>
           <div class="rm">${u.email}</div>
+          <div style="margin-top:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="pin-badge ${pinSet ? "set" : ""}">
+              🔑 ${pinSet ? "•".repeat(u.pin.length) : "sin PIN"}
+            </span>
+            <button class="btn secondary small" onclick="togglePinForm('${safeId}')">Cambiar PIN</button>
+          </div>
+
+          <!-- PIN change form (hidden) -->
+          <div class="pin-change-form hidden" id="pinform-${safeId}">
+            <input type="text" id="epin-${safeId}" placeholder="Nuevo PIN" maxlength="4"
+                   inputmode="numeric" style="max-width:110px;text-align:center;font-family:monospace;letter-spacing:3px;font-size:15px;padding:6px 10px;border-radius:8px;border:1px solid var(--border)">
+            <button class="btn small" onclick="savePinEdit('${u.email}','${safeId}')">Guardar</button>
+            <button class="btn secondary small" onclick="closePinForm('${safeId}')">✕</button>
+          </div>
 
           <!-- Edit form (hidden) -->
           <div class="edit-inline" id="edit-${safeId}">
@@ -1285,16 +1277,44 @@ function showDelConfirm(safeId) {
 }
 function closeDelConfirm(safeId) { $("delconf-" + safeId).classList.remove("show"); }
 
+// PIN forms
+function togglePinForm(safeId) {
+  const f = $("pinform-" + safeId);
+  f.classList.toggle("hidden");
+  if (!f.classList.contains("hidden")) $("epin-" + safeId).focus();
+  $("edit-" + safeId).classList.remove("show");
+  $("delconf-" + safeId).classList.remove("show");
+}
+function closePinForm(safeId) { $("pinform-" + safeId).classList.add("hidden"); }
+
+async function savePinEdit(email, safeId) {
+  const newPin = $("epin-" + safeId).value.trim();
+  if (!newPin) return;
+  const entry = adminRosterData.find(r => r.email === email);
+  if (!entry) return;
+  // Update in Sheets (preserve name/role, update pin)
+  fetch(REPORT_URL, {
+    method: "POST", mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "updateRoster", oldEmail: email, email: email, name: entry.name, role: entry.role, pin: newPin })
+  }).catch(() => {});
+  entry.pin = newPin;
+  saveRosterCache(adminRosterData);
+  closePinForm(safeId);
+  renderRosterPanel();
+}
+
 async function saveRosterEdit(email, safeId) {
   const newName = $("ename-" + safeId).value.trim();
   const newRole = $("erole-" + safeId).value;
   if (!newName || !newRole) return;
+  const entry = adminRosterData.find(r => r.email === email);
+  const existingPin = entry ? (entry.pin || "") : "";
   fetch(REPORT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ action:"updateRoster", oldEmail:email, email:email, name:newName, role:newRole })
+    body: JSON.stringify({ action:"updateRoster", oldEmail:email, email:email, name:newName, role:newRole, pin:existingPin })
   }).catch(()=>{});
-  const entry = adminRosterData.find(r => r.email === email);
   if (entry) { entry.name = newName; entry.role = newRole; }
   saveRosterCache(adminRosterData);
   renderRosterPanel();
@@ -1327,24 +1347,157 @@ async function addRosterUser() {
     msg.style.display = "block"; msg.style.color = "var(--bad)";
     msg.textContent = "Este correo ya está en el roster."; return;
   }
+  const pin = ($("new-user-pin") ? $("new-user-pin").value.trim() : "");
   btn.disabled = true; btn.textContent = "Guardando…";
   fetch(REPORT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ action:"addRoster", email, name, role })
+    body: JSON.stringify({ action:"addRoster", email, name, role, pin })
   }).catch(()=>{});
-  adminRosterData.push({ email, name, role });
+  adminRosterData.push({ email, name, role, pin });
   saveRosterCache(adminRosterData);
   msg.style.display = "block"; msg.style.color = "var(--good)";
   msg.textContent = `✓ ${name} agregado como ${role}`;
   $("new-user-email").value = "";
   $("new-user-name").value  = "";
   $("new-user-role").value  = "";
+  if ($("new-user-pin")) $("new-user-pin").value = "";
   btn.disabled = false; btn.textContent = "Agregar";
   renderRosterPanel();
   $("roster-add-msg").style.display = "block";
   $("roster-add-msg").style.color   = "var(--good)";
   $("roster-add-msg").textContent   = `✓ ${name} agregado como ${role}`;
+}
+
+/* ── TAB: Config ── */
+function renderConfigPanel() {
+  const panel = $("admin-panel-config");
+  const currentPin = getAdminPin();
+  panel.innerHTML = `
+    <div style="max-width:360px">
+      <h3 style="margin:0 0 6px;color:var(--header)">🔐 PIN del Admin</h3>
+      <p style="margin:0 0 16px;font-size:13.5px;color:var(--muted)">
+        PIN actual: <span style="font-family:monospace;font-weight:700;font-size:15px;color:var(--text)">
+          ${"•".repeat(currentPin.length)}</span>
+      </p>
+      <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Nuevo PIN (4 dígitos)</label>
+      <input type="password" id="cfg-pin-new" class="pin-field" placeholder="••••" maxlength="4"
+             inputmode="numeric" autocomplete="off" style="max-width:180px;margin-bottom:10px">
+      <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Confirmar PIN</label>
+      <input type="password" id="cfg-pin-confirm" class="pin-field" placeholder="••••" maxlength="4"
+             inputmode="numeric" autocomplete="off" style="max-width:180px;margin-bottom:14px">
+      <p id="cfg-pin-msg" style="display:none;font-size:13px;margin:0 0 12px"></p>
+      <button class="btn" id="btn-cfg-save-pin">Guardar nuevo PIN</button>
+    </div>`;
+  $("btn-cfg-save-pin").addEventListener("click", () => {
+    const n = $("cfg-pin-new").value.trim();
+    const c = $("cfg-pin-confirm").value.trim();
+    const msg = $("cfg-pin-msg");
+    msg.style.display = "none";
+    if (!n || n.length < 4) {
+      msg.style.color = "var(--bad)"; msg.style.display = "block";
+      msg.textContent = "El PIN debe tener al menos 4 caracteres."; return;
+    }
+    if (n !== c) {
+      msg.style.color = "var(--bad)"; msg.style.display = "block";
+      msg.textContent = "Los PINs no coinciden."; return;
+    }
+    setAdminPin(n);
+    $("cfg-pin-new").value = ""; $("cfg-pin-confirm").value = "";
+    msg.style.color = "var(--good)"; msg.style.display = "block";
+    msg.textContent = "✓ PIN actualizado correctamente.";
+    renderConfigPanel();
+  });
+}
+
+/* ================= Login con PIN ================= */
+let pendingLoginEntry = null; // guarda el entry del roster mientras el usuario escribe el PIN
+
+$("btn-login").addEventListener("click", async () => {
+  const email = $("login-email").value.trim().toLowerCase();
+  $("login-error").style.display = "none";
+  if (!email) { showLoginError(lang === "es" ? "Escribe tu correo" : "Enter your email"); return; }
+
+  if (!REPORT_URL) {
+    showLoginError(lang === "es"
+      ? "Configuración pendiente: el administrador debe conectar el Google Sheet primero (ver README)."
+      : "Setup pending: the admin needs to connect the Google Sheet first (see README).");
+    return;
+  }
+
+  $("btn-login").disabled = true;
+  let roster = await fetchRoster();
+  if (!roster) roster = loadRosterCache();
+  $("btn-login").disabled = false;
+
+  if (!roster || !roster.length) {
+    showLoginError(lang === "es"
+      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu manager."
+      : "Couldn't reach the access list. Try again or tell your manager.");
+    return;
+  }
+
+  const entry = findInRoster(roster, email);
+  if (!entry) {
+    showLoginError(lang === "es"
+      ? "Tu correo no está registrado. Pide a tu manager que te agregue en el Google Sheet."
+      : "Your email isn't registered. Ask your manager to add you to the Google Sheet.");
+    return;
+  }
+
+  const normalizedRole = normalizeRole(entry.role);
+  if (!normalizedRole) {
+    showLoginError(lang === "es"
+      ? `El rol "${entry.role}" en el Roster no es válido. Pide a tu manager que lo corrija a uno de: Server, Bartender, Busser, Host, Manager.`
+      : `The role "${entry.role}" in the Roster isn't valid. Ask your manager to fix it to one of: Server, Bartender, Busser, Host, Manager.`);
+    return;
+  }
+
+  // Si el usuario tiene PIN asignado, pedirlo; si no, entrar directo
+  if (entry.pin && entry.pin.length >= 1) {
+    pendingLoginEntry = entry;
+    $("login-email").closest(".card").querySelector("button#btn-login").style.display = "none";
+    $("login-pin-step").classList.remove("hidden");
+    $("login-pin-error").style.display = "none";
+    $("login-pin").value = "";
+    setTimeout(() => $("login-pin").focus(), 80);
+  } else {
+    completeLogin(entry);
+  }
+});
+
+$("btn-login-pin").addEventListener("click", verifyStaffPin);
+$("login-pin").addEventListener("keydown", e => { if (e.key === "Enter") verifyStaffPin(); });
+
+function verifyStaffPin() {
+  const pin = $("login-pin").value.trim();
+  if (!pendingLoginEntry) return;
+  if (pin === String(pendingLoginEntry.pin)) {
+    completeLogin(pendingLoginEntry);
+  } else {
+    $("login-pin-error").style.display = "block";
+    $("login-pin").value = "";
+    $("login-pin").focus();
+  }
+}
+
+$("btn-login-back").addEventListener("click", () => {
+  $("login-pin-step").classList.add("hidden");
+  $("btn-login").style.display = "";
+  $("login-pin-error").style.display = "none";
+  pendingLoginEntry = null;
+});
+
+function completeLogin(entry) {
+  const normalizedRole = normalizeRole(entry.role);
+  const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
+  currentUser = { email: rec.email, name: rec.name, role: rec.role };
+  localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
+  // Resetear estado del login
+  $("login-pin-step").classList.add("hidden");
+  $("btn-login").style.display = "";
+  pendingLoginEntry = null;
+  showDashboard();
 }
 
 /* ================= Language ================= */

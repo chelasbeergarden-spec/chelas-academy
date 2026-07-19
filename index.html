@@ -116,6 +116,37 @@
   .missed-item .mi-q{font-weight:700;margin-bottom:4px;color:var(--text)}
   .missed-item .mi-a{color:var(--good);font-size:13px}
   .missed-title{font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+  /* ─── WELCOME SCREEN ─── */
+  @keyframes fadeSlideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+  .welcome-wrap{max-width:460px;margin:20px auto 0;padding:0 4px 60px;animation:fadeSlideUp .5s cubic-bezier(.22,1,.36,1) both}
+  .welcome-logo{text-align:center;font-size:54px;margin-bottom:6px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.1))}
+  .welcome-title{font-size:25px;font-weight:900;text-align:center;margin:0 0 10px;line-height:1.25;color:var(--text)}
+  .welcome-title span{color:var(--header)}
+  .welcome-sub{text-align:center;color:var(--muted);font-size:14px;line-height:1.65;margin:0 0 22px;padding:0 8px}
+  .welcome-steps{display:flex;flex-direction:column;gap:11px;margin-bottom:24px}
+  .welcome-step{display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:15px 16px;border-left:4px solid var(--header);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .welcome-step .ws-icon{font-size:26px;flex-shrink:0;line-height:1;margin-top:1px}
+  .welcome-step .ws-body{flex:1;min-width:0}
+  .welcome-step .ws-title{font-weight:800;font-size:14.5px;margin-bottom:3px;color:var(--text)}
+  .welcome-step .ws-desc{font-size:13px;color:var(--muted);line-height:1.55}
+  /* Mini animated flip demo */
+  .ws-flip-demo{display:flex;align-items:center;gap:10px;margin-top:9px}
+  .ws-demo-card{width:78px;height:44px;perspective:500px}
+  .ws-demo-inner{
+    width:100%;height:100%;transform-style:preserve-3d;
+    border-radius:9px;position:relative;
+    animation:demo-auto-flip 4s ease-in-out infinite 2s
+  }
+  @keyframes demo-auto-flip{
+    0%,35%{transform:rotateY(0deg)}
+    50%,85%{transform:rotateY(180deg)}
+    100%{transform:rotateY(0deg)}
+  }
+  .ws-demo-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;letter-spacing:.2px}
+  .ws-demo-front{background:var(--header);color:#fff}
+  .ws-demo-back{background:var(--accent);color:#241a08;transform:rotateY(180deg)}
+  .ws-flip-hint{font-size:11.5px;color:var(--muted);line-height:1.4}
+
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px;border-bottom:1px solid var(--border);text-align:left}
   th{color:var(--muted);font-weight:700}
@@ -206,6 +237,9 @@
 <div class="tabs hidden" id="track-tabs"></div>
 
 <div class="wrap">
+
+  <!-- WELCOME SCREEN -->
+  <div id="view-welcome" class="hidden"></div>
 
   <!-- LOGIN -->
   <div id="view-login" class="hidden">
@@ -483,6 +517,101 @@ function applyStaticTranslations(){
   $("btn-lang-en").classList.toggle("active", lang === "en");
 }
 
+/* ================= Welcome screen ================= */
+function hasSeenWelcome(email){
+  return !!localStorage.getItem("chelas_welcome_seen_" + email.toLowerCase());
+}
+function markWelcomeSeen(email){
+  localStorage.setItem("chelas_welcome_seen_" + email.toLowerCase(), "1");
+}
+
+function showWelcome(){
+  ["view-login","view-dashboard","view-module","view-admin","view-onboarding","view-admin-panel"]
+    .forEach(id => $(id).classList.add("hidden"));
+  $("track-tabs").classList.add("hidden");
+  $("btn-logout").classList.add("hidden");
+  $("header-username").classList.add("hidden");
+  $("btn-go-admin").classList.add("hidden");
+  $("btn-go-onboarding").classList.add("hidden");
+
+  const es = lang === "es";
+  const w = $("view-welcome");
+  w.classList.remove("hidden");
+  w.innerHTML = `<div class="welcome-wrap">
+    <div class="welcome-logo">🍺</div>
+    <h1 class="welcome-title">${es ? "Bienvenido a" : "Welcome to"}<br><span>Chela's Academy</span></h1>
+    <p class="welcome-sub">${es
+      ? "Este manual digital tiene un solo objetivo: compartir la información esencial para tu incorporación. Lee cada módulo, completa las tarjetas y aprueba los exámenes."
+      : "This digital manual has one goal: share the essential info for your onboarding. Read each module, go through the cards, and pass the quizzes."}</p>
+
+    <div class="welcome-steps">
+      <div class="welcome-step">
+        <div class="ws-icon">📖</div>
+        <div class="ws-body">
+          <div class="ws-title">${es ? "1 · Lee el módulo" : "1 · Read the module"}</div>
+          <div class="ws-desc">${es
+            ? "Cada sección tiene lecciones cortas. Usa las flechas para avanzar una página a la vez — tómate tu tiempo."
+            : "Each section has short lessons. Use the arrows to advance one page at a time — take your time."}</div>
+        </div>
+      </div>
+
+      <div class="welcome-step">
+        <div class="ws-icon">🃏</div>
+        <div class="ws-body">
+          <div class="ws-title">${es ? "2 · Voltea las tarjetas" : "2 · Flip the cards"}</div>
+          <div class="ws-desc">${es
+            ? "Detrás de cada tarjeta hay más información: ingredientes, pasos, detalles clave. Tócala para revelarla."
+            : "There's more info on the back of each card: ingredients, steps, key details. Tap it to reveal."}</div>
+          <div class="ws-flip-demo">
+            <div class="ws-demo-card">
+              <div class="ws-demo-inner">
+                <div class="ws-demo-face ws-demo-front">${es ? "Tarjeta" : "Card"}</div>
+                <div class="ws-demo-face ws-demo-back">${es ? "Info ✓" : "Info ✓"}</div>
+              </div>
+            </div>
+            <span class="ws-flip-hint">${es ? "← Se voltea sola para mostrarte cómo funciona" : "← Auto-flipping to show you how it works"}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="welcome-step">
+        <div class="ws-icon">✅</div>
+        <div class="ws-body">
+          <div class="ws-title">${es ? "3 · Aprueba el examen" : "3 · Pass the quiz"}</div>
+          <div class="ws-desc">${es
+            ? "Al final de cada módulo hay un quiz. Debes alcanzar el puntaje mínimo — si no pasas, puedes repasar las tarjetas y reintentar."
+            : "At the end of each module there's a quiz. Reach the minimum score — if you don't pass, you can review the cards and try again."}</div>
+        </div>
+      </div>
+
+      <div class="welcome-step">
+        <div class="ws-icon">🔓</div>
+        <div class="ws-body">
+          <div class="ws-title">${es ? "4 · Desbloquea lo siguiente" : "4 · Unlock what's next"}</div>
+          <div class="ws-desc">${es
+            ? "No puedes saltarte módulos — debes completar uno para abrir el siguiente. Tu progreso se guarda automáticamente."
+            : "You can't skip modules — complete one to open the next. Your progress saves automatically."}</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn" id="btn-welcome-start" style="width:100%;font-size:16px;padding:14px 16px">
+      ${es ? "¡Comenzar entrenamiento! →" : "Start training! →"}
+    </button>
+    <button class="btn secondary" id="btn-welcome-skip" style="width:100%;margin-top:10px;font-size:13px;color:var(--muted)">
+      ${es ? "No mostrar de nuevo" : "Don't show again"}
+    </button>
+  </div>`;
+
+  $("btn-welcome-start").addEventListener("click", () => {
+    showDashboard();
+  });
+  $("btn-welcome-skip").addEventListener("click", () => {
+    markWelcomeSeen(currentUser.email);
+    showDashboard();
+  });
+}
+
 /* ================= Login ================= */
 function showLoginError(msg){
   const el = $("login-error");
@@ -575,6 +704,7 @@ function renderFilters(){
 /* ================= Dashboard ================= */
 function showDashboard(){
   $("view-login").classList.add("hidden");
+  $("view-welcome").classList.add("hidden");
   $("view-module").classList.add("hidden");
   $("view-admin").classList.add("hidden");
   $("view-onboarding").classList.add("hidden");
@@ -1605,7 +1735,12 @@ function completeLogin(entry) {
   $("login-pin-step").classList.add("hidden");
   $("btn-login").style.display = "";
   pendingLoginEntry = null;
-  showDashboard();
+  // Show welcome screen on first login; go straight to dashboard if already seen
+  if(!hasSeenWelcome(currentUser.email)){
+    showWelcome();
+  } else {
+    showDashboard();
+  }
 }
 
 /* ================= Language ================= */
@@ -1643,7 +1778,11 @@ applyStaticTranslations();
 const saved = JSON.parse(localStorage.getItem("chelas_current_user") || "null");
 if(saved){
   currentUser = saved;
-  showDashboard();
+  if(!hasSeenWelcome(currentUser.email)){
+    showWelcome();
+  } else {
+    showDashboard();
+  }
   refreshCurrentUserFromRoster();
 } else {
   $("view-login").classList.remove("hidden");

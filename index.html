@@ -561,8 +561,9 @@ function applyStaticTranslations(){
 }
 
 /* ================= Access Security ================= */
-function getMaxAccessDays(){
-  return parseInt(localStorage.getItem("chelas_max_access_days") || "30");
+function getMaxAccessDays(role){
+  if(role === "Manager") return 3;  // managers always get exactly 3 days
+  return parseInt(localStorage.getItem("chelas_max_access_days") || "2");
 }
 
 function setUserStatus(email, status){
@@ -575,10 +576,9 @@ function setUserStatus(email, status){
 }
 
 function checkUserAccess(email){
-  // Managers and QA accounts always have full access
-  if(currentUser && (currentUser.role === "Manager" || isQAUser(email))){
-    return { ok: true };
-  }
+  // Only QA/Admin test accounts have unlimited access
+  if(isQAUser(email)) return { ok: true };
+
   const rec = getUserRecord(email);
   if(!rec) return { ok: true };
 
@@ -591,9 +591,11 @@ function checkUserAccess(email){
     return { ok: false, reason: "expired" };
   }
 
-  // Check time window
+  // Role-aware time window: Manager=3 days, others=configured default (2)
+  const role = currentUser ? currentUser.role : rec.role;
+  const maxDays = getMaxAccessDays(role);
+
   if(rec.firstLogin){
-    const maxDays = getMaxAccessDays();
     const firstLoginDate = new Date(rec.firstLogin);
     const expiresAt = new Date(firstLoginDate.getTime() + maxDays * 24 * 60 * 60 * 1000);
     const now = new Date();
@@ -885,10 +887,10 @@ function showDashboard(){
   renderFilters();
   renderModuleList();
 
-  // Days-remaining access banner (non-managers, non-QA only)
+  // Days-remaining access banner (all users except QA/Admin)
   const existingBanner = document.getElementById("access-days-banner");
   if(existingBanner) existingBanner.remove();
-  if(currentUser.role !== "Manager" && !isQAUser(currentUser.email)){
+  if(!isQAUser(currentUser.email)){
     const access = checkUserAccess(currentUser.email);
     if(access.ok && access.daysLeft !== undefined){
       const banner = document.createElement("div");
@@ -1785,13 +1787,13 @@ async function addRosterUser() {
 function renderAccessPanel() {
   const panel = $("admin-panel-access");
   const users = loadUsers();
-  const maxDays = getMaxAccessDays();
   const now = new Date();
 
   const rows = Object.values(users).map(u => {
-    // Skip managers and QA
-    if(u.role === "Manager" || isQAUser(u.email)) return null;
+    // Skip only QA/Admin unlimited accounts
+    if(isQAUser(u.email)) return null;
     const status = u.status || "active";
+    const maxDays = getMaxAccessDays(u.role);
     let daysLeft = null;
     let expiresLabel = "—";
     if(u.firstLogin && status === "active"){
@@ -1886,7 +1888,7 @@ function renderConfigPanel() {
       <div>
         <h3 style="margin:0 0 6px;color:var(--header)">⏰ Período de Acceso</h3>
         <p style="margin:0 0 14px;font-size:13.5px;color:var(--muted)">
-          Días máximos que un empleado tiene para completar su entrenamiento, contados desde su primer login. Actualmente: <strong>${maxDays} días</strong>.
+          Días máximos que un empleado tiene para completar su entrenamiento, contados desde su primer login. Este valor aplica a todo el staff. <em>Managers tienen siempre 3 días fijos.</em> Actualmente: <strong>${maxDays} días</strong>.
         </p>
         <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Número de días (1–365)</label>
         <div style="display:flex;gap:8px;align-items:center">

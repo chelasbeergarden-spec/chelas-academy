@@ -116,6 +116,30 @@
   .missed-item .mi-q{font-weight:700;margin-bottom:4px;color:var(--text)}
   .missed-item .mi-a{color:var(--good);font-size:13px}
   .missed-title{font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+  /* ─── ACCESS SECURITY ─── */
+  .status-badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
+  .status-badge.active{background:#e2f5e9;color:var(--good)}
+  .status-badge.hold{background:#fff3cd;color:#856404}
+  .status-badge.expired{background:#fdecea;color:var(--bad)}
+  .days-banner{padding:10px 16px;text-align:center;font-size:13px;font-weight:700;border-radius:10px;margin:12px 0 -4px}
+  .days-banner.ok{background:#eef4f3;color:var(--header)}
+  .days-banner.warning{background:#fff3cd;color:#856404}
+  .days-banner.critical{background:#fdecea;color:var(--bad)}
+  .blocked-wrap{max-width:400px;margin:50px auto 0;text-align:center;padding:0 8px}
+  .blocked-icon{font-size:56px;margin-bottom:14px}
+  .blocked-title{font-size:20px;font-weight:900;margin:0 0 10px;color:var(--text)}
+  .blocked-sub{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 0 22px}
+  .blocked-user{background:#f0f5f4;border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:13.5px;margin-bottom:22px}
+  .access-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+  .access-table th{color:var(--muted);font-weight:700;padding:8px;border-bottom:2px solid var(--border);text-align:left;white-space:nowrap}
+  .access-table td{padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+  .access-table tr:hover td{background:#f8f9f8}
+  .days-left-pill{display:inline-block;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px}
+  .days-left-pill.ok{background:#e2f5e9;color:var(--good)}
+  .days-left-pill.warn{background:#fff3cd;color:#856404}
+  .days-left-pill.crit{background:#fdecea;color:var(--bad)}
+  .days-left-pill.none{background:#f0f0ec;color:var(--muted)}
+
   /* ─── WELCOME SCREEN ─── */
   @keyframes fadeSlideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
   .welcome-wrap{max-width:460px;margin:20px auto 0;padding:0 4px 60px;animation:fadeSlideUp .5s cubic-bezier(.22,1,.36,1) both}
@@ -237,6 +261,9 @@
 <div class="tabs hidden" id="track-tabs"></div>
 
 <div class="wrap">
+
+  <!-- BLOCKED / ACCESS EXPIRED -->
+  <div id="view-blocked" class="hidden"></div>
 
   <!-- WELCOME SCREEN -->
   <div id="view-welcome" class="hidden"></div>
@@ -387,12 +414,14 @@
     </div>
     <div class="card" style="margin-top:4px">
       <div class="admin-tab-bar">
-        <button class="admin-tab active" data-atab="progress">📊 Progreso del Equipo</button>
+        <button class="admin-tab active" data-atab="progress">📊 Progreso</button>
         <button class="admin-tab" data-atab="roster">👥 Roster</button>
+        <button class="admin-tab" data-atab="access">🔐 Acceso</button>
         <button class="admin-tab" data-atab="config">⚙️ Config</button>
       </div>
       <div id="admin-panel-progress"></div>
       <div id="admin-panel-roster" class="hidden"></div>
+      <div id="admin-panel-access" class="hidden"></div>
       <div id="admin-panel-config" class="hidden"></div>
     </div>
   </div>
@@ -459,8 +488,20 @@ function getUserRecord(email){
 function upsertUserRecord(email, name, role){
   const users = loadUsers();
   const key = email.toLowerCase();
-  if(!users[key]) users[key] = { email: key, name, role, progress: {}, updated: new Date().toISOString() };
-  else { users[key].name = name; users[key].role = role; }
+  if(!users[key]){
+    users[key] = {
+      email: key, name, role, progress: {},
+      updated: new Date().toISOString(),
+      firstLogin: new Date().toISOString(),  // ← record first access
+      status: "active"                        // ← active | hold | expired
+    };
+  } else {
+    users[key].name = name;
+    users[key].role = role;
+    // Ensure legacy records have these fields
+    if(!users[key].firstLogin) users[key].firstLogin = new Date().toISOString();
+    if(!users[key].status) users[key].status = "active";
+  }
   saveUsers(users);
   return users[key];
 }
@@ -478,6 +519,8 @@ function saveProgress(email, moduleId, passed, score, critical){
       body: JSON.stringify({ email: key, name: users[key].name, role: users[key].role, moduleId, passed, score, critical, date: users[key].updated })
     }).catch(()=>{});
   }
+  // Auto-hold if all modules now passed
+  if(passed) checkAutoHold(key);
 }
 
 /* ================= Roster (Google Sheet) ================= */
@@ -515,6 +558,115 @@ function applyStaticTranslations(){
   });
   $("btn-lang-es").classList.toggle("active", lang === "es");
   $("btn-lang-en").classList.toggle("active", lang === "en");
+}
+
+/* ================= Access Security ================= */
+function getMaxAccessDays(){
+  return parseInt(localStorage.getItem("chelas_max_access_days") || "30");
+}
+
+function setUserStatus(email, status){
+  const users = loadUsers();
+  const key = email.toLowerCase();
+  if(!users[key]) return;
+  users[key].status = status;
+  users[key].updated = new Date().toISOString();
+  saveUsers(users);
+}
+
+function checkUserAccess(email){
+  // Managers and QA accounts always have full access
+  if(currentUser && (currentUser.role === "Manager" || isQAUser(email))){
+    return { ok: true };
+  }
+  const rec = getUserRecord(email);
+  if(!rec) return { ok: true };
+
+  // Explicit hold set by admin
+  if(rec.status === "hold"){
+    return { ok: false, reason: "hold" };
+  }
+  // Already marked expired
+  if(rec.status === "expired"){
+    return { ok: false, reason: "expired" };
+  }
+
+  // Check time window
+  if(rec.firstLogin){
+    const maxDays = getMaxAccessDays();
+    const firstLoginDate = new Date(rec.firstLogin);
+    const expiresAt = new Date(firstLoginDate.getTime() + maxDays * 24 * 60 * 60 * 1000);
+    const now = new Date();
+    if(now > expiresAt){
+      setUserStatus(email, "expired");
+      return { ok: false, reason: "expired" };
+    }
+    const daysLeft = Math.ceil((expiresAt - now) / (24 * 60 * 60 * 1000));
+    return { ok: true, daysLeft, expiresAt };
+  }
+
+  return { ok: true };
+}
+
+function checkAutoHold(email){
+  // Managers and QA never auto-hold
+  if(currentUser && (currentUser.role === "Manager" || isQAUser(email))) return;
+  const rec = getUserRecord(email);
+  if(!rec || rec.status !== "active") return;
+  const tracks = getUserTracks(rec.role, email);
+  const allMods = tracks.flatMap(getModulesForTrack);
+  if(allMods.length === 0) return;
+  const allPassed = allMods.every(m => rec.progress[m.id] && rec.progress[m.id].passed);
+  if(allPassed){
+    setUserStatus(email, "hold");
+    // Brief celebration + notice before blocking next login
+  }
+}
+
+function showBlocked(reason){
+  ["view-login","view-welcome","view-dashboard","view-module","view-admin","view-onboarding","view-admin-panel"]
+    .forEach(id => $(id).classList.add("hidden"));
+  $("track-tabs").classList.add("hidden");
+  $("btn-logout").classList.remove("hidden");
+  $("header-username").classList.remove("hidden");
+  $("header-username").textContent = currentUser ? currentUser.name : "";
+  $("btn-go-admin").classList.add("hidden");
+  $("btn-go-onboarding").classList.add("hidden");
+
+  const es = lang === "es";
+  const b = $("view-blocked");
+  b.classList.remove("hidden");
+
+  const isHold   = reason === "hold";
+  const isExpired = reason === "expired";
+
+  b.innerHTML = `<div class="blocked-wrap">
+    <div class="blocked-icon">${isHold ? "⏸️" : "⏰"}</div>
+    <h2 class="blocked-title">${isHold
+      ? (es ? "Tu cuenta está en pausa" : "Account on hold")
+      : (es ? "Tu período de acceso expiró" : "Access period expired")}</h2>
+    <p class="blocked-sub">${isHold
+      ? (es
+        ? "Completaste tu entrenamiento y tu cuenta fue puesta en pausa automáticamente. Habla con tu manager para reactivarla si necesitas acceder de nuevo."
+        : "You completed your training and your account was automatically put on hold. Talk to your manager to reactivate it if you need access again.")
+      : (es
+        ? "Tu ventana de acceso al entrenamiento ha vencido. Habla con tu manager para que reactive tu cuenta."
+        : "Your training access window has expired. Talk to your manager to reactivate your account.")}</p>
+    <div class="blocked-user">
+      <div style="font-weight:700;margin-bottom:2px">${currentUser ? currentUser.name : ""}</div>
+      <div style="font-size:12px;color:var(--muted)">${currentUser ? currentUser.email : ""}</div>
+      <div style="margin-top:6px"><span class="status-badge ${reason}">${isHold ? (es?"En pausa":"On hold") : (es?"Expirado":"Expired")}</span></div>
+    </div>
+    <button class="btn secondary" id="btn-blocked-logout" style="width:100%">
+      ${es ? "Cerrar sesión" : "Log out"}
+    </button>
+  </div>`;
+
+  $("btn-blocked-logout").addEventListener("click", () => {
+    localStorage.removeItem("chelas_current_user");
+    currentUser = null;
+    location.reload();
+  });
 }
 
 /* ================= Welcome screen ================= */
@@ -705,6 +857,7 @@ function renderFilters(){
 function showDashboard(){
   $("view-login").classList.add("hidden");
   $("view-welcome").classList.add("hidden");
+  $("view-blocked").classList.add("hidden");
   $("view-module").classList.add("hidden");
   $("view-admin").classList.add("hidden");
   $("view-onboarding").classList.add("hidden");
@@ -731,6 +884,25 @@ function showDashboard(){
   renderTabs();
   renderFilters();
   renderModuleList();
+
+  // Days-remaining access banner (non-managers, non-QA only)
+  const existingBanner = document.getElementById("access-days-banner");
+  if(existingBanner) existingBanner.remove();
+  if(currentUser.role !== "Manager" && !isQAUser(currentUser.email)){
+    const access = checkUserAccess(currentUser.email);
+    if(access.ok && access.daysLeft !== undefined){
+      const banner = document.createElement("div");
+      banner.id = "access-days-banner";
+      const cls = access.daysLeft <= 3 ? "critical" : access.daysLeft <= 7 ? "warning" : "ok";
+      const icon = access.daysLeft <= 3 ? "🚨" : access.daysLeft <= 7 ? "⚠️" : "⏱️";
+      banner.className = `days-banner ${cls}`;
+      banner.textContent = lang === "es"
+        ? `${icon} Te quedan ${access.daysLeft} día${access.daysLeft === 1 ? "" : "s"} de acceso`
+        : `${icon} ${access.daysLeft} day${access.daysLeft === 1 ? "" : "s"} of access remaining`;
+      const dashCard = $("view-dashboard").querySelector(".card");
+      dashCard.insertAdjacentElement("afterend", banner);
+    }
+  }
 }
 
 function renderModuleList(){
@@ -1307,9 +1479,11 @@ function switchAdminTab(tab) {
     b.classList.toggle("active", b.dataset.atab === tab));
   $("admin-panel-progress").classList.toggle("hidden", tab !== "progress");
   $("admin-panel-roster").classList.toggle("hidden", tab !== "roster");
+  $("admin-panel-access").classList.toggle("hidden", tab !== "access");
   $("admin-panel-config").classList.toggle("hidden", tab !== "config");
   if (tab === "progress") loadAdminProgress();
   if (tab === "roster")   loadAdminRoster();
+  if (tab === "access")   renderAccessPanel();
   if (tab === "config")   renderConfigPanel();
 }
 
@@ -1607,26 +1781,154 @@ async function addRosterUser() {
   $("roster-add-msg").textContent   = `✓ ${name} agregado como ${role}`;
 }
 
+/* ── TAB: Acceso ── */
+function renderAccessPanel() {
+  const panel = $("admin-panel-access");
+  const users = loadUsers();
+  const maxDays = getMaxAccessDays();
+  const now = new Date();
+
+  const rows = Object.values(users).map(u => {
+    // Skip managers and QA
+    if(u.role === "Manager" || isQAUser(u.email)) return null;
+    const status = u.status || "active";
+    let daysLeft = null;
+    let expiresLabel = "—";
+    if(u.firstLogin && status === "active"){
+      const expiresAt = new Date(new Date(u.firstLogin).getTime() + maxDays * 24 * 60 * 60 * 1000);
+      daysLeft = Math.ceil((expiresAt - now) / (24 * 60 * 60 * 1000));
+      if(daysLeft < 0) daysLeft = 0;
+      expiresLabel = expiresAt.toLocaleDateString();
+    }
+    const firstLoginLabel = u.firstLogin ? new Date(u.firstLogin).toLocaleDateString() : "—";
+    const tracks = getUserTracks(u.role, u.email);
+    const allMods = tracks.flatMap(getModulesForTrack);
+    const passedCount = allMods.filter(m => u.progress[m.id] && u.progress[m.id].passed).length;
+    const progressPct = allMods.length ? Math.round((passedCount / allMods.length) * 100) : 0;
+
+    let daysPill = "";
+    if(status === "active" && daysLeft !== null){
+      const pillCls = daysLeft <= 3 ? "crit" : daysLeft <= 7 ? "warn" : "ok";
+      daysPill = `<span class="days-left-pill ${pillCls}">${daysLeft}d</span>`;
+    } else if(status !== "active"){
+      daysPill = `<span class="days-left-pill none">—</span>`;
+    }
+
+    const statusBadge = `<span class="status-badge ${status}">${
+      status === "active" ? "Activo" : status === "hold" ? "En pausa" : "Expirado"
+    }</span>`;
+
+    const safeId = u.email.replace(/[^a-z0-9]/gi, "_");
+    const canReactivate = status !== "active";
+    const canHold       = status === "active";
+
+    return `<tr>
+      <td><strong>${u.name}</strong><br><span style="font-size:11px;color:var(--muted)">${u.email}</span></td>
+      <td>${u.role}</td>
+      <td>${statusBadge}</td>
+      <td>${firstLoginLabel}</td>
+      <td>${expiresLabel}</td>
+      <td>${daysPill}</td>
+      <td style="font-size:12px">${passedCount}/${allMods.length} (${progressPct}%)</td>
+      <td style="white-space:nowrap">
+        ${canReactivate ? `<button class="btn small" onclick="adminReactivate('${u.email}')">🔓 Reactivar</button>` : ""}
+        ${canHold ? `<button class="btn secondary small" style="margin-left:4px" onclick="adminHold('${u.email}')">⏸ Hold</button>` : ""}
+      </td>
+    </tr>`;
+  }).filter(Boolean);
+
+  panel.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+      <div>
+        <h3 style="margin:0 0 2px;color:var(--header)">🔐 Control de Acceso</h3>
+        <p style="margin:0;font-size:13px;color:var(--muted)">Ventana activa: <strong>${maxDays} días</strong> desde el primer login · Ajústala en ⚙️ Config</p>
+      </div>
+    </div>
+    ${rows.length === 0
+      ? `<p class="muted center" style="padding:24px 0">No hay empleados registrados aún.</p>`
+      : `<div style="overflow-x:auto">
+          <table class="access-table">
+            <thead><tr>
+              <th>Empleado</th><th>Rol</th><th>Estado</th><th>Primer Login</th>
+              <th>Vence</th><th>Días</th><th>Progreso</th><th>Acción</th>
+            </tr></thead>
+            <tbody>${rows.join("")}</tbody>
+          </table>
+        </div>`}
+  `;
+}
+
+function adminReactivate(email){
+  const users = loadUsers();
+  const key = email.toLowerCase();
+  if(!users[key]) return;
+  users[key].status = "active";
+  users[key].firstLogin = new Date().toISOString(); // reset timer from now
+  users[key].updated = new Date().toISOString();
+  saveUsers(users);
+  renderAccessPanel();
+}
+
+function adminHold(email){
+  setUserStatus(email, "hold");
+  renderAccessPanel();
+}
+
 /* ── TAB: Config ── */
 function renderConfigPanel() {
   const panel = $("admin-panel-config");
   const currentPin = getAdminPin();
+  const maxDays = getMaxAccessDays();
   panel.innerHTML = `
-    <div style="max-width:360px">
-      <h3 style="margin:0 0 6px;color:var(--header)">🔐 PIN del Admin</h3>
-      <p style="margin:0 0 16px;font-size:13.5px;color:var(--muted)">
-        PIN actual: <span style="font-family:monospace;font-weight:700;font-size:15px;color:var(--text)">
-          ${"•".repeat(currentPin.length)}</span>
-      </p>
-      <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Nuevo PIN (4 dígitos)</label>
-      <input type="password" id="cfg-pin-new" class="pin-field" placeholder="••••" maxlength="4"
-             inputmode="numeric" autocomplete="off" style="max-width:180px;margin-bottom:10px">
-      <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Confirmar PIN</label>
-      <input type="password" id="cfg-pin-confirm" class="pin-field" placeholder="••••" maxlength="4"
-             inputmode="numeric" autocomplete="off" style="max-width:180px;margin-bottom:14px">
-      <p id="cfg-pin-msg" style="display:none;font-size:13px;margin:0 0 12px"></p>
-      <button class="btn" id="btn-cfg-save-pin">Guardar nuevo PIN</button>
+    <div style="max-width:380px;display:flex;flex-direction:column;gap:28px">
+
+      <!-- Período de acceso -->
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--header)">⏰ Período de Acceso</h3>
+        <p style="margin:0 0 14px;font-size:13.5px;color:var(--muted)">
+          Días máximos que un empleado tiene para completar su entrenamiento, contados desde su primer login. Actualmente: <strong>${maxDays} días</strong>.
+        </p>
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Número de días (1–365)</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="number" id="cfg-max-days" value="${maxDays}" min="1" max="365"
+                 style="max-width:100px;text-align:center;font-size:16px;font-weight:700">
+          <button class="btn small" id="btn-save-max-days">Guardar</button>
+        </div>
+        <p id="cfg-days-msg" style="display:none;font-size:13px;margin:8px 0 0"></p>
+      </div>
+
+      <!-- PIN del Admin -->
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--header)">🔐 PIN del Admin</h3>
+        <p style="margin:0 0 16px;font-size:13.5px;color:var(--muted)">
+          PIN actual: <span style="font-family:monospace;font-weight:700;font-size:15px;color:var(--text)">
+            ${"•".repeat(currentPin.length)}</span>
+        </p>
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Nuevo PIN (4 dígitos)</label>
+        <input type="password" id="cfg-pin-new" class="pin-field" placeholder="••••" maxlength="4"
+               inputmode="numeric" autocomplete="off" style="max-width:180px;margin-bottom:10px">
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Confirmar PIN</label>
+        <input type="password" id="cfg-pin-confirm" class="pin-field" placeholder="••••" maxlength="4"
+               inputmode="numeric" autocomplete="off" style="max-width:180px;margin-bottom:14px">
+        <p id="cfg-pin-msg" style="display:none;font-size:13px;margin:0 0 12px"></p>
+        <button class="btn" id="btn-cfg-save-pin">Guardar nuevo PIN</button>
+      </div>
+
     </div>`;
+
+  $("btn-save-max-days").addEventListener("click", () => {
+    const val = parseInt($("cfg-max-days").value);
+    const msg = $("cfg-days-msg");
+    msg.style.display = "none";
+    if(!val || val < 1 || val > 365){
+      msg.style.color = "var(--bad)"; msg.style.display = "block";
+      msg.textContent = "Ingresa un número entre 1 y 365."; return;
+    }
+    localStorage.setItem("chelas_max_access_days", String(val));
+    msg.style.color = "var(--good)"; msg.style.display = "block";
+    msg.textContent = `✓ Período actualizado a ${val} días.`;
+  });
+
   $("btn-cfg-save-pin").addEventListener("click", () => {
     const n = $("cfg-pin-new").value.trim();
     const c = $("cfg-pin-confirm").value.trim();
@@ -1735,8 +2037,11 @@ function completeLogin(entry) {
   $("login-pin-step").classList.add("hidden");
   $("btn-login").style.display = "";
   pendingLoginEntry = null;
-  // Show welcome screen on first login; go straight to dashboard if already seen
-  if(!hasSeenWelcome(currentUser.email)){
+  // Security: check access before showing anything
+  const access = checkUserAccess(currentUser.email);
+  if(!access.ok){
+    showBlocked(access.reason);
+  } else if(!hasSeenWelcome(currentUser.email)){
     showWelcome();
   } else {
     showDashboard();
@@ -1778,7 +2083,10 @@ applyStaticTranslations();
 const saved = JSON.parse(localStorage.getItem("chelas_current_user") || "null");
 if(saved){
   currentUser = saved;
-  if(!hasSeenWelcome(currentUser.email)){
+  const savedAccess = checkUserAccess(currentUser.email);
+  if(!savedAccess.ok){
+    showBlocked(savedAccess.reason);
+  } else if(!hasSeenWelcome(currentUser.email)){
     showWelcome();
   } else {
     showDashboard();

@@ -585,6 +585,83 @@ function setUserStatus(email, status){
   users[key].status = status;
   users[key].updated = new Date().toISOString();
   saveUsers(users);
+  // Sync to Sheets (fire-and-forget)
+  if(REPORT_URL){
+    fetch(REPORT_URL, {
+      method:"POST", mode:"no-cors",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ action:"setAccess", email:key,
+        name: users[key].name, role: users[key].role,
+        firstLogin: users[key].firstLogin, status })
+    }).catch(()=>{});
+  }
+}
+
+/* ─── Google Sheets Access Sync ─── */
+async function syncAccessRecord(email, name, role){
+  if(!REPORT_URL) return;
+  const emailLow = email.toLowerCase();
+  try {
+    const res = await fetch(REPORT_URL + "?action=getAccess&email=" + encodeURIComponent(emailLow));
+    const data = await res.json();
+    const users = loadUsers();
+    const localRec = users[emailLow];
+
+    if(data && data.found !== false && data.email){
+      // Sheets record exists — use it as source of truth for firstLogin & status
+      let changed = false;
+      if(localRec){
+        if(data.firstLogin && data.firstLogin !== localRec.firstLogin){
+          users[emailLow].firstLogin = data.firstLogin;  changed = true;
+        }
+        if(data.status && data.status !== localRec.status){
+          users[emailLow].status = data.status;           changed = true;
+        }
+      }
+      if(changed) saveUsers(users);
+      // Push updated name/role back to Sheets
+      const cur = users[emailLow] || localRec || {};
+      fetch(REPORT_URL, {
+        method:"POST", mode:"no-cors",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ action:"setAccess", email:emailLow, name, role,
+          firstLogin: cur.firstLogin || data.firstLogin,
+          status:     cur.status     || data.status || "active" })
+      }).catch(()=>{});
+    } else {
+      // Not in Sheets yet — write the local record as the canonical one
+      const cur = users[emailLow] || {};
+      fetch(REPORT_URL, {
+        method:"POST", mode:"no-cors",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ action:"setAccess", email:emailLow, name, role,
+          firstLogin: cur.firstLogin || new Date().toISOString(),
+          status:     cur.status     || "active" })
+      }).catch(()=>{});
+    }
+  } catch(err){ /* network error — continue with localStorage */ }
+}
+
+async function fetchAllAccessRecords(){
+  if(!REPORT_URL) return;
+  try {
+    const res = await fetch(REPORT_URL + "?action=getAllAccess");
+    const data = await res.json();
+    if(!data || !Array.isArray(data.records)) return;
+    const users = loadUsers();
+    let changed = false;
+    data.records.forEach(r => {
+      const emailLow = (r.email || "").toLowerCase();
+      if(!emailLow || isQAUser(emailLow) || !users[emailLow]) return;
+      if(r.firstLogin && r.firstLogin !== users[emailLow].firstLogin){
+        users[emailLow].firstLogin = r.firstLogin; changed = true;
+      }
+      if(r.status && r.status !== users[emailLow].status){
+        users[emailLow].status = r.status; changed = true;
+      }
+    });
+    if(changed) saveUsers(users);
+  } catch(err){}
 }
 
 function checkUserAccess(email){
@@ -1882,8 +1959,11 @@ async function addRosterUser() {
 }
 
 /* ── TAB: Acceso ── */
-function renderAccessPanel() {
+async function renderAccessPanel() {
   const panel = $("admin-panel-access");
+  // Show loading state while we fetch from Sheets
+  panel.innerHTML = `<p style="padding:20px;color:var(--muted);text-align:center">⏳ Cargando datos…</p>`;
+  await fetchAllAccessRecords();   // merge Sheets → localStorage
   const users = loadUsers();
   const now = new Date();
 
@@ -1966,6 +2046,16 @@ function adminReactivate(email){
   users[key].firstLogin = new Date().toISOString(); // reset timer from now
   users[key].updated = new Date().toISOString();
   saveUsers(users);
+  // Sync reset to Sheets so timer can't be gamed by clearing cache
+  if(REPORT_URL){
+    fetch(REPORT_URL, {
+      method:"POST", mode:"no-cors",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ action:"setAccess", email:key,
+        name: users[key].name, role: users[key].role,
+        firstLogin: users[key].firstLogin, status:"active" })
+    }).catch(()=>{});
+  }
   renderAccessPanel();
 }
 
@@ -2128,7 +2218,7 @@ $("btn-login-back").addEventListener("click", () => {
   pendingLoginEntry = null;
 });
 
-function completeLogin(entry) {
+async function completeLogin(entry) {
   const normalizedRole = normalizeRole(entry.role);
   const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
   currentUser = { email: rec.email, name: rec.name, role: rec.role };
@@ -2137,7 +2227,9 @@ function completeLogin(entry) {
   $("login-pin-step").classList.add("hidden");
   $("btn-login").style.display = "";
   pendingLoginEntry = null;
-  // Security: check access before showing anything
+  // Sync firstLogin/status with Sheets (Sheets is the authoritative timer source)
+  await syncAccessRecord(currentUser.email, currentUser.name, currentUser.role);
+  // Security: check access before showing anything (now uses Sheets-synced data)
   const access = checkUserAccess(currentUser.email);
   if(!access.ok){
     showBlocked(access.reason);
@@ -2183,6 +2275,7 @@ applyStaticTranslations();
 const saved = JSON.parse(localStorage.getItem("chelas_current_user") || "null");
 if(saved){
   currentUser = saved;
+  // Fast path: check local access first so screen appears immediately
   const savedAccess = checkUserAccess(currentUser.email);
   if(!savedAccess.ok){
     showBlocked(savedAccess.reason);
@@ -2191,7 +2284,15 @@ if(saved){
   } else {
     showDashboard();
   }
+  // Then sync with Sheets in background — if status changed, re-check access
   refreshCurrentUserFromRoster();
+  syncAccessRecord(currentUser.email, currentUser.name, currentUser.role).then(() => {
+    const freshAccess = checkUserAccess(currentUser.email);
+    if(!freshAccess.ok && savedAccess.ok){
+      // Sheets says blocked but we showed the dashboard — correct it
+      showBlocked(freshAccess.reason);
+    }
+  }).catch(()=>{});
 } else {
   $("view-login").classList.remove("hidden");
 }

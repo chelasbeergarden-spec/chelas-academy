@@ -668,11 +668,16 @@ function renderFlash(){
   const f = m.flashcards[flashIdx];
   const card = $("flash-card");
   card.dataset.showBack = "false";
-  card.textContent = t(f.front);
+  function showFront(){
+    card.innerHTML = f.img
+      ? `<img src="${f.img}" alt="${t(f.front)}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:8px;margin-bottom:8px;"><br>${t(f.front)}`
+      : t(f.front);
+  }
+  showFront();
   card.onclick = () => {
     const showBack = card.dataset.showBack === "true";
     card.dataset.showBack = showBack ? "false" : "true";
-    card.textContent = showBack ? t(f.front) : t(f.back);
+    if(showBack){ showFront(); } else { card.innerHTML = t(f.back); }
   };
   const dots = $("flash-dots");
   dots.innerHTML = "";
@@ -682,6 +687,10 @@ function renderFlash(){
     dots.appendChild(d);
   });
   $("btn-flash-prev").disabled = flashIdx === 0;
+  const isLast = flashIdx === m.flashcards.length - 1;
+  $("btn-flash-next").textContent = isLast
+    ? (lang === "es" ? "Ir al examen" : "Take the quiz")
+    : (lang === "es" ? "Siguiente" : "Next");
 }
 $("btn-flash-prev").addEventListener("click", () => { if(flashIdx>0){ flashIdx--; renderFlash(); } });
 $("btn-flash-next").addEventListener("click", () => {

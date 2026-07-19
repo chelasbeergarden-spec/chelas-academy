@@ -171,6 +171,18 @@
   .ws-demo-back{background:var(--accent);color:#241a08;transform:rotateY(180deg)}
   .ws-flip-hint{font-size:11.5px;color:var(--muted);line-height:1.4}
 
+  /* ─── WELCOME TIMER ─── */
+  .wc-timer-wrap{background:linear-gradient(135deg,var(--header) 0%,var(--tabs) 100%);border-radius:18px;padding:22px 16px 18px;text-align:center;margin:18px 0 4px;color:#fff;box-shadow:0 6px 24px rgba(47,102,102,.25)}
+  .wc-timer-label{font-size:12px;font-weight:700;opacity:.82;text-transform:uppercase;letter-spacing:.7px;margin-bottom:14px}
+  .wc-timer-digits{display:flex;justify-content:center;align-items:flex-start;gap:6px}
+  .wc-digit-block{display:flex;flex-direction:column;align-items:center;min-width:52px}
+  .wc-digit{font-size:42px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-1px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+  .wc-digit-unit{font-size:10px;font-weight:700;opacity:.7;text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+  .wc-sep{font-size:36px;font-weight:900;line-height:1;opacity:.45;padding-bottom:12px}
+  .wc-deadline{font-size:12px;opacity:.72;margin-top:12px;line-height:1.5}
+  .wc-deadline strong{opacity:1}
+  .wc-maxdays{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:3px 12px;font-size:11.5px;font-weight:700;letter-spacing:.3px;margin-bottom:10px}
+
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px;border-bottom:1px solid var(--border);text-align:left}
   th{color:var(--muted);font-weight:700}
@@ -626,6 +638,7 @@ function checkAutoHold(email){
 }
 
 function showBlocked(reason){
+  if(_welcomeTimer){ clearInterval(_welcomeTimer); _welcomeTimer = null; }
   ["view-login","view-welcome","view-dashboard","view-module","view-admin","view-onboarding","view-admin-panel"]
     .forEach(id => $(id).classList.add("hidden"));
   $("track-tabs").classList.add("hidden");
@@ -672,6 +685,7 @@ function showBlocked(reason){
 }
 
 /* ================= Welcome screen ================= */
+let _welcomeTimer = null;
 function hasSeenWelcome(email){
   return !!localStorage.getItem("chelas_welcome_seen_" + email.toLowerCase());
 }
@@ -688,15 +702,70 @@ function showWelcome(){
   $("btn-go-admin").classList.add("hidden");
   $("btn-go-onboarding").classList.add("hidden");
 
+  // Clear any previous timer
+  if(_welcomeTimer){ clearInterval(_welcomeTimer); _welcomeTimer = null; }
+
   const es = lang === "es";
+  const firstName = (currentUser.name || "").split(" ")[0] || (es ? "compañero" : "friend");
+  const maxDays = getMaxAccessDays(currentUser.role);
+  const rec = getUserRecord(currentUser.email);
+  const isQA = isQAUser(currentUser.email);
+
+  // Compute expiry timestamp
+  let expiresAt = null;
+  if(!isQA && rec && rec.firstLogin){
+    expiresAt = new Date(new Date(rec.firstLogin).getTime() + maxDays * 24 * 60 * 60 * 1000);
+  }
+
+  // Format deadline label
+  const deadlineFmt = expiresAt
+    ? expiresAt.toLocaleDateString(es ? "es-MX" : "en-US", {weekday:"long", month:"long", day:"numeric"})
+      + " · " + expiresAt.toLocaleTimeString(es ? "es-MX" : "en-US", {hour:"2-digit", minute:"2-digit"})
+    : "";
+
+  // Timer block HTML (hidden for QA)
+  const timerHTML = isQA ? `` : `
+    <div class="wc-timer-wrap">
+      <div class="wc-maxdays">${es ? `${maxDays} días para completar` : `${maxDays} days to complete`}</div>
+      <div class="wc-timer-label">${es ? "Tiempo restante" : "Time remaining"}</div>
+      <div class="wc-timer-digits">
+        <div class="wc-digit-block">
+          <span class="wc-digit" id="wc-d">--</span>
+          <span class="wc-digit-unit">${es ? "días" : "days"}</span>
+        </div>
+        <div class="wc-sep">:</div>
+        <div class="wc-digit-block">
+          <span class="wc-digit" id="wc-h">--</span>
+          <span class="wc-digit-unit">${es ? "horas" : "hrs"}</span>
+        </div>
+        <div class="wc-sep">:</div>
+        <div class="wc-digit-block">
+          <span class="wc-digit" id="wc-m">--</span>
+          <span class="wc-digit-unit">${es ? "min" : "min"}</span>
+        </div>
+        <div class="wc-sep">:</div>
+        <div class="wc-digit-block">
+          <span class="wc-digit" id="wc-s">--</span>
+          <span class="wc-digit-unit">${es ? "seg" : "sec"}</span>
+        </div>
+      </div>
+      <div class="wc-deadline">
+        ${es ? "Fecha límite:" : "Deadline:"} <strong>${deadlineFmt}</strong>
+      </div>
+    </div>`;
+
   const w = $("view-welcome");
   w.classList.remove("hidden");
   w.innerHTML = `<div class="welcome-wrap">
     <div class="welcome-logo">🍺</div>
-    <h1 class="welcome-title">${es ? "Bienvenido a" : "Welcome to"}<br><span>Chela's Academy</span></h1>
+    <h1 class="welcome-title">${es ? `¡Hola, ${firstName}!` : `Hey, ${firstName}!`}<br>
+      <span>${es ? "Bienvenido a Chela's Academy" : "Welcome to Chela's Academy"}</span>
+    </h1>
     <p class="welcome-sub">${es
       ? "Este manual digital tiene un solo objetivo: compartir la información esencial para tu incorporación. Lee cada módulo, completa las tarjetas y aprueba los exámenes."
       : "This digital manual has one goal: share the essential info for your onboarding. Read each module, go through the cards, and pass the quizzes."}</p>
+
+    ${timerHTML}
 
     <div class="welcome-steps">
       <div class="welcome-step">
@@ -749,7 +818,7 @@ function showWelcome(){
       </div>
     </div>
 
-    <button class="btn" id="btn-welcome-start" style="width:100%;font-size:16px;padding:14px 16px">
+    <button class="btn" id="btn-welcome-start" style="width:100%;font-size:16px;padding:14px 16px;margin-top:8px">
       ${es ? "¡Comenzar entrenamiento! →" : "Start training! →"}
     </button>
     <button class="btn secondary" id="btn-welcome-skip" style="width:100%;margin-top:10px;font-size:13px;color:var(--muted)">
@@ -757,10 +826,38 @@ function showWelcome(){
     </button>
   </div>`;
 
+  // Start live countdown
+  if(expiresAt && !isQA){
+    const pad = n => String(n).padStart(2, "0");
+    function tickTimer(){
+      const diff = expiresAt - new Date();
+      if(diff <= 0){
+        clearInterval(_welcomeTimer); _welcomeTimer = null;
+        ["wc-d","wc-h","wc-m","wc-s"].forEach(id => { const el=$(id); if(el) el.textContent="00"; });
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      const dEl=$("wc-d"); if(dEl) dEl.textContent=String(d);
+      const hEl=$("wc-h"); if(hEl) hEl.textContent=pad(h);
+      const mEl=$("wc-m"); if(mEl) mEl.textContent=pad(m);
+      const sEl=$("wc-s"); if(sEl) sEl.textContent=pad(s);
+    }
+    tickTimer();
+    _welcomeTimer = setInterval(tickTimer, 1000);
+  }
+
+  function leaveWelcome(){
+    if(_welcomeTimer){ clearInterval(_welcomeTimer); _welcomeTimer = null; }
+  }
   $("btn-welcome-start").addEventListener("click", () => {
+    leaveWelcome();
     showDashboard();
   });
   $("btn-welcome-skip").addEventListener("click", () => {
+    leaveWelcome();
     markWelcomeSeen(currentUser.email);
     showDashboard();
   });
@@ -857,6 +954,7 @@ function renderFilters(){
 
 /* ================= Dashboard ================= */
 function showDashboard(){
+  if(_welcomeTimer){ clearInterval(_welcomeTimer); _welcomeTimer = null; }
   $("view-login").classList.add("hidden");
   $("view-welcome").classList.add("hidden");
   $("view-blocked").classList.add("hidden");

@@ -82,7 +82,40 @@
   .opt.selected{border-color:var(--accent);background:#fbeed2}
   .opt.correct{border-color:var(--good);background:#e2f5e9}
   .opt.wrong{border-color:var(--bad);background:#fbe4e0}
-  .flash{background:#fbfbf9;border:1px solid var(--border);border-radius:12px;padding:26px;min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;cursor:pointer}
+  /* ─── FLASHCARD 3D FLIP ─── */
+  .flash-scene{perspective:1200px;margin-bottom:10px;border-radius:14px}
+  .flash-inner{
+    position:relative;width:100%;min-height:220px;
+    transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);
+    cursor:pointer;border-radius:14px
+  }
+  .flash-inner.flipped{transform:rotateY(180deg)}
+  .flash-face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;border-radius:14px;padding:24px 20px;border:1px solid var(--border)
+  }
+  .flash-front{background:#fff}
+  .flash-back{background:var(--header);color:#fff;transform:rotateY(180deg)}
+  .flash-img{max-width:100%;max-height:150px;object-fit:contain;border-radius:10px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.10)}
+  .flash-label{font-size:17px;font-weight:700;line-height:1.4}
+  .flash-counter{text-align:center;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px;letter-spacing:.2px}
+  .flash-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:10px;opacity:.7}
+
+  /* ─── QUIZ IMPROVEMENTS ─── */
+  @keyframes pulse-correct{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+  @keyframes shake-wrong{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .opt.correct{animation:pulse-correct .4s ease;animation-fill-mode:both}
+  .opt.wrong{animation:shake-wrong .4s ease}
+  .quiz-score-ring{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px;margin:0 auto 14px;border:4px solid}
+  .quiz-score-ring.passed{border-color:var(--good);color:var(--good);background:#e8f7ee}
+  .quiz-score-ring.failed{border-color:var(--bad);color:var(--bad);background:#fdecea}
+  .missed-list{text-align:left;margin:16px 0 4px}
+  .missed-item{padding:10px 13px;border-radius:10px;background:#fffbf2;border:1px solid #f0ddb0;margin-bottom:8px;font-size:13.5px}
+  .missed-item .mi-q{font-weight:700;margin-bottom:4px;color:var(--text)}
+  .missed-item .mi-a{color:var(--good);font-size:13px}
+  .missed-title{font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:8px;border-bottom:1px solid var(--border);text-align:left}
   th{color:var(--muted);font-weight:700}
@@ -230,7 +263,14 @@
       </div>
 
       <div id="mod-flash" class="hidden">
-        <div class="flash" id="flash-card"></div>
+        <div class="flash-counter" id="flash-counter"></div>
+        <div class="flash-scene">
+          <div class="flash-inner" id="flash-inner">
+            <div class="flash-face flash-front" id="flash-front"></div>
+            <div class="flash-face flash-back" id="flash-back"></div>
+          </div>
+        </div>
+        <div class="flash-hint" id="flash-hint"></div>
         <div class="dots" id="flash-dots"></div>
         <div class="nav-row">
           <button class="btn secondary" id="btn-flash-prev" data-t-en="Previous" data-t-es="Anterior">Anterior</button>
@@ -666,26 +706,42 @@ $("btn-lesson-next").addEventListener("click", () => {
 function renderFlash(){
   const m = activeModule;
   const f = m.flashcards[flashIdx];
-  const card = $("flash-card");
-  card.dataset.showBack = "false";
-  function showFront(){
-    card.innerHTML = f.img
-      ? `<img src="${f.img}" alt="${t(f.front)}" style="max-width:100%;max-height:160px;object-fit:contain;border-radius:8px;margin-bottom:8px;"><br>${t(f.front)}`
-      : t(f.front);
-  }
-  showFront();
-  card.onclick = () => {
-    const showBack = card.dataset.showBack === "true";
-    card.dataset.showBack = showBack ? "false" : "true";
-    if(showBack){ showFront(); } else { card.innerHTML = t(f.back); }
-  };
+  const inner = $("flash-inner");
+
+  // Reset flip without visible transition
+  inner.style.transition = "none";
+  inner.classList.remove("flipped");
+  void inner.offsetWidth; // force reflow
+  inner.style.transition = "";
+
+  // Front face — image + name
+  $("flash-front").innerHTML = f.img
+    ? `<img src="${f.img}" alt="${t(f.front)}" class="flash-img"><div class="flash-label">${t(f.front)}</div>`
+    : `<div class="flash-label" style="font-size:21px">${t(f.front)}</div>`;
+
+  // Back face — ingredients / details
+  $("flash-back").innerHTML = `<div class="flash-label" style="font-size:14.5px;font-weight:600;line-height:1.6">${t(f.back)}</div>`;
+
+  // Counter
+  $("flash-counter").textContent = lang === "es"
+    ? `Tarjeta ${flashIdx + 1} de ${m.flashcards.length}`
+    : `Card ${flashIdx + 1} of ${m.flashcards.length}`;
+
+  // Hint
+  $("flash-hint").textContent = lang === "es" ? "Toca para ver los ingredientes" : "Tap to reveal ingredients";
+
+  // Toggle flip on click
+  inner.onclick = () => inner.classList.toggle("flipped");
+
+  // Dot indicators
   const dots = $("flash-dots");
   dots.innerHTML = "";
   m.flashcards.forEach((_, i) => {
     const d = document.createElement("span");
-    if(i === flashIdx) d.className = "active";
+    if (i === flashIdx) d.className = "active";
     dots.appendChild(d);
   });
+
   $("btn-flash-prev").disabled = flashIdx === 0;
   const isLast = flashIdx === m.flashcards.length - 1;
   $("btn-flash-next").textContent = isLast
@@ -751,6 +807,7 @@ $("btn-quiz-submit").addEventListener("click", () => {
     return;
   }
   let correct = 0;
+  const missed = [];
   const blocks = document.querySelectorAll("#quiz-body .q-block");
   m.quiz.forEach((q, qi) => {
     const opts = blocks[qi].querySelectorAll(".opt");
@@ -759,24 +816,66 @@ $("btn-quiz-submit").addEventListener("click", () => {
       if(realIdx === q.correct) o.classList.add("correct");
       else if(realIdx === quizAnswers[qi] && realIdx !== q.correct) o.classList.add("wrong");
     });
-    if(quizAnswers[qi] === q.correct) correct++;
+    if(quizAnswers[qi] === q.correct){
+      correct++;
+    } else {
+      missed.push({ question: t(q.q), answer: t(q.options[q.correct]) });
+    }
   });
   const score = Math.round((correct / m.quiz.length) * 100);
   const passed = score >= m.pass;
   saveProgress(currentUser.email, m.id, passed, score, !!m.critical);
 
+  // Build missed-questions HTML
+  let missedHtml = "";
+  if(missed.length){
+    const missedLabel = lang==="es" ? "Preguntas incorrectas" : "Missed questions";
+    const correctLabel = lang==="es" ? "Respuesta correcta:" : "Correct answer:";
+    missedHtml = `
+      <div class="missed-title">${missedLabel}</div>
+      <div class="missed-list">
+        ${missed.map(m => `
+          <div class="missed-item">
+            <div class="mi-q">${m.question}</div>
+            <div class="mi-a">✓ ${correctLabel} ${m.answer}</div>
+          </div>
+        `).join("")}
+      </div>`;
+  }
+
   const result = $("quiz-result");
   result.classList.remove("hidden");
   result.innerHTML = `
-    <div style="font-size:22px;font-weight:800;color:${passed ? "var(--good)" : "var(--bad)"}">${score}%</div>
-    <div style="margin:8px 0">${passed ? (lang==="es"?"¡Aprobado! 🎉":"Passed! 🎉") : (lang==="es"?"No aprobado — inténtalo de nuevo.":"Not passed — try again.")}</div>
+    <div class="quiz-score-ring ${passed ? "passed" : "failed"}">${score}%</div>
+    <div style="font-size:17px;font-weight:800;margin-bottom:6px">
+      ${passed
+        ? (lang==="es" ? "¡Aprobado! 🎉" : "Passed! 🎉")
+        : (lang==="es" ? "No aprobado — ¡inténtalo de nuevo!" : "Not passed — try again!")}
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px">
+      ${correct} / ${m.quiz.length} ${lang==="es" ? "correctas" : "correct"}
+    </div>
+    ${!passed ? missedHtml : ""}
     ${passed ? trackCompleteBanner(m.track) : ""}
-    <button class="btn" id="btn-quiz-continue">${passed ? (lang==="es"?"Continuar":"Continue") : (lang==="es"?"Reintentar":"Retry")}</button>
+    <button class="btn" style="width:100%" id="btn-quiz-continue">
+      ${passed ? (lang==="es" ? "Continuar" : "Continue") : (lang==="es" ? "Reintentar" : "Retry")}
+    </button>
+    ${!passed && m.flashcards && m.flashcards.length ? `
+      <button class="btn secondary" style="width:100%;margin-top:8px" id="btn-review-cards">
+        ${lang==="es" ? "Repasar tarjetas" : "Review flashcards"}
+      </button>` : ""}
   `;
   $("btn-quiz-submit").classList.add("hidden");
   $("btn-quiz-continue").addEventListener("click", () => {
     if(passed) showDashboard();
     else startQuiz();
+  });
+  const btnReview = document.getElementById("btn-review-cards");
+  if(btnReview) btnReview.addEventListener("click", () => {
+    flashIdx = 0;
+    $("mod-quiz").classList.add("hidden");
+    $("mod-flash").classList.remove("hidden");
+    renderFlash();
   });
 });
 

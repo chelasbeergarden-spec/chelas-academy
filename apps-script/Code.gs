@@ -1,6 +1,6 @@
 // Chela's Academy — backend de Google Apps Script
 // Conecta la app con dos Google Sheets:
-//   - Roster: quién puede entrar y con qué rol
+//   - Roster: quién puede entrar y con qué rol (columnas: email, name, role, pin)
 //   - Progress: registro de progreso que la app llena sola
 //
 // Para actualizar: pega este código completo en Extensions > Apps Script,
@@ -26,7 +26,8 @@ function getRoster() {
     var email = String(data[i][0] || '').trim().toLowerCase();
     var name  = String(data[i][1] || '').trim();
     var role  = String(data[i][2] || '').trim();
-    if (email && name && role) roster.push({ email: email, name: name, role: role });
+    var pin   = String(data[i][3] || '').trim();
+    if (email && name && role) roster.push({ email: email, name: name, role: role, pin: pin });
   }
   return jsonOut({ roster: roster });
 }
@@ -83,13 +84,14 @@ function addRosterEntry(data) {
   var email = String(data.email || '').trim().toLowerCase();
   var name  = String(data.name  || '').trim();
   var role  = String(data.role  || '').trim();
+  var pin   = String(data.pin   || '').trim();
   if (!email || !name || !role) return jsonOut({ error: 'missing fields' });
   var rows = sheet.getDataRange().getValues();
   for (var i = 1; i < rows.length; i++) {
     if (String(rows[i][0] || '').trim().toLowerCase() === email)
       return jsonOut({ error: 'email already exists' });
   }
-  sheet.appendRow([email, name, role]);
+  sheet.appendRow([email, name, role, pin]);
   return jsonOut({ status: 'ok' });
 }
 
@@ -112,10 +114,14 @@ function updateRosterEntry(data) {
   var newEmail = String(data.email    || '').trim().toLowerCase();
   var name     = String(data.name     || '').trim();
   var role     = String(data.role     || '').trim();
+  var pin      = String(data.pin      !== undefined ? data.pin : '').trim();
   var rows     = sheet.getDataRange().getValues();
   for (var i = 1; i < rows.length; i++) {
     if (String(rows[i][0] || '').trim().toLowerCase() === oldEmail) {
-      sheet.getRange(i + 1, 1, 1, 3).setValues([[newEmail, name, role]]);
+      // If pin is empty string, preserve the existing pin
+      var existingPin = String(rows[i][3] || '').trim();
+      var finalPin    = (pin !== '') ? pin : existingPin;
+      sheet.getRange(i + 1, 1, 1, 4).setValues([[newEmail, name, role, finalPin]]);
       return jsonOut({ status: 'ok' });
     }
   }

@@ -433,6 +433,7 @@
           <option value="Host">Host</option>
           <option value="Kitchen">Kitchen</option>
           <option value="Manager">Manager</option>
+          <option value="Admin">Admin</option>
         </select>
         <button class="btn small" id="btn-onb-add" data-t-en="+ Add candidate" data-t-es="+ Añadir candidato">+ Añadir candidato</button>
       </div>
@@ -484,7 +485,7 @@
 /* ================= Config ================= */
 const REPORT_URL = "https://script.google.com/macros/s/AKfycbw-wzlDSi_ErKPzxc3Ek_C5XTuGux3KUCx9su4I3FZTAR-FjjUlhQnSFHbUO1rYT-IVPw/exec";
 
-const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Kitchen:"KITCHEN", Manager:"MANAGER" };
+const ROLE_TRACK = { Server:"SERVER", Bartender:"BARTENDER", Busser:"BUSSER", Host:"HOST", Kitchen:"KITCHEN", Manager:"MANAGER", Admin:"MANAGER" };
 const ALL_TRACKS = ["CORE", "SERVER", "BARTENDER", "BUSSER", "HOST", "KITCHEN", "MANAGER"];
 const TRACK_LABEL = { CORE: { en: "Core", es: "Core" }, SERVER: { en: "Server", es: "Server" }, BARTENDER: { en: "Bartender", es: "Bartender" }, BUSSER: { en: "Busser", es: "Busser" }, HOST: { en: "Host", es: "Host" }, KITCHEN: { en: "Kitchen", es: "Cocina" }, MANAGER: { en: "Manager", es: "Manager" } };
 
@@ -694,6 +695,8 @@ function checkUserAccess(email){
 
   const rec = getUserRecord(email);
   if(!rec) return { ok: true };
+  // Admin (dueño / supervisión): sin límite de acceso, no caduca.
+  if((currentUser ? currentUser.role : rec.role) === "Admin") return { ok: true };
 
   // Explicit hold set by admin
   if(rec.status === "hold"){
@@ -725,7 +728,7 @@ function checkUserAccess(email){
 
 function checkAutoHold(email){
   // Managers and QA never auto-hold
-  if(currentUser && (currentUser.role === "Manager" || isQAUser(email))) return;
+  if(currentUser && (currentUser.role === "Admin" || isQAUser(email))) return;
   const rec = getUserRecord(email);
   if(!rec || rec.status !== "active") return;
   const tracks = getUserTracks(rec.role, email);
@@ -986,7 +989,9 @@ function isQAUser(email){
 }
 
 function getUserTracks(role, email){
-  if(role === "Manager" || isQAUser(email)) return ALL_TRACKS.slice();
+  // Admin (supervisión) y QA ven TODOS los tracks. Manager es un rol de entrenamiento
+  // normal: ve CORE + su track y debe completarlo.
+  if(role === "Admin" || isQAUser(email)) return ALL_TRACKS.slice();
   const track = ROLE_TRACK[role];
   return ["CORE", track];
 }
@@ -1089,8 +1094,8 @@ function showDashboard(){
   $("btn-logout").classList.remove("hidden");
   $("header-username").classList.remove("hidden");
   $("header-username").textContent = currentUser.name;
-  $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Manager");
-  $("btn-go-onboarding").classList.toggle("hidden", currentUser.role !== "Manager");
+  $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Admin");
+  $("btn-go-onboarding").classList.toggle("hidden", currentUser.role !== "Admin");
 
   userTracks = getUserTracks(currentUser.role, currentUser.email);
   if(!userTracks.includes(activeTrack)) activeTrack = userTracks[0];
@@ -1979,7 +1984,7 @@ async function loadAdminRoster() {
 }
 
 function renderRosterPanel() {
-  const VALID_ROLES = ["Server","Bartender","Busser","Host","Kitchen","Manager"];
+  const VALID_ROLES = ["Server","Bartender","Busser","Host","Kitchen","Manager","Admin"];
   const panel = $("admin-panel-roster");
 
   let html = `

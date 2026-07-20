@@ -1105,7 +1105,8 @@ function showDashboard(){
   $("header-username").classList.remove("hidden");
   $("header-username").textContent = currentUser.name;
   $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Admin");
-  $("btn-go-onboarding").classList.toggle("hidden", currentUser.role !== "Admin");
+  // Onboarding desactivado: se administra todo desde el Roster. (Para reactivar: volver a toggle por rol Admin.)
+  $("btn-go-onboarding").classList.add("hidden");
 
   userTracks = getUserTracks(currentUser.role, currentUser.email);
   if(!userTracks.includes(activeTrack)) activeTrack = userTracks[0];

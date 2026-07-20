@@ -1745,3 +1745,348 @@ const QUIZ_EXPLANATIONS = {
   ]
 };
 if (typeof module !== 'undefined') { module.exports = { MODULES, QUIZ_EXPLANATIONS }; }
+
+/* ═══════════════════════════════════════════════════════════════
+   EXTRA_FLASHCARDS — tarjetas de repaso adicionales por módulo, usadas SOLO por el
+   modo "Repaso rápido". No cambian el flujo de módulos/exámenes. Formato:
+   EXTRA_FLASHCARDS[<id>] = [ {front:{en,es}, back:{en,es}}, ... ]
+   ═══════════════════════════════════════════════════════════════ */
+const EXTRA_FLASHCARDS = {
+  "C2": [
+    {
+      "front": {
+        "es": "¿Las papas fritas son libres de gluten?",
+        "en": "Are the fries gluten-free?"
+      },
+      "back": {
+        "es": "No: la freidora se comparte con productos con gluten.",
+        "en": "No: the fryer is shared with gluten products."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Las papas son seguras para alergia a mariscos?",
+        "en": "Are fries safe for a shellfish allergy?"
+      },
+      "back": {
+        "es": "Sí: se fríen en la freidora sin mariscos.",
+        "en": "Yes: fried in the shellfish-free fryer."
+      }
+    },
+    {
+      "front": {
+        "es": "Etiqueta correcta en el POS para una alergia",
+        "en": "Correct POS tag for an allergy"
+      },
+      "back": {
+        "es": "ALLERGY – [Alérgeno] – Mesa #",
+        "en": "ALLERGY – [Allergen] – Table #"
+      }
+    },
+    {
+      "front": {
+        "es": "Tienes duda sobre un ingrediente y hay alergia",
+        "en": "Unsure about an ingredient with an allergy"
+      },
+      "back": {
+        "es": "Detente y pregunta a un manager o a la cocina. Nunca adivines.",
+        "en": "Stop and ask a manager or the kitchen. Never guess."
+      }
+    }
+  ],
+  "CESC": [
+    {
+      "front": {
+        "es": "Nombra 3 situaciones que SIEMPRE van a un manager",
+        "en": "Name 3 situations that ALWAYS go to a manager"
+      },
+      "back": {
+        "es": "Lesión/emergencia, alergia, huésped intoxicado/agresivo, robo/pago, acoso, falla de equipo, policía/medios/legal.",
+        "en": "Injury/emergency, allergy, intoxicated/aggressive guest, theft/payment, harassment, equipment failure, police/media/legal."
+      }
+    },
+    {
+      "front": {
+        "es": "Un huésped cree tener una reacción alérgica",
+        "en": "A guest thinks they're having an allergic reaction"
+      },
+      "back": {
+        "es": "Involucra a un manager de inmediato.",
+        "en": "Involve a manager immediately."
+      }
+    },
+    {
+      "front": {
+        "es": "Entra un policía haciendo preguntas",
+        "en": "A police officer comes in asking questions"
+      },
+      "back": {
+        "es": "Avisa a un manager; no respondas tú solo.",
+        "en": "Get a manager; don't answer on your own."
+      }
+    },
+    {
+      "front": {
+        "es": "No sabes si algo amerita llamar al manager",
+        "en": "Not sure if something warrants the manager"
+      },
+      "back": {
+        "es": "Trátalo como que sí y avisa. Mejor de más que callar.",
+        "en": "Treat it as yes and tell them. Better to over-report."
+      }
+    }
+  ],
+  "S4": [
+    {
+      "front": {
+        "es": "Primer paso ante una reacción alérgica severa",
+        "en": "First step in a severe allergic reaction"
+      },
+      "back": {
+        "es": "Llama al 911 de inmediato y avisa a un manager.",
+        "en": "Call 911 immediately and notify a manager."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Qué salsa contiene soya?",
+        "en": "Which sauce contains soy?"
+      },
+      "back": {
+        "es": "La salsa del Lomo Saltado.",
+        "en": "The Lomo Saltado sauce."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Qué significa el asterisco (*) en el menú?",
+        "en": "What does the (*) on the menu mean?"
+      },
+      "back": {
+        "es": "Artículo crudo o poco cocido.",
+        "en": "Raw or undercooked item."
+      }
+    },
+    {
+      "front": {
+        "es": "Además del chef/expo, ¿a quién avisas en una alergia?",
+        "en": "Besides chef/expo, who else on an allergy order?"
+      },
+      "back": {
+        "es": "A un manager, para supervisar preparación y entrega.",
+        "en": "A manager, to oversee prep and delivery."
+      }
+    }
+  ],
+  "S8": [
+    {
+      "front": {
+        "es": "¿A quién le pides identificación?",
+        "en": "Who do you ID?"
+      },
+      "back": {
+        "es": "A cualquiera que aparente 35 o menos, sin excepciones.",
+        "en": "Anyone who looks 35 or younger, no exceptions."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Quién puede anular un corte de alcohol?",
+        "en": "Who can override an alcohol cut-off?"
+      },
+      "back": {
+        "es": "Solo el Manager en Turno (MOD).",
+        "en": "Only the Manager on Duty (MOD)."
+      }
+    },
+    {
+      "front": {
+        "es": "Plazos del entrenamiento RVA",
+        "en": "RVA training deadlines"
+      },
+      "back": {
+        "es": "No managers: 30 días; managers: 15 días; repaso cada 4 meses.",
+        "en": "Non-managers: 30 days; managers: 15; refresher every 4 months."
+      }
+    },
+    {
+      "front": {
+        "es": "Primer paso al notar a alguien intoxicado",
+        "en": "First step when you notice intoxication"
+      },
+      "back": {
+        "es": "Avisa a un supervisor/manager de inmediato; nunca lo manejes solo.",
+        "en": "Alert a supervisor/manager immediately; never handle it alone."
+      }
+    }
+  ],
+  "BT8": [
+    {
+      "front": {
+        "es": "¿Puedes tomar shots con clientes mientras trabajas?",
+        "en": "Can you drink shots with customers while working?"
+      },
+      "back": {
+        "es": "No, nunca — te pone a ti y al restaurante en riesgo.",
+        "en": "No, never — it puts you and the restaurant at risk."
+      }
+    },
+    {
+      "front": {
+        "es": "¿A quién le pides identificación?",
+        "en": "Who do you ID?"
+      },
+      "back": {
+        "es": "A cualquiera que aparente 35 o menos, sin excepciones.",
+        "en": "Anyone who looks 35 or younger, no exceptions."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Quién puede anular un corte?",
+        "en": "Who can override a cut-off?"
+      },
+      "back": {
+        "es": "Solo el Manager en Turno (MOD).",
+        "en": "Only the Manager on Duty (MOD)."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Toda bebida alcohólica va a Toast?",
+        "en": "Every alcoholic drink into Toast?"
+      },
+      "back": {
+        "es": "Sí, sin excepciones ni cortesías sin autorización de un manager.",
+        "en": "Yes, no exceptions and no comps without manager authorization."
+      }
+    }
+  ],
+  "BT11": [
+    {
+      "front": {
+        "es": "Un huésped pide quitar un ingrediente — ¿qué confirmas?",
+        "en": "A guest asks to remove an ingredient — what do you confirm?"
+      },
+      "back": {
+        "es": "Si es alergia o preferencia; el procedimiento cambia.",
+        "en": "Whether it's an allergy or a preference; the procedure changes."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Quién confirma que el plato se puede hacer seguro?",
+        "en": "Who confirms the dish can be made safely?"
+      },
+      "back": {
+        "es": "El chef/expo, antes de ingresar el pedido.",
+        "en": "The chef/expo, before the order goes in."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Etiquetas ALLERGY los compartidos sin el alérgeno?",
+        "en": "Tag shared dishes without the allergen?"
+      },
+      "back": {
+        "es": "Sí, para prevenir contaminación cruzada.",
+        "en": "Yes, to prevent cross-contamination."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Cómo se entrega un plato con alergia?",
+        "en": "How is an allergy plate delivered?"
+      },
+      "back": {
+        "es": "Directo frente al huésped con la alergia, verificando la mesa.",
+        "en": "Directly to the guest with the allergy, verifying the table."
+      }
+    }
+  ],
+  "MG6": [
+    {
+      "front": {
+        "es": "¿Autoridad final para anular un corte?",
+        "en": "Final authority to override a cut-off?"
+      },
+      "back": {
+        "es": "El Manager en Turno (MOD).",
+        "en": "The Manager on Duty (MOD)."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Qué determina las horas de servicio de alcohol?",
+        "en": "What sets alcohol service hours?"
+      },
+      "back": {
+        "es": "La regla más restrictiva aplicable.",
+        "en": "The most restrictive applicable rule."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Quién audita Toast para cumplimiento?",
+        "en": "Who audits Toast for compliance?"
+      },
+      "back": {
+        "es": "Los managers.",
+        "en": "Managers."
+      }
+    },
+    {
+      "front": {
+        "es": "Huésped con problemas recurrentes de intoxicación",
+        "en": "Guest with recurring intoxication issues"
+      },
+      "back": {
+        "es": "La gerencia puede limitar o rechazar el servicio futuro.",
+        "en": "Management can limit or refuse future service."
+      }
+    }
+  ],
+  "K11": [
+    {
+      "front": {
+        "es": "¿Cuándo reportas síntomas de enfermedad?",
+        "en": "When do you report illness symptoms?"
+      },
+      "back": {
+        "es": "Antes de empezar tu turno, no después.",
+        "en": "Before your shift starts, not after."
+      }
+    },
+    {
+      "front": {
+        "es": "Antes de que un plato con alergia salga del pase",
+        "en": "Before an allergy plate leaves the pass"
+      },
+      "back": {
+        "es": "Verifica el ticket contra el plato terminado.",
+        "en": "Check the ticket against the finished plate."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Por qué no audífonos en la cocina?",
+        "en": "Why no earbuds in the kitchen?"
+      },
+      "back": {
+        "es": "No oyes una alarma de incendio ni la advertencia de un compañero.",
+        "en": "You can't hear a fire alarm or a coworker's warning."
+      }
+    },
+    {
+      "front": {
+        "es": "¿Manos desnudas en alimentos listos o hielo?",
+        "en": "Bare hands on ready-to-eat food or ice?"
+      },
+      "back": {
+        "es": "No — usa utensilios, scoops o guantes.",
+        "en": "No — use utensils, scoops, or gloves."
+      }
+    }
+  ]
+};
+if (typeof module !== 'undefined') { module.exports = Object.assign({}, module.exports, { EXTRA_FLASHCARDS }); }

@@ -314,12 +314,30 @@
       </div>
     </div>
 
+    <button class="btn secondary" id="btn-open-review" style="width:100%;margin-bottom:14px" data-t-en="⚡ Quick review" data-t-es="⚡ Repaso rápido">⚡ Repaso rápido</button>
+
     <div class="search-row">
       <input id="search-input" data-t-en-ph="Search module…" data-t-es-ph="Buscar módulo…" placeholder="Buscar módulo…">
     </div>
     <div class="filters" id="filter-pills"></div>
     <div class="track-summary" id="track-summary"></div>
     <div id="module-list"></div>
+  </div>
+
+  <!-- REVIEW (repaso rápido con flashcards) -->
+  <div id="view-review" class="hidden">
+    <button class="btn secondary small" id="btn-review-back" style="margin-top:16px" data-t-en="← Back" data-t-es="← Volver">← Volver</button>
+    <div class="card" style="margin-top:12px">
+      <h2 style="margin-top:0" data-t-en="Quick review" data-t-es="Repaso rápido">Repaso rápido</h2>
+      <div class="muted" id="review-progress" style="margin-bottom:10px"></div>
+      <div class="flash" id="review-card"></div>
+      <div class="muted center" id="review-hint" style="margin-top:8px;font-size:12px" data-t-en="Tap the card to flip" data-t-es="Toca la tarjeta para voltear">Toca la tarjeta para voltear</div>
+      <div class="nav-row">
+        <button class="btn secondary" id="btn-review-prev" data-t-en="Previous" data-t-es="Anterior">Anterior</button>
+        <button class="btn" id="btn-review-next" data-t-en="Next" data-t-es="Siguiente">Siguiente</button>
+      </div>
+      <div id="review-empty" class="hidden muted center" style="padding:20px 0"></div>
+    </div>
   </div>
 
   <!-- MODULE (lessons / flashcards / quiz) -->
@@ -1040,6 +1058,7 @@ function showDashboard(){
   $("view-module").classList.add("hidden");
   $("view-admin").classList.add("hidden");
   $("view-onboarding").classList.add("hidden");
+  $("view-review").classList.add("hidden");
   $("view-dashboard").classList.remove("hidden");
   $("btn-logout").classList.remove("hidden");
   $("header-username").classList.remove("hidden");
@@ -1130,6 +1149,72 @@ function renderModuleList(){
 $("search-input").addEventListener("input", renderModuleList);
 
 /* ================= Module: lessons -> flashcards -> quiz ================= */
+/* ================= Repaso rápido (flashcards) ================= */
+let reviewCards = [], reviewIdx = 0;
+
+function gatherReviewCards(){
+  const mods = (userTracks || []).flatMap(getModulesForTrack);
+  const cards = [];
+  mods.forEach(m => {
+    const base  = (m.flashcards && m.flashcards.length) ? m.flashcards : [];
+    const extra = (typeof EXTRA_FLASHCARDS !== "undefined" && EXTRA_FLASHCARDS[m.id]) ? EXTRA_FLASHCARDS[m.id] : [];
+    base.concat(extra).forEach(c => cards.push({ front: c.front, back: c.back, mod: m.id, modTitle: m.title }));
+  });
+  return shuffleArray(cards);
+}
+
+function openReview(){
+  $("view-dashboard").classList.add("hidden");
+  $("track-tabs").classList.add("hidden");
+  $("view-review").classList.remove("hidden");
+  reviewCards = gatherReviewCards();
+  reviewIdx = 0;
+  const hasCards = reviewCards.length > 0;
+  ["review-card","btn-review-prev","btn-review-next","review-hint","review-progress"].forEach(id =>
+    $(id).classList.toggle("hidden", !hasCards));
+  const empty = $("review-empty");
+  empty.classList.toggle("hidden", hasCards);
+  if(!hasCards){
+    empty.textContent = lang==="es"
+      ? "Aún no hay tarjetas de repaso para tu rol."
+      : "There are no review cards for your role yet.";
+    return;
+  }
+  renderReviewCard();
+}
+
+function renderReviewCard(){
+  const c = reviewCards[reviewIdx];
+  if(!c) return;
+  const card = $("review-card");
+  card.dataset.showBack = "false";
+  card.textContent = t(c.front);
+  card.onclick = () => {
+    const showBack = card.dataset.showBack === "true";
+    card.dataset.showBack = showBack ? "false" : "true";
+    card.textContent = showBack ? t(c.front) : t(c.back);
+  };
+  $("review-progress").textContent = `${reviewIdx+1} / ${reviewCards.length} · ${c.mod} — ${t(c.modTitle)}`;
+  $("btn-review-prev").disabled = reviewIdx === 0;
+  const last = reviewIdx === reviewCards.length - 1;
+  $("btn-review-next").textContent = last
+    ? (lang==="es" ? "Terminar" : "Finish")
+    : (lang==="es" ? "Siguiente" : "Next");
+}
+
+$("btn-open-review").addEventListener("click", openReview);
+$("btn-review-back").addEventListener("click", () => {
+  $("view-review").classList.add("hidden");
+  showDashboard();
+});
+$("btn-review-prev").addEventListener("click", () => {
+  if(reviewIdx > 0){ reviewIdx--; renderReviewCard(); }
+});
+$("btn-review-next").addEventListener("click", () => {
+  if(reviewIdx < reviewCards.length - 1){ reviewIdx++; renderReviewCard(); }
+  else { $("view-review").classList.add("hidden"); showDashboard(); }
+});
+
 function openModule(m){
   activeModule = m;
   lessonIdx = 0; flashIdx = 0; quizAnswers = {};

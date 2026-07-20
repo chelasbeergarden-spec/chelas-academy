@@ -2090,3 +2090,13 @@ const EXTRA_FLASHCARDS = {
   ]
 };
 if (typeof module !== 'undefined') { module.exports = Object.assign({}, module.exports, { EXTRA_FLASHCARDS }); }
+
+/* ═══════════════════════════════════════════════════════════════
+   RECERTIFICACIÓN — cada cuántos meses caduca un módulo (0/ausente = nunca).
+   Alcohol = 4 meses (regla RVA del propio manual). Alérgenos/cocina/escalación = 12.
+   MODULE_UPDATED: fecha ISO en que se actualizó el contenido de un módulo; quien lo
+   aprobó ANTES de esa fecha deberá recertificar. Ej: MODULE_UPDATED["S8"]="2026-09-01".
+   ═══════════════════════════════════════════════════════════════ */
+const RECERT_MONTHS = { "S8": 4, "BT8": 4, "MG6": 4, "C2": 12, "S4": 12, "BT11": 12, "K11": 12, "CESC": 12 };
+const MODULE_UPDATED = {};
+if (typeof module !== "undefined") { module.exports = Object.assign({}, module.exports, { RECERT_MONTHS, MODULE_UPDATED }); }

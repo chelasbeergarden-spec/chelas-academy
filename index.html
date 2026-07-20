@@ -254,6 +254,8 @@
   .del-confirm.show{display:flex}
   .quiz-expl{margin:6px 0 4px;padding:10px 13px;border-radius:10px;background:#eef4f3;border:1px solid #cfe0dc;font-size:13.5px;line-height:1.5;color:#2f4a46}
   .quiz-expl b{color:var(--header)}
+  .module-card .icon.recert{background:#c98a1f;color:#fff}
+  .pill.recert{background:#f4e3c4;color:#8a5a12}
 </style>
 </head>
 <body>
@@ -315,6 +317,7 @@
     </div>
 
     <button class="btn secondary" id="btn-open-review" style="width:100%;margin-bottom:14px" data-t-en="⚡ Quick review" data-t-es="⚡ Repaso rápido">⚡ Repaso rápido</button>
+    <button class="btn hidden" id="btn-cert" style="width:100%;margin-bottom:14px" data-t-en="📜 Download certificate" data-t-es="📜 Descargar certificado">📜 Descargar certificado</button>
 
     <div class="search-row">
       <input id="search-input" data-t-en-ph="Search module…" data-t-es-ph="Buscar módulo…" placeholder="Buscar módulo…">
@@ -476,6 +479,7 @@
 </div>
 
 <script src="modules.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ================= Config ================= */
 const REPORT_URL = "https://script.google.com/macros/s/AKfycbw-wzlDSi_ErKPzxc3Ek_C5XTuGux3KUCx9su4I3FZTAR-FjjUlhQnSFHbUO1rYT-IVPw/exec";
@@ -991,6 +995,28 @@ function getModulesForTrack(track){
   return MODULES.filter(m => m.track === track);
 }
 
+/* ================= Recertificación ================= */
+// ¿Un módulo aprobado en la fecha passMs necesita recertificarse?
+// Dispara por (a) actualización del manual (MODULE_UPDATED) o (b) tiempo (RECERT_MONTHS).
+function recertDueForDate(m, passMs){
+  if(!passMs) return false;
+  const passed = new Date(passMs);
+  if(typeof MODULE_UPDATED !== "undefined" && MODULE_UPDATED[m.id] && passed < new Date(MODULE_UPDATED[m.id])) return true;
+  const months = (typeof RECERT_MONTHS !== "undefined" && RECERT_MONTHS[m.id]) ? RECERT_MONTHS[m.id] : 0;
+  if(months > 0){
+    const due = new Date(passed.getTime());
+    due.setMonth(due.getMonth() + months);
+    if(new Date() > due) return true;
+  }
+  return false;
+}
+function moduleRecertDue(email, m){
+  const rec = getUserRecord(email);
+  const p = rec && rec.progress[m.id];
+  if(!p || !p.passed) return false;
+  return recertDueForDate(m, new Date(p.date).getTime());
+}
+
 function isModulePassed(email, moduleId){
   const rec = getUserRecord(email);
   return !!(rec && rec.progress[moduleId] && rec.progress[moduleId].passed);
@@ -1079,6 +1105,24 @@ function showDashboard(){
   ring.style.background = `conic-gradient(var(--accent) ${pct*3.6}deg, #eee 0deg)`;
   ring.textContent = pct + "%";
 
+  // Certificado: solo si completó todo y no hay recertificaciones pendientes
+  const anyRecertDue = allUserModules.some(m => moduleRecertDue(currentUser.email, m));
+  $("btn-cert").classList.toggle("hidden", !(allUserModules.length > 0 && pct === 100 && !anyRecertDue));
+  // Banner de recertificación pendiente
+  const existingRecert = document.getElementById("recert-banner");
+  if(existingRecert) existingRecert.remove();
+  const recertCount = allUserModules.filter(m => moduleRecertDue(currentUser.email, m)).length;
+  if(recertCount > 0){
+    const rb = document.createElement("div");
+    rb.id = "recert-banner";
+    rb.className = "days-banner warning";
+    rb.textContent = lang==="es"
+      ? `⟳ Tienes ${recertCount} módulo${recertCount===1?"":"s"} por recertificar`
+      : `⟳ You have ${recertCount} module${recertCount===1?"":"s"} to recertify`;
+    const dashCard = $("view-dashboard").querySelector(".card");
+    dashCard.insertAdjacentElement("afterend", rb);
+  }
+
   renderTabs();
   renderFilters();
   renderModuleList();
@@ -1129,15 +1173,23 @@ function renderModuleList(){
     const passedLabel = m.policyOnly
       ? (lang==="es" ? "Confirmado" : "Confirmed")
       : (lang==="es" ? `Aprobado — ${scoreInfo}%` : `Passed — ${scoreInfo}%`);
+    const recertDue = passedMod && moduleRecertDue(currentUser.email, m);
+    const recertLabel = lang==="es" ? "Recertificar — vuelve a aprobarlo" : "Recertify — pass it again";
+    const iconClass  = recertDue ? "recert" : (passedMod ? "done" : (unlocked ? "open" : "locked"));
+    const iconChar   = recertDue ? "⟳" : (passedMod ? "✓" : (unlocked ? "▶" : "🔒"));
+    const stateLabel = recertDue ? recertLabel : (passedMod ? passedLabel : (unlocked ? pendingLabel : lockedLabel));
+    const badge = recertDue
+      ? `<span class="pill recert">${lang==="es"?"Recertificar":"Recertify"}</span>`
+      : (m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : "");
 
     const row = document.createElement("div");
     row.className = "module-card" + (unlocked ? "" : " locked");
     row.innerHTML = `
-      <div class="icon ${passedMod ? "done" : (unlocked ? "open" : "locked")}">${passedMod ? "✓" : (unlocked ? "▶" : "🔒")}</div>
+      <div class="icon ${iconClass}">${iconChar}</div>
       <div class="info">
         <div class="idline"><span class="cat-badge ${m.category}">${m.category}</span></div>
-        <div class="t">${m.id} — ${t(m.title)} ${m.critical ? `<span class="pill crit">${lang==="es"?"Crítico":"Critical"}</span>` : ""}</div>
-        <div class="s">${passedMod ? passedLabel : (unlocked ? pendingLabel : lockedLabel)}</div>
+        <div class="t">${m.id} — ${t(m.title)} ${badge}</div>
+        <div class="s">${stateLabel}</div>
       </div>`;
     if(unlocked){
       row.addEventListener("click", () => openModule(m));
@@ -1214,6 +1266,56 @@ $("btn-review-next").addEventListener("click", () => {
   if(reviewIdx < reviewCards.length - 1){ reviewIdx++; renderReviewCard(); }
   else { $("view-review").classList.add("hidden"); showDashboard(); }
 });
+
+/* ================= Certificado (PDF descargable) ================= */
+function generateCertificate(){
+  if(!(window.jspdf && window.jspdf.jsPDF)){
+    alert(lang==="es" ? "No se pudo cargar el generador de PDF. Revisa tu conexión." : "Couldn't load the PDF generator. Check your connection.");
+    return;
+  }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+  const W = doc.internal.pageSize.getWidth();
+  const es = lang === "es";
+
+  doc.setDrawColor(224,165,58); doc.setLineWidth(3); doc.rect(22,22,W-44,doc.internal.pageSize.getHeight()-44);
+  doc.setFillColor(47,107,102); doc.rect(22,22,W-44,64,"F");
+  doc.setFillColor(224,165,58); doc.rect(22,86,W-44,5,"F");
+  doc.setTextColor(255,255,255); doc.setFont("helvetica","bold"); doc.setFontSize(24);
+  doc.text("Chela's Academy", W/2, 62, { align:"center" });
+
+  doc.setTextColor(34,48,46); doc.setFont("helvetica","bold"); doc.setFontSize(30);
+  doc.text(es ? "Certificado de Capacitación" : "Training Certificate", W/2, 165, { align:"center" });
+
+  doc.setFont("helvetica","normal"); doc.setFontSize(13); doc.setTextColor(90,90,90);
+  doc.text(es ? "Se certifica que" : "This certifies that", W/2, 205, { align:"center" });
+  doc.setFont("helvetica","bold"); doc.setFontSize(26); doc.setTextColor(47,107,102);
+  doc.text(currentUser.name, W/2, 240, { align:"center" });
+
+  const total = userTracks.flatMap(getModulesForTrack).length;
+  const tracks = userTracks.map(tk => t(TRACK_LABEL[tk])).join(", ");
+  doc.setFont("helvetica","normal"); doc.setFontSize(13); doc.setTextColor(90,90,90);
+  const l1 = es
+    ? `completó el programa de entrenamiento de Chela's Academy como ${currentUser.role},`
+    : `completed the Chela's Academy training program as ${currentUser.role},`;
+  const l2 = es
+    ? `aprobando los ${total} módulos de: ${tracks}.`
+    : `passing all ${total} modules of: ${tracks}.`;
+  doc.text(l1, W/2, 275, { align:"center" });
+  doc.text(l2, W/2, 296, { align:"center", maxWidth: W-160 });
+
+  const dateStr = new Date().toLocaleDateString(es ? "es-US" : "en-US", { year:"numeric", month:"long", day:"numeric" });
+  doc.setFontSize(12); doc.setTextColor(120,120,120);
+  doc.text((es ? "Fecha: " : "Date: ") + dateStr, W/2, 345, { align:"center" });
+
+  doc.setDrawColor(190,190,190); doc.setLineWidth(1); doc.line(W/2-120, 400, W/2+120, 400);
+  doc.setFontSize(11); doc.setTextColor(90,90,90);
+  doc.text(es ? "Gerencia — Chela's" : "Management — Chela's", W/2, 418, { align:"center" });
+
+  const safe = (currentUser.name || "certificado").replace(/[^a-zA-Z0-9]+/g, "_");
+  doc.save(`Certificado-${safe}.pdf`);
+}
+$("btn-cert").addEventListener("click", generateCertificate);
 
 function openModule(m){
   activeModule = m;
@@ -1514,7 +1616,7 @@ function renderAdmin(){
     const total = userModules.length;
     const passedCount = userModules.filter(m => u.progress[m.id] && u.progress[m.id].passed).length;
     const criticalMods = userModules.filter(m => m.critical);
-    const criticalOk = criticalMods.every(m => u.progress[m.id] && u.progress[m.id].passed);
+    const criticalOk = criticalMods.every(m => u.progress[m.id] && u.progress[m.id].passed && !recertDueForDate(m, new Date(u.progress[m.id].date).getTime()));
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${u.name}</td>
@@ -1802,7 +1904,7 @@ async function loadAdminProgress() {
       const allMods  = tracks.flatMap(getModulesForTrack);
       const passed   = allMods.filter(m => u.modules[m.id] && u.modules[m.id].passed).length;
       const critMods = allMods.filter(m => m.critical);
-      const critOk   = critMods.length > 0 && critMods.every(m => u.modules[m.id] && u.modules[m.id].passed);
+      const critOk   = critMods.length > 0 && critMods.every(m => u.modules[m.id] && u.modules[m.id].passed && !recertDueForDate(m, u.modules[m.id]._ts));
       const pct      = allMods.length ? Math.round((passed / allMods.length) * 100) : 0;
       return { email, name: u.name, role: u.role, passed, total: allMods.length, pct, critOk, critTotal: critMods.length, lastActive: u.lastActive };
     }).sort((a, b) => b.pct - a.pct);

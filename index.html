@@ -798,6 +798,12 @@ function markWelcomeSeen(email){
 }
 
 function showWelcome(){
+  // Los Admin no tienen temporizador ni pantalla de bienvenida con cuenta regresiva.
+  if(currentUser && (currentUser.role === "Admin" || isQAUser(currentUser.email))){
+    markWelcomeSeen(currentUser.email);
+    showDashboard();
+    return;
+  }
   ["view-login","view-dashboard","view-module","view-admin","view-onboarding","view-admin-panel"]
     .forEach(id => $(id).classList.add("hidden"));
   $("track-tabs").classList.add("hidden");
@@ -1135,7 +1141,7 @@ function showDashboard(){
   // Days-remaining access banner (all users except QA/Admin)
   const existingBanner = document.getElementById("access-days-banner");
   if(existingBanner) existingBanner.remove();
-  if(!isQAUser(currentUser.email)){
+  if(!isQAUser(currentUser.email) && currentUser.role !== "Admin"){
     const access = checkUserAccess(currentUser.email);
     if(access.ok && access.daysLeft !== undefined){
       const banner = document.createElement("div");

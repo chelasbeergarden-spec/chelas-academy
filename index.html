@@ -1798,6 +1798,10 @@ $("btn-onb-add").addEventListener("click", () => {
 // Admin PIN — guardado en localStorage; por defecto "1234"
 function getAdminPin() { return localStorage.getItem("chelas_admin_pin") || "1234"; }
 function setAdminPin(p) { localStorage.setItem("chelas_admin_pin", p); }
+// Token de admin: se envía al backend en las escrituras del roster. Se guarda solo en
+// este dispositivo (no viaja en el código público). Se configura en Admin Panel > Config.
+function getAdminToken() { return localStorage.getItem("chelas_admin_token") || ""; }
+function setAdminToken(tk) { localStorage.setItem("chelas_admin_token", tk); }
 let adminAuthenticated = false;
 let adminActiveTab = "progress";
 let adminRosterData = [];
@@ -1876,9 +1880,10 @@ async function loadAdminProgress() {
   const panel = $("admin-panel-progress");
   panel.innerHTML = `<p class="muted center" style="padding:28px 0">Cargando datos del equipo…</p>`;
   try {
+    const _tk = "&token=" + encodeURIComponent(getAdminToken());
     const [progRes, rosterRes] = await Promise.all([
-      fetch(REPORT_URL + "?action=allProgress"),
-      fetch(REPORT_URL + "?action=roster")
+      fetch(REPORT_URL + "?action=allProgress" + _tk),
+      fetch(REPORT_URL + "?action=roster" + _tk)
     ]);
     const { progress = [] } = await progRes.json();
     const { roster   = [] } = await rosterRes.json();
@@ -1964,7 +1969,7 @@ async function loadAdminRoster() {
   const panel = $("admin-panel-roster");
   panel.innerHTML = `<p class="muted center" style="padding:28px 0">Cargando roster…</p>`;
   try {
-    const res = await fetch(REPORT_URL + "?action=roster");
+    const res = await fetch(REPORT_URL + "?action=roster&token=" + encodeURIComponent(getAdminToken()));
     const data = await res.json();
     adminRosterData = data.roster || [];
     renderRosterPanel();
@@ -2092,7 +2097,7 @@ async function savePinEdit(email, safeId) {
   fetch(REPORT_URL, {
     method: "POST", mode: "no-cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action: "updateRoster", oldEmail: email, email: email, name: entry.name, role: entry.role, pin: newPin })
+    body: JSON.stringify({ action: "updateRoster", token: getAdminToken(), oldEmail: email, email: email, name: entry.name, role: entry.role, pin: newPin })
   }).catch(() => {});
   entry.pin = newPin;
   saveRosterCache(adminRosterData);
@@ -2109,7 +2114,7 @@ async function saveRosterEdit(email, safeId) {
   fetch(REPORT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ action:"updateRoster", oldEmail:email, email:email, name:newName, role:newRole, pin:existingPin })
+    body: JSON.stringify({ action:"updateRoster", token: getAdminToken(), oldEmail:email, email:email, name:newName, role:newRole, pin:existingPin })
   }).catch(()=>{});
   if (entry) { entry.name = newName; entry.role = newRole; }
   saveRosterCache(adminRosterData);
@@ -2120,7 +2125,7 @@ async function confirmDeleteRoster(email, safeId) {
   fetch(REPORT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ action:"removeRoster", email })
+    body: JSON.stringify({ action:"removeRoster", token: getAdminToken(), email })
   }).catch(()=>{});
   adminRosterData = adminRosterData.filter(r => r.email !== email);
   saveRosterCache(adminRosterData);
@@ -2148,7 +2153,7 @@ async function addRosterUser() {
   fetch(REPORT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ action:"addRoster", email, name, role, pin })
+    body: JSON.stringify({ action:"addRoster", token: getAdminToken(), email, name, role, pin })
   }).catch(()=>{});
   adminRosterData.push({ email, name, role, pin });
   saveRosterCache(adminRosterData);
@@ -2276,8 +2281,24 @@ function renderConfigPanel() {
   const panel = $("admin-panel-config");
   const currentPin = getAdminPin();
   const maxDays = getMaxAccessDays();
+  const tokenSet = getAdminToken().length > 0;
   panel.innerHTML = `
     <div style="max-width:380px;display:flex;flex-direction:column;gap:28px">
+
+      <!-- Token de admin (escrituras del roster) -->
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--header)">🔑 Token de admin</h3>
+        <p style="margin:0 0 12px;font-size:13.5px;color:var(--muted)">
+          Necesario para agregar, editar o eliminar personas del roster. Debe ser IGUAL al valor
+          <b>ADMIN_TOKEN</b> configurado en Apps Script. Se guarda solo en este dispositivo.
+          Estado: <b style="color:${tokenSet ? "var(--good)" : "var(--bad)"}">${tokenSet ? "configurado" : "sin configurar"}</b>
+        </p>
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px">Token</label>
+        <input type="password" id="cfg-token" class="pin-field" placeholder="••••••••" autocomplete="off"
+               style="max-width:260px;letter-spacing:2px;margin-bottom:10px">
+        <p id="cfg-token-msg" style="display:none;font-size:13px;margin:0 0 12px"></p>
+        <button class="btn" id="btn-cfg-save-token">Guardar token</button>
+      </div>
 
       <!-- Período de acceso -->
       <div>
@@ -2313,6 +2334,22 @@ function renderConfigPanel() {
 
     </div>`;
 
+  $("btn-cfg-save-token").addEventListener("click", () => {
+    const v = $("cfg-token").value.trim();
+    const msg = $("cfg-token-msg");
+    msg.style.display = "block";
+    if (!v) {
+      msg.style.color = "var(--bad)";
+      msg.textContent = "Escribe el token (el mismo que ADMIN_TOKEN en Apps Script).";
+      return;
+    }
+    setAdminToken(v);
+    $("cfg-token").value = "";
+    msg.style.color = "var(--good)";
+    msg.textContent = "✓ Token guardado en este dispositivo.";
+    renderConfigPanel();
+  });
+
   $("btn-save-max-days").addEventListener("click", () => {
     const val = parseInt($("cfg-max-days").value);
     const msg = $("cfg-days-msg");
@@ -2347,8 +2384,73 @@ function renderConfigPanel() {
   });
 }
 
-/* ================= Login con PIN ================= */
-let pendingLoginEntry = null; // guarda el entry del roster mientras el usuario escribe el PIN
+/* ================= Login con PIN (verificación en el servidor) ================= */
+let pendingLoginEntry = null; // solo modo legacy (fallback): entry del roster
+let pendingLoginEmail = null; // modo servidor: correo en espera de PIN
+let loginMode = "server";     // "server" | "legacy"
+
+// Verifica correo (+PIN) contra el backend. Devuelve el JSON del servidor, o "FALLBACK"
+// si authCheck no está disponible (backend viejo aún desplegado / sin red).
+async function serverAuthCheck(email, pin){
+  try{
+    const r = await fetch(REPORT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "authCheck", email, pin })
+    });
+    const data = await r.json();
+    if (data && (typeof data.ok !== "undefined" || data.reason)) return data;
+    return "FALLBACK";
+  }catch(err){
+    return "FALLBACK";
+  }
+}
+
+function showPinStep(){
+  $("login-email").closest(".card").querySelector("button#btn-login").style.display = "none";
+  $("login-pin-step").classList.remove("hidden");
+  $("login-pin-error").style.display = "none";
+  $("login-pin").value = "";
+  setTimeout(() => $("login-pin").focus(), 80);
+}
+function showPinError(){
+  $("login-pin-error").style.display = "block";
+  $("login-pin").value = "";
+  $("login-pin").focus();
+}
+function invalidRoleError(role){
+  showLoginError(lang === "es"
+    ? `El rol "${role}" en el Roster no es válido. Pide a tu manager que lo corrija a uno de: Server, Bartender, Busser, Host, Kitchen, Manager.`
+    : `The role "${role}" in the Roster isn't valid. Ask your manager to fix it to one of: Server, Bartender, Busser, Host, Kitchen, Manager.`);
+}
+
+// Fallback: verificación con el roster en el cliente (comportamiento anterior).
+async function legacyLogin(email){
+  loginMode = "legacy";
+  let roster = await fetchRoster();
+  if (!roster) roster = loadRosterCache();
+  if (!roster || !roster.length) {
+    showLoginError(lang === "es"
+      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu manager."
+      : "Couldn't reach the access list. Try again or tell your manager.");
+    return;
+  }
+  const entry = findInRoster(roster, email);
+  if (!entry) {
+    showLoginError(lang === "es"
+      ? "Tu correo no está registrado. Pide a tu manager que te agregue en el Google Sheet."
+      : "Your email isn't registered. Ask your manager to add you to the Google Sheet.");
+    return;
+  }
+  const role = normalizeRole(entry.role);
+  if (!role) { invalidRoleError(entry.role); return; }
+  if (entry.pin && String(entry.pin).length >= 1) {
+    pendingLoginEntry = entry;
+    showPinStep();
+  } else {
+    completeLogin(entry.email, entry.name, role);
+  }
+}
 
 $("btn-login").addEventListener("click", async () => {
   const email = $("login-email").value.trim().toLowerCase();
@@ -2363,58 +2465,55 @@ $("btn-login").addEventListener("click", async () => {
   }
 
   $("btn-login").disabled = true;
-  let roster = await fetchRoster();
-  if (!roster) roster = loadRosterCache();
+  const res = await serverAuthCheck(email, "");
   $("btn-login").disabled = false;
 
-  if (!roster || !roster.length) {
-    showLoginError(lang === "es"
-      ? "No se pudo conectar con la lista de acceso. Intenta de nuevo o avisa a tu manager."
-      : "Couldn't reach the access list. Try again or tell your manager.");
-    return;
-  }
+  if (res === "FALLBACK") { return legacyLogin(email); }
 
-  const entry = findInRoster(roster, email);
-  if (!entry) {
+  loginMode = "server";
+  if (res.reason === "notfound") {
     showLoginError(lang === "es"
       ? "Tu correo no está registrado. Pide a tu manager que te agregue en el Google Sheet."
       : "Your email isn't registered. Ask your manager to add you to the Google Sheet.");
     return;
   }
-
-  const normalizedRole = normalizeRole(entry.role);
-  if (!normalizedRole) {
-    showLoginError(lang === "es"
-      ? `El rol "${entry.role}" en el Roster no es válido. Pide a tu manager que lo corrija a uno de: Server, Bartender, Busser, Host, Manager.`
-      : `The role "${entry.role}" in the Roster isn't valid. Ask your manager to fix it to one of: Server, Bartender, Busser, Host, Manager.`);
+  if (res.reason === "needpin") {
+    pendingLoginEmail = email;
+    showPinStep();
     return;
   }
-
-  // Si el usuario tiene PIN asignado, pedirlo; si no, entrar directo
-  if (entry.pin && entry.pin.length >= 1) {
-    pendingLoginEntry = entry;
-    $("login-email").closest(".card").querySelector("button#btn-login").style.display = "none";
-    $("login-pin-step").classList.remove("hidden");
-    $("login-pin-error").style.display = "none";
-    $("login-pin").value = "";
-    setTimeout(() => $("login-pin").focus(), 80);
-  } else {
-    completeLogin(entry);
+  if (res.ok) {
+    const role = normalizeRole(res.role);
+    if (!role) { invalidRoleError(res.role); return; }
+    completeLogin(email, res.name, role);
+    return;
   }
+  showLoginError(lang === "es"
+    ? "No se pudo verificar tu acceso. Intenta de nuevo o avisa a tu manager."
+    : "Couldn't verify your access. Try again or tell your manager.");
 });
 
 $("btn-login-pin").addEventListener("click", verifyStaffPin);
 $("login-pin").addEventListener("keydown", e => { if (e.key === "Enter") verifyStaffPin(); });
 
-function verifyStaffPin() {
+async function verifyStaffPin() {
   const pin = $("login-pin").value.trim();
-  if (!pendingLoginEntry) return;
-  if (pin === String(pendingLoginEntry.pin)) {
-    completeLogin(pendingLoginEntry);
+  if (loginMode === "legacy") {
+    if (pendingLoginEntry && pin === String(pendingLoginEntry.pin)) {
+      const role = normalizeRole(pendingLoginEntry.role);
+      completeLogin(pendingLoginEntry.email, pendingLoginEntry.name, role);
+    } else { showPinError(); }
+    return;
+  }
+  if (!pendingLoginEmail) return;
+  const res = await serverAuthCheck(pendingLoginEmail, pin);
+  if (res === "FALLBACK") { showPinError(); return; }
+  if (res.ok) {
+    const role = normalizeRole(res.role);
+    if (!role) { invalidRoleError(res.role); return; }
+    completeLogin(pendingLoginEmail, res.name, role);
   } else {
-    $("login-pin-error").style.display = "block";
-    $("login-pin").value = "";
-    $("login-pin").focus();
+    showPinError();
   }
 }
 
@@ -2423,17 +2522,18 @@ $("btn-login-back").addEventListener("click", () => {
   $("btn-login").style.display = "";
   $("login-pin-error").style.display = "none";
   pendingLoginEntry = null;
+  pendingLoginEmail = null;
 });
 
-async function completeLogin(entry) {
-  const normalizedRole = normalizeRole(entry.role);
-  const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
+async function completeLogin(email, name, role) {
+  const rec = upsertUserRecord(email, name, role);
   currentUser = { email: rec.email, name: rec.name, role: rec.role };
   localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
   // Resetear estado del login
   $("login-pin-step").classList.add("hidden");
   $("btn-login").style.display = "";
   pendingLoginEntry = null;
+  pendingLoginEmail = null;
   // Sync firstLogin/status with Sheets (Sheets is the authoritative timer source)
   await syncAccessRecord(currentUser.email, currentUser.name, currentUser.role);
   // Security: check access before showing anything (now uses Sheets-synced data)
@@ -2463,14 +2563,17 @@ $("btn-lang-en").addEventListener("click", () => setLang("en"));
 /* ================= Boot ================= */
 async function refreshCurrentUserFromRoster(){
   if(!currentUser || !REPORT_URL) return;
-  const roster = await fetchRoster();
-  if(!roster) return;
-  const entry = findInRoster(roster, currentUser.email);
-  if(!entry) return; // stay logged in with cached role if they were since removed; login screen will catch it next fresh login
-  const normalizedRole = normalizeRole(entry.role);
-  if(!normalizedRole) return; // invalid role in the sheet; keep the last known-good role until it's fixed
-  if(entry.name !== currentUser.name || normalizedRole !== currentUser.role){
-    const rec = upsertUserRecord(entry.email, entry.name, normalizedRole);
+  // Pide solo el rol de ESTE usuario (no descarga el roster completo con PINs).
+  let name = null, role = null;
+  try{
+    const r = await fetch(REPORT_URL + "?action=userRole&email=" + encodeURIComponent(currentUser.email));
+    const d = await r.json();
+    if(!d || d.error || d.notfound || !d.role) return; // backend viejo o correo removido: conservar rol en caché
+    name = d.name; role = normalizeRole(d.role);
+  }catch(err){ return; }
+  if(!role) return; // rol inválido en el sheet: conservar el último rol válido
+  if(name !== currentUser.name || role !== currentUser.role){
+    const rec = upsertUserRecord(currentUser.email, name, role);
     currentUser = { email: rec.email, name: rec.name, role: rec.role };
     localStorage.setItem("chelas_current_user", JSON.stringify(currentUser));
     if(!$("view-dashboard").classList.contains("hidden")) showDashboard();

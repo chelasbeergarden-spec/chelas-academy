@@ -1503,3 +1503,245 @@ const MODULES = [
     critical: true
   }
 ];
+
+/* ═══════════════════════════════════════════════════════════════
+   QUIZ_EXPLANATIONS — explicación del "porqué" mostrada al revisar cada examen.
+   Formato: QUIZ_EXPLANATIONS[<id de módulo>] = [ {en, es}, ... ] en el MISMO orden que quiz[].
+   La app muestra q.explanation si existe inline; si no, usa esta tabla.
+   Para agregar más: copia un bloque y respeta el orden de las preguntas.
+   ═══════════════════════════════════════════════════════════════ */
+const QUIZ_EXPLANATIONS = {
+  "C2": [
+    {
+      "es": "Aunque las papas se fríen en la freidora sin mariscos, esa freidora se comparte con productos con gluten — por eso NO son libres de gluten. Corrige esa suposición de forma proactiva.",
+      "en": "Even though the fries cook in the shellfish-free fryer, that fryer is shared with gluten products — so they are NOT gluten-free. Correct that assumption proactively."
+    },
+    {
+      "es": "Las papas se cocinan en la freidora SIN mariscos, así que están libres de contacto cruzado con mariscos/pescado.",
+      "en": "The fries cook in the shellfish-free fryer, so they are free of cross-contact with shellfish/fish."
+    },
+    {
+      "es": "El formato estándar ALLERGY – [Alérgeno] – Mesa # asegura que la cocina vea la alerta sin importar qué tan ocupada esté la línea de tickets.",
+      "en": "The standard format ALLERGY – [Allergen] – Table # makes sure the kitchen sees the alert no matter how busy the ticket line is."
+    },
+    {
+      "es": "Nunca adivines con alergias. 'Creo que probablemente está bien' no es aceptable — detente y confirma con un manager o la cocina.",
+      "en": "Never guess with allergies. 'I think it's probably fine' is never acceptable — stop and confirm with a manager or the kitchen."
+    },
+    {
+      "es": "Un solo error con una alergia puede provocar una reacción grave que ponga en riesgo la salud del huésped; por eso no se acepta 80%.",
+      "en": "A single mistake with an allergy can trigger a serious reaction that endangers the guest's health; that's why 80% isn't enough."
+    }
+  ],
+  "CESC": [
+    {
+      "es": "Una posible reacción alérgica es una emergencia médica — nunca se maneja solo. Involucra a un manager de inmediato.",
+      "en": "A possible allergic reaction is a medical emergency — never handle it alone. Involve a manager immediately."
+    },
+    {
+      "es": "Acoso, discriminación o conflicto grave entre empleados siempre va directo a un manager, no lo resuelves tú solo.",
+      "en": "Harassment, discrimination, or a serious conflict between employees always goes straight to a manager — not for you to solve alone."
+    },
+    {
+      "es": "Cualquier solicitud de policía, medios, inspector o legal la maneja un manager, no tú.",
+      "en": "Any request from police, media, an inspector, or legal is handled by a manager, not by you."
+    },
+    {
+      "es": "Fallas de equipo y condiciones inseguras siempre involucran a un manager, aunque parezcan menores.",
+      "en": "Equipment failures and unsafe conditions always involve a manager, even when they look minor."
+    },
+    {
+      "es": "Cuando dudes si algo califica, trátalo como si calificara y avisa — mejor avisar de más que callar en el momento equivocado.",
+      "en": "When in doubt whether something qualifies, treat it as if it does and tell a manager — better to over-report than stay silent at the wrong moment."
+    }
+  ],
+  "S4": [
+    {
+      "es": "Ceviches, Camarones Saltados, poke bowl y Chicharrones de Mariscos tienen alta presencia de mariscos/pescado.",
+      "en": "Ceviches, Camarones Saltados, poke bowl, and Chicharrones de Mariscos have a high presence of shellfish/fish."
+    },
+    {
+      "es": "Ante una reacción severa, llama al 911 de inmediato y notifica a un manager. No des comida ni bebida salvo indicación médica.",
+      "en": "For a severe reaction, call 911 immediately and notify a manager. Don't give food or drink unless medical staff say so."
+    },
+    {
+      "es": "El formato correcto es ALLERGY – [Alérgeno] – Mesa # (ej. ALLERGY – Shellfish – Table 12).",
+      "en": "The correct format is ALLERGY – [Allergen] – Table # (e.g., ALLERGY – Shellfish – Table 12)."
+    },
+    {
+      "es": "El marinado/salsa del Lomo Saltado contiene soya.",
+      "en": "The Lomo Saltado marinade/sauce contains soy."
+    },
+    {
+      "es": "Además del chef/expo, avisa a un manager para que supervise la preparación y entrega del pedido con alergia.",
+      "en": "Beyond the chef/expo, alert a manager to oversee prep and delivery of the allergy order."
+    },
+    {
+      "es": "El asterisco (*) marca artículos crudos o poco cocidos (ostras, tartares, ceviches).",
+      "en": "The asterisk (*) marks raw or undercooked items (oysters, tartares, ceviches)."
+    }
+  ],
+  "S8": [
+    {
+      "es": "Pide identificación a cualquiera que aparente 35 años o menos, sin excepciones (política FOH-BAR-ALC-001).",
+      "en": "Ask for ID from anyone who looks 35 or younger, no exceptions (policy FOH-BAR-ALC-001)."
+    },
+    {
+      "es": "Solo el Manager en Turno (MOD) puede anular una decisión de corte.",
+      "en": "Only the Manager on Duty (MOD) can override a cut-off decision."
+    },
+    {
+      "es": "Toda bebida alcohólica se registra en Toast, sin excepciones ni cortesías sin autorización de un manager.",
+      "en": "Every alcoholic drink is rung into Toast, no exceptions and no comps without manager authorization."
+    },
+    {
+      "es": "Los no managers deben completar el entrenamiento RVA dentro de 30 días desde su contratación.",
+      "en": "Non-managers must complete RVA training within 30 days of hire."
+    },
+    {
+      "es": "El repaso de RVA es cada 4 meses para todos.",
+      "en": "RVA refresher training is required every 4 months for everyone."
+    },
+    {
+      "es": "Nunca lo manejes solo — al notar señales de intoxicación, alerta a un supervisor o manager de inmediato.",
+      "en": "Never handle it alone — at the first signs of intoxication, alert a supervisor or manager immediately."
+    },
+    {
+      "es": "Usa el guion oficial: por su seguridad, no más alcohol, y ofrece agua, comida o transporte — con respeto, sin confrontar.",
+      "en": "Use the official script: for their safety, no more alcohol, and offer water, food, or a safe ride — respectfully, without confrontation."
+    },
+    {
+      "es": "Recomiéndale que no maneje y ayúdale a conseguir Uber/Lyft/taxi; si la situación escala, interviene el manager.",
+      "en": "Recommend they don't drive and help arrange Uber/Lyft/taxi; if it escalates, the manager steps in."
+    },
+    {
+      "es": "Después de controlar la situación, documenta con un breve reporte escrito a la gerencia (fecha/hora, personal, acciones, transporte).",
+      "en": "Once the situation is under control, document it with a brief written report to management (date/time, staff, actions, transport)."
+    }
+  ],
+  "BT8": [
+    {
+      "es": "Pide identificación a cualquiera que aparente 35 años o menos, sin excepciones (política FOH-BAR-ALC-001).",
+      "en": "Ask for ID from anyone who looks 35 or younger, no exceptions (policy FOH-BAR-ALC-001)."
+    },
+    {
+      "es": "Solo el Manager en Turno (MOD) puede anular una decisión de corte.",
+      "en": "Only the Manager on Duty (MOD) can override a cut-off decision."
+    },
+    {
+      "es": "Toda bebida alcohólica se registra en Toast, sin excepciones ni cortesías sin autorización de un manager.",
+      "en": "Every alcoholic drink is rung into Toast, no exceptions and no comps without manager authorization."
+    },
+    {
+      "es": "Nunca consumas shots ni alcohol con clientes mientras trabajas — difumina la línea y te pone a ti y al restaurante en riesgo real.",
+      "en": "Never drink shots or alcohol with customers while working — it blurs the line and puts you and the restaurant at real risk."
+    },
+    {
+      "es": "Los managers deben completar el entrenamiento RVA dentro de 15 días desde su contratación.",
+      "en": "Managers must complete RVA training within 15 days of hire."
+    },
+    {
+      "es": "El repaso de RVA es cada 4 meses para todos.",
+      "en": "RVA refresher training is required every 4 months for everyone."
+    },
+    {
+      "es": "Nunca lo manejes solo — al notar señales de intoxicación, alerta a un supervisor o manager de inmediato.",
+      "en": "Never handle it alone — at the first signs of intoxication, alert a supervisor or manager immediately."
+    },
+    {
+      "es": "Usa el guion oficial: por su seguridad, no más alcohol, y ofrece agua, comida o transporte — con respeto, sin confrontar.",
+      "en": "Use the official script: for their safety, no more alcohol, and offer water, food, or a safe ride — respectfully, without confrontation."
+    },
+    {
+      "es": "Recomiéndale que no maneje y ayúdale a conseguir Uber/Lyft/taxi; si la situación escala, interviene el manager.",
+      "en": "Recommend they don't drive and help arrange Uber/Lyft/taxi; if it escalates, the manager steps in."
+    },
+    {
+      "es": "Después de controlar la situación, documenta con un breve reporte escrito a la gerencia (fecha/hora, personal, acciones, transporte).",
+      "en": "Once the situation is under control, document it with a brief written report to management (date/time, staff, actions, transport)."
+    }
+  ],
+  "BT11": [
+    {
+      "es": "Siempre confirma si es alergia o preferencia — el procedimiento cambia por completo según la respuesta.",
+      "en": "Always confirm whether it's an allergy or a preference — the procedure changes completely depending on the answer."
+    },
+    {
+      "es": "El chef/expo confirma que el plato se puede hacer sin ese ingrediente y sin contaminación cruzada antes de ingresar el pedido.",
+      "en": "The chef/expo confirms the dish can be made without that ingredient and without cross-contamination before the order goes in."
+    },
+    {
+      "es": "El formato correcto es ALLERGY – [Alérgeno] – Mesa # y tiene prioridad sobre cualquier otra etiqueta.",
+      "en": "The correct format is ALLERGY – [Allergen] – Table #, and it takes priority over any other label."
+    },
+    {
+      "es": "Sí — aunque el plato compartido no contenga el alérgeno, se etiqueta ALLERGY para prevenir contaminación cruzada en la cocina.",
+      "en": "Yes — even if a shared dish doesn't contain the allergen, tag it ALLERGY to prevent cross-contamination in the kitchen."
+    },
+    {
+      "es": "Se coloca directamente frente al huésped con la alergia, verificando la mesa antes de retirarse.",
+      "en": "Place it directly in front of the guest with the allergy, verifying the table before stepping away."
+    }
+  ],
+  "MG6": [
+    {
+      "es": "El Manager en Turno (MOD) es la autoridad final para anular un corte.",
+      "en": "The Manager on Duty (MOD) is the final authority to override a cut-off."
+    },
+    {
+      "es": "Los managers completan el entrenamiento RVA dentro de 15 días desde su contratación.",
+      "en": "Managers complete RVA training within 15 days of hire."
+    },
+    {
+      "es": "El repaso de RVA para managers es cada 4 meses.",
+      "en": "RVA refresher for managers is every 4 months."
+    },
+    {
+      "es": "Las horas de servicio de alcohol siguen la regla más restrictiva aplicable (incluye el horario de Miami Lakes cuando corresponda).",
+      "en": "Alcohol service hours follow the most restrictive applicable rule (including the Miami Lakes schedule when it applies)."
+    },
+    {
+      "es": "Los managers son responsables de auditar Toast periódicamente para cumplimiento.",
+      "en": "Managers are responsible for periodically auditing Toast for compliance."
+    },
+    {
+      "es": "El manager decide e interviene con firmeza pero con respeto cuando la situación escala.",
+      "en": "The manager decides and steps in firmly but respectfully when the situation escalates."
+    },
+    {
+      "es": "El manager es responsable de completar o revisar el reporte escrito del incidente.",
+      "en": "The manager is responsible for completing or reviewing the written incident report."
+    },
+    {
+      "es": "La gerencia puede limitar o rechazar el servicio futuro según las leyes locales y la política del restaurante.",
+      "en": "Management can limit or refuse future service according to local laws and restaurant policy."
+    }
+  ],
+  "K11": [
+    {
+      "es": "Reporta síntomas o enfermedad ANTES de empezar tu turno, no después — para no comprometer la seguridad alimentaria.",
+      "en": "Report symptoms or illness BEFORE your shift starts, not after — so food safety isn't compromised."
+    },
+    {
+      "es": "Ningún plato con modificación de alergia sale del pase sin verificar el ticket contra el plato terminado.",
+      "en": "No dish with an allergy modification leaves the pass without checking the ticket against the finished plate."
+    },
+    {
+      "es": "Las quemaduras e incendios son un riesgo real en cocina; por eso se exigen zapatos cerrados y antideslizantes siempre.",
+      "en": "Burns and fires are a real risk in the kitchen; that's why closed-toe, non-slip shoes are required at all times."
+    },
+    {
+      "es": "Con audífonos no puedes oír una alarma de incendio ni la advertencia de un compañero sobre un sartén caliente.",
+      "en": "With earbuds in, you can't hear a fire alarm or a coworker's warning about a hot pan."
+    },
+    {
+      "es": "Los conflictos se resuelven en privado, con el Jefe de Cocina o un manager — una cocina tensa comete errores.",
+      "en": "Conflicts are resolved privately, with the Head Chef or a manager — a tense kitchen makes mistakes."
+    },
+    {
+      "es": "No — usa utensilios, scoops o guantes aprobados para alimentos listos para comer, hielo o garnishes.",
+      "en": "No — use utensils, scoops, or approved gloves for ready-to-eat foods, ice, or garnishes."
+    }
+  ]
+};
+if (typeof module !== 'undefined') { module.exports = { MODULES, QUIZ_EXPLANATIONS }; }

@@ -252,6 +252,8 @@
   .edit-inline .form-row input,.edit-inline .form-row select{flex:1;min-width:120px}
   .del-confirm{background:#fdecea;border:1px solid #f5c4bf;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:13px;display:none;align-items:center;justify-content:space-between;gap:8px}
   .del-confirm.show{display:flex}
+  .quiz-expl{margin:6px 0 4px;padding:10px 13px;border-radius:10px;background:#eef4f3;border:1px solid #cfe0dc;font-size:13.5px;line-height:1.5;color:#2f4a46}
+  .quiz-expl b{color:var(--header)}
 </style>
 </head>
 <body>
@@ -1246,6 +1248,16 @@ function shuffleArray(arr){
 
 let quizOptionOrder = [];
 
+// Devuelve la explicación del "porqué" de una pregunta: primero inline (q.explanation),
+// si no, la tabla QUIZ_EXPLANATIONS[moduleId][indicePregunta]. null si no hay.
+function getQuizExplanation(m, qi){
+  const q = m.quiz[qi];
+  if(q && q.explanation) return q.explanation;
+  if(typeof QUIZ_EXPLANATIONS !== "undefined" && QUIZ_EXPLANATIONS[m.id] && QUIZ_EXPLANATIONS[m.id][qi])
+    return QUIZ_EXPLANATIONS[m.id][qi];
+  return null;
+}
+
 function startQuiz(){
   const m = activeModule;
   $("mod-quiz").classList.remove("hidden");
@@ -1295,6 +1307,14 @@ $("btn-quiz-submit").addEventListener("click", () => {
       if(realIdx === q.correct) o.classList.add("correct");
       else if(realIdx === quizAnswers[qi] && realIdx !== q.correct) o.classList.add("wrong");
     });
+    // Mostrar la explicación del "porqué" debajo de la pregunta al revisar
+    const expl = getQuizExplanation(m, qi);
+    if(expl && !blocks[qi].querySelector(".quiz-expl")){
+      const d = document.createElement("div");
+      d.className = "quiz-expl";
+      d.innerHTML = `<b>${lang==="es" ? "Por qué:" : "Why:"}</b> ${t(expl)}`;
+      blocks[qi].appendChild(d);
+    }
     if(quizAnswers[qi] === q.correct){
       correct++;
     } else {

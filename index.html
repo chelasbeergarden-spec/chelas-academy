@@ -120,6 +120,7 @@
   .missed-item .mi-q{font-weight:700;margin-bottom:4px;color:var(--text)}
   .missed-item .mi-a{color:var(--good);font-size:13px}
   .missed-title{font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+  .review-prompt{padding:13px 15px;border-radius:12px;background:#fdf3e3;border:1px solid #f0ddb0;font-size:14px;line-height:1.55;color:#7a5512;margin-bottom:14px;text-align:left}
   /* ─── ACCESS SECURITY ─── */
   .status-badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
   .status-badge.active{background:#e2f5e9;color:var(--good)}
@@ -514,6 +515,8 @@ let searchQuery = "";
 let activeModule = null;
 let lessonIdx = 0, flashIdx = 0;
 let quizAnswers = {};
+let _lessonTimer = null;          // #4 temporizador de lectura mínima por página
+let lessonSeenIdx = new Set();    // #4 páginas ya vistas en el módulo actual (no re-bloquear)
 
 /* ================= Helpers ================= */
 const $ = (id) => document.getElementById(id);
@@ -1336,6 +1339,8 @@ $("btn-cert").addEventListener("click", generateCertificate);
 function openModule(m){
   activeModule = m;
   lessonIdx = 0; flashIdx = 0; quizAnswers = {};
+  lessonSeenIdx = new Set();
+  if(_lessonTimer){ clearInterval(_lessonTimer); _lessonTimer = null; }
   $("view-dashboard").classList.add("hidden");
   $("view-admin").classList.add("hidden");
   $("view-module").classList.remove("hidden");
@@ -1369,6 +1374,30 @@ function renderLesson(){
         ? (lang==="es" ? "Continuar" : "Continue")
         : (lang==="es" ? (m.flashcards && m.flashcards.length ? "Tarjetas" : "Ir al examen") : (m.flashcards && m.flashcards.length ? "Flashcards" : "Take the quiz")))
     : (lang==="es" ? "Siguiente" : "Next");
+
+  // #4 Fricción: tiempo mínimo de lectura por página (solo la primera vez; QA/Admin exentos).
+  const nb = $("btn-lesson-next");
+  if(_lessonTimer){ clearInterval(_lessonTimer); _lessonTimer = null; }
+  const exemptRead = isQAUser(currentUser.email) || currentUser.role === "Admin";
+  if(!exemptRead && !lessonSeenIdx.has(lessonIdx)){
+    const words = (t(m.lessons[lessonIdx]) || "").trim().split(/\s+/).filter(Boolean).length;
+    const fullLabel = nb.textContent;
+    let remain = Math.ceil(Math.min(8000, Math.max(2500, words * 45)) / 1000);
+    nb.disabled = true;
+    const paint = () => { nb.textContent = (lang==="es" ? "Lee… " : "Read… ") + remain + "s"; };
+    paint();
+    _lessonTimer = setInterval(() => {
+      remain--;
+      if(remain <= 0){
+        clearInterval(_lessonTimer); _lessonTimer = null;
+        lessonSeenIdx.add(lessonIdx);
+        nb.disabled = false;
+        nb.textContent = fullLabel;
+      } else { paint(); }
+    }, 1000);
+  } else {
+    nb.disabled = false;
+  }
 }
 $("btn-lesson-prev").addEventListener("click", () => { if(lessonIdx>0){ lessonIdx--; renderLesson(); } });
 $("btn-lesson-next").addEventListener("click", () => {
@@ -1504,46 +1533,57 @@ $("btn-quiz-submit").addEventListener("click", () => {
   const missed = [];
   const blocks = document.querySelectorAll("#quiz-body .q-block");
   m.quiz.forEach((q, qi) => {
-    const opts = blocks[qi].querySelectorAll(".opt");
-    opts.forEach((o, displayIdx) => {
-      const realIdx = quizOptionOrder[qi][displayIdx];
-      if(realIdx === q.correct) o.classList.add("correct");
-      else if(realIdx === quizAnswers[qi] && realIdx !== q.correct) o.classList.add("wrong");
-    });
-    // Mostrar la explicación del "porqué" debajo de la pregunta al revisar
-    const expl = getQuizExplanation(m, qi);
-    if(expl && !blocks[qi].querySelector(".quiz-expl")){
-      const d = document.createElement("div");
-      d.className = "quiz-expl";
-      d.innerHTML = `<b>${lang==="es" ? "Por qué:" : "Why:"}</b> ${t(expl)}`;
-      blocks[qi].appendChild(d);
-    }
-    if(quizAnswers[qi] === q.correct){
-      correct++;
-    } else {
-      missed.push({ question: t(q.q), answer: t(q.options[q.correct]) });
-    }
+    if(quizAnswers[qi] === q.correct){ correct++; }
+    else { missed.push({ question: t(q.q), answer: t(q.options[q.correct]) }); }
   });
   const score = Math.round((correct / m.quiz.length) * 100);
   const passed = score >= m.pass;
+  // #1 Solo se revelan respuestas al APROBAR o en módulos críticos.
+  // Un módulo normal reprobado NO muestra las respuestas: se manda a repasar (así no se memoriza).
+  const reveal = passed || !!m.critical;
   saveProgress(currentUser.email, m.id, passed, score, !!m.critical);
 
-  // Build missed-questions HTML
+  if(reveal){
+    m.quiz.forEach((q, qi) => {
+      const opts = blocks[qi].querySelectorAll(".opt");
+      opts.forEach((o, displayIdx) => {
+        const realIdx = quizOptionOrder[qi][displayIdx];
+        if(realIdx === q.correct) o.classList.add("correct");
+        else if(realIdx === quizAnswers[qi] && realIdx !== q.correct) o.classList.add("wrong");
+      });
+      const expl = getQuizExplanation(m, qi);
+      if(expl && !blocks[qi].querySelector(".quiz-expl")){
+        const d = document.createElement("div");
+        d.className = "quiz-expl";
+        d.innerHTML = `<b>${lang==="es" ? "Por qué:" : "Why:"}</b> ${t(expl)}`;
+        blocks[qi].appendChild(d);
+      }
+    });
+  }
+
+  // Lista de respuestas correctas — solo cuando se revela (aprobado o crítico).
   let missedHtml = "";
-  if(missed.length){
+  if(reveal && missed.length){
     const missedLabel = lang==="es" ? "Preguntas incorrectas" : "Missed questions";
     const correctLabel = lang==="es" ? "Respuesta correcta:" : "Correct answer:";
     missedHtml = `
       <div class="missed-title">${missedLabel}</div>
       <div class="missed-list">
-        ${missed.map(m => `
+        ${missed.map(mm => `
           <div class="missed-item">
-            <div class="mi-q">${m.question}</div>
-            <div class="mi-a">✓ ${correctLabel} ${m.answer}</div>
+            <div class="mi-q">${mm.question}</div>
+            <div class="mi-a">✓ ${correctLabel} ${mm.answer}</div>
           </div>
         `).join("")}
       </div>`;
   }
+
+  // Módulo normal reprobado: aviso de repaso en vez de respuestas.
+  const reviewPrompt = (!passed && !m.critical)
+    ? `<div class="review-prompt">${lang==="es"
+        ? "No te mostramos las respuestas a propósito. Repasa la lección y las tarjetas, y vuelve a intentarlo — así de verdad se te queda."
+        : "We're not showing the answers on purpose. Review the lesson and cards, then try again — that's how it really sticks."}</div>`
+    : "";
 
   const result = $("quiz-result");
   result.classList.remove("hidden");
@@ -1557,21 +1597,27 @@ $("btn-quiz-submit").addEventListener("click", () => {
     <div style="font-size:13px;color:var(--muted);margin-bottom:14px">
       ${correct} / ${m.quiz.length} ${lang==="es" ? "correctas" : "correct"}
     </div>
-    ${!passed ? missedHtml : ""}
+    ${reveal ? missedHtml : reviewPrompt}
     ${passed ? trackCompleteBanner(m.track) : ""}
-    <button class="btn" style="width:100%" id="btn-quiz-continue">
-      ${passed ? (lang==="es" ? "Continuar" : "Continue") : (lang==="es" ? "Reintentar" : "Retry")}
-    </button>
-    ${!passed && m.flashcards && m.flashcards.length ? `
-      <button class="btn secondary" style="width:100%;margin-top:8px" id="btn-review-cards">
-        ${lang==="es" ? "Repasar tarjetas" : "Review flashcards"}
-      </button>` : ""}
+    ${passed ? `
+      <button class="btn" style="width:100%" id="btn-quiz-continue">${lang==="es" ? "Continuar" : "Continue"}</button>
+    ` : (m.critical ? `
+      <button class="btn" style="width:100%" id="btn-quiz-retry">${lang==="es" ? "Reintentar" : "Retry"}</button>
+      ${m.flashcards && m.flashcards.length ? `<button class="btn secondary" style="width:100%;margin-top:8px" id="btn-review-cards">${lang==="es" ? "Repasar tarjetas" : "Review flashcards"}</button>` : ""}
+    ` : `
+      <button class="btn" style="width:100%" id="btn-quiz-review-lesson">${lang==="es" ? "Repasar lección" : "Review lesson"}</button>
+      <button class="btn secondary" style="width:100%;margin-top:8px" id="btn-quiz-retry-only">${lang==="es" ? "Reintentar sin repasar" : "Retry without reviewing"}</button>
+    `)}
   `;
   $("btn-quiz-submit").classList.add("hidden");
-  $("btn-quiz-continue").addEventListener("click", () => {
-    if(passed) showDashboard();
-    else startQuiz();
-  });
+  const bCont = document.getElementById("btn-quiz-continue");
+  if(bCont) bCont.addEventListener("click", showDashboard);
+  const bRetry = document.getElementById("btn-quiz-retry");
+  if(bRetry) bRetry.addEventListener("click", startQuiz);
+  const bReviewLesson = document.getElementById("btn-quiz-review-lesson");
+  if(bReviewLesson) bReviewLesson.addEventListener("click", () => openModule(m));
+  const bRetryOnly = document.getElementById("btn-quiz-retry-only");
+  if(bRetryOnly) bRetryOnly.addEventListener("click", startQuiz);
   const btnReview = document.getElementById("btn-review-cards");
   if(btnReview) btnReview.addEventListener("click", () => {
     flashIdx = 0;

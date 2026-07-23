@@ -4683,3 +4683,2785 @@ if (typeof module !== "undefined") { module.exports = Object.assign({}, module.e
   ]);
 
 })();
+
+/* Pedagogia: opciones rebalanceadas — track CORE (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options;
+    m.quiz[qi].correct = correct;
+  }
+
+  /* ===== C0 ===== */
+  setq("C0", 0, [
+    {es:"La experiencia del cliente", en:"The guest experience"},
+    {es:"Únicamente sus propias propinas", en:"Only their own tip money"},
+    {es:"Solo el área que le asignaron", en:"Only their assigned area"},
+    {es:"El inventario de la barra", en:"The bar inventory"}
+  ], 0);
+  setq("C0", 1, [
+    {es:"Únicamente la gerencia", en:"Only management"},
+    {es:"Cada miembro del equipo", en:"Every team member"},
+    {es:"Solo el turno de noche", en:"Only the night shift"},
+    {es:"Solo los bartenders", en:"Only the bartenders"}
+  ], 1);
+  setq("C0", 2, [
+    {es:"Sí, reemplazan las políticas generales", en:"Yes, they replace the general policies"},
+    {es:"Solo reemplazan las reglas de propinas", en:"They only replace the tipping rules"},
+    {es:"No, se suman a esas políticas de base", en:"No, they build on top of those policies"},
+    {es:"Sí, pero únicamente para la cocina", en:"Yes, but only for the kitchen staff"}
+  ], 2);
+  setq("C0", 3, [
+    {es:"Adivinar y seguir adelante", en:"Guess and keep going"},
+    {es:"Ignorarla por completo", en:"Ignore it completely"},
+    {es:"Preguntarle a un huésped", en:"Ask a guest about it"},
+    {es:"Preguntar a un manager", en:"Ask a manager"}
+  ], 3);
+  setq("C0", 4, [
+    {es:"A todo el personal de salón", en:"To all floor staff"},
+    {es:"Solo a los meseros del turno", en:"Only to the servers on shift"},
+    {es:"Solo a hosts y bartenders", en:"Only to hosts and bartenders"},
+    {es:"Únicamente a la gerencia", en:"Only to the management team"}
+  ], 0);
+  setq("C0", 5, [
+    {es:"Cualquier mesero solo", en:"Any server alone"},
+    {es:"El equipo de gerencia", en:"The management team"},
+    {es:"Los clientes frecuentes", en:"The regular customers"},
+    {es:"El proveedor externo", en:"The outside supplier"}
+  ], 1);
+
+  /* ===== C1 ===== */
+  setq("C1", 0, [
+    {es:"Un 50% es suficiente", en:"A 50% is enough"},
+    {es:"Cualquier puntaje sirve", en:"Any score works"},
+    {es:"El 80% de aprobación", en:"The 80% pass mark"},
+    {es:"Se necesita un 100%", en:"A full 100% is needed"}
+  ], 2);
+  setq("C1", 1, [
+    {es:"Tareas de cierre y limpieza general", en:"Closing tasks and general cleaning"},
+    {es:"El módulo de uniforme y montaje", en:"The uniform and setup module"},
+    {es:"Bienvenida y cultura de Chela's", en:"Welcome and Chela's culture"},
+    {es:"Alérgenos y servicio de alcohol", en:"Allergens and alcohol service"}
+  ], 3);
+  setq("C1", 2, [
+    {es:"Sí, CORE va primero", en:"Yes, CORE comes first"},
+    {es:"No, en cualquier orden", en:"No, in any order"},
+    {es:"Solo si eres manager", en:"Only if you're a manager"},
+    {es:"Solo los fines de semana", en:"Only on the weekends"}
+  ], 0);
+  setq("C1", 3, [
+    {es:"Ambos son lo mismo, solo cambian el nombre según el día", en:"They're the same thing, just named differently by day"},
+    {es:"El servicio cumple la tarea; la hospitalidad, el cuidado", en:"Service completes the task; hospitality, the caring"},
+    {es:"La hospitalidad únicamente aplica a los huéspedes VIP", en:"Hospitality only applies to the VIP guests"},
+    {es:"El servicio no importa, solo cuenta la hospitalidad plena", en:"Service doesn't matter, only full hospitality counts"}
+  ], 1);
+  setq("C1", 4, [
+    {es:"Quedas bloqueado del sistema de forma permanente", en:"You are permanently locked out of the system"},
+    {es:"Debes pedir a un manager un teléfono nuevo", en:"You must ask a manager for a new phone"},
+    {es:"Puedes repetirlo cuantas veces necesites", en:"You can retake it as many times as needed"},
+    {es:"Se te reduce el pago del siguiente turno", en:"Your next shift's pay gets reduced"}
+  ], 2);
+  setq("C1", 5, [
+    {es:"Precio bajo, rapidez, cantidad y gran volumen", en:"Low price, speed, quantity and high volume"},
+    {es:"Marketing, redes sociales, descuentos y promos", en:"Marketing, social media, discounts and promos"},
+    {es:"Uniformes, horarios, propinas y descansos largos", en:"Uniforms, schedules, tips and long breaks"},
+    {es:"Hospitalidad, equipo, puntualidad y detalles", en:"Hospitality, teamwork, punctuality and details"}
+  ], 3);
+  setq("C1", 6, [
+    {es:"El side work y el montaje se sincronizan con la apertura", en:"Side work and setup are synchronized with the opening"},
+    {es:"Porque se descuenta del sueldo de forma automática", en:"Because it is automatically deducted from your pay"},
+    {es:"Porque los clientes anotan quién llega tarde al turno", en:"Because customers note who arrives late to the shift"},
+    {es:"Porque la gerencia reparte las mesas por orden de llegada", en:"Because management assigns tables by arrival order"}
+  ], 0);
+  setq("C1", 7, [
+    {es:"Cocina, limpieza, seguridad y mantenimiento", en:"Kitchen, cleaning, security and maintenance"},
+    {es:"Server, Bartender, Busser, Host y Manager", en:"Server, Bartender, Busser, Host and Manager"},
+    {es:"Ventas, marketing, finanzas y compras", en:"Sales, marketing, finance and purchasing"},
+    {es:"Un único track general para todo el personal", en:"One single general track for all staff"}
+  ], 1);
+
+  /* ===== C2 ===== */
+  setq("C2", 0, [
+    {es:"Sí, se cocinan lejos del gluten allí", en:"Yes, they're cooked away from gluten there"},
+    {es:"Solo si se piden sin sal", en:"Only if ordered without salt"},
+    {es:"No, esa freidora contiene gluten", en:"No, that fryer contains gluten"},
+    {es:"Solo son seguras en el almuerzo", en:"They're only safe at lunch"}
+  ], 2);
+  setq("C2", 1, [
+    {es:"Sí, van en la freidora sin mariscos", en:"Yes, they go in the non-seafood fryer"},
+    {es:"No, tocan mariscos en la freidora", en:"No, they touch seafood in the fryer"},
+    {es:"Solo si la cocina las prepara aparte", en:"Only if the kitchen prepares them apart"},
+    {es:"Depende del día y del cocinero", en:"It depends on the day and the cook"}
+  ], 0);
+  setq("C2", 2, [
+    {es:"Solo una nota escrita en la cocina", en:"Just a written note in the kitchen"},
+    {es:"AVISO – Cliente – Número de silla", en:"NOTICE – Guest – Seat number"},
+    {es:"No hace falta ninguna etiqueta especial", en:"No special label is needed at all"},
+    {es:"ALLERGY – [Alérgeno] – Mesa #", en:"ALLERGY – [Allergen] – Table #"}
+  ], 3);
+  setq("C2", 3, [
+    {es:"Adivinar según tu propia experiencia anterior", en:"Guess based on your own prior experience"},
+    {es:"Detenerte y preguntar a un manager o cocina", en:"Stop and ask a manager or the kitchen"},
+    {es:"Servirlo de todos modos para no tardar", en:"Serve it anyway to avoid delays"},
+    {es:"Confiar en lo que diga otro compañero", en:"Trust whatever another coworker says"}
+  ], 1);
+  setq("C2", 4, [
+    {es:"Es una regla puesta al azar por la empresa", en:"It is a rule set at random by the company"},
+    {es:"Porque los alérgenos son el tema más sencillo", en:"Because allergens are the easiest topic"},
+    {es:"Un error de alergia daña la salud del huésped", en:"An allergy error can harm a guest's health"},
+    {es:"En realidad no lo requiere, solo pide un 80%", en:"It doesn't really; it only asks for 80%"}
+  ], 2);
+  setq("C2", 5, [
+    {es:"Corregir esa idea: la freidora lleva gluten", en:"Correct that idea: the fryer carries gluten"},
+    {es:"Confirmarle que sí son libres de gluten", en:"Confirm to them that they are gluten-free"},
+    {es:"Esperar a que el huésped pregunte primero", en:"Wait for the guest to ask about it first"},
+    {es:"Ignorarlo, avisar no es tu responsabilidad aquí", en:"Ignore it, warning them is not your job here"}
+  ], 0);
+  setq("C2", 6, [
+    {es:"Como algo totalmente opcional", en:"As something entirely optional"},
+    {es:"Como una preferencia más del menú", en:"As just another menu preference"},
+    {es:"Solo si el huésped insiste dos veces", en:"Only if the guest insists twice"},
+    {es:"Como algo importante, siempre", en:"As something important, always"}
+  ], 3);
+
+  /* ===== C3 ===== */
+  setq("C3", 0, [
+    {es:"Solo al iniciar y terminar cada turno largo", en:"Only at the start and end of each long shift"},
+    {es:"A menudo: descansos, basura y tareas", en:"Often: breaks, trash and between tasks"},
+    {es:"Únicamente después de usar el baño", en:"Only after using the restroom"},
+    {es:"Solo cuando se vean muy sucias las manos", en:"Only when the hands look very dirty"}
+  ], 1);
+  setq("C3", 1, [
+    {es:"Cubrirlo con varias servilletas de papel", en:"Cover it with several paper napkins"},
+    {es:"Esperar a que un busser lo limpie", en:"Wait for a busser to clean it up"},
+    {es:"Poner señal de piso mojado y limpiar", en:"Put up a wet-floor sign and clean it"},
+    {es:"Dejarlo si el piso ya está seco", en:"Leave it if the floor looks dry"}
+  ], 2);
+  setq("C3", 2, [
+    {es:"Con las manos con cuidado", en:"Carefully with bare hands"},
+    {es:"Con una toalla húmeda", en:"With a damp towel"},
+    {es:"Empujándolo a una esquina", en:"By pushing it to a corner"},
+    {es:"Con escoba y recogedor", en:"With a broom and dustpan"}
+  ], 3);
+  setq("C3", 3, [
+    {es:"Para que nadie lo pise mientras traes trapos", en:"So no one steps in it while you get rags"},
+    {es:"Porque una norma de la ciudad así lo exige", en:"Because a city rule requires it that way"},
+    {es:"Solo por apariencia frente a los huéspedes", en:"Only for appearance in front of guests"},
+    {es:"Porque se requiere los fines de semana largos", en:"Because it's required on long weekends"}
+  ], 0);
+  setq("C3", 4, [
+    {es:"Los guantes de látex empeoran el agarre allí", en:"Latex gloves make the grip worse there"},
+    {es:"Cerca puede haber esquirlas pequeñas ocultas", en:"Small hidden shards can be nearby"},
+    {es:"El vidrio del bar no llega a estar filoso", en:"Bar glass never actually gets sharp"},
+    {es:"No implica ningún riesgo real para el personal", en:"It poses no real risk to the staff"}
+  ], 1);
+  setq("C3", 5, [
+    {es:"Cerca de 5 minutos", en:"About 5 minutes"},
+    {es:"Alrededor de 2 minutos", en:"Around 2 minutes"},
+    {es:"Unos 20 segundos", en:"About 20 seconds"},
+    {es:"Casi una hora entera", en:"Nearly a full hour"}
+  ], 2);
+  setq("C3", 6, [
+    {es:"Solo donde están las piezas grandes visibles", en:"Only where the large visible pieces are"},
+    {es:"Nada más el centro justo del derrame", en:"Just the exact center of the spill"},
+    {es:"Basta con la zona de paso principal", en:"Only the main walkway zone is enough"},
+    {es:"Toda el área, incluso bajo muebles cercanos", en:"The whole area, even under nearby furniture"}
+  ], 3);
+
+  /* ===== C4 ===== */
+  setq("C4", 0, [
+    {es:"En los primeros 60 segundos", en:"Within the first 60 seconds"},
+    {es:"Cuando te resulte conveniente", en:"Whenever it is convenient for you"},
+    {es:"Después de unos 10 minutos", en:"After about 10 minutes"},
+    {es:"Solo si te hacen una seña", en:"Only if they wave you over"}
+  ], 0);
+  setq("C4", 1, [
+    {es:"Ignorarla porque no es tu mesa asignada", en:"Ignore it since it's not your assigned table"},
+    {es:"Ayudar; la hospitalidad es cosa de equipo", en:"Help; hospitality is a team effort"},
+    {es:"Decirles que esperen a su propio server", en:"Tell them to wait for their own server"},
+    {es:"Quejarte con el manager por la carga extra", en:"Complain to the manager about the extra load"}
+  ], 1);
+  setq("C4", 2, [
+    {es:"Entregar la cuenta sin decir nada", en:"Hand over the check without a word"},
+    {es:"Apresurarlos para liberar la mesa", en:"Rush them to free up the table"},
+    {es:"Agradecerles e invitarlos a volver", en:"Thank them and invite them back"},
+    {es:"Retirar los platos rápido y callado", en:"Clear the plates fast and quietly"}
+  ], 2);
+  setq("C4", 3, [
+    {es:"En realidad no cambia nada durante la visita", en:"It really changes nothing during the visit"},
+    {es:"Solo importa con los grupos muy grandes", en:"It only matters with very large parties"},
+    {es:"Los huéspedes casi nunca notan el saludo", en:"Guests hardly ever notice the greeting"},
+    {es:"Fija un tono positivo para toda la visita", en:"It sets a positive tone for the whole visit"}
+  ], 3);
+  setq("C4", 4, [
+    {es:"No; lee la mesa y ajusta lo necesario", en:"No; read the table and adjust as needed"},
+    {es:"Sí, exactamente igual en todos los casos", en:"Yes, exactly the same in every case"},
+    {es:"Solo los grupos grandes reciben ajuste", en:"Only large parties get an adjustment"},
+    {es:"No importa cómo trates cada mesa aquí", en:"It doesn't matter how you treat each table"}
+  ], 0);
+  setq("C4", 5, [
+    {es:"Solo entregándoles el recibo ya impreso", en:"Just by handing them the printed receipt"},
+    {es:"Por su nombre e invitándolos a volver", en:"By their name and inviting them back"},
+    {es:"Con un simple gesto rápido de la mano", en:"With a simple quick wave of the hand"},
+    {es:"No hace falta despedirse de ellos", en:"There's no need to say goodbye to them"}
+  ], 1);
+  setq("C4", 6, [
+    {es:"Exactamente igual, con el mismo ritmo para ambos", en:"Exactly the same, with the same pace for both"},
+    {es:"Con la máxima energía posible en ambas mesas", en:"Giving maximum energy to both tables"},
+    {es:"Ajustando el tono y las revisiones a cada mesa", en:"Adjusting tone and check-ins to each table"},
+    {es:"Ignorando a la pareja para atender al grupo", en:"Ignoring the couple to serve the big group"}
+  ], 2);
+
+  /* ===== C5 ===== */
+  setq("C5", 0, [
+    {es:"Sí, si confías en él", en:"Yes, if you trust them"},
+    {es:"Solo con los managers", en:"Only with the managers"},
+    {es:"Solo en noches ocupadas", en:"Only on busy nights"},
+    {es:"No, en ningún caso", en:"No, under no circumstances"}
+  ], 3);
+  setq("C5", 1, [
+    {es:"Abrir primero la mesa", en:"Open the table first"},
+    {es:"Cerrar la cuenta antes", en:"Close the check first"},
+    {es:"Avisar antes a la cocina", en:"Notify the kitchen first"},
+    {es:"Cobrarle ya al huésped", en:"Charge the guest already"}
+  ], 0);
+  setq("C5", 2, [
+    {es:"Solo las alcohólicas", en:"Only the alcoholic ones"},
+    {es:"Sí, toda bebida", en:"Yes, every drink"},
+    {es:"Solo si el huésped paga", en:"Only if the guest pays"},
+    {es:"Solo tras varias rondas", en:"Only after several rounds"}
+  ], 1);
+  setq("C5", 3, [
+    {es:"No existe una razón real, es solo una norma más", en:"There's no real reason, it's just one more rule"},
+    {es:"Solo perjudica al compañero, jamás a ti", en:"It only hurts the coworker, never you"},
+    {es:"Podrías responder por actos que no hiciste tú", en:"You could answer for acts you didn't do"},
+    {es:"En realidad los PIN no se pueden compartir", en:"PINs actually can't be shared at all"}
+  ], 2);
+  setq("C5", 4, [
+    {es:"No guarda relación alguna con la política de alcohol", en:"It bears no relation at all to the alcohol policy"},
+    {es:"Sirve solamente para fines de facturación", en:"It only serves billing purposes"},
+    {es:"Solo la gerencia necesita ese seguimiento", en:"Only management needs that tracking"},
+    {es:"Es el único modo de saber cuánto se ha servido", en:"It's the only way to know how much was served"}
+  ], 3);
+  setq("C5", 5, [
+    {es:"Para ligar cada artículo a la mesa correcta", en:"To link each item to the correct table from the start"},
+    {es:"Para que el pedido salga por completo gratis", en:"So the order comes out completely free"},
+    {es:"Porque la cocina lo exige antes de cocinar", en:"Because the kitchen requires it before cooking"},
+    {es:"No hace falta abrir la mesa previamente", en:"There's no need to open the table beforehand"}
+  ], 0);
+  setq("C5", 6, [
+    {es:"Solo las bebidas que tengan alcohol dentro", en:"Only the drinks that contain alcohol"},
+    {es:"Toda bebida, con o sin alcohol, sin excepción", en:"Every drink, with or without alcohol"},
+    {es:"Solo las bebidas que el huésped vaya a pagar", en:"Only the drinks the guest will pay for"},
+    {es:"Solo las bebidas tras la tercera ronda pedida", en:"Only the drinks after the third round"}
+  ], 1);
+
+  /* ===== CESC ===== */
+  setq("CESC", 0, [
+    {es:"Esperar a ver si la reacción empeora", en:"Wait to see if the reaction gets worse"},
+    {es:"Manejarlo tú solo sin avisar a nadie", en:"Handle it yourself without telling anyone"},
+    {es:"Avisar a un manager de inmediato", en:"Alert a manager immediately"},
+    {es:"Decirle que vea a un médico luego", en:"Tell them to see a doctor later"}
+  ], 2);
+  setq("CESC", 1, [
+    {es:"Decirle que lo resuelva él solo después", en:"Tell them to sort it out themselves later"},
+    {es:"Ignorarlo, no es asunto tuyo", en:"Ignore it, it's none of your business"},
+    {es:"Comentarlo con otros compañeros", en:"Discuss it with other coworkers"},
+    {es:"Avisar a un manager de inmediato", en:"Alert a manager immediately"}
+  ], 3);
+  setq("CESC", 2, [
+    {es:"Avisar a un manager de inmediato", en:"Alert a manager immediately"},
+    {es:"Responder tú mismo todas sus preguntas", en:"Answer all of their questions yourself"},
+    {es:"Pedirle que vuelva en otro momento", en:"Ask them to come back another time"},
+    {es:"Ignorarlo y seguir trabajando", en:"Ignore them and keep working"}
+  ], 0);
+  setq("CESC", 3, [
+    {es:"Ignorarlo, porque de verdad parece algo muy menor", en:"Ignore it, since it really seems very minor"},
+    {es:"Reportarlo ya; una falla insegura va al manager", en:"Report it now; any unsafe fault goes to the manager"},
+    {es:"Arreglarlo tú mismo con lo que tengas cerca", en:"Fix it yourself with whatever's around"},
+    {es:"Esperar al cierre del turno para mencionarlo", en:"Wait until the shift's close to mention it"}
+  ], 1);
+  setq("CESC", 4, [
+    {es:"Asumir que no califica y seguir con lo tuyo", en:"Assume it doesn't qualify and carry on"},
+    {es:"Preguntarle a un huésped qué le parece", en:"Ask a guest what they think about it"},
+    {es:"Tratarla como que sí y avisar al manager", en:"Treat it as if it does and tell the manager"},
+    {es:"Esperar a que otra persona lo note antes", en:"Wait for someone else to notice it first"}
+  ], 2);
+  setq("CESC", 5, [
+    {es:"Perseguirlo tú mismo hasta la calle", en:"Chase them into the street yourself"},
+    {es:"Pagar la cuenta de tu propio bolsillo", en:"Pay the bill out of your own pocket"},
+    {es:"Ignorarlo y seguir con tu trabajo", en:"Ignore it and get on with your work"},
+    {es:"Avisar a un manager de inmediato", en:"Alert a manager immediately"}
+  ], 3);
+  setq("CESC", 6, [
+    {es:"Darla por válida y avisar ya al manager", en:"Treat it as valid and alert the manager now"},
+    {es:"Esperar a ver si la cosa empeora sola", en:"Wait to see if it worsens on its own"},
+    {es:"Consultarlo primero con otro compañero", en:"Check first with another coworker"},
+    {es:"Resolverla tú solo para no molestar a nadie", en:"Handle it yourself to avoid bothering anyone"}
+  ], 0);
+})();
+
+/* Pedagogia: opciones rebalanceadas — track SERVER (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+
+  /* ===== S1 ===== */
+  setq("S1", 0, [ {es:"Servir la comida más rápida y económica de todo Miami",en:"Serve the fastest, cheapest food in all of Miami"},{es:"Competir siempre por tener el precio más bajo de la ciudad",en:"Always compete on having the lowest price in the city"},{es:"Dar hospitalidad excepcional y crear momentos memorables",en:"Give exceptional hospitality and create memorable moments"},{es:"Vender la mayor cantidad de bebidas posible cada noche",en:"Sell as many drinks as possible every single night"} ], 2);
+  setq("S1", 1, [ {es:"Fusión mexicana y peruana enriquecida con sabores latinos",en:"Mexican and Peruvian fusion enriched with Latin flavors"},{es:"Cocina italiana tradicional con toques mediterráneos frescos",en:"Traditional Italian cooking with fresh Mediterranean touches"},{es:"Comida americana clásica de bar y parrilla",en:"Classic American bar and grill comfort food"},{es:"Fusión japonesa-peruana estilo nikkei contemporáneo",en:"Contemporary Japanese-Peruvian nikkei-style fusion"} ], 0);
+  setq("S1", 2, [ {es:"De 12pm a 11pm, el mismo horario que de lunes a martes",en:"12pm to 11pm, the same hours as Monday and Tuesday"},{es:"De 12pm a 12am, cerrando justo a la medianoche",en:"12pm to 12am, closing right at midnight sharp"},{es:"Abierto las 24 horas los viernes y sábados",en:"Open 24 hours all through Friday and Saturday"},{es:"De 12pm a 2am, el horario más largo de la semana",en:"12pm to 2am, the latest hours of the week"} ], 3);
+  setq("S1", 3, [ {es:"La mesa 24, en la sección del Bar cerca de la barra",en:"Table 24, in the Bar section near the counter"},{es:"La mesa 48, la redonda de 8 en el Centro",en:"Table 48, the round 8-top in the Center"},{es:"La mesa 101, la primera del Florida Room a la entrada",en:"Table 101, the first Florida Room table by the door"},{es:"La mesa 501, en la sección Exterior del fondo",en:"Table 501, in the far Exterior section"} ], 1);
+  setq("S1", 4, [ {es:"Clases gratis de salsa con DJ en vivo desde las 9pm",en:"Free salsa dance classes with a live DJ from 9pm"},{es:"Una banda en vivo de 7pm a 10pm seguida de un DJ",en:"A live band from 7pm to 10pm followed by a DJ"},{es:"DJ con tema pink night y karaoke en Santa Diabla",en:"A pink night DJ plus karaoke inside Santa Diabla"},{es:"Brunch café y perreo con mimosas ilimitadas hasta las 4pm",en:"Café y perreo brunch with bottomless mimosas until 4pm"} ], 2);
+  setq("S1", 5, [ {es:"Una banda en vivo toca de 7pm a 10pm",en:"A live band plays from 7pm to 10pm"},{es:"Hay karaoke dentro de Santa Diabla hasta las 9pm",en:"There's karaoke inside Santa Diabla until 9pm"},{es:"Clases gratis de baile de salsa antes del DJ",en:"Free salsa dance classes before the DJ starts"},{es:"El lugar permanece tranquilo y cerrado hasta las 9pm",en:"The place stays quiet and closed until 9pm"} ], 0);
+  setq("S1", 6, [ {es:"Mencionar únicamente el descuento y el precio bajo del día",en:"Mention only the discount and the low price of the day"},{es:"No mencionarlo salvo que el huésped pregunte directamente",en:"Don't bring it up unless the guest directly asks"},{es:"Sugerir que revisen el precio exacto en línea antes de venir",en:"Suggest they check the exact price online first"},{es:"Como la oportunidad de probar varios sabores en una visita",en:"As the chance to try several flavors in one visit"} ], 3);
+  setq("S1", 7, [ {es:"Exactamente cinco dólares para emergencias pequeñas",en:"Exactly five dollars for small emergencies"},{es:"Al menos $100 en cambio",en:"At least $100 in change"},{es:"Nada, porque todo el cambio se guarda en la caja central",en:"Nothing, since all change is kept in the register"},{es:"Solo lo que traigas en tu propia billetera esa noche",en:"Only whatever you carry in your own wallet that night"} ], 1);
+  setq("S1", 8, [ {es:"Sí, siempre revisar cuando se pide alcohol",en:"Yes, always check whenever alcohol is ordered"},{es:"No, basta con revisar solo a quienes se ven jóvenes",en:"No, it's enough to check only those who look young"},{es:"Solo hace falta revisar durante los fines de semana",en:"You only need to check on the weekends"},{es:"Nunca, preguntar por la identificación es de mala educación",en:"Never, asking for ID is considered rude"} ], 0);
+  setq("S1", 9, [ {es:"Todos los días de la semana, de 5pm a 8pm",en:"Every day of the week, from 5pm to 8pm"},{es:"Solamente los viernes por la tarde, de 4pm a 7pm",en:"Only on Friday afternoons, from 4pm to 7pm"},{es:"De lunes a sábado, de 4pm a 7pm",en:"Monday through Saturday, from 4pm to 7pm"},{es:"De lunes a domingo, de 12pm a 4pm en la tarde",en:"Monday through Sunday, from 12pm to 4pm"} ], 2);
+  setq("S1", 10, [ {es:"Clases gratis de salsa con DJ en vivo desde las 9pm",en:"Free salsa classes with a live DJ starting at 9pm"},{es:"DJ con tema pink night y karaoke en Santa Diabla",en:"A pink night DJ plus karaoke inside Santa Diabla"},{es:"Brunch café y perreo con mimosas ilimitadas al mediodía",en:"Café y perreo brunch with bottomless mimosas at noon"},{es:"Ladies Night, con menú con descuento desde las 8pm",en:"Ladies Night, with a discounted menu from 8pm"} ], 3);
+  setq("S1", 11, [ {es:"Un destapador, un radio funcionando y un encendedor",en:"A bottle opener, a working radio and a lighter"},{es:"Un cargador de teléfono y un juego de llaves del bar",en:"A phone charger and a set of keys to the bar"},{es:"Un cuaderno de reservaciones y una tablet del POS",en:"A reservations notebook and a POS tablet"},{es:"Una libreta de comandas y varios bolígrafos de repuesto",en:"An order pad and several spare pens for the shift"} ], 0);
+
+  /* ===== S2 ===== */
+  setq("S2", 0, [ {es:"Traer directamente agua de la llave sin ofrecer nada más",en:"Bring plain tap water without offering anything else"},{es:"Preguntarle cuántos cubos de hielo quiere en el vaso",en:"Ask how many ice cubes they want in the glass"},{es:"Dejar el agua embotellada como la única alternativa",en:"Leave bottled water as the only alternative"},{es:"Sodas, agua de jamaica, chicha morada u otra sin alcohol",en:"Sodas, jamaica water, chicha morada or another soft drink"} ], 3);
+  setq("S2", 1, [ {es:"Cuando van como tres cuartas partes del plato fuerte",en:"When they're about three quarters through the main"},{es:"Justo antes de que pidan la comida, al inicio del servicio",en:"Right before they order food, at the start of service"},{es:"Únicamente si el huésped lo pregunta por su cuenta",en:"Only if the guest brings it up on their own"},{es:"Después de que ya hayan pagado y pedido la cuenta",en:"After they have already paid and asked for the check"} ], 0);
+  setq("S2", 2, [ {es:"El pastel de chocolate de 5 capas para compartir",en:"The 5-layer chocolate cake to share at the table"},{es:"Guacamole fresco con chips para compartir",en:"Fresh guacamole with chips to share"},{es:"La cuenta, para que vayan preparando el pago",en:"The check, so they can get ready to pay"},{es:"Nada, simplemente esperar a que pidan por su cuenta",en:"Nothing, just wait for them to order on their own"} ], 1);
+  setq("S2", 3, [ {es:"Pizza margarita y una pasta al pesto de la casa",en:"Margherita pizza and a house pesto pasta"},{es:"Solo postres, como el flan o el cheesecake clásico",en:"Only desserts, like the flan or classic cheesecake"},{es:"Camarones Saltados y Steak Frites",en:"Camarones Saltados and Steak Frites"},{es:"Nada, esperar a que el huésped pregunte por opciones",en:"Nothing, wait for the guest to ask for options"} ], 2);
+  setq("S2", 4, [ {es:"Describir un artículo favorito en vez de solo preguntar",en:"Describe a favorite item instead of just asking"},{es:"Enumerar mecánicamente cada artículo de todo el menú",en:"Mechanically list every single item on the menu"},{es:"No decir nada y esperar a que el huésped se decida",en:"Say nothing and wait for the guest to decide"},{es:"Presionar siempre por el artículo más caro de la carta",en:"Always push for the most expensive item on the menu"} ], 0);
+  setq("S2", 5, [ {es:"Asumir de entrada que el huésped no quiere ningún plato fuerte",en:"Assume from the start the guest wants no main at all"},{es:"Saltarse por completo la toma del pedido de comida",en:"Skip taking the food order entirely"},{es:"Usarla solo para vender los postres al final de la cena",en:"Use it only to sell desserts at the end of the meal"},{es:"Ofrecer opciones de plato fuerte en vez de preguntar si quieren uno",en:"Offer main options instead of asking if they want one"} ], 3);
+  setq("S2", 6, [ {es:"Porque es un requisito obligatorio de la política interna",en:"Because it is a mandatory requirement of policy"},{es:"Porque aumenta ambas ventas",en:"Because it raises both sales"},{es:"Porque no tiene ningún efecto real sobre la cuenta",en:"Because it has no real effect on the check"},{es:"Porque a la mayoría de los huéspedes les disgusta la idea",en:"Because most guests actually dislike the idea"} ], 1);
+  setq("S2", 7, [ {es:"El pastel de chocolate de 5 capas con un espresso martini",en:"The 5-layer chocolate cake with an espresso martini"},{es:"El guacamole fresco con chicharrones para empezar",en:"Fresh guacamole with chicharrones to start"},{es:"El cóctel Bajapanty y el especial del chef",en:"The Bajapanty cocktail and the chef's special"},{es:"Un Carajillo Chela's y las mini empanaditas de short rib",en:"A Carajillo Chela's and the short rib empanaditas"} ], 2);
+  setq("S2", 8, [ {es:"¿Lo prefieren bien picante o más bien suave?",en:"Would you prefer it very spicy or rather mild?"},{es:"¿Lo quieren con queso derretido o sin queso?",en:"Do you want it with melted cheese or without?"},{es:"¿Para cuántas personas de la mesa lo preparo?",en:"For how many people should I make it?"},{es:"¿Lo quieren con chicharrones, o solo?",en:"Do you want it with chicharrones, or plain?"} ], 3);
+  setq("S2", 9, [ {es:"Una cerveza Modelo de barril bien fría",en:"A cold Modelo draft beer"},{es:"Un Espresso Martini o un Carajillo Chela's",en:"An Espresso Martini or a Carajillo Chela's"},{es:"Una Corona-Rita gigante para compartir en la mesa",en:"A giant Corona-Rita to share at the table"},{es:"Una copa de la sangría insignia de la casa",en:"A glass of the house signature sangria"} ], 1);
+
+  /* ===== S3 ===== */
+  setq("S3", 0, [ {es:"En 20 minutos, junto con la entrega de la comida",en:"In 20 minutes, together with the food delivery"},{es:"En 1 minuto, apenas se sientan en la mesa",en:"In 1 minute, right as they sit down"},{es:"En 6 minutos",en:"In 6 minutes"},{es:"Sin límite de tiempo definido para la entrega",en:"No defined time limit for delivery"} ], 2);
+  setq("S3", 1, [ {es:"20–25 minutos",en:"20–25 minutes"},{es:"5 minutos desde que ingresas el pedido",en:"5 minutes after entering the order"},{es:"1 hora completa después de tomar el pedido",en:"A full hour after taking the order"},{es:"Sin objetivo de tiempo para la entrega",en:"No time target for delivery"} ], 0);
+  setq("S3", 2, [ {es:"Plato, Porción, Proteína y Ganancia total",en:"Plate, Portion, Protein and total Profit"},{es:"Producto, Preparación, Presentación, Precio",en:"Product, Preparation, Presentation, Price"},{es:"Precio, Promoción, Publicidad y Posición en carta",en:"Price, Promotion, Publicity and menu Position"},{es:"Porción, Presentación, Proteína y Postre",en:"Portion, Presentation, Protein and Dessert"} ], 1);
+  setq("S3", 3, [ {es:"En 15 minutos después de que lo soliciten",en:"In 15 minutes after they request it"},{es:"En 1 minuto, procesándolo de inmediato",en:"In 1 minute, processing it right away"},{es:"Sin apuro, cuando tengas tiempo libre",en:"No rush, whenever you have free time"},{es:"En 3 minutos",en:"In 3 minutes"} ], 3);
+  setq("S3", 4, [ {es:"De memoria, recordando quién dijo qué en la mesa",en:"From memory, recalling who said what at the table"},{es:"Anotados rápido en una servilleta y luego al POS",en:"Jotted quickly on a napkin, then into the POS"},{es:"Por posición de asiento, repetidos para confirmar",en:"By seat position, repeated back to confirm"},{es:"Adivinando según lo que suele pedir cada tipo de huésped",en:"Guessing by what each type of guest usually orders"} ], 2);
+  setq("S3", 5, [ {es:"En 3 minutos desde que la mesa se sienta",en:"In 3 minutes from when the table sits"},{es:"En 2 minutos",en:"In 2 minutes"},{es:"En 6 minutos, junto con las bebidas",en:"In 6 minutes, along with the drinks"},{es:"En 4 minutos, después del recorrido de menú",en:"In 4 minutes, after the menu tour"} ], 1);
+  setq("S3", 6, [ {es:"Uno por cada huésped sentado en la mesa",en:"One for each guest seated at the table"},{es:"Uno solo para toda la mesa completa",en:"Just one for the whole table"},{es:"Uno por cada cuatro huéspedes de la mesa",en:"One for every four guests at the table"},{es:"Uno por cada dos huéspedes",en:"One for every two guests"} ], 3);
+  setq("S3", 7, [ {es:"Dentro de 4 minutos de que terminen",en:"Within 4 minutes of them finishing"},{es:"Dentro de 10 minutos después de que acaben de comer",en:"Within 10 minutes after they finish eating"},{es:"Solamente cuando ya vayas a presentar la cuenta",en:"Only when you're about to present the check"},{es:"Dentro de 2 minutos de que dejen de comer",en:"Within 2 minutes of them stopping eating"} ], 0);
+
+  /* ===== S4 ===== */
+  setq("S4", 0, [ {es:"Solo los postres, como los churros con nutella y las sopaipillas",en:"Only desserts, like churros with nutella and sopaipillas"},{es:"Ceviches, Camarones Saltados, poke bowl, Chicharrones de Mariscos",en:"Ceviches, Camarones Saltados, poke bowl, Chicharrones"},{es:"Únicamente las quesadillas y los tacos de short rib",en:"Only the quesadillas and the short rib tacos"},{es:"Ninguno, el menú no incluye mariscos ni pescado",en:"None, the menu has no seafood or fish at all"} ], 1);
+  setq("S4", 1, [ {es:"Esperar unos minutos a ver cómo evoluciona el huésped",en:"Wait a few minutes to see how the guest develops"},{es:"Darle agua de inmediato para diluir el alérgeno",en:"Give them water right away to dilute the allergen"},{es:"Preguntarle a un compañero qué conviene hacer primero",en:"Ask a coworker what should be done first"},{es:"Llamar al 911 de inmediato",en:"Call 911 immediately"} ], 3);
+  setq("S4", 2, [ {es:"ALLERGY – [Alérgeno] – Mesa #",en:"ALLERGY – [Allergen] – Table #"},{es:"Solo una nota verbal avisando a la cocina",en:"Just a verbal note to the kitchen"},{es:"No hace falta ningún formato especial en el sistema",en:"No special format is needed in the system"},{es:"Únicamente el número de mesa, sin más detalle",en:"Only the table number, with no other detail"} ], 0);
+  setq("S4", 3, [ {es:"El guacamole con chips, limón y jalapeño",en:"The guacamole with chips, lime and jalapeño"},{es:"La crema batida de los postres de la casa",en:"The whipped cream on the house desserts"},{es:"La salsa del Lomo Saltado",en:"The Lomo Saltado sauce"},{es:"La salsa verde que acompaña a los tacos",en:"The green salsa served with the tacos"} ], 2);
+  setq("S4", 4, [ {es:"A nadie más, con avisar solo a la cocina ya es suficiente",en:"No one else, telling just the kitchen is enough"},{es:"A un manager, para supervisar preparación y entrega",en:"A manager, to oversee prep and delivery"},{es:"Al valet, para que esté atento en la entrada del local",en:"The valet, so they stay alert at the entrance"},{es:"A otro huésped de la mesa que conozca la alergia",en:"Another guest at the table who knows the allergy"} ], 1);
+  setq("S4", 5, [ {es:"Que el artículo es especialmente picante",en:"That the item is especially spicy"},{es:"Que es un plato apto para vegetarianos",en:"That it's a vegetarian-friendly dish"},{es:"Que el artículo es libre de gluten certificado",en:"That the item is certified gluten-free"},{es:"Que es crudo o poco cocido",en:"That it's raw or undercooked"} ], 3);
+  setq("S4", 6, [ {es:"Churros y sopaipillas caseras",en:"Homemade churros and sopaipillas"},{es:"El ceviche clásico de pescado fresco",en:"The classic fresh fish ceviche"},{es:"El coctel de camarón con salsa de la casa",en:"The shrimp cocktail with house sauce"},{es:"El Caribbean Tuna Poke Bowl del menú del mar",en:"The Caribbean Tuna Poke Bowl from the sea menu"} ], 0);
+  setq("S4", 7, [ {es:"Una leve somnolencia justo después de terminar de comer",en:"Mild drowsiness right after finishing the meal"},{es:"Sensación de mucha sed a lo largo de la comida",en:"A feeling of strong thirst throughout the meal"},{es:"Dificultad para respirar u opresión en la garganta",en:"Difficulty breathing or tightness in the throat"},{es:"Un dolor de cabeza leve que aparece poco a poco",en:"A mild headache that appears little by little"} ], 2);
+  setq("S4", 8, [ {es:"Solamente al plato principal del huésped que tiene la alergia",en:"Only to the main dish of the guest with the allergy"},{es:"A cada artículo afectado, incluyendo platos compartidos",en:"To every affected item, including shared dishes"},{es:"Únicamente a las entradas que llegan primero a la mesa",en:"Only to the appetizers that arrive first"},{es:"Solamente a las bebidas que pide ese huésped",en:"Only to the drinks that guest orders"} ], 1);
+
+  /* ===== S5 ===== */
+  setq("S5", 0, [ {es:"Sí, la quesadilla de camarón está disponible todos los días del año",en:"Yes, the shrimp quesadilla is available every day"},{es:"Solo se ofrece los fines de semana por la noche",en:"It's only offered on weekend nights"},{es:"No, los rellenos son pollo, short rib, vegetariana o filete",en:"No, fillings are chicken, short rib, veggie or steak"},{es:"Solo se sirve durante el brunch de los domingos",en:"It's only served during Sunday brunch"} ], 2);
+  setq("S5", 1, [ {es:"No más de 25 minutos",en:"No more than 25 minutes"},{es:"Hasta 2 horas si se mantienen sobre hielo",en:"Up to 2 hours if kept on ice"},{es:"Toda la noche mientras el bar siga abierto",en:"All night as long as the bar is open"},{es:"Sin límite, siempre que se vean frescas",en:"No limit, as long as they look fresh"} ], 0);
+  setq("S5", 2, [ {es:"Sí, se puede modificar de cualquier forma que pidan",en:"Yes, it can be modified any way they ask"},{es:"Solo se le pueden quitar los chips que lo acompañan",en:"Only the chips that come with it can be removed"},{es:"Sí, pero únicamente con la autorización de un manager",en:"Yes, but only with a manager's authorization"},{es:"No, no se puede modificar",en:"No, it can't be modified"} ], 3);
+  setq("S5", 3, [ {es:"Que por hoy no tenemos alitas mexicanas disponibles en la cocina",en:"That we have no Mexican wings available today"},{es:"Que siempre llevan el sabor del marinado, nunca van solas",en:"That they always carry the marinade flavor, never plain"},{es:"Que las alitas no llevan absolutamente ningún sabor",en:"That the wings carry no flavor at all"},{es:"Que todas las alitas de la casa son siempre muy picantes",en:"That all the house wings are always very spicy"} ], 1);
+  setq("S5", 4, [ {es:"No, solo se venden en set de tres",en:"No, only sold as a set of three"},{es:"Sí, se pueden pedir de uno en uno",en:"Yes, they can be ordered one at a time"},{es:"Solo se venden en pares, nunca en tres",en:"Only sold in pairs, never in threes"},{es:"Únicamente se ofrecen durante el brunch",en:"Only offered during brunch"} ], 0);
+  setq("S5", 5, [ {es:"Camarón, pollo y filete a elección del huésped",en:"Shrimp, chicken and steak, guest's choice"},{es:"Solo pollo y vegetariana, sin otras opciones",en:"Only chicken and veggie, no other options"},{es:"Short rib y camarón como únicos rellenos",en:"Short rib and shrimp as the only fillings"},{es:"Pollo, short rib, vegetariana o filete",en:"Chicken, short rib, veggie or steak"} ], 3);
+  setq("S5", 6, [ {es:"En tortilla de harina de trigo recién hecha",en:"In freshly made wheat flour tortillas"},{es:"En una tortilla mixta de maíz y harina",en:"In a mixed corn-and-flour tortilla"},{es:"En tortilla 100% de maíz",en:"In 100% corn tortillas"},{es:"En tortilla de trigo integral horneada",en:"In baked whole-wheat tortillas"} ], 2);
+  setq("S5", 7, [ {es:"De forma individual, uno por uno según se pida",en:"Individually, one at a time as requested"},{es:"Solo en set de tres, sin sustituciones",en:"Only as a set of three, no substitutions"},{es:"En pares, siempre acompañados de arroz y frijoles",en:"In pairs, always served with rice and beans"},{es:"En set de tres, pero con sustituciones libres de relleno",en:"As three, but with free filling substitutions"} ], 1);
+
+  /* ===== S6 ===== */
+  setq("S6", 0, [ {es:"Pellegrino, servida siempre con gas",en:"Pellegrino, always served sparkling"},{es:"Evian, importada directamente de Francia",en:"Evian, imported straight from France"},{es:"Fiji, en botella cuadrada característica",en:"Fiji, in its signature square bottle"},{es:"Saratoga",en:"Saratoga"} ], 3);
+  setq("S6", 1, [ {es:"Bulleit Rye — votado el Mejor Old Fashioned de Miami",en:"Bulleit Rye — voted Best Old Fashioned in Miami"},{es:"Solo tequila blanco, sin nada que lo haga especial",en:"Just blanco tequila, with nothing special about it"},{es:"Una mezcla de ron añejo con cola y limón",en:"A blend of aged rum with cola and lime"},{es:"Vodka con soda, popular entre los clientes nuevos",en:"Vodka with soda, popular with new customers"} ], 0);
+  setq("S6", 2, [ {es:"Starbucks, servido en todas las sucursales",en:"Starbucks, served across all locations"},{es:"Coffee Papis Co., tostado en el sur de Florida",en:"Coffee Papis Co., roasted in South Florida"},{es:"Una mezcla importada exclusivamente desde Italia",en:"A blend imported exclusively from Italy"},{es:"Grano sin marca, comprado a granel al mayoreo",en:"Unbranded beans, bought in bulk wholesale"} ], 1);
+  setq("S6", 3, [ {es:"No, solo si el huésped lo pide dos veces seguidas",en:"No, only if the guest asks twice in a row"},{es:"Nunca mencionarlos, no forman parte de la carta",en:"Never mention them, they aren't on the menu"},{es:"Sí, siempre ofrecerlos como una opción",en:"Yes, always offer them as an option"},{es:"Solo ofrecerlos cuando hay niños en la mesa",en:"Only offer them when there are kids at the table"} ], 2);
+  setq("S6", 4, [ {es:"Blanco, Reposado y Añejo, para quien recién empieza",en:"Blanco, Reposado and Añejo, for beginners"},{es:"Solo Don Julio Blanco servido en tres copas",en:"Just Don Julio Blanco served in three glasses"},{es:"Una selección únicamente de mezcales artesanales",en:"A selection of only artisanal mezcals"},{es:"Don Julio Añejo, 70 Aniversario y 1942",en:"Don Julio Añejo, 70 Aniversario and 1942"} ], 3);
+  setq("S6", 5, [ {es:"Smoke Some",en:"Smoke Some"},{es:"Strawberryta, sin alcohol y con fresas",en:"Strawberryta, alcohol-free and with strawberries"},{es:"Botánico, con pepino, menta y tónica",en:"Botánico, with cucumber, mint and tonic"},{es:"Frozen Piña Colada, dulce y congelada",en:"Frozen Piña Colada, sweet and frozen"} ], 0);
+  setq("S6", 6, [ {es:"Ahumado y algo picante, hecho con mezcal ancho",en:"Smoky and a bit spicy, made with ancho mezcal"},{es:"Rico y para tomar despacio, añejado en barril de roble",en:"Rich and slow to sip, aged in an oak barrel"},{es:"Floral y refrescante, con lychee y flor de mariposa",en:"Floral and refreshing, with lychee and butterfly flower"},{es:"Con energía incluida, porque lleva Red Bull",en:"Energy included, because it has Red Bull"} ], 2);
+  setq("S6", 7, [ {es:"Una margarita congelada de fresa para el calor",en:"A frozen strawberry margarita for the heat"},{es:"Un Tommy's tamaño jumbo con una Coronita encima",en:"A jumbo-size Tommy's with a Coronita on top"},{es:"Una cerveza de barril servida con un toque de limón",en:"A draft beer served with a touch of lime"},{es:"Un flight de tres tequilas Don Julio para catar",en:"A flight of three Don Julio tequilas to taste"} ], 1);
+  setq("S6", 8, [ {es:"El tequila de la casa, igual que el paquete House",en:"The house tequila, same as the House package"},{es:"Campo Bravo Plata, el mismo del Tommy's Classic",en:"Campo Bravo Plata, same as the Tommy's Classic"},{es:"Los Vecinos, el mezcal de The Spicy One",en:"Los Vecinos, the mezcal from The Spicy One"},{es:"Don Julio",en:"Don Julio"} ], 3);
+
+  /* ===== S7 ===== */
+  setq("S7", 0, [ {es:"Nada, puedes empezar a tomar pedidos de inmediato",en:"Nothing, you can start taking orders right away"},{es:"Las cifras de ventas del turno del día anterior",en:"The sales figures from the previous day's shift"},{es:"Que estás con tu propio nombre de server",en:"That you're under your own server name"},{es:"El pronóstico del clima para el resto de la noche",en:"The weather forecast for the rest of the night"} ], 2);
+  setq("S7", 1, [ {es:"Cuando cada huésped paga lo suyo",en:"When each guest pays for their own"},{es:"Siempre, sin importar cómo quiera pagar la mesa",en:"Always, no matter how the table wants to pay"},{es:"Nunca, todas las cuentas se dividen por partes iguales",en:"Never, all checks are split equally"},{es:"Solo cuando la mesa es un grupo de exactamente dos",en:"Only when the table is a party of exactly two"} ], 0);
+  setq("S7", 2, [ {es:"A grupos de 2 o más personas en la mesa",en:"To parties of 2 or more at the table"},{es:"A grupos de 10 o más personas solamente",en:"To parties of 10 or more only"},{es:"Nunca aplica, la propina siempre es voluntaria",en:"Never applies, tips are always voluntary"},{es:"A grupos de 6 o más",en:"To parties of 6 or more"} ], 3);
+  setq("S7", 3, [ {es:"El 10% sobre el total de la transacción",en:"10% of the transaction total"},{es:"El 3%",en:"3%"},{es:"El 0%, no existe ningún recargo por tarjeta",en:"0%, there is no card surcharge at all"},{es:"El 20%, igual que la propina automática",en:"20%, same as the automatic gratuity"} ], 1);
+  setq("S7", 4, [ {es:"Con nadie, puedes aplicarlos tú mismo directamente",en:"With no one, you can apply them yourself"},{es:"Solo con el huésped que está pagando la cuenta",en:"Only with the guest who is paying the check"},{es:"Con un manager",en:"With a manager"},{es:"Con otro server que tenga más experiencia que tú",en:"With another, more experienced server"} ], 2);
+  setq("S7", 5, [ {es:"Únicamente a grupos de 10 o más personas",en:"Only to parties of 10 or more people"},{es:"A cualquier cuenta de la mesa que llegue a $100 o más",en:"To any table check that reaches $100 or more"},{es:"A todas las cuentas que se paguen con tarjeta",en:"To all checks that are paid by card"},{es:"A grupos de 6 o más, o cuentas de $300 o más",en:"To parties of 6+, or checks of $300 or more"} ], 3);
+  setq("S7", 6, [ {es:"Para repartir la cuenta en partes iguales",en:"To split the check into equal parts"},{es:"Cuando cada huésped paga solo lo que él pidió",en:"When each guest pays only for what they ordered"},{es:"Cuando hay una sola tarjeta para toda la mesa",en:"When there's a single card for the whole table"},{es:"Al finalizar tu turno, para cerrar todo más rápido",en:"At the end of your shift, to close out faster"} ], 0);
+  setq("S7", 7, [ {es:"Puedes dejarlas para que las cierre el siguiente turno",en:"You can leave them for the next shift to close"},{es:"No dejes cuentas abiertas después de tu turno",en:"Don't leave checks open after your shift"},{es:"Ciérralas solo si el manager te lo pide expresamente",en:"Close them only if the manager expressly asks"},{es:"Déjalas abiertas para seguir acumulando propinas",en:"Leave them open to keep accumulating tips"} ], 1);
+
+  /* ===== S8 ===== */
+  setq("S8", 0, [ {es:"Solo si el propio huésped ofrece mostrarla primero",en:"Only if the guest offers to show it first"},{es:"Únicamente a los huéspedes que se ven obviamente jóvenes",en:"Only to guests who look obviously young"},{es:"A nadie, mientras el huésped pida su bebida con calma",en:"No one, as long as they order calmly"},{es:"A cualquiera que aparente 35 años o menos",en:"Anyone who looks 35 or younger"} ], 3);
+  setq("S8", 1, [ {es:"Cualquier server que atienda esa sección esa noche",en:"Any server working that section that night"},{es:"El bartender, siempre que el huésped insista bastante",en:"The bartender, if the guest insists enough"},{es:"Solo el Manager en Turno (MOD)",en:"Only the Manager on Duty (MOD)"},{es:"El propio huésped, si asegura sentirse perfectamente bien",en:"The guest, if they swear they feel fine"} ], 2);
+  setq("S8", 2, [ {es:"No, las bebidas de cortesía se pueden omitir",en:"No, comp drinks can be left out"},{es:"Sí, sin excepciones",en:"Yes, no exceptions"},{es:"Solo los cócteles, no la cerveza ni el vino",en:"Only cocktails, not beer or wine"},{es:"Solo si el huésped específicamente pide el recibo",en:"Only if the guest specifically asks for the receipt"} ], 1);
+  setq("S8", 3, [ {es:"En 30 días",en:"Within 30 days"},{es:"En 90 días desde la fecha de contratación",en:"Within 90 days of the hire date"},{es:"En 1 año, con tiempo de sobra para hacerlo",en:"Within 1 year, plenty of time to do it"},{es:"Nunca, no es un requisito para el personal",en:"Never, it isn't required for staff"} ], 0);
+  setq("S8", 4, [ {es:"Una sola vez, y nunca hay que repetirlo",en:"Just once, and never repeated again"},{es:"Cada 5 años, según la política del estado",en:"Every 5 years, per state policy"},{es:"Cada 4 meses",en:"Every 4 months"},{es:"Cada semana, antes de empezar el turno",en:"Every week, before starting the shift"} ], 2);
+  setq("S8", 5, [ {es:"Servirle agua discretamente sin avisarle a nadie más",en:"Quietly serve them water without telling anyone"},{es:"Alertar de inmediato a un supervisor o manager",en:"Immediately alert a supervisor or manager"},{es:"Ignorarlo por completo si es un cliente frecuente",en:"Ignore it entirely if they're a regular"},{es:"Pedirle a otro huésped de la mesa que lo controle",en:"Ask another guest at the table to handle it"} ], 1);
+  setq("S8", 6, [ {es:"Ya tomó usted demasiado esta noche, así que vamos a pedirle que se retire del local ahora mismo, sin más discusión.",en:"You've had too much tonight, so we're asking you to leave the venue right now, no further discussion."},{es:"Nada; dejamos de traerle bebidas en silencio y esperamos que no lo note.",en:"Nothing; we just quietly stop bringing drinks and hope they don't notice."},{es:"Le decimos que le pida al bartender la próxima ronda que quiera.",en:"We tell them to ask the bartender for whatever next round they want."},{es:"Por su seguridad y la de los demás, no podemos servirle más alcohol; con gusto le ofrecemos agua, comida o un transporte seguro.",en:"For your safety and others', we can't serve more alcohol; we'd gladly offer water, food or a safe ride."} ], 3);
+  setq("S8", 7, [ {es:"Recomendar que no maneje y ayudar a conseguir Uber, Lyft o taxi",en:"Recommend they not drive and help get a ride"},{es:"Dejarlo manejar, porque al final es su propia decisión",en:"Let them drive, since it's their own decision"},{es:"Darle un par de cafés bien cargados y después dejarlo irse manejando solo",en:"Give them strong coffees and let them drive off alone"},{es:"Nada, porque eso ya no es responsabilidad del server",en:"Nothing, it's no longer the server's job"} ], 0);
+  setq("S8", 8, [ {es:"Nada más, el incidente ya quedó completamente cerrado",en:"Nothing more, the incident is already closed"},{es:"Un breve reporte escrito enviado a la gerencia",en:"A brief written report sent to management"},{es:"Publicarlo en las redes sociales del restaurante",en:"Post it on the restaurant's social media"},{es:"Contarles a los otros huéspedes lo que acaba de pasar",en:"Tell the other guests what just happened"} ], 1);
+  setq("S8", 9, [ {es:"En 30 días, el mismo plazo que los no managers",en:"Within 30 days, same as non-managers"},{es:"En 60 días desde su fecha de contratación",en:"Within 60 days of their hire date"},{es:"En 4 meses, coincidiendo con el repaso general",en:"Within 4 months, matching the refresher"},{es:"En 15 días",en:"Within 15 days"} ], 3);
+  setq("S8", 10, [ {es:"Pedir agua con mucha frecuencia durante la comida",en:"Asking for water very often during the meal"},{es:"Hablar en voz baja y de forma muy pausada con el resto de la mesa",en:"Speaking softly and slowly with the table"},{es:"Habla arrastrada y problemas de equilibrio al caminar",en:"Slurred speech and balance problems walking"},{es:"Pedir la cuenta rápido para poder retirarse pronto",en:"Asking for the check quickly to leave soon"} ], 2);
+  setq("S8", 11, [ {es:"Nada, debe seguir sirviéndole exactamente igual que siempre",en:"Nothing, it must serve them exactly as always"},{es:"Limitar o rechazar el servicio en el futuro",en:"Limit or refuse service in the future"},{es:"Cobrarle una tarifa extra cada vez que regrese al local",en:"Charge an extra fee each time they return"},{es:"Prohibirle la entrada de por vida de forma automática",en:"Automatically ban them for life"} ], 1);
+
+  /* ===== S9 ===== */
+  setq("S9", 0, [ {es:"1 turno, de aproximadamente 2 horas de duración",en:"1 shift, about 2 hours long"},{es:"10 turnos, de 4 horas cada uno durante dos semanas",en:"10 shifts, 4 hours each over two weeks"},{es:"4 turnos, de 8 horas cada uno",en:"4 shifts, 8 hours each"},{es:"No hay un número definido, depende del trainee",en:"No set number, it depends on the trainee"} ], 2);
+  setq("S9", 1, [ {es:"En la mesa de un manager, tratada como mesa normal",en:"At a manager's table, treated as a normal table"},{es:"En un salón de clases, con un examen puramente teórico",en:"In a classroom, with a purely theoretical exam"},{es:"Por teléfono, con el manager haciendo las preguntas",en:"Over the phone, with the manager asking questions"},{es:"No se realiza; basta con aprobar el examen escrito",en:"It isn't done; passing the written test is enough"} ], 0);
+  setq("S9", 2, [ {es:"Un 50%, con la mitad correcta ya es suficiente",en:"50%, getting half right is already enough"},{es:"Solo un 100% perfecto permite aprobar el examen",en:"Only a perfect 100% allows passing the exam"},{es:"No hay un puntaje mínimo definido para aprobar",en:"There's no defined minimum score to pass"},{es:"Un 80% o más",en:"80% or more"} ], 3);
+  setq("S9", 3, [ {es:"Nada en absoluto, ese día del bar es únicamente para observar al equipo",en:"Nothing at all, that day is only for observing"},{es:"Dos cócteles, vinos blancos por copa, dos entradas y cuatro sin alcohol",en:"Two cocktails, white wines by glass, two apps, four soft drinks"},{es:"Solo postres, junto con café y digestivos de la carta",en:"Only desserts, plus coffee and digestifs"},{es:"Solo cerveza de barril durante todo el turno del bar",en:"Only draft beer throughout the bar shift"} ], 1);
+  setq("S9", 4, [ {es:"Vender alcohol en el bar y practicar la venta sugestiva de cócteles",en:"Selling alcohol and practicing suggestive selling"},{es:"Manejo de efectivo y cierre de cuentas en el POS",en:"Cash handling and closing checks in the POS"},{es:"Acompañar al chef en expo y aprender los platos y alergias",en:"Shadowing the chef at expo, learning dishes and allergies"},{es:"Nada específico; es un día libre de tareas asignadas",en:"Nothing specific; a day free of assigned tasks"} ], 2);
+  setq("S9", 5, [ {es:"Solo 4 turnos de server, sin otras áreas del restaurante",en:"Only 4 server shifts, no other areas"},{es:"2 de cocina, 2 de bar y 4 de server, sin turno de busser",en:"2 kitchen, 2 bar and 4 server, no busser shift"},{es:"3 de bar y 3 de server, repartidos en la semana",en:"3 bar and 3 server, across the week"},{es:"1 de Cocina/Expo, 1 de Bar, 1 de Busser y 4 de Server",en:"1 Kitchen/Expo, 1 Bar, 1 Busser and 4 Server"} ], 3);
+  setq("S9", 6, [ {es:"Atender una mesa todo el turno mientras el entrenador supervisa",en:"Handling a table all shift while the trainer supervises"},{es:"Acompañar al chef en la línea de expo durante toda la noche",en:"Shadowing the chef on the expo line all night"},{es:"Hacer side work y catas de cócteles en el bar del salón",en:"Doing side work and cocktail tastings at the bar"},{es:"Realizar la evaluación final a cargo de un manager",en:"Performing the final manager evaluation"} ], 0);
+  setq("S9", 7, [ {es:"Únicamente el menú completo de comida y de bebidas de la casa",en:"Only the full food and drink menu of the house"},{es:"Menú, pasos de servicio, protocolo de alergias y venta sugestiva",en:"Menu, service steps, allergies and suggestive selling"},{es:"Solo el protocolo de alergias y la seguridad alimentaria",en:"Only the allergy protocol and food safety"},{es:"La historia del restaurante y su misión de hospitalidad",en:"The restaurant's history and hospitality mission"} ], 1);
+
+  /* ===== S10 ===== */
+  setq("S10", 0, [ {es:"Solo cuando el restaurante está tranquilo y con muy pocas mesas ocupadas",en:"Only when the restaurant is quiet with few tables"},{es:"Únicamente durante el cierre, al terminar el servicio",en:"Only during closing, once service has ended"},{es:"Es opcional; cada server decide si mantener su estación",en:"It's optional; each server decides whether to keep it"},{es:"Durante todo el servicio activo, incluso en horas de movimiento",en:"Throughout active service, even during busy hours"} ], 3);
+  setq("S10", 1, [ {es:"Center Room",en:"Center Room"},{es:"Jungle Room, junto al refrigerador de sodas",en:"Jungle Room, next to the sodas fridge"},{es:"Florida Room, cerca de la estación de agua",en:"Florida Room, near the water station"},{es:"El Bar, al lado de la estación del POS",en:"The Bar, beside the POS station"} ], 0);
+  setq("S10", 2, [ {es:"Nadie en específico; la cubre quien esté disponible",en:"No one specific; whoever is free covers it"},{es:"Solo el manager de turno se encarga de esa estación",en:"Only the manager on duty handles that station"},{es:"El server asignado a esa sección",en:"The server assigned to that section"},{es:"El valet, cuando no está estacionando autos afuera",en:"The valet, when not parking cars outside"} ], 2);
+  setq("S10", 3, [ {es:"Nada; la estación del POS no requiere reabastecerse",en:"Nothing; the POS station needs no restocking"},{es:"Papel de impresora, sobres de propina y bolígrafos",en:"Printer paper, tip envelopes and pens"},{es:"Solamente servilletas y removedores para las bebidas",en:"Only napkins and drink stirrers"},{es:"Artículos de comida y guarniciones para las mesas",en:"Food items and side dishes for the tables"} ], 1);
+  setq("S10", 4, [ {es:"Dejarla sin cubrir por completo hasta que puedas volver a ella",en:"Leave it fully uncovered until you can get back"},{es:"Nada; cubrir la estación no es realmente importante",en:"Nothing; covering the station isn't important"},{es:"Pedirle a un huésped cercano que te eche una mano",en:"Ask a nearby guest to give you a hand"},{es:"Avisar al supervisor o arreglar un relevo con un compañero",en:"Tell the supervisor or arrange a relief with a coworker"} ], 3);
+  setq("S10", 5, [ {es:"En el Florida Room, junto a la estación de agua",en:"In the Florida Room, by the water station"},{es:"En el Jungle Room",en:"In the Jungle Room"},{es:"En el Center Room, cerca de la estación de café",en:"In the Center Room, near the coffee station"},{es:"En el Bar, al lado de la estación del POS",en:"In the Bar, beside the POS station"} ], 1);
+  setq("S10", 6, [ {es:"Del server que esté asignado al Florida Room durante el turno",en:"The server assigned to the Florida Room that shift"},{es:"Del manager en turno, que la revisa al cerrar",en:"The manager on duty, who checks it at closing"},{es:"Del busser, aunque los servers reportan problemas ahí",en:"The busser, though servers report problems there"},{es:"De nadie en particular; se mantiene sola durante el día",en:"No one in particular; it keeps itself up"} ], 2);
+  setq("S10", 7, [ {es:"Jarras frías, vasos limpios y hielo",en:"Cold pitchers, clean glasses and ice"},{es:"Café caliente, vasos, tapas y los sugar caddies",en:"Hot coffee, cups, lids and the sugar caddies"},{es:"Sodas mexicanas, agua embotellada y jarritos",en:"Mexican sodas, bottled water and jarritos"},{es:"Papel de impresora, sobres de propina y bolígrafos",en:"Printer paper, tip envelopes and pens"} ], 0);
+
+  /* ===== S11 ===== */
+  setq("S11", 0, [ {es:"Discutir con firmeza que los precios son totalmente justos",en:"Firmly argue the prices are completely fair"},{es:"Ignorar por completo el comentario y cambiar de tema",en:"Completely ignore the comment and change subject"},{es:"Reconocer con calidez y destacar la calidad y el valor",en:"Acknowledge warmly and highlight quality and value"},{es:"Ofrecer un descuento de inmediato sin consultar al manager",en:"Offer a discount right away without asking the manager"} ], 2);
+  setq("S11", 1, [ {es:"No decir nada y esperar que la comida salga pronto sola",en:"Say nothing and hope the food comes out soon"},{es:"Culpar abiertamente a la cocina frente al huésped molesto",en:"Openly blame the kitchen in front of the guest"},{es:"Decirles que se vayan si no están contentos con la espera",en:"Tell them to leave if unhappy with the wait"},{es:"Disculparte, consultar a cocina y mantenerlos informados",en:"Apologize, check with the kitchen and keep them informed"} ], 3);
+  setq("S11", 2, [ {es:"Disculparte, retirar el plato y notificar al manager",en:"Apologize, remove the plate and notify the manager"},{es:"Discutir con el huésped que eso no es realmente posible",en:"Argue with the guest that it isn't really possible"},{es:"Ignorarlo con calma y esperar que lo dejen pasar solos",en:"Calmly ignore it and hope they let it slide"},{es:"Ofrecerles cambiar de mesa mientras se calma la situación",en:"Offer to move them to another table meanwhile"} ], 0);
+  setq("S11", 3, [ {es:"Adivinar lo que quieren para ahorrar tiempo en la mesa",en:"Guess what they want to save time at the table"},{es:"Una a la vez, repitiendo cada una para confirmar",en:"One at a time, repeating each to confirm"},{es:"Negarte a tomar cualquier tipo de modificación al plato",en:"Refuse to take any modification to the dish"},{es:"Apresurarte a ingresarlas todas sin confirmar ninguna",en:"Rush to enter them all without confirming any"} ], 1);
+  setq("S11", 4, [ {es:"Servir directo la bebida de mayor graduación sin preguntar",en:"Directly serve the highest-proof drink without asking"},{es:"Negarte a servirles cualquier bebida por precaución",en:"Refuse to serve them any drink as a precaution"},{es:"Preguntar su preferencia de licor e involucrar al bartender",en:"Ask their liquor preference and involve the bartender"},{es:"Servirles dos bebidas fuertes a la vez para que elijan",en:"Serve them two strong drinks at once to pick from"} ], 2);
+  setq("S11", 5, [ {es:"Ofrecer siempre un descuento de inmediato a la mesa",en:"Always offer an immediate discount to the table"},{es:"Llamar de inmediato al 911 ante cualquier tipo de queja de un huésped",en:"Immediately call 911 for any kind of complaint"},{es:"Ignorar la queja un rato hasta que el huésped se calme",en:"Ignore the complaint until the guest calms down"},{es:"Escuchar sin interrumpir, disculparte, involucrar al manager y dar seguimiento",en:"Listen, apologize, involve the manager and follow up"} ], 3);
+  setq("S11", 6, [ {es:"Debatir con el huésped sobre cómo llegó el cabello ahí",en:"Debate with the guest how the hair got there"},{es:"Notificar al manager de inmediato",en:"Notify the manager immediately"},{es:"Cobrar el plato de todas formas al presentar la cuenta",en:"Charge for the plate anyway on the check"},{es:"Servir otro plato sin avisarle a nadie del equipo",en:"Serve another plate without telling anyone"} ], 1);
+  setq("S11", 7, [ {es:"Comunicándose con claridad y anticipando necesidades",en:"By communicating clearly and anticipating needs"},{es:"Ofreciendo cortesías gratuitas a todas y cada una de las mesas",en:"By offering free comps to each and every table"},{es:"Evitando en lo posible hablar demasiado con los huéspedes",en:"By avoiding talking too much with the guests"},{es:"Sirviendo lo más rápido posible sin revisar bien los pedidos",en:"By serving as fast as possible without checking orders"} ], 0);
+
+})();
+
+/* --- ajustes de paridad de longitud (override) --- */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+  setq("S2", 5, [ {es:"Asumir de entrada, apenas se sientan, que el huésped no quiere ningún plato fuerte esta noche",en:"Assume as soon as they sit that the guest wants no main course tonight"},{es:"Saltarse por completo la toma del pedido de comida",en:"Skip taking the food order entirely"},{es:"Usarla solo para vender los postres al final de la cena",en:"Use it only to sell desserts at the end of the meal"},{es:"Ofrecer opciones de plato fuerte en vez de preguntar si quieren uno",en:"Offer main options instead of asking if they want one"} ], 3);
+  setq("S4", 0, [ {es:"Solo los postres del menú, como los churros con nutella, las sopaipillas y el flan de la casa",en:"Only desserts, like churros with nutella, sopaipillas and flan"},{es:"Ceviches, Camarones Saltados, poke bowl, Chicharrones de Mariscos",en:"Ceviches, Camarones Saltados, poke bowl, Chicharrones"},{es:"Únicamente las quesadillas y los tacos de short rib",en:"Only the quesadillas and the short rib tacos"},{es:"Ninguno, el menú no incluye mariscos ni pescado",en:"None, the menu has no seafood or fish at all"} ], 1);
+  setq("S8", 6, [ {es:"Ya tomó usted demasiado esta noche; le vamos a pedir por favor que se retire del local ahora mismo, sin más discusión.",en:"You've had too much tonight; please leave the venue right now, no further discussion."},{es:"No hacemos nada; dejamos de traerle bebidas en silencio y esperamos que el huésped no lo llegue a notar.",en:"We do nothing; we just quietly stop bringing drinks and hope they don't notice."},{es:"Le decimos que le pida directamente al bartender la próxima ronda de bebidas que quiera tomar.",en:"We tell them to ask the bartender directly for their next round."},{es:"Por su seguridad no podemos servirle más alcohol; con gusto le ofrecemos agua, comida o transporte seguro.",en:"For your safety we can't serve more alcohol; we'd gladly offer water, food or a safe ride."} ], 3);
+  setq("S9", 3, [ {es:"Nada en absoluto durante ese día; el turno de bar es únicamente para observar con calma al resto del equipo",en:"Nothing at all; the bar day is only for calmly observing the team"},{es:"Dos cócteles, vinos blancos por copa, dos entradas y cuatro sin alcohol",en:"Two cocktails, white wines by glass, two apps, four soft drinks"},{es:"Solo postres, junto con café y digestivos de la carta",en:"Only desserts, plus coffee and digestifs"},{es:"Solo cerveza de barril durante todo el turno del bar",en:"Only draft beer throughout the bar shift"} ], 1);
+  setq("S11", 5, [ {es:"Ofrecer siempre un descuento de inmediato a la mesa que se queja",en:"Always offer an immediate discount to the table"},{es:"Llamar de inmediato al 911 ante cualquier tipo de queja que reciba de parte de un huésped molesto",en:"Immediately call 911 for any kind of complaint from a guest"},{es:"Ignorar la queja un rato hasta que el huésped se calme",en:"Ignore the complaint until the guest calms down"},{es:"Escuchar sin interrumpir, disculparte, involucrar al manager y dar seguimiento",en:"Listen, apologize, involve the manager and follow up"} ], 3);
+})();
+
+/* Pedagogia: opciones rebalanceadas — track BARTENDER (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+
+  /* ===== BT1 ===== */
+  setq("BT1",0,[
+    {es:"A mitad del turno de trabajo",en:"Midway through the shift"},
+    {es:"Antes de abrir, cada turno",en:"Before opening, every shift"},
+    {es:"Durante la hora pico ocupada",en:"During the busy rush"},
+    {es:"Después de cerrar la barra",en:"After closing the bar"}
+  ],1);
+  setq("BT1",1,[
+    {es:"Porque lo exige la ley estatal",en:"Because state law requires it"},
+    {es:"Solo para impresionar al manager",en:"Only to impress the manager"},
+    {es:"Para gastar menos hielo por turno",en:"To use less ice per shift"},
+    {es:"Más rápida y segura en hora pico",en:"Faster and safer during a rush"}
+  ],3);
+  setq("BT1",2,[
+    {es:"Solo hielo, sin herramientas ni copas",en:"Only ice, no tools or glassware"},
+    {es:"Menús impresos, volantes y bolígrafos",en:"Printed menus, flyers and pens"},
+    {es:"Hielo, guarniciones, cristalería y herramientas",en:"Ice, garnishes, glassware and tools"},
+    {es:"Botellas de respaldo traídas del almacén general",en:"Backup bottles brought from the main storeroom"}
+  ],2);
+  setq("BT1",3,[
+    {es:"Un posavaso, nunca una servilleta",en:"A coaster, never a napkin"},
+    {es:"Una servilleta doblada, no un posavaso",en:"A folded napkin, not a coaster"},
+    {es:"Un individual de tela pequeño",en:"A small cloth placemat"},
+    {es:"Un plato pequeño de cortesía",en:"A small courtesy plate"}
+  ],0);
+  setq("BT1",4,[
+    {es:"De inmediato, apenas se vacíe la botella",en:"Right away, as soon as it empties"},
+    {es:"Al terminar el turno completo",en:"At the end of the whole shift"},
+    {es:"Cuando el bar esté tranquilo",en:"When the bar is slow"},
+    {es:"Solo con el reemplazo ya en la mano",en:"Only with the replacement already in hand"}
+  ],3);
+  setq("BT1",5,[
+    {es:"Un posavaso de cartón grueso",en:"A thick cardboard coaster"},
+    {es:"Una servilleta de papel",en:"A paper napkin"},
+    {es:"Un individual de tela",en:"A cloth placemat"},
+    {es:"Nada, solo la bebida sola",en:"Nothing, just the drink"}
+  ],1);
+  setq("BT1",6,[
+    {es:"Tirarla de inmediato al bote de basura",en:"Throw it straight in the trash bin"},
+    {es:"Guardarla en tu bolsillo del delantal",en:"Keep it in your apron pocket"},
+    {es:"Apartarla para que el bar-back la reabastezca",en:"Set it aside for the bar-back to restock"},
+    {es:"Dejarla en el piso detrás de la barra por horas",en:"Leave it on the floor behind the bar for hours"}
+  ],2);
+  setq("BT1",7,[
+    {es:"Es más rápida y más segura",en:"It is faster and safer"},
+    {es:"Solo para verse profesional",en:"Only to look professional"},
+    {es:"Para usar menos hielo al día",en:"To use less ice per day"},
+    {es:"No tiene ningún efecto real",en:"It has no real effect"}
+  ],0);
+
+  /* ===== BT2 ===== */
+  setq("BT2",0,[
+    {es:"No, todavía están sin definir del todo",en:"No, they are still not fully defined"},
+    {es:"Solo las de las margaritas",en:"Only the margarita recipes"},
+    {es:"Solo las bebidas sin alcohol",en:"Only the non-alcoholic drinks"},
+    {es:"Sí, confirmadas para cada cóctel",en:"Yes, confirmed for every cocktail"}
+  ],3);
+  setq("BT2",1,[
+    {es:"La lista de ingredientes de cada bebida",en:"The ingredient list of each drink"},
+    {es:"Las medidas (oz) y la cristalería por cóctel",en:"Pour sizes (oz) and glassware per cocktail"},
+    {es:"Los nombres oficiales de los cócteles",en:"The official names of the cocktails"},
+    {es:"Nada, absolutamente todo ya quedó confirmado hoy",en:"Nothing, absolutely everything is already confirmed"}
+  ],1);
+  setq("BT2",2,[
+    {es:"Lo que a ti te parezca más correcto",en:"Whatever seems most right to you"},
+    {es:"Tu memoria de bares anteriores donde trabajaste",en:"Your memory from previous bars you worked at"},
+    {es:"Las tarjetas de receta impresas en la barra",en:"The printed recipe cards at the bar"},
+    {es:"El consejo de un huésped habitual",en:"The advice of a regular guest"}
+  ],2);
+  setq("BT2",3,[
+    {es:"Bulleit Rye, demerara, Angostura y bitters de naranja",en:"Bulleit Rye, demerara, Angostura and orange bitters"},
+    {es:"Tequila reposado, triple sec, limón y sal fina",en:"Reposado tequila, triple sec, lime and fine salt"},
+    {es:"Ron añejo, cola, amargo de angostura y rodaja de limón",en:"Aged rum, cola, angostura bitters and a lime wheel"},
+    {es:"Vodka, soda, azúcar y un twist de naranja",en:"Vodka, soda, sugar and an orange twist"}
+  ],0);
+  setq("BT2",4,[
+    {es:"Ron Tanduay reposado de Filipinas",en:"Reposado Tanduay rum from the Philippines"},
+    {es:"Mezcal The Lost Explorer",en:"The Lost Explorer mezcal"},
+    {es:"Vodka Ketel One de Holanda",en:"Ketel One vodka from Holland"},
+    {es:"Whiskey Bulleit Rye de centeno",en:"Bulleit Rye rye whiskey"}
+  ],1);
+  setq("BT2",5,[
+    {es:"Licor 43, espresso de Coffee Papis, naranja y hielo grande",en:"Licor 43, Coffee Papis espresso, orange and large ice"},
+    {es:"Vodka a la vainilla, licor de café Mr. Black, espresso y azúcar",en:"Vanilla vodka, Mr. Black coffee liqueur, espresso and sugar"},
+    {es:"Ron Tanduay, néctar de lychee, limón y agua con gas",en:"Tanduay rum, lychee nectar, lime and sparkling water"},
+    {es:"Bulleit Rye, azúcar demerara y bitters de angostura fría",en:"Bulleit Rye, demerara sugar and cold angostura bitters"}
+  ],0);
+  setq("BT2",6,[
+    {es:"Adivinar la medida a ojo",en:"Guess the measurement by eye"},
+    {es:"Usar cualquier copa que encuentres",en:"Use any glass you find"},
+    {es:"Servir según tu propio criterio",en:"Pour based on your own judgment"},
+    {es:"Preguntar a un manager",en:"Ask a manager"}
+  ],3);
+
+  /* ===== BT3 ===== */
+  setq("BT3",0,[
+    {es:"Solo cerveza de barril, sin shots",en:"Only draft beer, no shots"},
+    {es:"Cinco cócteles de la carta premium",en:"Five cocktails from the premium menu"},
+    {es:"Cerveza más shots de tequila de la casa",en:"Beer plus house tequila shots"},
+    {es:"Únicamente shots de tequila, sin cerveza alguna",en:"Only tequila shots, no beer at all"}
+  ],2);
+  setq("BT3",1,[
+    {es:"Beginners es Blanco/Reposado/Añejo; Ballers es lo top de gama",en:"Beginners is Blanco/Reposado/Añejo; Ballers is top-shelf"},
+    {es:"No existe ninguna diferencia real entre los dos niveles ofrecidos",en:"There is no real difference between the two levels offered"},
+    {es:"Ballers no incluye nada de tequila en su servicio",en:"Ballers includes no tequila in its service"},
+    {es:"Beginners es un flight reservado solo para el personal",en:"Beginners is a flight reserved only for staff"}
+  ],0);
+  setq("BT3",2,[
+    {es:"Un cóctel exclusivo reservado solo para el bartender de turno",en:"An exclusive cocktail reserved only for the bartender on duty"},
+    {es:"Un postre de cortesía para el huésped que paga",en:"A courtesy dessert for the paying guest"},
+    {es:"Un tipo de cerveza especial de barril importada",en:"A special imported draft beer type"},
+    {es:"Un detalle que un huésped le manda al equipo de cocina",en:"A treat a guest can send to the kitchen team"}
+  ],3);
+  setq("BT3",3,[
+    {es:"El House Prosecco servido por copa",en:"The House Prosecco served by the glass"},
+    {es:"Moët & Chandon Imperial Brut",en:"Moët & Chandon Imperial Brut"},
+    {es:"Prosecco Zero sin azúcar",en:"Prosecco Zero with no sugar"},
+    {es:"Prosecco Rosé bien espumoso",en:"A nicely sparkling Prosecco Rosé"}
+  ],1);
+  setq("BT3",4,[
+    {es:"Ignorar sus solicitudes de bebida",en:"Ignore their drink requests"},
+    {es:"Servir únicamente cerveza de barril fría",en:"Serve only cold draft beer"},
+    {es:"Recomendar bebidas según su gusto",en:"Recommend drinks based on their taste"},
+    {es:"Rechazar cualquier pregunta suya",en:"Refuse any question they ask"}
+  ],2);
+  setq("BT3",5,[
+    {es:"Un flight de tequila Don Julio con tres niveles distintos",en:"A Don Julio tequila flight with three distinct levels"},
+    {es:"Un Tommy's tamaño jumbo con una Coronita encima",en:"A jumbo-sized Tommy's with a Coronita on top"},
+    {es:"Una margarita sin alcohol para toda la mesa",en:"A non-alcoholic margarita for the whole table"},
+    {es:"Una sangría de la casa servida por jarra grande",en:"A house sangria served by the large pitcher"}
+  ],1);
+  setq("BT3",6,[
+    {es:"Strawberryta, Yellow Bull, Ponche y Botánico",en:"Strawberryta, Yellow Bull, Ponche and Botanico"},
+    {es:"Bajapanty, Smoke Some, Como La Flor y Amazonian G&G",en:"Bajapanty, Smoke Some, Como La Flor and Amazonian G&G"},
+    {es:"Modelo Especial, Pacifico y Guinness",en:"Modelo Especial, Pacifico and Guinness"},
+    {es:"Diora Pinot Noir y San Simeon Cabernet",en:"Diora Pinot Noir and San Simeon Cabernet"}
+  ],0);
+  setq("BT3",7,[
+    {es:"Cervezas con shots de tequila de la casa",en:"Beers with house tequila shots"},
+    {es:"Vino tinto con burbujas de prosecco",en:"Red wine with prosecco bubbles"},
+    {es:"Margaritas frozen de fresa y limón",en:"Frozen strawberry and lime margaritas"},
+    {es:"Cervezas con shots de Don Julio",en:"Beers with Don Julio shots"}
+  ],3);
+
+  /* ===== BT4 ===== */
+  setq("BT4",0,[
+    {es:"Al terminar toda la noche",en:"At the end of the whole night"},
+    {es:"Solo si el pago es en efectivo",en:"Only if payment is in cash"},
+    {es:"Al momento de prepararla",en:"As it's being made"},
+    {es:"Al cerrar la cuenta del huésped",en:"When closing the guest's check"}
+  ],2);
+  setq("BT4",1,[
+    {es:"Para nada, es totalmente opcional aquí",en:"For nothing, it's totally optional here"},
+    {es:"Para ralentizar el servicio a propósito en hora pico",en:"To slow down service on purpose during a rush"},
+    {es:"Solo para cumplir con un simple formalismo",en:"Only to satisfy a simple formality"},
+    {es:"Para que el huésped reciba lo que pidió",en:"So the guest gets what they ordered"}
+  ],3);
+  setq("BT4",2,[
+    {es:"Sí, es parte de la política",en:"Yes, it is part of the policy"},
+    {es:"No, no tiene relación alguna",en:"No, it has no connection"},
+    {es:"Solo aplica los fines de semana",en:"It only applies on weekends"},
+    {es:"Solo para pagos con tarjeta",en:"Only for card payments"}
+  ],0);
+  setq("BT4",3,[
+    {es:"Registrarlo una sola vez de igual forma",en:"Ring it just once anyway"},
+    {es:"No registrarlo en el sistema",en:"Don't ring it in the system"},
+    {es:"Registrar el alcohol dos veces",en:"Ring the alcohol twice"},
+    {es:"Pedirle que pague en efectivo",en:"Ask them to pay in cash"}
+  ],2);
+  setq("BT4",4,[
+    {es:"Sí, siempre y en cualquier momento del pago",en:"Yes, always and at any point of payment"},
+    {es:"No; avísales al momento de pagar",en:"No; let them know at payment time"},
+    {es:"Solo durante los fines de semana",en:"Only during the weekends"},
+    {es:"Solo para grupos grandes de mesa",en:"Only for large table parties"}
+  ],1);
+  setq("BT4",5,[
+    {es:"Server, Mis Mesas, Propinas, tipo de tarjeta, últimos 4 dígitos, monto",en:"Server, My Tables, Tips, card type, last 4 digits, amount"},
+    {es:"Cerrar la cuenta y seleccionar el pago en efectivo del cajón",en:"Close the check and select cash payment from the drawer"},
+    {es:"Dividir la cuenta por asiento en la parte baja de la pantalla",en:"Split the check by seat at the bottom of the screen"},
+    {es:"Abrir una cuenta nueva e ingresar el número total de huéspedes sentados",en:"Open a new check and enter the total number of seated guests"}
+  ],0);
+  setq("BT4",6,[
+    {es:"Guardadas dentro del sistema POS",en:"Stored inside the POS system"},
+    {es:"Siempre frente a ellos",en:"Always in front of them"},
+    {es:"En manos del manager de turno",en:"In the hands of the manager on duty"},
+    {es:"En el bolsillo del bartender",en:"In the bartender's pocket"}
+  ],1);
+  setq("BT4",7,[
+    {es:"Puede excederlo con total libertad siempre",en:"They may exceed it freely at any time"},
+    {es:"Debe cerrar la barra de inmediato",en:"They must close the bar immediately"},
+    {es:"Debe pagarlo de su propia propina",en:"They must pay it from their own tips"},
+    {es:"Nunca sin la aprobación de un manager",en:"Never without a manager's approval"}
+  ],3);
+
+  /* ===== BT5 ===== */
+  setq("BT5",0,[
+    {es:"Agua Perrier importada de Francia",en:"Perrier water imported from France"},
+    {es:"Agua Fiji de las islas",en:"Fiji water from the islands"},
+    {es:"Agua Saratoga de la casa",en:"House Saratoga water"},
+    {es:"Agua Evian de manantial",en:"Evian spring water"}
+  ],2);
+  setq("BT5",1,[
+    {es:"Solamente con gas, nada más",en:"Only sparkling, nothing else"},
+    {es:"Solamente sin gas, nada más",en:"Only still, nothing else"},
+    {es:"Solo en versión saborizada",en:"Only in a flavored version"},
+    {es:"Sin gas o con gas",en:"Still or sparkling"}
+  ],3);
+  setq("BT5",2,[
+    {es:"Sí, siempre con cuidado",en:"Yes, always with care"},
+    {es:"No, no hace ninguna falta",en:"No, there's no need at all"},
+    {es:"Solo si el huésped lo pide",en:"Only if the guest asks"},
+    {es:"No, es algo sin importancia",en:"No, it's something unimportant"}
+  ],0);
+  setq("BT5",3,[
+    {es:"A los huéspedes nunca les importa la marca",en:"Guests never care about the brand"},
+    {es:"No cambia absolutamente nada en todo el servicio",en:"It changes absolutely nothing in the whole service"},
+    {es:"Refuerza que es una elección premium del menú",en:"It reinforces it's a premium menu choice"},
+    {es:"Porque la ley del estado así lo exige siempre",en:"Because state law always requires it"}
+  ],2);
+  setq("BT5",4,[
+    {es:"Preguntando vagamente '¿sin gas o con gas?'",en:"Vaguely asking 'still or sparkling?'"},
+    {es:"Nombrando la marca: '¿Saratoga sin o con gas?'",en:"Naming the brand: 'Saratoga still or sparkling?'"},
+    {es:"Sirviendo agua de la llave sin siquiera preguntar",en:"Serving tap water without even asking"},
+    {es:"Ofreciendo únicamente agua con gas siempre",en:"Always offering only sparkling water"}
+  ],1);
+  setq("BT5",5,[
+    {es:"De cualquier forma rápida, sin ningún cuidado especial",en:"Any quick way, with no special care"},
+    {es:"En el mismo vaso que usó la bebida anterior",en:"In the same glass the previous drink used"},
+    {es:"Como un cóctel: vaso limpio, hielo si se pide, en la mesa",en:"Like a cocktail: clean glass, ice if asked, at the table"},
+    {es:"Solamente cuando el huésped lo pida e insista mucho en ello",en:"Only when the guest asks and insists a lot on it"}
+  ],2);
+
+  /* ===== BT6 ===== */
+  setq("BT6",0,[
+    {es:"No, pueden ir todos juntos sin problema",en:"No, they can all go together with no problem"},
+    {es:"Sí, siempre separados",en:"Yes, always separated"},
+    {es:"Da igual dónde se guarden",en:"It doesn't matter where they go"},
+    {es:"Solo durante la noche",en:"Only during the night"}
+  ],1);
+  setq("BT6",1,[
+    {es:"Una sola vez por semana",en:"Just once a week"},
+    {es:"Una sola vez cada mes",en:"Just once a month"},
+    {es:"De forma frecuente",en:"Frequently"},
+    {es:"Nunca hace falta cambiarlos",en:"They never need changing"}
+  ],2);
+  setq("BT6",2,[
+    {es:"Solo los vasos de cristal usados",en:"Only the used glass tumblers"},
+    {es:"Únicamente el piso del bar",en:"Only the bar floor"},
+    {es:"Nada en particular hoy",en:"Nothing in particular today"},
+    {es:"La barra y las herramientas",en:"The bar top and the tools"}
+  ],3);
+  setq("BT6",3,[
+    {es:"En realidad no lo es; el hielo no tiene ninguna regla sanitaria",en:"It really isn't; ice has no sanitary rules at all"},
+    {es:"Es con lo que se hacen las bebidas y no debe contaminarse",en:"It's what drinks are made with, so it can't be contaminated"},
+    {es:"Solo se considera alimento en algunos estados del país",en:"It's only considered food in some states"},
+    {es:"Únicamente si un huésped presenta una queja formal",en:"Only if a guest files a formal complaint"}
+  ],1);
+  setq("BT6",4,[
+    {es:"Una película pegajosa que atrae moscas de fruta",en:"A sticky film that attracts fruit flies"},
+    {es:"Una capa protectora muy útil sobre la barra de madera",en:"A very useful protective layer on the wood bar"},
+    {es:"Un aroma muy agradable para los huéspedes",en:"A very pleasant aroma for the guests"},
+    {es:"Nada que sea realmente digno de preocupación",en:"Nothing really worth worrying about"}
+  ],0);
+  setq("BT6",5,[
+    {es:"Un paño exclusivo para limpiar el piso",en:"A cloth used only for the floor"},
+    {es:"Un paño solo para las botellas",en:"A cloth only for the bottles"},
+    {es:"No hace falta separar los paños",en:"There's no need to separate cloths"},
+    {es:"Uno dedicado a cristalería y manos",en:"One dedicated to glassware and hands"}
+  ],3);
+
+  /* ===== BT7 ===== */
+  setq("BT7",0,[
+    {es:"Trabajar solo y en completo silencio",en:"Working alone and in complete silence"},
+    {es:"Ignorar del todo a tus compañeros",en:"Fully ignoring your teammates"},
+    {es:"Agrupar las bebidas similares",en:"Batching the similar drinks"},
+    {es:"Saltarte toda la preparación",en:"Skipping all the prep work"}
+  ],2);
+  setq("BT7",1,[
+    {es:"Justo en medio de la hora pico",en:"Right in the middle of the rush"},
+    {es:"Antes de la hora pico",en:"Before the rush"},
+    {es:"Después de cerrar la barra",en:"After closing the bar"},
+    {es:"Nunca, no es necesario",en:"Never, it isn't needed"}
+  ],1);
+  setq("BT7",2,[
+    {es:"Es algo totalmente innecesario de hacer",en:"It's something totally unnecessary to do"},
+    {es:"Ralentiza demasiado todas las cosas",en:"It slows everything down too much"},
+    {es:"Solo se hace por pura apariencia",en:"It's only done for pure show"},
+    {es:"Coordina al equipo y lo hace rápido",en:"It coordinates the team and keeps it fast"}
+  ],3);
+  setq("BT7",3,[
+    {es:"Reduce el cambio de herramientas y botellas, ahorrando segundos",en:"It reduces tool and bottle switching, saving seconds"},
+    {es:"No hace ninguna diferencia real en el ritmo del servicio en barra",en:"It makes no real difference to the pace of bar service"},
+    {es:"A los huéspedes les gusta esperar mucho más tiempo",en:"Guests prefer waiting a lot longer"},
+    {es:"Solo sirve para los turnos realmente tranquilos",en:"It only works for really slow shifts"}
+  ],0);
+  setq("BT7",4,[
+    {es:"Únicamente con señas de mano bien discretas y rápidas",en:"Only with very discreet, quick hand signals"},
+    {es:"Trabajando siempre en el más absoluto silencio",en:"Working always in the most absolute silence"},
+    {es:"En voz alta y específica, ej. 'dos Old Fashioned en el rail'",en:"Out loud and specific, e.g. 'two Old Fashioneds on the rail'"},
+    {es:"Anotándolos siempre en un cuaderno personal de bolsillo pequeño",en:"Always jotting them in a small personal pocket notebook"}
+  ],2);
+  setq("BT7",5,[
+    {es:"Una barra desorganizada",en:"A disorganized bar"},
+    {es:"Una barra muy eficiente",en:"A very efficient bar"},
+    {es:"Huéspedes muy satisfechos",en:"Very satisfied guests"},
+    {es:"Un turno tranquilo y lento",en:"A calm, slow shift"}
+  ],0);
+
+  /* ===== BT8 ===== */
+  setq("BT8",0,[
+    {es:"Solo si el huésped la ofrece primero",en:"Only if the guest offers it first"},
+    {es:"A quien aparente 35 años o menos",en:"Anyone who looks 35 or younger"},
+    {es:"Solo a los jóvenes evidentes",en:"Only to obviously young guests"},
+    {es:"A nadie, nunca en ningún caso",en:"To no one, ever, in any case"}
+  ],1);
+  setq("BT8",1,[
+    {es:"Cualquier bartender que esté de turno",en:"Any bartender who is on duty"},
+    {es:"El propio huésped afectado",en:"The affected guest themselves"},
+    {es:"Solo el Manager en Turno (MOD)",en:"Only the Manager on Duty (MOD)"},
+    {es:"Un server, en todo momento",en:"A server, at all times"}
+  ],2);
+  setq("BT8",2,[
+    {es:"No, no es obligatorio",en:"No, it isn't required"},
+    {es:"Solo los cócteles caros",en:"Only the expensive cocktails"},
+    {es:"Solo si el huésped lo pide",en:"Only if the guest asks for it"},
+    {es:"Sí, sin ninguna excepción",en:"Yes, without any exception"}
+  ],3);
+  setq("BT8",3,[
+    {es:"No, nunca mientras trabajas",en:"No, never while working"},
+    {es:"Sí, si el huésped te invita",en:"Yes, if the guest offers"},
+    {es:"Solo con clientes frecuentes",en:"Only with regular customers"},
+    {es:"Solo tras el último llamado",en:"Only after last call"}
+  ],0);
+  setq("BT8",4,[
+    {es:"En 90 días desde su fecha de contratación",en:"Within 90 days of their hire date"},
+    {es:"En un año como plazo máximo total",en:"Within one year as the maximum term"},
+    {es:"En 15 días desde la contratación",en:"Within 15 days of hire"},
+    {es:"Nunca es un requisito para ellos",en:"It is never a requirement for them"}
+  ],2);
+  setq("BT8",5,[
+    {es:"Cada 5 años exactamente",en:"Exactly every 5 years"},
+    {es:"Cada 4 meses",en:"Every 4 months"},
+    {es:"Una sola vez, nunca más",en:"Just once, never again"},
+    {es:"Cada semana sin falta",en:"Every week without fail"}
+  ],1);
+  setq("BT8",6,[
+    {es:"Servirles un vaso de agua y no decirle nada a nadie",en:"Serve them a glass of water and tell no one"},
+    {es:"Ignorarlo si son clientes frecuentes",en:"Ignore it if they are regulars"},
+    {es:"Alertar de inmediato a un supervisor o manager",en:"Immediately alert a supervisor or manager"},
+    {es:"Pedirle a otro huésped que lo maneje",en:"Ask another guest to handle it"}
+  ],2);
+  setq("BT8",7,[
+    {es:"Por su seguridad y la de los demás, no podemos servirle más bebidas alcohólicas en este momento. Con gusto podemos ofrecerle agua, comida o ayudarle a coordinar un transporte seguro.",en:"For your safety and the safety of others, we can't serve you any more alcoholic beverages at this time. We'd be happy to get you water, food, or help arrange safe transportation."},
+    {es:"Ya tomó bastante por hoy, así que necesito que abandone el local de inmediato antes de que tenga que llamar a seguridad para que lo acompañen hasta la puerta de salida sin causar ningún escándalo.",en:"You've had plenty for today, so I need you to leave the premises immediately before I have to call security to walk you out the front exit without causing any kind of scene."},
+    {es:"No se preocupe, ahora mismo le preparo un último trago bien cargado y con eso cerramos su cuenta de la noche.",en:"Don't worry, I'll make you one last strong drink right now and then we'll close out your tab for the evening."},
+    {es:"Eso lo tiene que arreglar directamente con el bartender; yo solo traigo la comida y no decido si le seguimos sirviendo.",en:"You'll have to sort that out directly with the bartender; I just bring the food and don't decide whether we keep serving you."}
+  ],0);
+  setq("BT8",8,[
+    {es:"Dejarlo manejar, es completamente su decisión",en:"Let them drive, it's entirely their choice"},
+    {es:"Darle un café bien cargado y dejar que se marche solo",en:"Give them a strong coffee and let them leave alone"},
+    {es:"Recomendarle no manejar y ayudar con Uber/Lyft/taxi",en:"Recommend not driving and help with Uber/Lyft/taxi"},
+    {es:"Nada en absoluto, no es tu responsabilidad",en:"Nothing at all, it's not your responsibility"}
+  ],2);
+  setq("BT8",9,[
+    {es:"Publicarlo todo en las redes sociales de inmediato",en:"Post everything on social media right away"},
+    {es:"Un breve reporte escrito enviado a la gerencia",en:"A brief written report sent to management"},
+    {es:"Absolutamente nada más sobre el asunto",en:"Absolutely nothing more about the matter"},
+    {es:"Contarles a otros huéspedes lo ocurrido",en:"Tell other guests what happened"}
+  ],1);
+  setq("BT8",10,[
+    {es:"15 días desde la contratación",en:"15 days from hire"},
+    {es:"60 días desde la contratación",en:"60 days from hire"},
+    {es:"30 días desde la contratación",en:"30 days from hire"},
+    {es:"El mismo día de la contratación",en:"The same day of hire"}
+  ],2);
+  setq("BT8",11,[
+    {es:"Sí, siempre y cuando no sean alcohólicas",en:"Yes, as long as they are non-alcoholic"},
+    {es:"Solo al final del turno laboral",en:"Only at the end of the work shift"},
+    {es:"Solo con la propina de un huésped",en:"Only with a guest's tip"},
+    {es:"No, las alcohólicas nunca se permiten",en:"No, alcoholic ones are never allowed"}
+  ],3);
+  setq("BT8",12,[
+    {es:"El bartender debe manejarlo completamente solo",en:"The bartender must handle it entirely alone"},
+    {es:"El manager interviene con firmeza y respeto",en:"The manager steps in firmly and respectfully"},
+    {es:"Se le entregan sus llaves y se le deja ir",en:"His keys are returned and he is let go"},
+    {es:"Se le sirve un último trago para calmarlo",en:"He is served one last drink to calm him"}
+  ],1);
+
+  /* ===== BT9 ===== */
+  setq("BT9",0,[
+    {es:"Solo el efectivo del cajón",en:"Only the cash in the drawer"},
+    {es:"Únicamente los vasos",en:"Only the glasses"},
+    {es:"Las botellas de licor",en:"The liquor bottles"},
+    {es:"Nada en particular",en:"Nothing in particular"}
+  ],2);
+  setq("BT9",1,[
+    {es:"Con el valet parking",en:"With the valet parking"},
+    {es:"Con un huésped fiel",en:"With a loyal guest"},
+    {es:"Con nadie en absoluto",en:"With no one at all"},
+    {es:"Con un manager",en:"With a manager"}
+  ],3);
+  setq("BT9",2,[
+    {es:"Dejarla completamente abierta",en:"Leave it completely open"},
+    {es:"Asegurarla bien",en:"Secure it well"},
+    {es:"Dejar las botellas afuera",en:"Leave the bottles out"},
+    {es:"Nada en especial",en:"Nothing special"}
+  ],1);
+  setq("BT9",3,[
+    {es:"Rastrea el costo de bebida y detecta sobre-servido o pérdidas",en:"It tracks pour cost and catches over-pouring or shrinkage"},
+    {es:"Es solo papeleo tedioso sin ningún propósito real para el negocio",en:"It's just tedious paperwork with no real purpose for the business"},
+    {es:"Solamente importa una vez al año en el cierre fiscal",en:"It only matters once a year at the fiscal close"},
+    {es:"Solo protege al manager de turno, nunca a ti mismo",en:"It only protects the manager on duty, never you"}
+  ],0);
+  setq("BT9",4,[
+    {es:"Solo el efectivo del cajón registrador",en:"Only the cash in the register drawer"},
+    {es:"Nada, lo hace por completo quien abre mañana",en:"Nothing, tomorrow's opener does it all"},
+    {es:"Únicamente las servilletas de papel",en:"Only the paper napkins"},
+    {es:"Guarniciones, hielo y botellas de respaldo",en:"Garnishes, ice and backup bottles"}
+  ],3);
+  setq("BT9",5,[
+    {es:"Licor cubierto, caja conciliada y depositada, equipo apagado",en:"Liquor covered, cash reconciled and deposited, equipment off"},
+    {es:"Solamente apagar las luces principales de toda el área de barra",en:"Just turning off the main lights of the whole bar area"},
+    {es:"Dejar absolutamente todo tal y como estaba antes",en:"Leaving absolutely everything just as it was before"},
+    {es:"Únicamente cerrar con llave la puerta principal",en:"Only locking the main door"}
+  ],0);
+
+  /* ===== BT10 ===== */
+  setq("BT10",0,[
+    {es:"En unos 10 minutos",en:"In about 10 minutes"},
+    {es:"En una hora completa",en:"In a full hour"},
+    {es:"En 30 segundos",en:"Within 30 seconds"},
+    {es:"No hay un objetivo fijo",en:"There is no fixed target"}
+  ],2);
+  setq("BT10",1,[
+    {es:"Ignorar al huésped por un breve rato cuando hay prisa",en:"Ignoring the guest briefly when things are busy"},
+    {es:"Contacto visual y avisar que lo atenderás pronto",en:"Eye contact and letting them know you'll be right there"},
+    {es:"Un cóctel corto que se sirve muy rápido",en:"A short cocktail served very fast"},
+    {es:"Saltarse el saludo inicial por completo",en:"Skipping the initial greeting entirely"}
+  ],1);
+  setq("BT10",2,[
+    {es:"En unos 20 minutos",en:"In about 20 minutes"},
+    {es:"En un solo minuto",en:"In a single minute"},
+    {es:"No hay objetivo fijo",en:"There is no fixed target"},
+    {es:"En 6 minutos",en:"Within 6 minutes"}
+  ],3);
+  setq("BT10",3,[
+    {es:"Al final completo de toda la visita",en:"At the very end of the whole visit"},
+    {es:"Solo si el huésped lo pide",en:"Only if the guest asks"},
+    {es:"Al pedir el primer artículo",en:"When the first item is ordered"},
+    {es:"Nunca, no hace ninguna falta",en:"Never, there's no need at all"}
+  ],2);
+  setq("BT10",4,[
+    {es:"En unos 15 minutos",en:"In about 15 minutes"},
+    {es:"En 2 minutos",en:"Within 2 minutes"},
+    {es:"En un solo minuto",en:"In a single minute"},
+    {es:"Sin ningún apuro",en:"With no rush at all"}
+  ],1);
+  setq("BT10",5,[
+    {es:"Producto, Preparación, Presentación y Precio",en:"Product, Preparation, Presentation and Price"},
+    {es:"Persona, Postre, Propina y Pago final del cliente",en:"Person, Dessert, Tip and the customer's final Payment"},
+    {es:"Plato, Pedido, Propina y Postre dulce",en:"Dish, Order, Tip and sweet Dessert"},
+    {es:"Precio, Promoción, Plaza y Producto",en:"Price, Promotion, Place and Product"}
+  ],0);
+  setq("BT10",6,[
+    {es:"Justo después de servir el postre de la mesa",en:"Right after serving the table's dessert"},
+    {es:"Únicamente al momento de cerrar por completo la cuenta",en:"Only at the moment of fully closing the check"},
+    {es:"Solo si el propio huésped se acuerda de pedirla",en:"Only if the guest remembers to ask for it"},
+    {es:"Antes de la comida, ofreciendo renovar la bebida",en:"Before the food, offering to refresh the drink"}
+  ],3);
+  setq("BT10",7,[
+    {es:"En unos 6 minutos",en:"In about 6 minutes"},
+    {es:"En 2 minutos exactos",en:"In exactly 2 minutes"},
+    {es:"En 20 a 25 minutos",en:"In 20 to 25 minutes"},
+    {es:"En unos 45 minutos",en:"In about 45 minutes"}
+  ],2);
+
+  /* ===== BT11 ===== */
+  setq("BT11",0,[
+    {es:"Nada, simplemente hay que quitarlo",en:"Nothing, you just remove it"},
+    {es:"Si es alergia o preferencia",en:"Whether it's an allergy or a preference"},
+    {es:"La edad exacta del huésped",en:"The guest's exact age"},
+    {es:"Si es un cliente frecuente",en:"Whether they are a regular"}
+  ],1);
+  setq("BT11",1,[
+    {es:"Nadie, solo hay que enviarlo",en:"No one, just send it through"},
+    {es:"El propio huésped afectado",en:"The affected guest themselves"},
+    {es:"Cualquier otro huésped",en:"Any other guest"},
+    {es:"El chef o el expo",en:"The chef or the expo"}
+  ],3);
+  setq("BT11",2,[
+    {es:"No se necesita ningún formato",en:"No format is needed"},
+    {es:"Solo de forma verbal al cocinero",en:"Only verbally to the cook"},
+    {es:"ALLERGY – [Alérgeno] – Mesa #",en:"ALLERGY – [Allergen] – Table #"},
+    {es:"Solo el número de la mesa",en:"Only the table number"}
+  ],2);
+  setq("BT11",3,[
+    {es:"Sí, para prevenir contaminación cruzada",en:"Yes, to prevent cross-contamination"},
+    {es:"No, únicamente los platos del propio huésped afectado",en:"No, only the affected guest's own dishes"},
+    {es:"Solo si se trata de postres o dulces de la mesa",en:"Only if they are desserts or sweets on the table"},
+    {es:"No, nunca hace ninguna falta etiquetarlos",en:"No, there's never any need to label them"}
+  ],0);
+  setq("BT11",4,[
+    {es:"En cualquier lugar libre que haya en la mesa",en:"Anywhere there's free space on the table"},
+    {es:"Entregado a cualquier huésped que esté sentado presente",en:"Handed to any guest who happens to be seated there"},
+    {es:"Frente al huésped con la alergia, verificando la mesa",en:"In front of the guest with the allergy, checking the table"},
+    {es:"Dejado en la barra para que alguien lo recoja",en:"Left at the bar for someone to pick up"}
+  ],2);
+  setq("BT11",5,[
+    {es:"Que elija directamente otro plato distinto del menú",en:"That they simply pick another dish from the menu"},
+    {es:"Que sea específico: ¿tomate crudo o cocido/salsa?",en:"To be specific: raw tomato or cooked/sauce?"},
+    {es:"Que firme una exención de responsabilidad",en:"To sign a liability waiver"},
+    {es:"Nada, solo se quita el ingrediente y ya",en:"Nothing, just remove the ingredient"}
+  ],1);
+  setq("BT11",6,[
+    {es:"La misma que cualquier modificador normal",en:"The same as any normal modifier"},
+    {es:"Menor prioridad que un 'sin hielo' normal",en:"Lower priority than a normal 'no ice'"},
+    {es:"Solo aplica al primer tiempo que se sirve en mesa",en:"It only applies to the first course served"},
+    {es:"Prioridad sobre cualquier otro etiquetado",en:"Priority over any other labeling"}
+  ],3);
+
+})();
+
+/* Pedagogia: opciones rebalanceadas — track BUSSER (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+
+  /* ===== B1 ===== */
+  setq("B1", 0, [
+    {es:"Tomar los pedidos de los huéspedes", en:"Taking the guests' food orders"},
+    {es:"Recoger y montar las mesas rápido", en:"Clearing and resetting tables fast"},
+    {es:"Preparar los cócteles del bar", en:"Preparing the bar cocktails"},
+    {es:"Dirigir a todo el personal del turno", en:"Directing all the shift staff"}
+  ], 1);
+  setq("B1", 1, [
+    {es:"Solo a los cocineros de la cocina", en:"Only the kitchen cooks"},
+    {es:"Únicamente a los managers de turno", en:"Only the shift managers"},
+    {es:"A los servers del comedor", en:"The floor servers"},
+    {es:"A los valets de la entrada", en:"The entrance valets"}
+  ], 2);
+  setq("B1", 2, [
+    {es:"Los huéspedes se sientan más rápido", en:"Guests get seated faster"},
+    {es:"Retrasa el servicio de todo el comedor", en:"It delays the whole dining room"},
+    {es:"Solo importa durante la hora de almuerzo", en:"It only matters during the lunch hour"},
+    {es:"No tiene ninguna importancia", en:"It has no real importance"}
+  ], 0);
+  setq("B1", 3, [
+    {es:"Se queda siempre dentro de la cocina caliente", en:"They always stay in the hot kitchen"},
+    {es:"Toma las ventas y mesas del server", en:"They take over the server's sales"},
+    {es:"No interactúan de ninguna manera", en:"They don't interact in any way"},
+    {es:"Cubre la limpieza y el montaje de mesas", en:"They handle clearing and resetting"}
+  ], 3);
+  setq("B1", 4, [
+    {es:"Solo se ve afectada la sección del bar", en:"Only the bar section is affected"},
+    {es:"El comedor entero se atasca de todos modos", en:"The whole dining room backs up anyway"},
+    {es:"La cocina deja de preparar la comida", en:"The kitchen stops preparing the food"},
+    {es:"No pasa nada si el host trabaja rápido y bien", en:"Nothing happens if the host works fast"}
+  ], 1);
+  setq("B1", 5, [
+    {es:"Como alguien invisible que ningún huésped nota", en:"As someone invisible no guest notices"},
+    {es:"Como el único responsable de la cocina", en:"As the one responsible for the kitchen"},
+    {es:"Como parte de la experiencia del huésped", en:"As part of the guest experience"},
+    {es:"Como el reemplazo del host en la puerta", en:"As the host's replacement at the door"}
+  ], 2);
+
+  /* ===== B2 ===== */
+  setq("B2", 0, [
+    {es:"Quitar solamente los platos más grandes", en:"Remove only the largest plates"},
+    {es:"Dejarla tal como quedó del huésped", en:"Leave it as the guest left it"},
+    {es:"No hace falta hacerle nada más", en:"Nothing else needs to be done"},
+    {es:"Quedar completamente limpia y montada", en:"Fully wiped clean and reset"}
+  ], 3);
+  setq("B2", 1, [
+    {es:"Limpios, secos y bien alineados", en:"Clean, dry, and neatly aligned"},
+    {es:"De cualquier forma está bien", en:"Any arrangement is fine"},
+    {es:"Basta con colocar solo los vasos", en:"Just placing the glasses is enough"},
+    {es:"El acomodo realmente no importa", en:"The arrangement doesn't matter"}
+  ], 0);
+  setq("B2", 2, [
+    {es:"Siempre por el frente del huésped sentado", en:"Always from the seated guest's front"},
+    {es:"Por la derecha cuando sea posible", en:"From the right when possible"},
+    {es:"Únicamente por detrás del huésped", en:"Only from behind the guest"},
+    {es:"El lado realmente no importa nada", en:"The side really doesn't matter"}
+  ], 1);
+  setq("B2", 3, [
+    {es:"Simplemente resulta mucho más lento de hacer", en:"It is simply much slower to do"},
+    {es:"A los huéspedes les gusta mucho más así", en:"Guests like it much better that way"},
+    {es:"El choque mecánico debilita el vidrio", en:"Mechanical shock weakens the glass"},
+    {es:"Realmente no importa cómo se manejen", en:"It doesn't matter how they're handled"}
+  ], 2);
+  setq("B2", 4, [
+    {es:"Los platos más pequeños siempre van abajo", en:"The smallest ones always go on bottom"},
+    {es:"Se apilan totalmente al azar", en:"They are stacked at random"},
+    {es:"Nunca se deben apilar los platos", en:"Plates should never be stacked"},
+    {es:"Los más grandes abajo y pequeños arriba", en:"Largest on bottom, smaller on top"}
+  ], 3);
+  setq("B2", 5, [
+    {es:"Un bus tub, balde sanitizante y toallas", en:"A bus tub, sanitizer bucket, and towels"},
+    {es:"Solamente una servilleta de papel", en:"Only a paper napkin"},
+    {es:"Únicamente una escoba de mango largo", en:"Only a long-handled broom"},
+    {es:"Nada en especial hace falta reunir antes de empezar", en:"Nothing special needs gathering first"}
+  ], 0);
+  setq("B2", 6, [
+    {es:"Montarla demasiado rápido para el huésped", en:"Setting it too fast for the guest"},
+    {es:"Dejarla demasiado húmeda al montar", en:"Leaving it too damp when setting"},
+    {es:"Dejarla demasiado limpia y seca", en:"Making it too clean and dry"},
+    {es:"No existe ningún error común aquí", en:"There is no common mistake here"}
+  ], 1);
+  setq("B2", 7, [
+    {es:"Sanitizar toda la mesa de inmediato sin avisar", en:"Sanitize the table at once without asking"},
+    {es:"Apilar todos los vasos juntos", en:"Stack all the glasses together"},
+    {es:"Confirmar que ya terminaron de comer", en:"Confirm they have finished eating"},
+    {es:"Montar la vajilla nueva primero", en:"Set the new place settings first"}
+  ], 2);
+  setq("B2", 8, [
+    {es:"Solo una toalla y un menú a la mano", en:"Just a towel and a menu on hand"},
+    {es:"Una escoba y bolsas de basura nada más", en:"Only a broom and trash bags"},
+    {es:"Cubiertos extra y servilletas de tela solamente", en:"Only extra cutlery and cloth napkins"},
+    {es:"Bus tub grande, balde sanitizante y toallas", en:"A large bus tub, sanitizer bucket, towels"}
+  ], 3);
+  setq("B2", 9, [
+    {es:"Debe estar seca; una mesa húmeda falla", en:"It must be dry; a wet table fails"},
+    {es:"El agua ayuda a fijar la vajilla", en:"Water helps hold the place settings"},
+    {es:"Solo importa si la mesa es de madera fina", en:"It only matters if the table is fine wood"},
+    {es:"No es problema si el huésped no lo ve", en:"It's fine if the guest doesn't notice"}
+  ], 0);
+
+  /* ===== B3 ===== */
+  setq("B3", 0, [
+    {es:"Florida Room", en:"Florida Room"},
+    {es:"Jungle", en:"Jungle"},
+    {es:"Bar", en:"Bar"},
+    {es:"Exterior", en:"Exterior"}
+  ], 1);
+  setq("B3", 1, [
+    {es:"Mesa 21", en:"Table 21"},
+    {es:"Mesa 101", en:"Table 101"},
+    {es:"Mesa 48", en:"Table 48"},
+    {es:"Mesa 401", en:"Table 401"}
+  ], 2);
+  setq("B3", 2, [
+    {es:"Centro", en:"Center"},
+    {es:"Jungle", en:"Jungle"},
+    {es:"Exterior", en:"Exterior"},
+    {es:"Bar", en:"Bar"}
+  ], 3);
+  setq("B3", 3, [
+    {es:"Te dice con qué server comunicarte", en:"It tells you which server to reach"},
+    {es:"Las secciones cambian cada noche sola", en:"Sections change every single night"},
+    {es:"Solo los managers deben saberlas", en:"Only managers need to know them"},
+    {es:"Realmente no importa en absoluto", en:"It really doesn't matter at all"}
+  ], 0);
+  setq("B3", 4, [
+    {es:"Florida Room", en:"Florida Room"},
+    {es:"Exterior", en:"Exterior"},
+    {es:"Centro", en:"Center"},
+    {es:"Jungle", en:"Jungle"}
+  ], 1);
+  setq("B3", 5, [
+    {es:"Bar principal", en:"Main Bar"},
+    {es:"Florida Room", en:"Florida Room"},
+    {es:"Jungle interior", en:"Inner Jungle"},
+    {es:"Exterior", en:"Exterior"}
+  ], 1);
+  setq("B3", 6, [
+    {es:"Se asigna según el tamaño de cada mesa del salón", en:"It's assigned by each table's size"},
+    {es:"Sigue el orden en que se limpian", en:"It follows the order tables get cleaned"},
+    {es:"Cambia cada semana según el server", en:"It changes weekly by the server"},
+    {es:"Está agrupada por salón; 401 es Exterior", en:"Grouped by room; 401 means Exterior"}
+  ], 3);
+
+  /* ===== B4 ===== */
+  setq("B4", 0, [
+    {es:"El server de esa sección", en:"The section's server"},
+    {es:"El valet del estacionamiento", en:"The parking valet"},
+    {es:"Solo el manager de turno", en:"Only the shift manager"},
+    {es:"Absolutamente nadie del piso", en:"Absolutely no one on the floor"}
+  ], 0);
+  setq("B4", 1, [
+    {es:"Solamente al host de la puerta", en:"Only the host at the door"},
+    {es:"A la cocina o al expo", en:"The kitchen or the expo"},
+    {es:"Directamente al huésped sentado", en:"Directly to the seated guest"},
+    {es:"A nadie, no hace falta avisar", en:"No one, no need to tell"}
+  ], 1);
+  setq("B4", 2, [
+    {es:"En realidad no es nada importante", en:"It really isn't important at all"},
+    {es:"Solo se hace por pura apariencia", en:"It's only done for appearance"},
+    {es:"Mantiene el servicio coordinado", en:"It keeps service coordinated"},
+    {es:"Ralentiza mucho todo el servicio", en:"It slows the whole service down"}
+  ], 2);
+  setq("B4", 3, [
+    {es:"Los bussers tienen mejor vista que ellos", en:"Bussers have better eyesight"},
+    {es:"A los servers no les importan sus mesas", en:"Servers don't care about their tables"},
+    {es:"Eso realmente nunca llega a suceder", en:"That really never happens at all"},
+    {es:"El server atiende varias mesas a la vez", en:"The server handles several tables at once"}
+  ], 3);
+  setq("B4", 4, [
+    {es:"Puede no notar el momento y la mesa espera", en:"He may miss it and the table waits"},
+    {es:"El host siempre se encarga de avisar", en:"The host always handles notifying"},
+    {es:"Las mesas se montan solas al quedar listas", en:"Tables set themselves when ready"},
+    {es:"El server siempre ve todas las mesas", en:"The server always sees every table"}
+  ], 0);
+  setq("B4", 5, [
+    {es:"Hace que la cocina trabaje más lento", en:"It makes the kitchen work slower"},
+    {es:"Crea un momento apresurado y descuidado", en:"It creates a rushed, sloppy moment"},
+    {es:"Mejora todo porque la comida llega caliente", en:"It improves things since food is hot"},
+    {es:"No afecta al huésped de ninguna forma", en:"It doesn't affect the guest at all"}
+  ], 1);
+
+  /* ===== B5 ===== */
+  setq("B5", 0, [
+    {es:"Solo para la basura del piso", en:"Only for the floor trash"},
+    {es:"Únicamente para servilletas", en:"Only for napkins"},
+    {es:"Para basura y para vajilla", en:"For trash and for dishware"},
+    {es:"No sirven para separar nada", en:"They separate nothing"}
+  ], 2);
+  setq("B5", 1, [
+    {es:"Esperar a que otro lo resuelva", en:"Wait for someone else to fix it"},
+    {es:"Ignorarlo y seguir trabajando", en:"Ignore it and keep working"},
+    {es:"Arreglarlo tú mismo siempre solo", en:"Always fix it yourself alone"},
+    {es:"Reportarlo de inmediato", en:"Report it immediately"}
+  ], 3);
+  setq("B5", 2, [
+    {es:"Para evitar los derrames", en:"To avoid spills"},
+    {es:"Solo para verse más rápido", en:"Only to look faster"},
+    {es:"Únicamente por la apariencia", en:"Only for appearance"},
+    {es:"Solo para ir un poco más veloz", en:"Just to move a bit quicker"}
+  ], 0);
+  setq("B5", 3, [
+    {es:"Una sola vez por semana", en:"Just once a week"},
+    {es:"Cada dos a cuatro horas", en:"Every two to four hours"},
+    {es:"Nunca hace falta cambiarlos", en:"They never need changing"},
+    {es:"Solo una vez por turno completo", en:"Only once per full shift"}
+  ], 1);
+  setq("B5", 4, [
+    {es:"Seguir usándola sin cambiarla", en:"Keep using it without changing"},
+    {es:"Esconderla debajo del delantal", en:"Hide it under the apron"},
+    {es:"Retirarla y tomar una limpia", en:"Retire it and grab a clean one"},
+    {es:"Lavarla frente al huésped", en:"Wash it in front of the guest"}
+  ], 2);
+  setq("B5", 5, [
+    {es:"Solamente al final de tu turno", en:"Only at the end of your shift"},
+    {es:"Cada ocho horas sin excepción", en:"Every eight hours, no exception"},
+    {es:"Solo cuando lo pida el supervisor", en:"Only when the supervisor asks"},
+    {es:"Antes si el agua se ve sucia", en:"Sooner if the water looks dirty"}
+  ], 3);
+  setq("B5", 6, [
+    {es:"Para cambiarlo si se mancha y verte limpio", en:"To change it if stained and stay clean"},
+    {es:"Porque hay que usar dos a la vez siempre", en:"Because you must always wear two"},
+    {es:"Para prestárselo a los servers del piso", en:"To lend it to the floor servers"},
+    {es:"Para guardar cubiertos y servilletas extra", en:"To store extra cutlery and napkins"}
+  ], 0);
+
+  /* ===== B6 ===== */
+  setq("B6", 0, [
+    {es:"Solamente los vasos del bar", en:"Only the bar glasses"},
+    {es:"Las estaciones de servicio", en:"The service stations"},
+    {es:"Únicamente las servilletas", en:"Only the napkins"},
+    {es:"Nada, ya está todo listo", en:"Nothing, it's all ready"}
+  ], 1);
+  setq("B6", 1, [
+    {es:"Solamente tu propia mesa del rincón", en:"Only your own corner table"},
+    {es:"El clima que hará mañana temprano", en:"Tomorrow morning's weather"},
+    {es:"Que cada sección quede lista", en:"That every section is reset"},
+    {es:"Que las luces del comedor sigan encendidas", en:"That the dining room lights stay on"}
+  ], 2);
+  setq("B6", 2, [
+    {es:"Dejarlos totalmente llenos", en:"Leave them completely full"},
+    {es:"Tirarlos directo a la basura", en:"Throw them in the trash"},
+    {es:"No hacerles absolutamente nada", en:"Do absolutely nothing to them"},
+    {es:"Vaciarlos y limpiarlos bien", en:"Empty and clean them well"}
+  ], 3);
+  setq("B6", 3, [
+    {es:"Atrae plagas y genera mal olor", en:"It attracts pests and causes odor"},
+    {es:"Ahorra algo de tiempo para mañana", en:"It saves some time for tomorrow"},
+    {es:"Es solo un problema estético menor", en:"It's only a minor cosmetic issue"},
+    {es:"No causa ningún problema real", en:"It causes no real problem"}
+  ], 0);
+  setq("B6", 4, [
+    {es:"Para saludar a los últimos huéspedes", en:"To greet the last guests"},
+    {es:"Es el último punto de control del turno", en:"It's the shift's last checkpoint"},
+    {es:"Para contar cuántas mesas se usaron hoy", en:"To count how many tables were used"},
+    {es:"Porque el supervisor lo exige sin razón", en:"Because the supervisor demands it"}
+  ], 1);
+  setq("B6", 5, [
+    {es:"Está listo para el día siguiente", en:"It's ready for the next day"},
+    {es:"Puede dejarse con residuos hasta mañana", en:"It can be left with residue overnight"},
+    {es:"No está limpio; hay que vaciarlo bien", en:"It's not clean; empty it fully"},
+    {es:"Solo importa si de verdad huele mal", en:"It only matters if it truly smells"}
+  ], 2);
+
+  /* ===== B7 ===== */
+  setq("B7", 0, [
+    {es:"La Coffee Station del centro", en:"The center's Coffee Station"},
+    {es:"La Water Station de Florida", en:"Florida's Water Station"},
+    {es:"El Mexican Sodas Fridge", en:"The Mexican Sodas Fridge"},
+    {es:"La Soda Station & Glassware", en:"The Soda Station & Glassware"}
+  ], 3);
+  setq("B7", 1, [
+    {es:"Reportarlo al supervisor de turno", en:"Report it to the shift supervisor"},
+    {es:"Arreglarlo tú mismo con herramientas", en:"Fix it yourself with tools"},
+    {es:"Decirle a un huésped que espere", en:"Tell a guest to wait"},
+    {es:"Ignorarlo por completo y seguir", en:"Ignore it entirely and continue"}
+  ], 0);
+  setq("B7", 2, [
+    {es:"Solo cuando el comedor está tranquilo", en:"Only when the dining room is slow"},
+    {es:"Durante todo el servicio activo", en:"During all active service"},
+    {es:"Únicamente al cierre del turno", en:"Only at the shift's closing"},
+    {es:"Nunca, no es una responsabilidad", en:"Never, it's not a duty"}
+  ], 1);
+  setq("B7", 3, [
+    {es:"Cerrar la estación hasta volver", en:"Close the station until you return"},
+    {es:"Dejar que los huéspedes se sirvan", en:"Let the guests serve themselves"},
+    {es:"Avisar al supervisor o pedir relevo", en:"Tell the supervisor or get relief"},
+    {es:"Esperar hasta el cierre para atender", en:"Wait until closing to handle it"}
+  ], 2);
+  setq("B7", 4, [
+    {es:"El podio de host y la entrada", en:"The host podium and the entrance"},
+    {es:"Solamente la Soda Station del busser station", en:"Only the busser station's Soda Station"},
+    {es:"La cocina caliente y el bar", en:"The hot kitchen and the bar"},
+    {es:"Mexican Sodas, Coffee y Water Station", en:"Mexican Sodas, Coffee, and Water Station"}
+  ], 3);
+})();
+
+/* Pedagogia: opciones rebalanceadas — track HOST (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+
+  /* ===== H1 ===== */
+  setq("H1", 0, [
+    {es:"Es la primera y última impresión del huésped", en:"First and last impression for guests"},
+    {es:"Solo se encarga de cobrar las cuentas de los huéspedes", en:"Only handles the guests' bills"},
+    {es:"Únicamente trabaja dentro de la cocina del lugar", en:"Only works inside the kitchen"},
+    {es:"Prepara y sirve los cócteles en la barra", en:"Prepares and serves cocktails at the bar"}
+  ], 0);
+  setq("H1", 1, [
+    {es:"El inventario de la barra y la cocina", en:"The bar and kitchen inventory"},
+    {es:"Los asientos y la lista de espera", en:"Seating and the waitlist"},
+    {es:"La nómina y los horarios del personal", en:"Payroll and staff schedules"},
+    {es:"La preparación de cócteles especiales", en:"Preparing special cocktails"}
+  ], 1);
+  setq("H1", 2, [
+    {es:"Una recepción fría y apresurada", en:"A cold and rushed reception"},
+    {es:"Atención solo si son clientes VIP", en:"Attention only if they are VIP"},
+    {es:"Una bienvenida cálida y genuina", en:"A warm and genuine welcome"},
+    {es:"Ningún saludo especial al entrar", en:"No special greeting on arrival"}
+  ], 2);
+  setq("H1", 3, [
+    {es:"No existe ninguna diferencia real entre ambos", en:"There is no real difference between them"},
+    {es:"El Host tiene mayor responsabilidad total", en:"The Host has greater overall responsibility"},
+    {es:"El Maître D solo cocina en la cocina", en:"The Maître D only cooks in the kitchen"},
+    {es:"El Maître D supervisa el frente de la casa", en:"The Maître D oversees the front of house"}
+  ], 3);
+  setq("H1", 4, [
+    {es:"Contestar teléfonos, cobrar y empacar pedidos", en:"Answer phones, take payments, and pack orders"},
+    {es:"Preparar y decorar los cócteles en la barra principal", en:"Prepare and garnish cocktails at the main bar"},
+    {es:"Cocinar y emplatar los platillos calientes", en:"Cook and plate the hot dishes"},
+    {es:"Contratar y despedir al personal del turno", en:"Hire and fire the shift staff"}
+  ], 0);
+  setq("H1", 5, [
+    {es:"Supervisar a todo el personal de servers", en:"Supervising all the server staff"},
+    {es:"La puerta, las mesas y el flujo de huéspedes", en:"The door, tables, and guest flow"},
+    {es:"Gestionar todo el inventario de la cocina diaria", en:"Managing all the daily kitchen inventory"},
+    {es:"La satisfacción total del frente de la casa", en:"The total satisfaction of the front of house"}
+  ], 1);
+  setq("H1", 6, [
+    {es:"Con los bartenders de la barra central", en:"With the bartenders at the central bar"},
+    {es:"Con los cocineros de la cocina", en:"With the cooks in the kitchen"},
+    {es:"Con los managers del restaurante", en:"With the restaurant managers"},
+    {es:"Con los bussers del comedor", en:"With the dining room bussers"}
+  ], 2);
+
+  /* ===== H2 ===== */
+  setq("H2", 0, [
+    {es:"Para llenar únicamente una de las secciones", en:"To fill only one of the sections"},
+    {es:"Porque el manager lo ordena al azar", en:"Because the manager orders it at random"},
+    {es:"No importa realmente el motivo", en:"The reason doesn't really matter"},
+    {es:"Para que ningún server se sobrecargue", en:"So no server gets overloaded"}
+  ], 3);
+  setq("H2", 1, [
+    {es:"Centro", en:"Centro"},
+    {es:"Bar", en:"Bar"},
+    {es:"Exterior", en:"Exterior"},
+    {es:"Jungle", en:"Jungle"}
+  ], 0);
+  setq("H2", 2, [
+    {es:"Florida Room", en:"Florida Room"},
+    {es:"Exterior", en:"Exterior"},
+    {es:"Bar", en:"Bar"},
+    {es:"Centro", en:"Centro"}
+  ], 1);
+  setq("H2", 3, [
+    {es:"Sentar a los huéspedes demasiado lento", en:"Seating guests too slowly"},
+    {es:"Un tipo especial de mesa redonda", en:"A special kind of round table"},
+    {es:"Sentar demasiados en una misma sección", en:"Seating too many in the same section"},
+    {es:"Dejar una sección totalmente vacía toda la noche", en:"Leaving a section completely empty all night"}
+  ], 2);
+  setq("H2", 4, [
+    {es:"Sentar aún más mesas en esa misma sección", en:"Seat even more tables in that same section"},
+    {es:"Nada, no es asunto del host en absoluto", en:"Nothing, it's not the host's concern at all"},
+    {es:"Pedirle al huésped que se retire pronto", en:"Ask the guest to leave soon"},
+    {es:"Ayudar con el agua o tomar una bebida", en:"Help with water or take a drink order"}
+  ], 3);
+  setq("H2", 5, [
+    {es:"101–109", en:"101–109"},
+    {es:"41–48", en:"41–48"},
+    {es:"21–24, 31–34, 35", en:"21–24, 31–34, 35"},
+    {es:"51–53, 61–63", en:"51–53, 61–63"}
+  ], 0);
+  setq("H2", 6, [
+    {es:"Sentar cuantas mesas se pueda antes de que se vaya", en:"Seat as many tables as possible before they leave"},
+    {es:"Saber cuándo termina y no sentar justo antes", en:"Know when it ends and not seat right before"},
+    {es:"Ignorar por completo el horario del server", en:"Completely ignore the server's schedule"},
+    {es:"Pedirle que se quede más tiempo del turno", en:"Ask them to stay past their shift"}
+  ], 1);
+  setq("H2", 7, [
+    {es:"Porque llena el estacionamiento muy rápido", en:"Because it fills the parking lot very fast"},
+    {es:"Porque los huéspedes prefieren el exterior", en:"Because guests prefer the exterior"},
+    {es:"Porque afecta las propinas y el servicio", en:"Because it hurts tips and service"},
+    {es:"Porque la cocina se retrasa con los postres", en:"Because the kitchen falls behind on desserts"}
+  ], 2);
+
+  /* ===== H3 ===== */
+  setq("H3", 0, [
+    {es:"Solo el nombre y el número de teléfono del huésped", en:"Only the guest's name and phone number"},
+    {es:"Nada en específico, se resuelve al llegar ellos", en:"Nothing specific, sorted out when they arrive"},
+    {es:"Únicamente la hora exacta de la reservación", en:"Only the exact time of the reservation"},
+    {es:"Grupo, asiento, dieta, ocasión, fecha y contacto", en:"Party, seating, diet, occasion, date, and contact"}
+  ], 3);
+  setq("H3", 1, [
+    {es:"Preguntarle a un manager de turno", en:"Ask a manager on duty"},
+    {es:"Adivinar la respuesta uno mismo", en:"Guess the answer yourself"},
+    {es:"Ignorar la duda por completo", en:"Ignore the question entirely"},
+    {es:"Preguntarle a otro huésped cercano", en:"Ask another nearby guest"}
+  ], 0);
+  setq("H3", 2, [
+    {es:"Un cuaderno de papel junto a la puerta", en:"A paper notebook by the door"},
+    {es:"Toast Tables, el sistema aprobado", en:"Toast Tables, the approved system"},
+    {es:"Ningún sistema, todo de memoria", en:"No system, all from memory"},
+    {es:"Una app separada ajena a Toast", en:"A separate app unrelated to Toast"}
+  ], 1);
+  setq("H3", 3, [
+    {es:"Solo el clima y la temperatura del día", en:"Only the weather and temperature"},
+    {es:"Únicamente los precios del menú del día", en:"Only the day's menu prices"},
+    {es:"Reservas, mensajes y la app de Hostie", en:"Reservations, messages, and the Hostie app"},
+    {es:"Nada en particular antes de abrir el piso", en:"Nothing in particular before opening the floor"}
+  ], 2);
+  setq("H3", 4, [
+    {es:"Únicamente el nombre completo del huésped", en:"Only the guest's full name"},
+    {es:"El clima que hace afuera del local", en:"The weather outside the venue"},
+    {es:"Que la silla combine con el color de mesa", en:"That the chair matches the table color"},
+    {es:"Que no bloquee una salida de emergencia", en:"That it doesn't block an emergency exit"}
+  ], 3);
+  setq("H3", 5, [
+    {es:"Las rutas de salida de emergencia, no bloquearlas", en:"The emergency exit routes, so not to block them"},
+    {es:"Que la silla combine con el color de la mesa asignada", en:"That the chair matches the assigned table's color"},
+    {es:"Cobrar un cargo adicional por usar la silla", en:"Charge an extra fee for using the chair"},
+    {es:"Pedir permiso a la cocina antes de ponerla", en:"Ask the kitchen for permission first"}
+  ], 0);
+  setq("H3", 6, [
+    {es:"Aplicar tu propio criterio sin consultar nada", en:"Apply your own judgment without asking"},
+    {es:"Consultar a un manager, siguen pendientes", en:"Check with a manager, they're still pending"},
+    {es:"Rechazar siempre a todos los grupos grandes", en:"Always turn away all large parties"},
+    {es:"Cobrar un depósito por adelantado a cada grupo", en:"Charge every party a deposit in advance"}
+  ], 1);
+  setq("H3", 7, [
+    {es:"El inventario completo de la barra y cocina", en:"The full bar and kitchen inventory"},
+    {es:"Las propinas del turno anterior", en:"The previous shift's tips"},
+    {es:"La app de Hostie y regresar llamadas", en:"The Hostie app and returning calls"},
+    {es:"El menú de postres especial del día", en:"The special dessert menu of the day"}
+  ], 2);
+
+  /* ===== H4 ===== */
+  setq("H4", 0, [
+    {es:"Cuando resulte más conveniente para el host", en:"Whenever it's most convenient for the host"},
+    {es:"Solo si no hay demasiado trabajo", en:"Only if it isn't too busy"},
+    {es:"Nunca es necesario saludarlos", en:"It's never necessary to greet them"},
+    {es:"En el momento en que entra por la puerta", en:"The moment they walk through the door"}
+  ], 3);
+  setq("H4", 1, [
+    {es:"El contacto visual y una sonrisa", en:"Eye contact and a smile"},
+    {es:"Mirar hacia otro lado distinto", en:"Looking away elsewhere"},
+    {es:"Guardar silencio total al recibir", en:"Staying completely silent on arrival"},
+    {es:"Apresurar al huésped a su mesa", en:"Rushing the guest to their table"}
+  ], 0);
+  setq("H4", 2, [
+    {es:"No, primero termina la tarea", en:"No, finish the task first"},
+    {es:"Sí, siempre en cuanto entra", en:"Yes, always as they enter"},
+    {es:"Solo cuando el local está tranquilo", en:"Only when the place is slow"},
+    {es:"Únicamente si son clientes VIP", en:"Only if they are VIP guests"}
+  ], 1);
+  setq("H4", 3, [
+    {es:"Dejar el puesto sin cubrir un rato", en:"Leave the post unmanned for a while"},
+    {es:"Cerrar la puerta principal con llave un momento", en:"Lock the main door for a moment"},
+    {es:"Pedirle a alguien que esté pendiente", en:"Ask someone to keep a lookout"},
+    {es:"Nada, no hay problema en irse", en:"Nothing, there's no problem leaving"}
+  ], 2);
+  setq("H4", 4, [
+    {es:"Quien deje una propina más alta", en:"Whoever leaves a bigger tip"},
+    {es:"En un orden completamente aleatorio", en:"In a completely random order"},
+    {es:"El grupo más grande primero siempre", en:"The largest party first, always"},
+    {es:"Primero en llegar, primero servido", en:"First come, first served"}
+  ], 3);
+  setq("H4", 5, [
+    {es:"Abrir la puerta antes de que él llegue", en:"Open the door before they reach it"},
+    {es:"Esperar a que el huésped llegue a la puerta", en:"Wait for the guest to reach the door"},
+    {es:"Llamar a un manager para que reciba", en:"Call a manager to greet them"},
+    {es:"Quedarse siempre detrás del podio", en:"Always stay behind the podium"}
+  ], 0);
+  setq("H4", 6, [
+    {es:"Porque hablar en el trabajo está prohibido", en:"Because talking at work is forbidden"},
+    {es:"Porque distrae de notar a alguien entrando", en:"Because it distracts from noticing someone entering"},
+    {es:"Porque el manager cobra multas por ello", en:"Because the manager fines you for it"},
+    {es:"Porque hace demasiado ruido en la cocina", en:"Because it makes too much noise in the kitchen"}
+  ], 1);
+  setq("H4", 7, [
+    {es:"Idéntico siempre para mantener consistencia", en:"Identical every time for consistency"},
+    {es:"Breve y dicho en voz muy baja", en:"Brief and said very quietly"},
+    {es:"Genuino y variado, no robótico", en:"Genuine and varied, not robotic"},
+    {es:"Solo un gesto con la mano al pasar", en:"Just a wave of the hand in passing"}
+  ], 2);
+
+  /* ===== H5 ===== */
+  setq("H5", 0, [
+    {es:"Siempre cortos, aunque estén mal", en:"Always short, even if wrong"},
+    {es:"Completamente al azar cada vez", en:"Completely random each time"},
+    {es:"Sin dar ninguna estimación", en:"Without giving any estimate"},
+    {es:"Realistas y bien estimados", en:"Realistic and well estimated"}
+  ], 3);
+  setq("H5", 1, [
+    {es:"Actualizada en tiempo real", en:"Updated in real time"},
+    {es:"Actualizada solo una vez al día", en:"Updated only once a day"},
+    {es:"Sin ningún tipo de seguimiento", en:"Without any tracking at all"},
+    {es:"En papel y nunca revisada luego", en:"On paper and never checked after"}
+  ], 0);
+  setq("H5", 2, [
+    {es:"No, solo si ellos preguntan", en:"No, only if they ask"},
+    {es:"Sí, sin que lo pidan", en:"Yes, without them asking"},
+    {es:"Nunca, para no molestarlos", en:"Never, to avoid bothering them"},
+    {es:"Solo al final de la espera", en:"Only at the end of the wait"}
+  ], 1);
+  setq("H5", 3, [
+    {es:"El primer huésped en llegar durante el día", en:"The first guest to arrive during the day"},
+    {es:"Una mesa reservada para clientes VIP", en:"A table reserved for VIP guests"},
+    {es:"Sin preferencia de mesa, se sienta antes", en:"No table preference, seated sooner"},
+    {es:"La mesa más económica del comedor", en:"The cheapest table in the dining room"}
+  ], 2);
+  setq("H5", 4, [
+    {es:"No comunicarse con ellos en absoluto", en:"Not communicating with them at all"},
+    {es:"Dejar que decidan de forma aleatoria", en:"Letting them decide at random"},
+    {es:"Ignorar la lista de espera por completo", en:"Ignoring the waitlist entirely"},
+    {es:"Indicar qué mesas limpiar primero", en:"Flag which tables to clear first"}
+  ], 3);
+  setq("H5", 5, [
+    {es:"Uno en la puerta y otro sentando", en:"One at the door and another seating"},
+    {es:"Todos en el comedor sentando huéspedes", en:"All in the dining room seating guests"},
+    {es:"Un solo host encargado de todo", en:"A single host handling everything"},
+    {es:"Todos juntos en la puerta saludando", en:"All together at the door greeting"}
+  ], 0);
+  setq("H5", 6, [
+    {es:"Nombre, número de tarjeta y correo", en:"Name, card number, and email"},
+    {es:"Nombre, tamaño de grupo y asiento", en:"Name, party size, and seating"},
+    {es:"Solo el nombre y la hora de llegada", en:"Just the name and arrival time"},
+    {es:"Su platillo y bebida favoritos", en:"Their favorite dish and drink"}
+  ], 1);
+  setq("H5", 7, [
+    {es:"Preguntando a cada server cuánto tiempo falta", en:"Asking each server how long is left"},
+    {es:"Con un temporizador fijo de 45 minutos", en:"With a fixed 45-minute timer"},
+    {es:"Observando el flujo: bebida, pedido, pago", en:"Watching the flow: drinks, order, payment"},
+    {es:"Calculando solo según el tamaño del grupo", en:"Calculating by party size only"}
+  ], 2);
+
+  /* ===== H6 ===== */
+  setq("H6", 0, [
+    {es:"1 timbre", en:"1 ring"},
+    {es:"10 timbres", en:"10 rings"},
+    {es:"No importa cuántos", en:"No matter how many"},
+    {es:"3 timbres", en:"3 rings"}
+  ], 3);
+  setq("H6", 1, [
+    {es:"Todos los detalles", en:"All the details"},
+    {es:"Nada en particular", en:"Nothing in particular"},
+    {es:"Solo el nombre del que llama", en:"Only the caller's name"},
+    {es:"El clima del día", en:"The day's weather"}
+  ], 0);
+  setq("H6", 2, [
+    {es:"En completo silencio durante el inicio", en:"In complete silence at the start"},
+    {es:"Cálidamente, con el nombre del lugar", en:"Warmly, with the venue's name"},
+    {es:"De forma grosera y apurada", en:"Rudely and in a hurry"},
+    {es:"Solo con música de espera", en:"With hold music only"}
+  ], 1);
+  setq("H6", 3, [
+    {es:"Nunca importa en realidad", en:"It never really matters"},
+    {es:"Los teléfonos no dan reputación", en:"Phones don't build reputation"},
+    {es:"Ocurre antes de que lleguen", en:"It happens before they arrive"},
+    {es:"Solo cuentan los saludos en persona", en:"Only in-person greetings count"}
+  ], 2);
+  setq("H6", 4, [
+    {es:"El sistema bloquea la línea automáticamente", en:"The system blocks the line automatically"},
+    {es:"La llamada se transfiere a la cocina", en:"The call transfers to the kitchen"},
+    {es:"Se cobra una tarifa por la larga espera", en:"A fee is charged for the long wait"},
+    {es:"Algunos cuelgan y reservan en otro lugar", en:"Some hang up and book elsewhere"}
+  ], 3);
+  setq("H6", 5, [
+    {es:"Un error se vuelve difícil de arreglar", en:"An error becomes hard to fix"},
+    {es:"Para que la llamada dure mucho más tiempo", en:"So the call lasts much longer"},
+    {es:"Porque el manager lo exige por ley", en:"Because the manager requires it by law"},
+    {es:"Para grabar la conversación completa", en:"To record the entire conversation"}
+  ], 0);
+  setq("H6", 6, [
+    {es:"Lo más rápido posible para no tardar", en:"As fast as possible to save time"},
+    {es:"Claro y despacio para que se entienda", en:"Clearly and slowly to be understood"},
+    {es:"En voz muy baja para no molestar a nadie", en:"Very quietly so as not to bother anyone"},
+    {es:"Repitiendo cada palabra unas tres veces", en:"Repeating each word about three times"}
+  ], 1);
+
+  /* ===== H7 ===== */
+  setq("H7", 0, [
+    {es:"Únicamente las quejas de los huéspedes", en:"Only the guests' complaints"},
+    {es:"Nada, no hace falta avisar", en:"Nothing, no need to warn"},
+    {es:"Grupos grandes, VIPs y ocasiones", en:"Large parties, VIPs, and occasions"},
+    {es:"Solo el clima del día afuera", en:"Only the day's weather outside"}
+  ], 2);
+  setq("H7", 1, [
+    {es:"Absolutamente nadie del equipo", en:"Absolutely no one on the team"},
+    {es:"Únicamente el personal de cocina", en:"Only the kitchen staff"},
+    {es:"Solo el valet del estacionamiento", en:"Only the parking valet"},
+    {es:"Los servers y los managers", en:"The servers and the managers"}
+  ], 3);
+  setq("H7", 2, [
+    {es:"Para que puedan prepararse antes", en:"So they can prepare ahead"},
+    {es:"No es realmente necesario hacerlo", en:"It's not really necessary to"},
+    {es:"Solo por apariencia ante otros", en:"Only for appearance to others"},
+    {es:"Para confundir al resto del equipo", en:"To confuse the rest of the team"}
+  ], 0);
+  setq("H7", 3, [
+    {es:"Trabajar de forma totalmente independiente", en:"Work in a completely independent way"},
+    {es:"Sincronizarse para no repetir mesa", en:"Sync up to avoid repeating a table"},
+    {es:"Ignorarse por completo entre ellos", en:"Ignore each other entirely"},
+    {es:"Solo un host puede sentar a la vez", en:"Only one host may seat at a time"}
+  ], 1);
+  setq("H7", 4, [
+    {es:"Debe pagar la cuenta de ese grupo", en:"They must pay that party's bill"},
+    {es:"Tiene que llamar de inmediato a la policía", en:"They must call the police immediately"},
+    {es:"No alcanza a reacomodar sus otras mesas", en:"No time to rearrange their other tables"},
+    {es:"Pierde su turno en la rotación", en:"They lose their rotation turn"}
+  ], 2);
+  setq("H7", 5, [
+    {es:"El POS lo corrige de forma automática", en:"The POS fixes it automatically"},
+    {es:"Se gana una propina doble por ello", en:"A double tip is earned for it"},
+    {es:"No ocurre nada relevante en realidad", en:"Nothing relevant actually happens"},
+    {es:"Es vergonzoso y hay que corregirlo", en:"It's embarrassing and must be fixed"}
+  ], 3);
+  setq("H7", 6, [
+    {es:"Comunicarse con el FOH para anticipar", en:"Communicating with FOH to anticipate"},
+    {es:"Que cada uno trabaje solo sin distraerse", en:"Each working alone without distraction"},
+    {es:"Competir entre todos por las mejores mesas", en:"Competing for the best tables"},
+    {es:"Esperar la orden del manager para todo", en:"Waiting for the manager's order for everything"}
+  ], 0);
+
+  /* ===== H8 ===== */
+  setq("H8", 0, [
+    {es:"No, no es su responsabilidad", en:"No, it's not their responsibility"},
+    {es:"Sí, igual que los servers", en:"Yes, as well as the servers"},
+    {es:"Solo la sección de postres", en:"Only the dessert section"},
+    {es:"No importa en lo absoluto", en:"It doesn't matter at all"}
+  ], 1);
+  setq("H8", 1, [
+    {es:"Nada, solo entregar la bolsa cerrada", en:"Nothing, just hand over the sealed bag"},
+    {es:"Solo el precio total del pedido", en:"Only the order's total price"},
+    {es:"Cada plato y sus extras completos", en:"Every dish and its extras complete"},
+    {es:"Únicamente el nombre del huésped", en:"Only the guest's name"}
+  ], 2);
+  setq("H8", 2, [
+    {es:"Ser demasiado educado con todos", en:"Being too polite with everyone"},
+    {es:"Sonreír demasiado a los huéspedes", en:"Smiling too much at guests"},
+    {es:"Contar el cambio con mucho cuidado", en:"Counting change very carefully"},
+    {es:"Quedarse sin papel en hora pico", en:"Running out of paper at peak time"}
+  ], 3);
+  setq("H8", 3, [
+    {es:"Que no sean billetes falsos", en:"That they are not counterfeit"},
+    {es:"Nada en particular con ellos", en:"Nothing in particular with them"},
+    {es:"El número de serie por curiosidad", en:"The serial number out of curiosity"},
+    {es:"Solo el año que está impreso", en:"Only the printed year"}
+  ], 0);
+  setq("H8", 4, [
+    {es:"Servilletas de tela y unas velas", en:"Cloth napkins and some candles"},
+    {es:"Popotes, cubiertos y aderezos", en:"Straws, utensils, and dressings"},
+    {es:"Un menú impreso y carta de vinos", en:"A printed menu and a wine list"},
+    {es:"Cupones para la siguiente visita", en:"Coupons for the next visit"}
+  ], 1);
+  setq("H8", 5, [
+    {es:"Guardarlo bajo llave todo el turno", en:"Lock it away the whole shift"},
+    {es:"Usar el mismo rollo toda la semana", en:"Use the same roll all week"},
+    {es:"Tenerlo listo y saber recargarlo", en:"Keep it ready and know how to reload"},
+    {es:"Pedirlo a la cocina en cada ocasión", en:"Request it from the kitchen each time"}
+  ], 2);
+  setq("H8", 6, [
+    {es:"Solo los descuentos para empleados", en:"Only the employee discounts"},
+    {es:"Nada, eso lo maneja solo el manager", en:"Nothing, only the manager handles it"},
+    {es:"Únicamente los cupones de cumpleaños", en:"Only the birthday coupons"},
+    {es:"Todas las activas y cómo aplicarlas", en:"All active ones and how to apply them"}
+  ], 3);
+
+})();
+
+/* Pedagogia: opciones rebalanceadas — track KITCHEN (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+
+  /* ===== K1 ===== */
+  setq("K1", 0, [
+    {es:"Meseros, cocineros, y lavaplatos de turno", en:"Servers, cooks, and shift dishwashers"},
+    {es:"Chef, sous chef, y garrotero del salón", en:"Chef, sous chef, and dining-room busser"},
+    {es:"Línea, Preparadores, y Jefe de Cocina", en:"Línea, Preparadores, and Jefe de Cocina"},
+    {es:"Anfitrión, barista, y cajero principal", en:"Host, barista, and lead cashier"}
+  ], 2);
+  setq("K1", 1, [
+    {es:"Terminación de platos — revisar presentación, calidad y exactitud antes de que salgan", en:"Finishing plates — checking presentation, quality, and accuracy before they leave"},
+    {es:"Lavar la loza y todos los utensilios sucios de la cocina durante el turno completo del día", en:"Washing all the dishes and dirty utensils in the kitchen during the whole shift"},
+    {es:"Tomar los pedidos de los huéspedes y llevar cada plato a las mesas del salón", en:"Taking guests' orders and carrying each plate to the dining-room tables"},
+    {es:"Coordinar al equipo completo y repartir las tareas pendientes del servicio", en:"Coordinating the whole team and handing out the shift's pending tasks"}
+  ], 0);
+  setq("K1", 2, [
+    {es:"Sí, si la cocina está saturada de tickets en ese momento", en:"Yes, if the kitchen is swamped with tickets right then"},
+    {es:"No — hay que corregirlo antes de que salga de la cocina", en:"No — it must be fixed before it leaves the kitchen"},
+    {es:"Sí, siempre que el huésped no note el detalle", en:"Yes, as long as the guest won't notice the detail"},
+    {es:"Solo durante la hora pico del servicio nocturno", en:"Only during the peak of the night service"}
+  ], 1);
+  setq("K1", 3, [
+    {es:"Recibir a los huéspedes en la puerta y acompañarlos hasta su mesa asignada en el salón", en:"Greeting guests at the door and walking them to their assigned table"},
+    {es:"Procesar los pagos y cuadrar la caja registradora al cierre del turno", en:"Processing payments and balancing the register at the end of the shift"},
+    {es:"Dejar todo listo con anticipación, con calidad consistente y porciones correctas", en:"Getting everything ready ahead of time, with consistent quality and correct portions"},
+    {es:"Gestionar la carta de vinos y recomendar maridajes en la mesa", en:"Managing the wine list and recommending pairings at the table"}
+  ], 2);
+  setq("K1", 4, [
+    {es:"El Jefe de Cocina asigna responsable, tarea y tiempo, y da seguimiento — nadie adivina", en:"The Jefe de Cocina assigns who, what, and by when, and follows up — nobody guesses"},
+    {es:"Quien lo note primero se encarga de resolverlo por su cuenta, sin avisarle a nadie más", en:"Whoever notices it first handles it alone, without telling anyone else"},
+    {es:"Se deja anotado y se ignora hasta que empiece el siguiente turno", en:"It's noted down and ignored until the next shift begins"},
+    {es:"Cada cocinero decide por su cuenta qué pendiente atender primero", en:"Each cook decides on their own which pending task to tackle first"}
+  ], 0);
+  setq("K1", 5, [
+    {es:"Coordinar al equipo, distribuir responsabilidades y garantizar servicio con calidad y a tiempo", en:"Coordinate the team, assign responsibilities, and ensure quality, on-time service"},
+    {es:"Únicamente cocinar en la línea durante toda la hora pico, sin coordinar nunca al resto del equipo", en:"Only cook on the line during the entire rush, never coordinating the rest of the team"},
+    {es:"Hacer las compras con los proveedores cada mañana antes de abrir la cocina", en:"Do the purchasing with suppliers every morning before the kitchen opens"},
+    {es:"Encargarse solo de la limpieza profunda del área al final del turno", en:"Handle only the deep cleaning of the area at the end of the shift"}
+  ], 0);
+  setq("K1", 6, [
+    {es:"Porque todos los roles cobran exactamente el mismo salario por cada hora que trabajan en el turno", en:"Because all roles earn exactly the same hourly wage for every hour of the shift"},
+    {es:"Porque Línea no puede ir rápido sin que Prep se adelante, y sin coordinación se pierde ese trabajo", en:"Because Line can't go fast unless Prep gets ahead, and without coordination that work is lost"},
+    {es:"Porque en toda la cocina solo existe una estación de trabajo que el equipo entero comparte", en:"Because in the whole kitchen there is only one workstation the entire team shares"},
+    {es:"Porque el Jefe de Cocina termina haciendo todo el trabajo de la cocina él solo cada día", en:"Because the Head Chef ends up doing all the kitchen's work by himself every day"}
+  ], 1);
+  setq("K1", 7, [
+    {es:"Que puede improvisar las porciones y el sazón cuando anda con prisa", en:"That they can improvise portions and seasoning when in a hurry"},
+    {es:"Que solo la Línea revisa la calidad de cada base antes del servicio", en:"That only the Line checks the quality of each base before service"},
+    {es:"Que Prep decide el menú del día según lo que haya en la nevera", en:"That Prep decides the day's menu based on what's in the fridge"},
+    {es:"Que salsas, aderezos, proteínas y guarniciones llevan calidad y porciones consistentes", en:"That sauces, dressings, proteins, and garnishes have consistent quality and portions"}
+  ], 3);
+
+  /* ===== K2 ===== */
+  setq("K2", 0, [
+    {es:"El precio, la propina y la mesa asignada al plato", en:"The price, the tip, and the plate's assigned table"},
+    {es:"Solo la temperatura del plato al salir", en:"Only the plate's temperature on the way out"},
+    {es:"Presentación, Calidad y Exactitud", en:"Presentation, Quality, and Accuracy"},
+    {es:"El nombre del mesero que tomó el pedido", en:"The name of the server who took the order"}
+  ], 2);
+  setq("K2", 1, [
+    {es:"Reponerla de inmediato, o pedir apoyo al encargado en ese mismo momento", en:"Restock it immediately, or ask the lead for support right then"},
+    {es:"Esperar a que termine por completo la hora pico para reponerla con calma después", en:"Wait until the rush is fully over to restock it calmly afterward"},
+    {es:"Mandar los platos sin ese componente y sin avisarle a nadie", en:"Send the plates without that component and tell no one"},
+    {es:"Decirle a FOH que el huésped pida otro platillo del menú", en:"Tell FOH to have the guest order another dish"}
+  ], 0);
+  setq("K2", 2, [
+    {es:"Preparar la nómina semanal del personal de cocina", en:"Preparing the kitchen staff's weekly payroll"},
+    {es:"Gestionar las reservaciones de las mesas del salón", en:"Managing the dining-room table reservations"},
+    {es:"Chips fritos, escurridos, sazonados y bien crujientes", en:"Chips fried, drained, seasoned, and kept crisp"},
+    {es:"Diseñar el maridaje de vino para todo el menú", en:"Designing the wine pairing for the whole menu"}
+  ], 2);
+  setq("K2", 3, [
+    {es:"Se mantienen exactamente iguales en cada uno de los siete días de la semana completa", en:"They stay exactly the same on each of the seven days of the full week"},
+    {es:"El domingo siempre tiene los niveles más bajos de toda la semana de servicio", en:"Sunday always has the lowest levels of the whole service week"},
+    {es:"Cambian únicamente por la intuición del cocinero de turno, nunca por el día", en:"They change only by the shift cook's intuition, never by the day"},
+    {es:"El lunes corre con niveles base bajos; viernes, sábado y domingo con niveles altos", en:"Monday runs low base levels; Friday, Saturday, and Sunday run high levels"}
+  ], 3);
+  setq("K2", 4, [
+    {es:"Suficiente para esta noche nada más; alguien más se encargará mañana por la mañana temprano", en:"Good enough for tonight only; someone else will handle it early tomorrow morning"},
+    {es:"Completamente lista para el siguiente turno: limpieza profunda y reposición definida", en:"Fully ready for the next shift: deep clean and a defined restock"},
+    {es:"Igual a como quedó durante la hora pico, sin ordenar nada", en:"Just as it was left during the rush, tidying nothing"},
+    {es:"Cerrada con llave y sin tocar hasta la mañana siguiente", en:"Locked and untouched until the next morning"}
+  ], 1);
+  setq("K2", 5, [
+    {es:"Sacando primero los platos más fáciles y rápidos, sin importar el orden del ticket", en:"Sending the easiest, fastest dishes first, regardless of ticket order"},
+    {es:"Esperando en silencio a que se acaben los productos de la estación", en:"Waiting silently until the station's products run out"},
+    {es:"Priorizando los tickets por orden y por tiempo, y comunicando constantemente", en:"Prioritizing tickets by order and by time, and communicating constantly"},
+    {es:"Trabajando cada quien por su cuenta sin avisar nada al resto", en:"Everyone working alone without announcing anything to the rest"}
+  ], 2);
+  setq("K2", 6, [
+    {es:"Reponer solamente al final del turno, cuando ya haya bajado todo el ritmo del servicio", en:"Restock only at the end of the shift, once the whole pace has dropped"},
+    {es:"Esperar a que un ticket regrese marcado con '86' para reponer", en:"Wait for a ticket to come back marked '86' before restocking"},
+    {es:"Guardar todo el producto sobrante para usarlo al día siguiente", en:"Save all leftover product to use the following day"},
+    {es:"Reponer antes de quedar en cero, nunca después de agotar el producto", en:"Restock before hitting zero, never after running out"}
+  ], 3);
+  setq("K2", 7, [
+    {es:"Con niveles altos por la alta demanda esperada", en:"High levels due to expected high demand"},
+    {es:"Con niveles base, por la baja demanda del día", en:"Base levels, due to the day's low demand"},
+    {es:"Sin ningún par level definido para ese día", en:"With no par level defined for that day"},
+    {es:"Con los mismos niveles altos que el sábado", en:"The same high levels as Saturday"}
+  ], 1);
+
+  /* ===== K3 ===== */
+  setq("K3", 0, [
+    {es:"Solo el precio de venta del producto al público", en:"Only the product's retail sale price"},
+    {es:"Nombre del producto, fecha y hora, e iniciales de quien lo preparó", en:"Product name, date and time, and the preparer's initials"},
+    {es:"Solo la fecha de vencimiento impresa en el envase", en:"Only the expiration date printed on the container"},
+    {es:"El nombre del proveedor, el número de lote y el país de origen del insumo", en:"The supplier name, lot number, and the ingredient's country of origin"}
+  ], 1);
+  setq("K3", 1, [
+    {es:"FIFO — lo primero en entrar es lo primero en salir", en:"FIFO — first in is the first out"},
+    {es:"LIFO — lo último en entrar es lo primero en salir", en:"LIFO — last in is the first out"},
+    {es:"Lo que esté más cerca del frente se usa primero", en:"Whatever is closest to the front is used first"},
+    {es:"No hace falta ningún sistema de rotación de producto", en:"No product rotation system is needed"}
+  ], 0);
+  setq("K3", 2, [
+    {es:"Sí, siempre que el cocinero tenga suficiente experiencia", en:"Yes, as long as the cook has enough experience"},
+    {es:"Sí, en cualquier momento y con cualquier receta", en:"Yes, at any time and with any recipe"},
+    {es:"No — aquí la consistencia importa más que la velocidad", en:"No — here consistency matters more than speed"},
+    {es:"Sí, pero solo en los días tranquilos de poca venta", en:"Yes, but only on slow, low-sales days"}
+  ], 2);
+  setq("K3", 3, [
+    {es:"Decírselo de palabra a un compañero y confiar en que lo recuerde", en:"Tell a coworker verbally and trust they'll remember"},
+    {es:"Nada; basta con dejarlo pendiente donde quedó", en:"Nothing; just leave it pending where it is"},
+    {es:"Un mensaje escrito en el grupo con los detalles específicos", en:"A written message in the group chat with the specific details"},
+    {es:"Esperar a que el siguiente turno pregunte qué faltó", en:"Wait for the next shift to ask what's missing"}
+  ], 2);
+  setq("K3", 4, [
+    {es:"Solo la frase 'quedó pendiente', escrita en el chat sin ningún otro detalle adicional", en:"Just the phrase 'it's pending', in the chat with no other detail"},
+    {es:"Únicamente el nombre del producto que no se alcanzó a terminar durante el turno", en:"Only the name of the product that wasn't finished during the shift"},
+    {es:"La hora exacta de salida del cocinero y su firma personal al final del turno", en:"The cook's exact clock-out time and personal signature at shift's end"},
+    {es:"Producto, cuánto está hecho o falta, su estado, dónde se guardó y los pasos exactos", en:"Product, how much is done or missing, its state, where it's stored, and the exact steps"}
+  ], 3);
+  setq("K3", 5, [
+    {es:"No cambia nada; el servicio sigue exactamente igual que siempre", en:"Nothing changes; service goes on exactly the same as always"},
+    {es:"Línea pierde tiempo, se estresa, baja la calidad y se atrasan los tickets", en:"Línea loses time, gets stressed, quality drops, and tickets fall behind"},
+    {es:"Solo afecta al área de Prep, nunca al resto del equipo de cocina", en:"It only affects Prep, never the rest of the kitchen team"},
+    {es:"El servicio en realidad se vuelve mucho más rápido y fluido", en:"Service actually becomes much faster and smoother"}
+  ], 1);
+  setq("K3", 6, [
+    {es:"La cantidad de envases que se usan en la estación", en:"The number of containers used at the station"},
+    {es:"El tamaño de las porciones extra que sobran", en:"The size of the extra leftover portions"},
+    {es:"La decoración final que lleva cada plato", en:"The final decoration on each plate"},
+    {es:"La consistencia del resultado en cada lote", en:"The consistency of the result in each batch"}
+  ], 3);
+  setq("K3", 7, [
+    {es:"Comino y ajo en polvo", en:"Cumin and garlic powder"},
+    {es:"Chile en polvo picante", en:"Spicy chili powder"},
+    {es:"Sal y jugo de limón", en:"Salt and lime juice"},
+    {es:"Nada; lo dejó sin sazón", en:"Nothing; left it unseasoned"}
+  ], 2);
+  setq("K3", 8, [
+    {es:"Abiertos y sin etiqueta para poder agarrarlos más rápido", en:"Open and unlabeled so they can be grabbed faster"},
+    {es:"Amontonados en cualquier lugar donde haya espacio libre", en:"Piled up anywhere there's free space"},
+    {es:"Cerrados, limpios y con sus utensilios asignados", en:"Closed, clean, and with their assigned utensils"},
+    {es:"Guardados solo dentro de la nevera principal de la cocina", en:"Stored only inside the kitchen's main fridge"}
+  ], 2);
+
+  /* ===== K4 ===== */
+  setq("K4", 0, [
+    {es:"Volumen esperado, habilidades del personal y prioridades del menú y servicio", en:"Expected volume, staff skills, and menu and service priorities"},
+    {es:"En quien llegue primero al turno, que es quien elige la estación donde quiere trabajar", en:"On whoever arrives first, who gets to pick the station they want"},
+    {es:"Es idéntico todos los días sin importar el volumen esperado", en:"It's identical every day regardless of expected volume"},
+    {es:"En una asignación completamente al azar decidida al momento de abrir", en:"On a fully random assignment decided when opening"}
+  ], 0);
+  setq("K4", 1, [
+    {es:"Cualquier cocinero elegido al azar del turno", en:"Any randomly chosen cook on the shift"},
+    {es:"Nadie; FOH lo tiene que averiguar por su cuenta", en:"No one; FOH has to figure it out alone"},
+    {es:"El lavaplatos que esté disponible en ese momento", en:"Whatever dishwasher happens to be available"},
+    {es:"El Jefe de Cocina del turno", en:"The shift's Jefe de Cocina"}
+  ], 3);
+  setq("K4", 2, [
+    {es:"'¿Qué hora es?', únicamente para saber cuándo hay que abrir las puertas del local", en:"'What time is it?', only to know when to open the doors"},
+    {es:"'¿Estamos listos o no?', revisando mise en place y par levels", en:"'Are we ready or not?', checking mise en place and par levels"},
+    {es:"Ninguna; no existe una revisión antes del turno", en:"None; there's no pre-shift check at all"},
+    {es:"'¿Quién quiere irse temprano hoy?', antes de arrancar", en:"'Who wants to leave early today?', before starting"}
+  ], 1);
+  setq("K4", 3, [
+    {es:"A fin de mes, en la junta de resultados del equipo", en:"At month-end, in the team's results meeting"},
+    {es:"Solo durante las evaluaciones programadas del año", en:"Only during the year's scheduled reviews"},
+    {es:"En el momento, nunca 'después'", en:"In the moment, never 'later'"},
+    {es:"Nunca; no vale la pena interrumpir el servicio", en:"Never; it's not worth disrupting service"}
+  ], 2);
+  setq("K4", 4, [
+    {es:"Nada; el pendiente termina por resolverse solo con el paso del tiempo del turno", en:"Nothing; the task ends up sorting itself out over the course of the shift"},
+    {es:"Un responsable, una prioridad y un tiempo — y luego da seguimiento", en:"A responsible person, a priority, and a time — then follows up"},
+    {es:"Solo una fecha límite, pero sin ninguna persona asignada", en:"Just a deadline, but with no assigned person"},
+    {es:"Se lo deja a quien más se queje del pendiente en el turno", en:"It's left to whoever complains most about it on the shift"}
+  ], 1);
+  setq("K4", 5, [
+    {es:"La deja completamente fija, sin ningún cambio, hasta que llegue la hora del cierre", en:"Leaves it fully fixed, with no change, until closing time arrives"},
+    {es:"Detiene todo el servicio para reorganizar las estaciones", en:"Stops all service to reorganize the stations"},
+    {es:"La rebalancea: mueve personas, simplifica el flujo y elimina cuellos de botella", en:"Rebalances it: moves people, simplifies flow, and clears bottlenecks"},
+    {es:"Manda a todo el equipo a break exactamente al mismo tiempo", en:"Sends the whole team on break at exactly the same time"}
+  ], 2);
+  setq("K4", 6, [
+    {es:"Que haya suficiente personal ya programado para poder cubrir bien todo el turno de cierre de la noche", en:"That there's enough staff already scheduled to cover the whole night's closing shift"},
+    {es:"Que el salón esté bien decorado y con todas las mesas del servicio ya montadas", en:"That the dining room is well decorated with all service tables already set"},
+    {es:"Que los precios del menú impreso estén todos correctamente actualizados al día", en:"That the printed menu prices are all correctly up to date"},
+    {es:"Par levels y reposiciones críticas, y que cada estación tenga utensilios, contenedores y producto", en:"Par levels and critical restocks, and that each station has utensils, containers, and product"}
+  ], 3);
+  setq("K4", 7, [
+    {es:"Dar instrucciones claras y mantener la calma", en:"Give clear instructions and stay calm"},
+    {es:"Levantar la voz para apurar al equipo entero", en:"Raise his voice to rush the whole team"},
+    {es:"Dejar que cada quien decida solo qué hacer", en:"Let everyone decide alone what to do"},
+    {es:"Salir de la cocina hasta que baje la presión", en:"Leave the kitchen until the pressure drops"}
+  ], 0);
+
+  /* ===== K5 ===== */
+  setq("K5", 0, [
+    {es:"Chile habanero picado en trozos", en:"Chopped habanero chili"},
+    {es:"Jalapeño cortado en cubos", en:"Jalapeño cut into cubes"},
+    {es:"Solo pimienta negra molida", en:"Only ground black pepper"},
+    {es:"Nada; no pica en absoluto", en:"Nothing; it's not spicy at all"}
+  ], 1);
+  setq("K5", 1, [
+    {es:"Cátsup de tomate y mostaza amarilla", en:"Tomato ketchup and yellow mustard"},
+    {es:"Crema agria con eneldo fresco y ajo", en:"Sour cream with fresh dill and garlic"},
+    {es:"Mayonesa y aceitunas botija peruanas", en:"Mayonnaise and Peruvian Botija olives"},
+    {es:"Solo vinagre blanco destilado", en:"Only distilled white vinegar"}
+  ], 2);
+  setq("K5", 2, [
+    {es:"Morado oscuro intenso", en:"Deep dark purple"},
+    {es:"Verde brillante", en:"Bright green"},
+    {es:"Negro carbón", en:"Charcoal black"},
+    {es:"Amarillo-naranja", en:"Yellow-orange"}
+  ], 3);
+  setq("K5", 3, [
+    {es:"Crema espesa para batir, bien fría", en:"Cold heavy whipping cream"},
+    {es:"Caldo de pollo o agua caliente", en:"Chicken stock or hot water"},
+    {es:"Salsa de soya oscura", en:"Dark soy sauce"},
+    {es:"Leche de coco enlatada", en:"Canned coconut milk"}
+  ], 1);
+  setq("K5", 4, [
+    {es:"La de Atún agrega azúcar morena, jugo de limón y jugo de piña", en:"The Tuna one adds brown sugar, lemon juice, and pineapple juice"},
+    {es:"Son idénticas; no hay ninguna diferencia entre las dos", en:"They're identical; there's no difference between the two"},
+    {es:"La de Lomo es la salsa dulce, y la de Atún no lleva ningún ingrediente dulce", en:"The Lomo one is the sweet sauce, and the Tuna one has nothing sweet"},
+    {es:"Ninguna de las dos lleva salsa de pescado en su receta", en:"Neither of the two contains fish sauce in its recipe"}
+  ], 0);
+  setq("K5", 5, [
+    {es:"Para cocinar mucho más rápido sin tener que revisar los tickets ni las recetas del día", en:"To cook much faster without checking tickets or the day's recipes"},
+    {es:"Para detectar errores, informar a FOH sobre alergias y mantener el sabor siempre", en:"To catch errors, inform FOH about allergies, and keep the flavor consistent"},
+    {es:"Para poder cambiar y ajustar las recetas cada semana a gusto", en:"To change and adjust the recipes each week at will"},
+    {es:"Solo para poder aprobar un examen escrito de la capacitación", en:"Only to pass a written test in the training"}
+  ], 1);
+  setq("K5", 6, [
+    {es:"Memorizarla en silencio una sola vez y luego guardarla", en:"Memorize it silently just once and then put it away"},
+    {es:"Guardarla sin abrirla en ningún momento del turno", en:"Store it without opening it at any point"},
+    {es:"Voltearla y decir los ingredientes en voz alta", en:"Flip it and say the ingredients out loud"},
+    {es:"Copiarla en un cuaderno y luego descartarla", en:"Copy it in a notebook and then discard it"}
+  ], 2);
+
+  /* ===== K6 ===== */
+  setq("K6", 0, [
+    {es:"Chiles chipotle enteros en adobo bien molidos", en:"Whole chipotle peppers in adobo, well ground"},
+    {es:"Aceite de trufa blanca y champiñones frescos", en:"White truffle oil and fresh mushrooms"},
+    {es:"Cátsup de tomate y un toque de mostaza", en:"Tomato ketchup and a touch of mustard"},
+    {es:"Nada; en realidad son la misma receta", en:"Nothing; they're actually the same recipe"}
+  ], 1);
+  setq("K6", 1, [
+    {es:"Solo paprika en polvo", en:"Paprika powder only"},
+    {es:"Cátsup de tomate rojo", en:"Red tomato ketchup"},
+    {es:"Pasta de achiote", en:"Achiote paste"},
+    {es:"Jugo de betabel", en:"Beet juice"}
+  ], 2);
+  setq("K6", 2, [
+    {es:"Solamente agua fría con un poco de sal", en:"Only cold water with a bit of salt"},
+    {es:"Leche entera tibia con un poco de crema y una pizca de sal fina", en:"Warm whole milk with a bit of cream and a pinch of fine salt"},
+    {es:"Líquido sazonador oscuro, jugo de limón y jugo de naranja", en:"Dark savory seasoning liquid, lime juice, and orange juice"},
+    {es:"Solo cerveza rubia bien fría", en:"Only well-chilled blonde beer"}
+  ], 2);
+  setq("K6", 3, [
+    {es:"Solo cúrcuma en polvo", en:"Turmeric powder only"},
+    {es:"Sazonador Bijol y salsa de ají amarillo", en:"Bijol seasoning and ají amarillo sauce"},
+    {es:"Colorante amarillo artificial de repostería", en:"Artificial yellow baking coloring"},
+    {es:"Hebras de azafrán español", en:"Spanish saffron threads"}
+  ], 1);
+  setq("K6", 4, [
+    {es:"Solo frijoles rojos tipo kidney en lata", en:"Only canned kidney-type red beans"},
+    {es:"Garbanzos y lentejas cafés", en:"Chickpeas and brown lentils"},
+    {es:"Frijoles lima y habas verdes", en:"Lima beans and green favas"},
+    {es:"Frijoles pintos y frijoles negros", en:"Pinto beans and black beans"}
+  ], 3);
+
+  /* ===== K7 ===== */
+  setq("K7", 0, [
+    {es:"El tamaño 10/15, más grande", en:"Size 10/15, larger"},
+    {es:"El tamaño 50/60, más chico", en:"Size 50/60, smaller"},
+    {es:"El tamaño 21/25", en:"Size 21/25"},
+    {es:"Varía; no hay un estándar fijo", en:"It varies; there's no fixed standard"}
+  ], 2);
+  setq("K7", 1, [
+    {es:"Salmón del Atlántico", en:"Atlantic salmon"},
+    {es:"Mahi mahi", en:"Mahi mahi"},
+    {es:"Tilapia de granja", en:"Farmed tilapia"},
+    {es:"Bacalao del Pacífico", en:"Pacific cod"}
+  ], 1);
+  setq("K7", 2, [
+    {es:"Cobia, pulpo, aros de calamar y camarón con cola", en:"Cobia, octopus, calamari rings, and tail-on shrimp"},
+    {es:"Solo camarón 21/25 con un poco de pulpo", en:"Only 21/25 shrimp with a bit of octopus"},
+    {es:"Salmón, atún, tilapia y unos aros de calamar frito", en:"Salmon, tuna, tilapia, and some fried calamari rings"},
+    {es:"Cangrejo, langosta, almeja y mejillón", en:"Crab, lobster, clam, and mussel"}
+  ], 0);
+  setq("K7", 3, [
+    {es:"Solo con papel aluminio grueso", en:"Only with thick aluminum foil"},
+    {es:"Con hojas secas de maíz", en:"With dry corn husks"},
+    {es:"Hoja de plátano y recado de achiote", en:"Banana leaf and achiote recado"},
+    {es:"Nada; se cocina completamente al desnudo", en:"Nothing; it's cooked completely bare"}
+  ], 2);
+  setq("K7", 4, [
+    {es:"Champiñones en rodajas", en:"Sliced mushrooms"},
+    {es:"Tofu firme prensado y dorado", en:"Pressed, browned firm tofu"},
+    {es:"Yaca (jackfruit)", en:"Jackfruit"},
+    {es:"Seitán de trigo", en:"Wheat seitan"}
+  ], 0);
+  setq("K7", 5, [
+    {es:"No; es un sazonador concentrado tipo Maggi, distinto de la soya y del pescado", en:"No; it's a Maggi-style concentrate, different from soy and fish sauce"},
+    {es:"Sí; los dos son exactamente el mismo producto que se usa en la cocina a diario", en:"Yes; the two are exactly the same product used in the kitchen daily"},
+    {es:"No; en realidad es salsa de pescado tailandesa", en:"No; it's actually Thai fish sauce"},
+    {es:"No; es solo agua simple con colorante café añadido", en:"No; it's just plain water with brown coloring added"}
+  ], 0);
+  setq("K7", 6, [
+    {es:"Pescado del Día, Leche de Tigre y Chicharrón de Mariscos", en:"Catch of the Day, Leche de Tigre, and Chicharrón de Mariscos"},
+    {es:"Únicamente en el Ceviche Mixto de la casa", en:"Only in the house Ceviche Mixto"},
+    {es:"En la Cochinita Pibil y también en el Flan que se sirve de postre", en:"In the Cochinita Pibil and also the Flan served for dessert"},
+    {es:"Solamente en las Alitas Mexicanas picantes", en:"Only in the spicy Mexican Wings"}
+  ], 0);
+  setq("K7", 7, [
+    {es:"Únicamente en el Ceviche Mixto de mariscos que se prepara en la barra fría", en:"Only in the seafood Ceviche Mixto prepared at the cold bar"},
+    {es:"Marinación de Filet, Marinación de Alitas Mexicanas y Chicharrón de Mariscos", en:"Filet marinade, Mexican Wings marinade, and Chicharrón de Mariscos"},
+    {es:"En el Agua de Jamaica y en la Chicha Morada", en:"In the Agua de Jamaica and the Chicha Morada"},
+    {es:"En todas las salsas frías del menú de entradas", en:"In all the cold sauces on the starter menu"}
+  ], 1);
+  setq("K7", 8, [
+    {es:"Cerca de un tercio de ellas", en:"About a third of them"},
+    {es:"Exactamente la mitad de ellas", en:"Exactly half of them"},
+    {es:"Absolutamente todas ellas", en:"Absolutely all of them"},
+    {es:"Casi ninguna de ellas", en:"Almost none of them"}
+  ], 0);
+
+  /* ===== K8 ===== */
+  setq("K8", 0, [
+    {es:"Colorante rojo artificial de repostería", en:"Artificial red baking coloring"},
+    {es:"Jugo concentrado de betabel", en:"Concentrated beet juice"},
+    {es:"Flores secas de jamaica (hibisco)", en:"Dried hibiscus (jamaica) flowers"},
+    {es:"Jugo natural de arándano rojo", en:"Natural cranberry juice"}
+  ], 2);
+  setq("K8", 1, [
+    {es:"Colorante morado artificial", en:"Artificial purple coloring"},
+    {es:"Maíz morado peruano", en:"Peruvian purple corn"},
+    {es:"Jugo de uva morada", en:"Purple grape juice"},
+    {es:"Arándanos azules frescos", en:"Fresh blueberries"}
+  ], 1);
+  setq("K8", 2, [
+    {es:"Elote, zanahoria, papa y apio", en:"Corn, carrot, potato, and celery"},
+    {es:"Solamente cebolla blanca picada", en:"Only chopped white onion"},
+    {es:"Brócoli, coliflor y calabacín", en:"Broccoli, cauliflower, and zucchini"},
+    {es:"Únicamente guisantes verdes", en:"Green peas only"}
+  ], 0);
+  setq("K8", 3, [
+    {es:"Solamente agua con un poco de azúcar", en:"Only water with a bit of sugar"},
+    {es:"Crema espesa para batir y bastante mantequilla derretida tibia", en:"Heavy whipping cream and plenty of warm melted butter"},
+    {es:"Huevos enteros, leche entera y leche condensada endulzada", en:"Whole eggs, whole milk, and sweetened condensed milk"},
+    {es:"Yogur natural y miel de abeja", en:"Plain yogurt and bee honey"}
+  ], 2);
+  setq("K8", 4, [
+    {es:"Solamente pimienta negra recién molida", en:"Only freshly ground black pepper"},
+    {es:"Comino molido y paprika ahumada", en:"Ground cumin and smoked paprika"},
+    {es:"Ninguna especia; va totalmente simple", en:"No spice at all; totally plain"},
+    {es:"Canela molida y nuez moscada molida", en:"Ground cinnamon and ground nutmeg"}
+  ], 3);
+
+  /* ===== K9 ===== */
+  setq("K9", 0, [
+    {es:"Solo el turno de cierre de cada noche de servicio", en:"Only each night's closing shift"},
+    {es:"Un único conserje designado para esa tarea", en:"A single janitor designated for the task"},
+    {es:"Todo el equipo; es responsabilidad compartida", en:"The whole team; it's a shared responsibility"},
+    {es:"Solamente la gerencia del restaurante", en:"Only the restaurant's management"}
+  ], 2);
+  setq("K9", 1, [
+    {es:"Sí; los turnos de la mañana también pueden y deben empezarlas", en:"Yes; morning shifts can and should start them too"},
+    {es:"No; es estrictamente una tarea reservada solo para el turno de cierre", en:"No; it's strictly a task reserved for the closing shift"},
+    {es:"Solo se pueden empezar los domingos por la tarde", en:"They can only be started on Sunday afternoons"},
+    {es:"Nunca durante las horas de operación del local", en:"Never during the venue's operating hours"}
+  ], 0);
+  setq("K9", 2, [
+    {es:"Nada más; con solo enviar la foto diaria al grupo ya es más que suficiente", en:"Nothing else; just sending the daily photo to the group is more than enough"},
+    {es:"Solo tomar la foto y guardarla en su teléfono personal", en:"Just take the photo and save it on their personal phone"},
+    {es:"Firmar el control y confirmar que la estación esté limpia según el plan", en:"Sign the control sheet and confirm the station is clean per the plan"},
+    {es:"Publicar la foto en las redes sociales del local", en:"Post the photo on the venue's social media"}
+  ], 2);
+  setq("K9", 3, [
+    {es:"Guantes resistentes a químicos y calzado antideslizante", en:"Chemical-resistant gloves and non-slip footwear"},
+    {es:"No se necesita ningún tipo de EPP especial para poder hacer esto", en:"No special PPE of any kind is needed to do this"},
+    {es:"Solo una redecilla para sujetar el cabello", en:"Only a hairnet to hold the hair"},
+    {es:"Unas gafas de sol y guantes de tela", en:"Sunglasses and cloth gloves"}
+  ], 0);
+  setq("K9", 4, [
+    {es:"Nadie la verifica en ningún momento del proceso", en:"No one verifies it at any point in the process"},
+    {es:"Un huésped elegido al azar del salón", en:"A random guest from the dining room"},
+    {es:"Se autoreporta sin ninguna revisión posterior", en:"It's self-reported with no later review"},
+    {es:"El Supervisor de Cocina o el GM", en:"The Kitchen Supervisor or the GM"}
+  ], 3);
+  setq("K9", 5, [
+    {es:"Solamente agua caliente aplicada a presión", en:"Only pressurized hot water"},
+    {es:"Cloro y amoníaco mezclados juntos", en:"Bleach and ammonia mixed together"},
+    {es:"Desengrasante grado cocina, detergente neutro para acero y sanitizante", en:"Kitchen-grade degreaser, neutral detergent for steel, and sanitizer"},
+    {es:"Cualquier limpiador multiusos comprado en el supermercado del barrio", en:"Any all-purpose cleaner bought at the neighborhood supermarket"}
+  ], 2);
+  setq("K9", 6, [
+    {es:"Porque involucran desengrasantes y pisos mojados", en:"Because they involve degreasers and wet floors"},
+    {es:"Porque es solamente una cuestión de mantener la buena apariencia", en:"Because it's just about keeping up good appearance"},
+    {es:"Porque lo exige el proveedor de la comida", en:"Because the food supplier requires it"},
+    {es:"Porque se trabaja con cuchillos muy filosos", en:"Because you work with very sharp knives"}
+  ], 0);
+  setq("K9", 7, [
+    {es:"A media hora pico, ejecutadas por cualquier cliente del salón que esté disponible", en:"Mid-rush, carried out by any available dining-room customer"},
+    {es:"Solo una vez al mes, y únicamente por el GM en persona", en:"Only once a month, and only by the GM in person"},
+    {es:"Al cierre, por un cocinero o Prep designado con apoyo de busser o mantenimiento", en:"At closing, by a designated cook or Prep with busser or maintenance support"},
+    {es:"Nunca hay un horario definido para hacerlas", en:"There's never a defined schedule for them"}
+  ], 2);
+
+  /* ===== K10 ===== */
+  setq("K10", 0, [
+    {es:"Estación 6 — la nevera y el congelador", en:"Station 6 — the fridge and freezer"},
+    {es:"Estación 1 — freidoras, mesa de apoyo y nevera de ceviche", en:"Station 1 — fryers, support table, and ceviche fridge"},
+    {es:"Estación 3 — el horno y todas las estanterías de ingredientes secos", en:"Station 3 — the oven and all the dry-ingredient shelving"},
+    {es:"Ninguna estación se asigna al día lunes", en:"No station is assigned to Monday"}
+  ], 1);
+  setq("K10", 1, [
+    {es:"Nada en absoluto; el domingo no se realiza ningún tipo de limpieza profunda", en:"Nothing at all; no deep cleaning of any kind happens on Sunday"},
+    {es:"Solo se vuelven a limpiar las freidoras otra vez", en:"Only the fryers get cleaned again"},
+    {es:"Revisión general de las estaciones 1-6, más drenajes, paredes y zócalos", en:"General review of stations 1-6, plus drains, walls, and baseboards"},
+    {es:"Se repiten exactamente las tareas del día lunes", en:"Monday's tasks are repeated exactly"}
+  ], 2);
+  setq("K10", 2, [
+    {es:"Cortar o bloquear la energía y dejar enfriar el aceite", en:"Cut or lock out the power and let the oil cool"},
+    {es:"Moverlo de inmediato, sin revisar absolutamente nada de las conexiones", en:"Move it immediately, without checking any of the connections"},
+    {es:"Echarle agua fría encima mientras sigue caliente", en:"Pour cold water on it while it's still hot"},
+    {es:"Nada especial; se puede mover tal como está", en:"Nothing special; it can be moved as is"}
+  ], 0);
+  setq("K10", 3, [
+    {es:"Un orden completamente aleatorio, distinto cada vez que se acomoda", en:"A completely random order, different each time it's arranged"},
+    {es:"FIFO — lo más antiguo adelante y lo nuevo atrás", en:"FIFO — oldest in front and newest in back"},
+    {es:"Lo más nuevo siempre colocado adelante", en:"Newest always placed in front"},
+    {es:"Un orden estrictamente alfabético", en:"A strictly alphabetical order"}
+  ], 1);
+  setq("K10", 4, [
+    {es:"Nada; está perfectamente bien que quede mojado", en:"Nothing; it's perfectly fine for it to be wet"},
+    {es:"Solamente secar la puerta exterior del congelador principal de la cocina", en:"Only dry the outer door of the kitchen's main freezer"},
+    {es:"Asegurar que todo esté completamente seco para evitar formación de hielo", en:"Make sure everything is fully dry to avoid ice buildup"},
+    {es:"No importa; en los congeladores eso da igual", en:"It doesn't matter; for freezers that's irrelevant"}
+  ], 2);
+  setq("K10", 5, [
+    {es:"Estación 6: la nevera y el congelador", en:"Station 6: the fridge and freezer"},
+    {es:"Estación 1: freidoras y nevera de ceviche", en:"Station 1: fryers and ceviche fridge"},
+    {es:"Estación 3: horno y estanterías de ingredientes", en:"Station 3: oven and ingredient shelving"},
+    {es:"Estación 5: flat top y neveras laterales", en:"Station 5: flat top and side fridges"}
+  ], 0);
+  setq("K10", 6, [
+    {es:"Reportar cualquier daño de gas, eléctrico o de equipo antes de terminar", en:"Report any gas, electrical, or equipment damage before finishing"},
+    {es:"Esperar hasta la revisión general del domingo para poder reportarlo entonces", en:"Wait until Sunday's general review to report it then"},
+    {es:"Reportarlo solo si algún otro compañero lo llega a notar", en:"Report it only if another coworker happens to notice it"},
+    {es:"Arreglarlo por su propia cuenta y sin avisar a nadie", en:"Fix it on their own without telling anyone"}
+  ], 0);
+  setq("K10", 7, [
+    {es:"Repetir por completo toda la limpieza profunda de la semana partiendo desde cero", en:"Fully repeat the whole week's deep cleaning starting from scratch"},
+    {es:"Preparar el menú completo de la semana siguiente", en:"Prepare next week's full menu"},
+    {es:"Detectar lo que alguna estación de días anteriores dejó pasar", en:"Catch what an earlier day's station let slip"},
+    {es:"Descansar el domingo sin limpiar nada en absoluto", en:"Rest on Sunday without cleaning anything at all"}
+  ], 2);
+
+  /* ===== K11 ===== */
+  setq("K11", 0, [
+    {es:"Antes de empezar tu turno", en:"Before starting your shift"},
+    {es:"Solo si alguien te llega a preguntar por ello", en:"Only if someone happens to ask you about it"},
+    {es:"Después de haber terminado por completo el turno", en:"After the shift is completely over"},
+    {es:"Nunca; es un asunto totalmente privado", en:"Never; it's a completely private matter"}
+  ], 0);
+  setq("K11", 1, [
+    {es:"Nada extra; simplemente se envía como cualquier otro plato del turno", en:"Nothing extra; just send it like any other plate of the shift"},
+    {es:"Verificar el ticket contra el plato ya terminado", en:"Check the ticket against the finished plate"},
+    {es:"Solo adivinar según el nombre del platillo", en:"Just guess based on the dish's name"},
+    {es:"Pedirle al huésped que lo verifique él mismo", en:"Ask the guest to check it themselves"}
+  ], 1);
+  setq("K11", 2, [
+    {es:"Las quemaduras e incendios son un riesgo real en la cocina", en:"Burns and fires are a real risk in the kitchen"},
+    {es:"Solo por una cuestión de estilo y de buena apariencia del uniforme", en:"Only as a matter of uniform style and good appearance"},
+    {es:"En realidad no son un requisito obligatorio", en:"They aren't actually a requirement"},
+    {es:"Se requieren únicamente los días viernes", en:"They're required only on Fridays"}
+  ], 0);
+  setq("K11", 3, [
+    {es:"Porque son demasiado caros como para arriesgarse a dañarlos", en:"Because they're too expensive to risk damaging"},
+    {es:"No oyes una alarma de incendio ni la advertencia de peligro de un compañero", en:"You can't hear a fire alarm or a teammate's warning of danger"},
+    {es:"Porque en realidad no existe ningún riesgo extra en una cocina en específico", en:"Because there really is no extra risk in a kitchen specifically"},
+    {es:"Porque solo afectan el sabor de la comida, no la seguridad", en:"Because they only affect food taste, not safety"}
+  ], 1);
+  setq("K11", 4, [
+    {es:"En voz alta, frente a todo el equipo durante el servicio", en:"Loudly, in front of the whole team during service"},
+    {es:"Simplemente debe ignorarse por completo el conflicto", en:"The conflict should just be completely ignored"},
+    {es:"Publicándolo abiertamente en el chat grupal del equipo", en:"By posting about it openly in the team group chat"},
+    {es:"En privado, con el Jefe de Cocina o con un manager", en:"Privately, with the Jefe de Cocina or a manager"}
+  ], 3);
+  setq("K11", 5, [
+    {es:"Sí, en cualquier momento y sin ningún problema", en:"Yes, anytime and without any problem"},
+    {es:"Solo si tus manos se ven bien limpias y recién lavadas", en:"Only if your hands look nice, clean, and freshly washed"},
+    {es:"No; usa utensilios, scoops o guantes aprobados", en:"No; use approved utensils, scoops, or gloves"},
+    {es:"Solo con el hielo, nunca con la comida", en:"Only with ice, never with food"}
+  ], 2);
+  setq("K11", 6, [
+    {es:"Teléfonos, dinero, platos sucios, basura, tu cara o tu cabello", en:"Phones, money, dirty dishes, trash, your face, or your hair"},
+    {es:"Solo después de haber usado el baño del personal al menos una vez", en:"Only after using the staff restroom at least once"},
+    {es:"Únicamente al inicio de cada turno de trabajo", en:"Only at the start of each work shift"},
+    {es:"Solo cuando un manager específicamente lo pida", en:"Only when a manager specifically asks"}
+  ], 0);
+  setq("K11", 7, [
+    {es:"No, salvo emergencias o uso autorizado por un manager", en:"No, except emergencies or use authorized by a manager"},
+    {es:"Sí, siempre y cuando sea a un volumen bastante bajo y discreto", en:"Yes, as long as it's at a fairly low, discreet volume"},
+    {es:"Sí, pero solo durante la hora pico del servicio", en:"Yes, but only during the service rush"},
+    {es:"Sí, mientras estés en la estación de prep", en:"Yes, while you're at the prep station"}
+  ], 0);
+  setq("K11", 8, [
+    {es:"Confirmar la modificación antes de cocinar el plato", en:"Confirm the modification before cooking the dish"},
+    {es:"Usar herramientas y superficies bien limpias", en:"Use properly clean tools and surfaces"},
+    {es:"Adivinar cuál es el alérgeno", en:"Guess what the allergen is"},
+    {es:"Verificar el ticket contra el plato terminado", en:"Verify the ticket against the finished plate"}
+  ], 2);
+})();
+
+/* Pedagogia: opciones rebalanceadas — track MANAGER (generado, revisar) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function setq(id, qi, options, correct){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz || !m.quiz[qi]) return;
+    m.quiz[qi].options = options; m.quiz[qi].correct = correct;
+  }
+
+  /* ===== MG1 ===== */
+  setq("MG1",0,[
+    {es:"La cantidad de clientes que llegan",en:"The number of guests who arrive"},
+    {es:"El liderazgo que ejerce el manager",en:"The leadership the manager shows"},
+    {es:"El menú de bebidas y comida del local",en:"The food and drink menu of the venue"},
+    {es:"El estado del clima durante la tarde",en:"The weather during the afternoon"}
+  ],1);
+  setq("MG1",1,[
+    {es:"Únicamente en los turnos de fin de semana",en:"Only on weekend shifts"},
+    {es:"Solo cuando el dueño está presente",en:"Only when the owner is present"},
+    {es:"Solo si los clientes se quejan primero",en:"Only if customers complain first"},
+    {es:"De forma consistente en cada turno",en:"Consistently on every shift"}
+  ],3);
+  setq("MG1",2,[
+    {es:"Modelar el comportamiento que esperas",en:"Modeling the behavior you expect"},
+    {es:"Dar órdenes sin participar en el piso",en:"Giving orders without joining the floor"},
+    {es:"Supervisar desde la oficina a distancia",en:"Supervising remotely from the office"},
+    {es:"Delegar todo y observar sin involucrarte",en:"Delegating everything and just watching"}
+  ],0);
+  setq("MG1",3,[
+    {es:"En la oficina revisando papeleo",en:"In the office reviewing paperwork"},
+    {es:"Fuera del local haciendo mandados",en:"Off-site running errands"},
+    {es:"Visible y disponible en el piso",en:"Visible and available on the floor"},
+    {es:"En la cocina apoyando a los cocineros",en:"In the kitchen helping the cooks"}
+  ],2);
+  setq("MG1",4,[
+    {es:"Un resumen detallado solo de las propinas del día",en:"A detailed summary of only the day's tips"},
+    {es:"Un informe de incidencias, ventas y equipo",en:"A report on incidents, sales and team"},
+    {es:"Solo una lista de compras para la cocina",en:"Only a grocery list for the kitchen"},
+    {es:"Solo un reporte de asistencia del personal",en:"Only a staff attendance report"}
+  ],1);
+  setq("MG1",5,[
+    {es:"Solo con los proveedores externos",en:"Only with outside suppliers"},
+    {es:"Con el equipo de limpieza nocturno",en:"With the nighttime cleaning crew"},
+    {es:"Con el Manager General del restaurante",en:"With the General Manager of the restaurant"},
+    {es:"Únicamente con los clientes más frecuentes",en:"Only with the most frequent customers"}
+  ],2);
+  setq("MG1",6,[
+    {es:"Los horarios de autobús cercanos",en:"Nearby bus schedules"},
+    {es:"Los precios de la competencia local",en:"Local competitor prices"},
+    {es:"Las publicaciones internas del equipo",en:"The team's internal posts"},
+    {es:"Las reseñas en línea del restaurante",en:"The restaurant's online reviews"}
+  ],3);
+  setq("MG1",7,[
+    {es:"Retirarse a la oficina hasta que pase todo",en:"Retreat to the office until it all passes"},
+    {es:"Apoyar al equipo e intervenir para resolverlos",en:"Support the team and step in to resolve them"},
+    {es:"Esperar a que el Manager General regrese",en:"Wait for the General Manager to return"},
+    {es:"Cerrar el restaurante temporalmente por completo",en:"Temporarily close the restaurant entirely"}
+  ],1);
+
+  /* ===== MG2 ===== */
+  setq("MG2",0,[
+    {es:"Solo el módulo CORE general",en:"Only the general CORE module"},
+    {es:"Nada, puede empezar de inmediato",en:"Nothing, they can start right away"},
+    {es:"CORE más el track de su rol",en:"CORE plus their role track"},
+    {es:"Únicamente el track de su rol",en:"Only their role track"}
+  ],2);
+  setq("MG2",1,[
+    {es:"Mediante el progreso en Chela's Academy",en:"Through Chela's Academy progress"},
+    {es:"Preguntando de memoria una sola vez",en:"Asking from memory just once"},
+    {es:"Confiando en la palabra del empleado",en:"Trusting the employee's word"},
+    {es:"Revisando únicamente las hojas de reloj",en:"Checking only the clock sheets"}
+  ],0);
+  setq("MG2",2,[
+    {es:"Los proveedores externos del local",en:"The venue's outside suppliers"},
+    {es:"Los managers del restaurante",en:"The restaurant managers"},
+    {es:"Cada empleado por su propia cuenta",en:"Each employee on their own"},
+    {es:"El departamento de nómina externo",en:"The external payroll department"}
+  ],1);
+  setq("MG2",3,[
+    {es:"Al proveedor del sistema de reloj externo",en:"The external clock-system vendor"},
+    {es:"Al huésped afectado durante el turno",en:"The guest affected during the shift"},
+    {es:"Al bartender de mayor antigüedad",en:"The most senior bartender"},
+    {es:"Al Departamento de Recursos Humanos",en:"The Human Resources department"}
+  ],3);
+  setq("MG2",4,[
+    {es:"Menús especiales en cada turno",en:"Special menus every shift"},
+    {es:"Postres extra para los huéspedes",en:"Extra desserts for guests"},
+    {es:"Cobertura adecuada de personal",en:"Adequate staffing coverage"},
+    {es:"Horas reducidas de forma constante",en:"Consistently reduced hours"}
+  ],2);
+  setq("MG2",5,[
+    {es:"Cada empleado por su cuenta",en:"Each employee on their own"},
+    {es:"El manager del restaurante",en:"The restaurant manager"},
+    {es:"Recursos Humanos únicamente",en:"HR exclusively"},
+    {es:"El proveedor de nómina externo",en:"The external payroll vendor"}
+  ],1);
+  setq("MG2",6,[
+    {es:"Solo las entradas de los turnos nocturnos largos",en:"Only clock-ins for the long night shifts"},
+    {es:"Únicamente las horas extra del personal fijo",en:"Only the full-time staff's overtime hours"},
+    {es:"Que registren entradas, salidas y descansos",en:"That in, out and breaks are all logged"},
+    {es:"Nada, el sistema lo verifica todo solo",en:"Nothing, the system verifies it all alone"}
+  ],2);
+  setq("MG2",7,[
+    {es:"Únicamente cuando llega una queja formal grave",en:"Only when a serious formal complaint arrives"},
+    {es:"De forma continua, no solo en el onboarding",en:"Continuously, not only during onboarding"},
+    {es:"Solo durante la semana de onboarding inicial",en:"Only during the initial onboarding week"},
+    {es:"Una vez al año en una revisión formal",en:"Once a year at a formal review"}
+  ],1);
+
+  /* ===== MG3 ===== */
+  setq("MG3",0,[
+    {es:"Conciliar el POS y guardar el efectivo del día",en:"Reconcile the POS and secure the day's cash"},
+    {es:"Enviar el reporte de cierre a la dueña",en:"Send the closing report to the owner"},
+    {es:"Recorrer el piso y revisar personal y stock",en:"Walk the floor and check staff and stock"},
+    {es:"Apagar todas las luces y cerrar con llave",en:"Turn off all lights and lock up"}
+  ],2);
+  setq("MG3",1,[
+    {es:"Solo la puerta principal",en:"Only the front door"},
+    {es:"Únicamente el patio exterior",en:"Only the outdoor patio"},
+    {es:"Solo las propinas del turno",en:"Only the shift's tips"},
+    {es:"El efectivo y el alcohol",en:"The cash and the alcohol"}
+  ],3);
+  setq("MG3",2,[
+    {es:"Solo las propinas del turno",en:"Only the shift's tips"},
+    {es:"El sistema POS del local",en:"The venue's POS system"},
+    {es:"Solo el horario semanal",en:"Only the weekly schedule"},
+    {es:"El menú de bebidas del día",en:"The day's drink menu"}
+  ],1);
+  setq("MG3",3,[
+    {es:"Solo el nombre del repartidor que lo entrega",en:"Only the name of the driver who delivers it"},
+    {es:"Únicamente el color de las cajas entregadas",en:"Only the color of the delivered boxes"},
+    {es:"Solo la hora en que llegó el camión",en:"Only the time the truck arrived"},
+    {es:"Que se reciba y registre según la factura",en:"That it's received and logged per the invoice"}
+  ],3);
+  setq("MG3",4,[
+    {es:"Pedir siempre mucho más de lo necesario por si acaso",en:"Always order much more than needed just in case"},
+    {es:"Vigilar porciones, desperdicio y rotación FIFO",en:"Monitor portions, waste and FIFO rotation"},
+    {es:"Ignorar el desperdicio para ahorrar tiempo",en:"Ignore waste to save time"},
+    {es:"Servir porciones más grandes a cada cliente",en:"Serve larger portions to each customer"}
+  ],1);
+  setq("MG3",5,[
+    {es:"Recorrer el piso y revisar personal y stock",en:"Walk the floor and check staff and stock"},
+    {es:"Conciliar el POS y guardar el efectivo del día",en:"Reconcile the POS and secure the day's cash"},
+    {es:"Enviar el informe diario a Recursos Humanos",en:"Send the daily report to Human Resources"},
+    {es:"Apagar todas las luces del local al terminar",en:"Turn off all the venue's lights when done"}
+  ],0);
+  setq("MG3",6,[
+    {es:"Contra el menú del día del local",en:"Against the day's menu"},
+    {es:"Contra las reseñas en línea recientes",en:"Against recent online reviews"},
+    {es:"Contra las facturas del proveedor",en:"Against the supplier's invoices"},
+    {es:"Contra el horario semanal del personal",en:"Against the staff's weekly schedule"}
+  ],2);
+  setq("MG3",7,[
+    {es:"LIFO: Último en Entrar y Primero en Salir",en:"LIFO: Last In, First Out"},
+    {es:"Rotación al azar según lo que se vea",en:"Random rotation by what you see"},
+    {es:"FIFO: Primero en Entrar, Primero en Salir",en:"FIFO: First In, First Out"},
+    {es:"No rotar el producto en absoluto nunca",en:"Never rotating the product at all"}
+  ],2);
+
+  /* ===== MG4 ===== */
+  setq("MG4",0,[
+    {es:"Pasándolas a otro huésped",en:"Passing them to another guest"},
+    {es:"Discutiendo con el huésped",en:"Arguing with the guest"},
+    {es:"Ignorándolas por completo",en:"Ignoring them entirely"},
+    {es:"Personalmente y con calma",en:"Personally and calmly"}
+  ],3);
+  setq("MG4",1,[
+    {es:"No, deben esperar siempre al dueño presente",en:"No, they must always wait for the owner"},
+    {es:"No, solo el manager puede actuar",en:"No, only the manager may act"},
+    {es:"Sí, para resolver problemas pequeños",en:"Yes, to resolve small problems"},
+    {es:"No, nunca deben tomar decisiones solos",en:"No, they should never decide alone"}
+  ],2);
+  setq("MG4",2,[
+    {es:"Ignorarlos hasta que desaparezcan solos",en:"Ignore them until they go away on their own"},
+    {es:"Documentarlos para dar seguimiento",en:"Document them for follow-up"},
+    {es:"Ocultarlos de la dueña del local",en:"Hide them from the venue's owner"},
+    {es:"Olvidarlos al terminar el turno",en:"Forget them when the shift ends"}
+  ],1);
+  setq("MG4",3,[
+    {es:"Solo la temperatura del aire acondicionado central",en:"Only the central air-conditioning temperature"},
+    {es:"Únicamente el estacionamiento del local",en:"Only the venue's parking lot"},
+    {es:"Música, limpieza y presentación del espacio",en:"Music, cleanliness and presentation of the space"},
+    {es:"Solo los precios del menú de comida",en:"Only the food menu prices"}
+  ],2);
+  setq("MG4",4,[
+    {es:"Ignorar todas las reseñas del personal por completo",en:"Ignore all staff reviews completely"},
+    {es:"Responder solo a las que son negativas",en:"Respond only to the negative ones"},
+    {es:"Eliminarlas de la plataforma en línea",en:"Delete them from the online platform"},
+    {es:"Monitorearlas y dar seguimiento respetuoso",en:"Monitor them and follow up respectfully"}
+  ],3);
+  setq("MG4",5,[
+    {es:"Para procesar anulaciones en Toast",en:"To process voids in Toast"},
+    {es:"Para resolver problemas pequeños",en:"To resolve small problems"},
+    {es:"Para crear los horarios semanales",en:"To create the weekly schedules"},
+    {es:"Para hacer pedidos a proveedores",en:"To place supplier orders"}
+  ],1);
+  setq("MG4",6,[
+    {es:"Las tarifas de estacionamiento de la zona cercana",en:"Parking rates in the nearby area"},
+    {es:"El costo de la mano de obra semanal",en:"The weekly labor cost"},
+    {es:"El ambiente: música, limpieza y presentación",en:"The ambiance: music, cleanliness and presentation"},
+    {es:"El horario de entrega de los proveedores",en:"The suppliers' delivery schedule"}
+  ],2);
+  setq("MG4",7,[
+    {es:"Solo las menciones claramente negativas",en:"Only clearly negative mentions"},
+    {es:"Tanto las positivas como las negativas",en:"Both the positive and the negative"},
+    {es:"Únicamente las menciones positivas",en:"Only the positive mentions"},
+    {es:"Ninguna, no se les da seguimiento",en:"None, they aren't followed up"}
+  ],1);
+
+  /* ===== MG5 ===== */
+  setq("MG5",0,[
+    {es:"Reembolsos completos en efectivo directo al cliente",en:"Full cash refunds directly to the customer"},
+    {es:"Solo imprimir recibos de los clientes",en:"Only printing customer receipts"},
+    {es:"Anulaciones, cortesías y anulaciones especiales",en:"Voids, comps and special overrides"},
+    {es:"Solo marcar su entrada en el reloj",en:"Only clocking themselves in"}
+  ],2);
+  setq("MG5",1,[
+    {es:"Sí, siempre sin excepción",en:"Yes, always without exception"},
+    {es:"No, solo si el turno es largo",en:"No, only if the shift is long"},
+    {es:"Solo cuando el monto es alto",en:"Only when the amount is high"},
+    {es:"Nunca es realmente necesario",en:"It's never really necessary"}
+  ],0);
+  setq("MG5",2,[
+    {es:"Sí, en cualquier momento del turno",en:"Yes, anytime during the shift"},
+    {es:"No, solo para necesidades legítimas",en:"No, only for legitimate needs"},
+    {es:"Sí, siempre que haya mucho movimiento",en:"Yes, whenever it's very busy"},
+    {es:"Solo los fines de semana ocupados",en:"Only on busy weekends"}
+  ],1);
+  setq("MG5",3,[
+    {es:"Es una función automática al azar y sin propósito",en:"It's a random automatic feature with no purpose"},
+    {es:"Sirve solo para fines fiscales del local",en:"It only serves the venue's tax purposes"},
+    {es:"En realidad no registra nada del cambio",en:"It doesn't really log anything about the change"},
+    {es:"Protege al restaurante y al manager como prueba",en:"It protects the restaurant and manager as proof"}
+  ],3);
+  setq("MG5",4,[
+    {es:"Para agilizar el turno cuando hay mucho movimiento",en:"To speed up the shift when it's very busy"},
+    {es:"Para recuperación de servicio y correcciones",en:"For service recovery and legitimate corrections"},
+    {es:"Para dar bebidas gratis a los amigos",en:"To give free drinks to friends"},
+    {es:"Para evitar registrar algunas ventas",en:"To avoid recording some sales"}
+  ],1);
+  setq("MG5",5,[
+    {es:"Un uso plenamente legítimo de la autoridad del manager",en:"A fully legitimate use of the manager's authority"},
+    {es:"Una práctica recomendada de hospitalidad",en:"A recommended hospitality practice"},
+    {es:"Un mal uso que se nota y erosiona la confianza",en:"A misuse that shows and erodes trust"},
+    {es:"Una forma válida de agilizar el turno",en:"A valid way to speed up the shift"}
+  ],2);
+  setq("MG5",6,[
+    {es:"Solo al proveedor del sistema Toast externo",en:"Only the external Toast system vendor"},
+    {es:"Tanto al restaurante como al manager",en:"Both the restaurant and the manager"},
+    {es:"Únicamente al cliente del pedido",en:"Only the customer on the order"},
+    {es:"A nadie, es solo un trámite inútil",en:"No one, it's just useless paperwork"}
+  ],1);
+
+  /* ===== MG6 ===== */
+  setq("MG6",0,[
+    {es:"El bartender del turno",en:"The bartender on shift"},
+    {es:"Cualquier server del piso",en:"Any server on the floor"},
+    {es:"El host de la entrada",en:"The host at the entrance"},
+    {es:"El Manager en Turno (MOD)",en:"The Manager on Duty (MOD)"}
+  ],3);
+  setq("MG6",1,[
+    {es:"Dentro de los 90 días de contratación",en:"Within 90 days of hire"},
+    {es:"1 año completo tras la contratación",en:"A full year after hire"},
+    {es:"15 días desde la contratación",en:"15 days of hire"},
+    {es:"6 meses después de la contratación",en:"6 months after hire"}
+  ],2);
+  setq("MG6",2,[
+    {es:"Nunca, no se repite el curso completo",en:"Never, the course isn't repeated"},
+    {es:"Cada 5 años como mínimo",en:"At least every 5 years"},
+    {es:"Una sola vez, al ser contratado",en:"Only once, at hiring"},
+    {es:"Cada 4 meses aproximadamente",en:"About every 4 months"}
+  ],3);
+  setq("MG6",3,[
+    {es:"Lo que resulte más fácil para el local",en:"Whatever is easiest for the venue"},
+    {es:"La preferencia horaria del huésped",en:"The guest's preferred hours"},
+    {es:"La regla más restrictiva aplicable",en:"The most restrictive applicable rule"},
+    {es:"El criterio del bartender de turno",en:"The shift bartender's judgment"}
+  ],2);
+  setq("MG6",4,[
+    {es:"Los proveedores de bebidas",en:"The beverage suppliers"},
+    {es:"Los managers del local",en:"The venue's managers"},
+    {es:"Cada bartender por su cuenta",en:"Each bartender on their own"},
+    {es:"El sistema de forma automática",en:"The system automatically"}
+  ],1);
+  setq("MG6",5,[
+    {es:"Cualquier compañero de trabajo que esté cerca",en:"Any coworker who happens to be nearby"},
+    {es:"El manager, con firmeza pero con respeto",en:"The manager, firmly but respectfully"},
+    {es:"El propio huésped decide por sí solo",en:"The guest decides on their own"},
+    {es:"Nadie necesita realmente intervenir",en:"No one really needs to step in"}
+  ],1);
+  setq("MG6",6,[
+    {es:"Nadie, el reporte es opcional",en:"No one, the report is optional"},
+    {es:"El manager del turno",en:"The shift manager"},
+    {es:"El huésped afectado del caso",en:"The affected guest in the case"},
+    {es:"Un empleado cualquiera al azar",en:"Any random employee"}
+  ],1);
+  setq("MG6",7,[
+    {es:"Prohibirle la entrada desde el primer problema leve",en:"Ban them on the very first minor issue"},
+    {es:"Nada, no se puede hacer absolutamente nada",en:"Nothing at all can be done"},
+    {es:"Ignorarlo y seguir sirviéndole con normalidad",en:"Ignore it and keep serving them normally"},
+    {es:"Limitar o rechazar el servicio futuro",en:"Limit or refuse future service"}
+  ],3);
+  setq("MG6",8,[
+    {es:"Los managers del restaurante",en:"The restaurant managers"},
+    {es:"El bartender de mayor antigüedad",en:"The most senior bartender"},
+    {es:"El host de la puerta principal",en:"The front-door host"},
+    {es:"El cliente que presenta la identificación",en:"The customer presenting the ID"}
+  ],0);
+  setq("MG6",9,[
+    {es:"Pedir agua y comida tranquilamente durante la cena",en:"Calmly asking for water and food during dinner"},
+    {es:"Pagar la cuenta completa con tarjeta",en:"Paying the full bill by card"},
+    {es:"Habla arrastrada, mal equilibrio y olor a alcohol",en:"Slurred speech, poor balance and alcohol smell"},
+    {es:"Llegar temprano y esperar en la barra",en:"Arriving early and waiting at the bar"}
+  ],2);
+  setq("MG6",10,[
+    {es:"Otra bebida más ligera para que se calme un poco",en:"Another lighter drink to help them calm down"},
+    {es:"Las llaves de su auto de inmediato",en:"Their car keys immediately"},
+    {es:"Un descuento para su próxima visita",en:"A discount on their next visit"},
+    {es:"Ayudarle a conseguir un viaje (Uber/Lyft/taxi)",en:"Help arranging a ride (Uber/Lyft/taxi)"}
+  ],3);
+
+  /* ===== MG7 ===== */
+  setq("MG7",0,[
+    {es:"Solo el color de las cajas ya recibidas",en:"Only the color of the received boxes"},
+    {es:"Que la factura coincida con el pedido",en:"That the invoice matches the order"},
+    {es:"Únicamente el nombre del conductor",en:"Only the driver's name"},
+    {es:"Solo la marca del camión de reparto",en:"Only the delivery truck's brand"}
+  ],1);
+  setq("MG7",1,[
+    {es:"De forma proactiva y anticipada",en:"Proactively and in advance"},
+    {es:"Solo cuando se acaba todo",en:"Only when everything runs out"},
+    {es:"Al azar sin ninguna guía",en:"Randomly with no guide"},
+    {es:"Nunca, hasta que un cliente pida",en:"Never, until a customer asks"}
+  ],0);
+  setq("MG7",2,[
+    {es:"Solo las propinas del turno",en:"Only the shift's tips"},
+    {es:"Únicamente el clima del día",en:"Only the day's weather"},
+    {es:"Los niveles de stock",en:"Stock levels"},
+    {es:"El color de los uniformes",en:"The color of the uniforms"}
+  ],2);
+  setq("MG7",3,[
+    {es:"Los proveedores siempre entregan todo perfectamente",en:"Suppliers always deliver everything perfectly"},
+    {es:"El conductor asume toda la responsabilidad después",en:"The driver takes on all responsibility afterward"},
+    {es:"Se paga de más por producto faltante o dañado",en:"You overpay for short or damaged product"},
+    {es:"Nunca existe ningún riesgo real al hacerlo",en:"There's never any real risk in doing it"}
+  ],2);
+  setq("MG7",4,[
+    {es:"Solo cuando un artículo ya se agotó por completo",en:"Only when an item has already fully run out"},
+    {es:"Varias veces por semana, no solo al agotarse",en:"Several times a week, not just when out"},
+    {es:"Una vez al mes en el conteo formal",en:"Once a month at the formal count"},
+    {es:"Solo al final del año fiscal completo",en:"Only at the end of the full fiscal year"}
+  ],1);
+  setq("MG7",5,[
+    {es:"Solo cuando el proveedor llama para ofrecer más",en:"Only when the supplier calls to offer more"},
+    {es:"El mismo día en que el estante queda vacío",en:"The same day the shelf goes empty"},
+    {es:"Un día después de que se agota el producto",en:"One day after the product runs out"},
+    {es:"3 días o más antes de quedarse sin producto",en:"3 or more days before running out of product"}
+  ],3);
+  setq("MG7",6,[
+    {es:"Firmar de recibido de inmediato sin revisar nada",en:"Sign for it immediately without checking anything"},
+    {es:"Pagar y guardar todo sin contar nada primero",en:"Pay and store it all without counting first"},
+    {es:"Contar cantidades, revisar producto y ver daños",en:"Count quantities, check product and note damage"},
+    {es:"Dejar que el conductor lo descargue todo solo",en:"Let the driver unload it all alone"}
+  ],2);
+
+  /* ===== MG8 ===== */
+  setq("MG8",0,[
+    {es:"Solo preguntándole en persona a cada empleado",en:"Only by asking each employee in person"},
+    {es:"La tabla de administración 'Progreso'",en:"The 'Progreso' admin table"},
+    {es:"Únicamente dentro del sistema Toast",en:"Only inside the Toast system"},
+    {es:"En el horario semanal del personal",en:"In the staff's weekly schedule"}
+  ],1);
+  setq("MG8",1,[
+    {es:"Sí, como un archivo CSV",en:"Yes, as a CSV file"},
+    {es:"Solo impreso en papel físico",en:"Only printed on physical paper"},
+    {es:"No, de ninguna manera posible",en:"No, in no possible way"},
+    {es:"Solo por correo interno del local",en:"Only by the venue's internal email"}
+  ],0);
+  setq("MG8",2,[
+    {es:"Un fax al proveedor externo",en:"A fax to the outside vendor"},
+    {es:"Un Google Sheet conectado",en:"A connected Google Sheet"},
+    {es:"Solo correo electrónico interno",en:"Only internal email"},
+    {es:"Ninguna integración disponible",en:"No integration available"}
+  ],1);
+  setq("MG8",3,[
+    {es:"Porque no es realmente necesario revisarlo nunca",en:"Because it's really never necessary to review"},
+    {es:"Porque solo Recursos Humanos debe verlo",en:"Because only HR should look at it"},
+    {es:"Porque los datos de progreso no sirven",en:"Because progress data is useless"},
+    {es:"Para detectar temprano a un trainee en apuros",en:"To catch a struggling trainee early"}
+  ],3);
+  setq("MG8",4,[
+    {es:"Completar todos los módulos en el orden correcto",en:"Completing all modules in the correct order"},
+    {es:"Atorarse dos semanas o apresurarse sin aprobar",en:"Getting stuck two weeks or rushing without passing"},
+    {es:"Aprobar cada módulo en el primer intento",en:"Passing each module on the first try"},
+    {es:"Iniciar sesión desde su teléfono personal",en:"Logging in from their personal phone"}
+  ],1);
+  setq("MG8",5,[
+    {es:"Un video de repaso grabado",en:"A recorded review video"},
+    {es:"Una foto del piso del local",en:"A photo of the venue floor"},
+    {es:"Un mensaje de voz al manager",en:"A voice message to the manager"},
+    {es:"Un archivo CSV descargable",en:"A downloadable CSV file"}
+  ],3);
+  setq("MG8",6,[
+    {es:"La factura del último proveedor",en:"The latest supplier's invoice"},
+    {es:"El menú de cócteles de la barra",en:"The bar's cocktail menu"},
+    {es:"El archivo README del proyecto",en:"The project README file"},
+    {es:"El horario semanal del personal",en:"The staff's weekly schedule"}
+  ],2);
+
+  /* ===== MG9 ===== */
+  setq("MG9",0,[
+    {es:"Los ingresos totales de todo el restaurante juntos",en:"The total revenue of the whole restaurant"},
+    {es:"Solo las horas de mano de obra del turno",en:"Only the shift's labor hours"},
+    {es:"Costo de ingredientes contra la venta de comida",en:"Ingredient cost against food sales"},
+    {es:"El nivel de satisfacción de los huéspedes",en:"The guests' satisfaction level"}
+  ],2);
+  setq("MG9",1,[
+    {es:"Alrededor del 5 al 10%",en:"Around 5 to 10%"},
+    {es:"Alrededor del 60 al 70%",en:"Around 60 to 70%"},
+    {es:"Alrededor del 25 al 30%",en:"Around 25 to 30%"},
+    {es:"No existe una referencia clara",en:"There's no clear benchmark"}
+  ],2);
+  setq("MG9",2,[
+    {es:"Inventario Rápido Para Órdenes: acelera el servicio",en:"Fast Inventory For Orders: speeds up service"},
+    {es:"Un atajo del sistema POS para cobrar más rápido",en:"A POS system shortcut to charge faster"},
+    {es:"Primero en Entrar, Primero en Salir: reduce merma",en:"First In, First Out: reduces waste"},
+    {es:"No es un concepto real de la industria",en:"It's not a real industry concept"}
+  ],2);
+  setq("MG9",3,[
+    {es:"Solo el gasto mensual de la renta del local",en:"Only the venue's monthly rent expense"},
+    {es:"Costo de comida más costo de mano de obra",en:"Food cost plus labor cost"},
+    {es:"Solo el gasto total de marketing mensual",en:"Only the total monthly marketing spend"},
+    {es:"Los ingresos totales del restaurante",en:"The restaurant's total revenue"}
+  ],1);
+  setq("MG9",4,[
+    {es:"Desperdicio, robo o mala gestión",en:"Waste, theft or mismanagement"},
+    {es:"Solo la satisfacción del huésped",en:"Only guest satisfaction"},
+    {es:"El desempeño del marketing mensual",en:"Monthly marketing performance"},
+    {es:"El nivel de propinas del personal",en:"The staff's tip level"}
+  ],0);
+  setq("MG9",5,[
+    {es:"Los ingresos totales junto con los gastos",en:"Total revenue together with expenses"},
+    {es:"Las ventas junto con las propinas del turno",en:"Sales together with the shift's tips"},
+    {es:"El costo de comida y el de mano de obra",en:"Food cost and labor cost"},
+    {es:"El desperdicio junto con el robo interno",en:"Waste together with internal theft"}
+  ],2);
+  setq("MG9",6,[
+    {es:"Desperdicio, porciones, robo y precios",en:"Waste, portions, theft and prices"},
+    {es:"El color de los uniformes de todo el personal",en:"The color of all the staff's uniforms"},
+    {es:"El horario de apertura del restaurante los lunes",en:"The restaurant's Monday opening schedule"},
+    {es:"Solo la música que suena de fondo en el local",en:"Only the background music playing in the venue"}
+  ],0);
+  setq("MG9",7,[
+    {es:"Solo las propinas del personal",en:"Only the staff's tips"},
+    {es:"Las reseñas en línea del mes",en:"The month's online reviews"},
+    {es:"Ingresos, gastos y rentabilidad",en:"Revenue, expenses and profitability"},
+    {es:"El horario de los turnos semanales",en:"The weekly shift schedule"}
+  ],2);
+
+  /* ===== MG10 ===== */
+  setq("MG10",0,[
+    {es:"Del 90% o más de satisfacción",en:"90% or more satisfaction"},
+    {es:"Cerca del 50% de satisfacción",en:"Around 50% satisfaction"},
+    {es:"Apenas un 10% de satisfacción",en:"Barely 10% satisfaction"},
+    {es:"No hay ninguna meta establecida",en:"There's no set goal"}
+  ],0);
+  setq("MG10",1,[
+    {es:"De unas 2 estrellas",en:"About 2 stars"},
+    {es:"De 4.5 estrellas o más",en:"4.5 stars or more"},
+    {es:"De unas 3 estrellas",en:"About 3 stars"},
+    {es:"Cualquier calificación sirve",en:"Any rating will do"}
+  ],1);
+  setq("MG10",2,[
+    {es:"Esperar a ver si el problema se resuelve por sí solo",en:"Wait and see if the problem resolves on its own"},
+    {es:"Culpar a los servers frente a los huéspedes molestos",en:"Blame the servers in front of upset guests"},
+    {es:"Cerrar el restaurante hasta que baje el flujo",en:"Close the restaurant until the rush dies down"},
+    {es:"Avisar de inmediato a cocina y a FOH del problema",en:"Immediately alert kitchen and FOH to the problem"}
+  ],3);
+  setq("MG10",3,[
+    {es:"Ignorarlo por completo hasta el día siguiente",en:"Ignore it entirely until the next day"},
+    {es:"Tirar todo el producto sin siquiera revisarlo",en:"Throw out all product without even checking it"},
+    {es:"Mover el producto a almacenamiento seguro",en:"Move the product to safe storage"},
+    {es:"Decir a los huéspedes que no ocurre nada",en:"Tell guests that nothing is happening"}
+  ],2);
+  setq("MG10",4,[
+    {es:"Discutiendo en público con la persona que la escribió",en:"Arguing publicly with the person who wrote it"},
+    {es:"Con profesionalismo, pedir disculpas y resolver aparte",en:"Professionally, apologize and resolve it offline"},
+    {es:"Eliminándola sin dar ninguna respuesta al huésped",en:"Deleting it without giving the guest any response"},
+    {es:"Ignorándola por completo sin llegar a leerla",en:"Ignoring it completely without even reading it"}
+  ],1);
+  setq("MG10",5,[
+    {es:"Invitar amablemente al huésped a regresar pronto",en:"Kindly inviting the guest to come back soon"},
+    {es:"Ponerse a la defensiva con el huésped",en:"Getting defensive with the guest"},
+    {es:"Disculparse con el huésped molesto",en:"Apologizing to the upset guest"},
+    {es:"Ofrecer resolverlo fuera de línea",en:"Offering to resolve it offline"}
+  ],1);
+  setq("MG10",6,[
+    {es:"Cerrar el bar por completo el resto de la noche entera",en:"Close the bar completely for the rest of the night"},
+    {es:"Dejar de atender por completo a los huéspedes del bar",en:"Completely stop serving the bar's guests"},
+    {es:"Conseguir cobertura y simplificar el menú un rato",en:"Get coverage and briefly simplify the menu"},
+    {es:"Ignorar la ausencia hasta el día siguiente",en:"Ignore the absence until the next day"}
+  ],2);
+  setq("MG10",7,[
+    {es:"Culpar abiertamente al host frente al huésped afectado",en:"Openly blame the host in front of the affected guest"},
+    {es:"Mantener la calma, disculparse y buscar asiento",en:"Stay calm, apologize and find a seat"},
+    {es:"Pedirle al huésped que regrese en otro día",en:"Ask the guest to come back another day"},
+    {es:"Ignorar al huésped hasta que se abra una mesa",en:"Ignore the guest until a table opens"}
+  ],1);
+
+  /* ===== MG11 ===== */
+  setq("MG11",0,[
+    {es:"Dar órdenes al equipo desde la distancia sin actuar",en:"Give orders to the team from a distance without acting"},
+    {es:"Evitar el piso durante los turnos más ocupados",en:"Avoid the floor during the busiest shifts"},
+    {es:"Demostrar el profesionalismo y la ética esperados",en:"Demonstrate the expected professionalism and ethic"},
+    {es:"Delegar todo y no participar en nada",en:"Delegate everything and take part in nothing"}
+  ],2);
+  setq("MG11",1,[
+    {es:"Tener una conversación en privado",en:"Have a private conversation"},
+    {es:"Despedirlo de inmediato sin avisar",en:"Fire them immediately without notice"},
+    {es:"Criticarlo en público frente al equipo",en:"Criticize them publicly in front of the team"},
+    {es:"Ignorar el retraso por completo",en:"Ignore the lateness entirely"}
+  ],0);
+  setq("MG11",2,[
+    {es:"Cambiar constantemente los horarios del personal sin aviso",en:"Constantly changing the staff schedules without notice"},
+    {es:"Ignorar por completo la retroalimentación del equipo",en:"Completely ignoring the team's feedback"},
+    {es:"Nada realmente puede reducir la rotación de personal",en:"Nothing can really reduce staff turnover"},
+    {es:"Mejor entrenamiento, buena cultura, pago justo y elogio",en:"Better training, good culture, fair pay and praise"}
+  ],3);
+  setq("MG11",3,[
+    {es:"Separar el conflicto y proteger al huésped",en:"Separate the conflict and protect the guest"},
+    {es:"Dejar que terminen de discutir en el piso",en:"Let them finish arguing on the floor"},
+    {es:"Tomar partido de inmediato sin escuchar a nadie",en:"Take a side immediately without listening to anyone"},
+    {es:"Ignorarlo y seguir con el servicio normal",en:"Ignore it and continue normal service"}
+  ],0);
+  setq("MG11",4,[
+    {es:"Dar una advertencia verbal y documentarla",en:"Give a verbal warning and document it"},
+    {es:"Despedirlo de inmediato sin ninguna charla",en:"Fire them immediately without any talk"},
+    {es:"Ignorar el retraso del empleado por completo",en:"Ignore the employee's lateness entirely"},
+    {es:"Anunciar el retraso frente a todo el equipo",en:"Announce the lateness in front of the whole team"}
+  ],0);
+  setq("MG11",5,[
+    {es:"En el piso frente a los huéspedes",en:"On the floor in front of guests"},
+    {es:"En las redes sociales del local",en:"On the venue's social media"},
+    {es:"En privado, no en el piso",en:"In private, not on the floor"},
+    {es:"En la próxima reunión mensual",en:"At the next monthly meeting"}
+  ],2);
+  setq("MG11",6,[
+    {es:"Reducir el pago del personal por debajo del mercado actual",en:"Cutting the staff's pay below the current market"},
+    {es:"Eliminar todas las oportunidades de crecimiento",en:"Eliminating all growth opportunities"},
+    {es:"Mejor entrenamiento, buena cultura y horarios estables",en:"Better training, good culture and stable schedules"},
+    {es:"Cambiar los horarios del equipo sin ningún aviso",en:"Changing the team's schedules without any notice"}
+  ],2);
+
+})();

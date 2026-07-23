@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chela's Academy</title>
 <style>
   :root{
@@ -82,6 +82,9 @@
   .opt.selected{border-color:var(--accent);background:#fbeed2}
   .opt.correct{border-color:var(--good);background:#e2f5e9}
   .opt.wrong{border-color:var(--bad);background:#fbe4e0}
+  /* Señal no-solo-color (accesible para daltonismo): ✓ en la correcta, ✗ en la incorrecta */
+  .opt.correct::after{content:"✓";float:right;font-weight:900;color:var(--good);margin-left:8px}
+  .opt.wrong::after{content:"✗";float:right;font-weight:900;color:var(--bad);margin-left:8px}
   /* ─── FLASHCARD 3D FLIP ─── */
   .flash-scene{perspective:1200px;margin-bottom:10px;border-radius:14px}
   .flash-inner{

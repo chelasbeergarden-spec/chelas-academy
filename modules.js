@@ -2100,3 +2100,2586 @@ if (typeof module !== 'undefined') { module.exports = Object.assign({}, module.e
 const RECERT_MONTHS = { "S8": 4, "BT8": 4, "MG6": 4, "C2": 12, "S4": 12, "BT11": 12, "K11": 12, "CESC": 12 };
 const MODULE_UPDATED = {};
 if (typeof module !== "undefined") { module.exports = Object.assign({}, module.exports, { RECERT_MONTHS, MODULE_UPDATED }); }
+
+
+/* ===== #2 Explicaciones "por qué" — track CORE (generado, revisar por gerencia) ===== */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "C0": {
+      "0": { es: "Todo en Chela's gira en torno a la experiencia del huésped; cada puesto existe para protegerla, no solo para hacer tareas sueltas.", en: "Everything at Chela's centers on the guest experience; every role exists to protect it, not just to do isolated tasks." },
+      "1": { es: "Los estándares no son trabajo de una sola persona ni solo de la gerencia — se sostienen solo si cada miembro del equipo los cumple.", en: "Standards aren't one person's job or only management's — they hold up only if every team member upholds them." },
+      "2": { es: "Las políticas generales son la base para todos; los procedimientos de tu puesto se suman encima, nunca las reemplazan.", en: "The general policies are the baseline for everyone; your position's procedures add on top, they never replace them." },
+      "3": { es: "Adivinar o ignorar una instrucción poco clara crea errores; preguntarle al manager lo resuelve en segundos y evita problemas.", en: "Guessing or ignoring an unclear instruction creates mistakes; asking the manager settles it in seconds and prevents problems." }
+    },
+    "C1": {
+      "0": { es: "La mayoría de los módulos se desbloquean con 80% (o el puntaje de aprobación indicado), no con cualquier calificación.", en: "Most modules unlock at 80% (or the module's stated pass score), not with just any grade." },
+      "1": { es: "Alérgenos y Servicio Responsable de Alcohol son de seguridad crítica: un error puede dañar a alguien, por eso exigen 100%.", en: "Allergens and Responsible Alcohol Service are safety-critical: one mistake can harm someone, so they require 100%." },
+      "2": { es: "Los módulos CORE son la base común para todos, así que se completan antes del track específico de tu rol.", en: "CORE modules are the shared foundation for everyone, so they're completed before your role-specific track." },
+      "3": { es: "El servicio es ejecutar bien la tarea; la hospitalidad es lograr que el huésped se sienta genuinamente cuidado — Chela's busca las dos.", en: "Service is doing the task well; hospitality is making the guest feel genuinely cared for — Chela's wants both." },
+      "4": { es: "Reprobar no tiene castigo: puedes repetir el examen las veces que necesites hasta dominarlo.", en: "Failing carries no penalty: you can retake the quiz as many times as you need until you master it." }
+    },
+    "C3": {
+      "0": { es: "Lavarse solo al inicio no basta; las manos se contaminan durante el turno, por eso se lavan con frecuencia entre tareas.", en: "Washing only at the start isn't enough; hands get contaminated during the shift, so wash frequently between tasks." },
+      "1": { es: "Un derrame es riesgo de caída; se señaliza y se limpia de inmediato en vez de ignorarlo o taparlo.", en: "A spill is a fall hazard; sign it and clean it right away instead of ignoring or covering it." },
+      "2": { es: "El vidrio roto nunca se toca con las manos — se recoge con escoba y recogedor para no cortarse.", en: "Broken glass is never handled with bare hands — use a broom and dustpan to avoid cuts." },
+      "3": { es: "La señal protege a huéspedes y compañeros de resbalar mientras vas por los materiales de limpieza.", en: "The sign protects guests and coworkers from slipping while you go get cleaning supplies." },
+      "4": { es: "Junto a las piezas grandes casi siempre hay fragmentos pequeños y difíciles de ver que pueden cortarte.", en: "Next to the big pieces there are almost always tiny, hard-to-see shards that can cut you." }
+    },
+    "C4": {
+      "0": { es: "El primer minuto fija el tono de toda la visita; por eso se saluda dentro de 60 segundos, no 'cuando se pueda'.", en: "The first minute sets the tone for the whole visit; that's why you greet within 60 seconds, not 'whenever'." },
+      "1": { es: "La hospitalidad es de equipo: si una mesa necesita algo, ayudas aunque no sea tu sección.", en: "Hospitality is a team effort: if a table needs something, you help even if it isn't your section." },
+      "2": { es: "La despedida es parte de la experiencia; agradecer e invitar a regresar deja una última impresión cálida.", en: "The goodbye is part of the experience; thanking them and inviting them back leaves a warm final impression." },
+      "3": { es: "Sentirse notado de inmediato hace que el huésped perciba todo el servicio como más atento, aunque las esperas reales sean iguales.", en: "Feeling noticed right away makes the guest perceive the whole service as more attentive, even if actual waits are the same." },
+      "4": { es: "Cada mesa tiene su energía; un buen server la 'lee' y ajusta ritmo y tono en vez de tratar a todos igual.", en: "Every table has its own energy; a good server 'reads' it and adjusts pace and tone instead of treating everyone the same." }
+    },
+    "C5": {
+      "0": { es: "Todo en Toast queda registrado a quien esté conectado, así que nunca compartes tu PIN — ni con alguien de confianza.", en: "Everything in Toast is logged to whoever's signed in, so you never share your PIN — not even with someone you trust." },
+      "1": { es: "Abrir la mesa primero vincula cada artículo a la mesa y al número de huéspedes correctos desde el inicio.", en: "Opening the table first links every item to the correct table and guest count from the start." },
+      "2": { es: "Toda bebida se registra en Toast — es la única forma de cobrar bien y de rastrear el alcohol servido.", en: "Every drink gets rung into Toast — it's the only way to bill correctly and track alcohol served." },
+      "3": { es: "Con tu PIN compartido podrías cargar con acciones que no hiciste, y se pierde el registro exacto de tus ventas y propinas.", en: "With your PIN shared you could be blamed for actions you didn't take, and it breaks the exact record of your sales and tips." },
+      "4": { es: "Registrar cada bebida es la única manera de saber cuánto alcohol se le ha servido a un huésped y evitar el sobre-servicio.", en: "Ringing in every drink is the only way to know how much alcohol a guest has been served and prevent over-serving." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #2 Explicaciones "por qué" — track BUSSER (generado, revisar) */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "B1": {
+      "0": { es: "El busser mantiene el piso en movimiento recogiendo y montando mesas rápido, y ese es el corazón del rol.", en: "The busser keeps the floor moving by clearing and resetting tables fast, and that's the heart of the role." },
+      "1": { es: "El busser trabaja de la mano con los servers para que los huéspedes se sienten rápido.", en: "The busser works hand in hand with servers so guests get seated quickly." },
+      "2": { es: "Una mesa que se monta rápido libera el asiento antes, así que los huéspedes en la puerta esperan menos.", en: "A table that resets fast frees the seat sooner, so guests at the door wait less." },
+      "3": { es: "Cuando el busser se encarga de limpiar y montar, el server queda libre para dedicarse por completo al huésped.", en: "When the busser handles clearing and resetting, the server is free to focus entirely on the guest." }
+    },
+    "B2": {
+      "0": { es: "El próximo huésped merece una mesa completamente limpia y montada, no una a medias.", en: "The next guest deserves a fully wiped and reset table, not a half-done one." },
+      "1": { es: "La vajilla limpia y alineada hace que la mesa se vea lista y cuidada para el huésped.", en: "Clean, aligned settings make the table look ready and cared for to the guest." },
+      "2": { es: "Retirar por la derecha es el estándar cuando se puede, para no invadir el espacio del huésped.", en: "Clearing from the right is the standard when possible, so you don't crowd the guest." },
+      "3": { es: "Apilar vasos o meterles cubiertos genera choque mecánico que debilita el vidrio y lo hace romperse después.", en: "Stacking glasses or filling them with flatware causes mechanical shock that weakens the glass and makes it break later." },
+      "4": { es: "Los platos más grandes van abajo para que la pila quede estable y no se venga abajo.", en: "The largest dishes go on the bottom so the stack stays stable and won't topple." },
+      "5": { es: "Reunir el bus tub, el balde de sanitizante y las toallas primero te deja montar sin interrupciones.", en: "Gathering the bus tub, sanitizer bucket, and towels first lets you reset without interruptions." },
+      "6": { es: "Dejar la mesa demasiado húmeda incomoda al huésped que se sienta, así que se seca bien tras limpiar.", en: "Leaving the table too damp makes the seated guest uncomfortable, so wipe it dry after cleaning." }
+    },
+    "B3": {
+      "0": { es: "Esas mesas (51–53, 61–63, 71–73, 81–85) forman la sección Jungle en el plano.", en: "Those tables (51–53, 61–63, 71–73, 81–85) make up the Jungle section on the floor plan." },
+      "1": { es: "La mesa 48, la redonda de 8, es la que queda junto al podio de host.", en: "Table 48, the round eight-top, is the one next to the host stand." },
+      "2": { es: "Las mesas 21–24, 31–34 y 35 pertenecen a la sección Bar.", en: "Tables 21–24, 31–34, and 35 belong to the Bar section." },
+      "3": { es: "Saber la sección te dice de inmediato con qué server hablar sobre esa mesa, sin perder tiempo preguntando.", en: "Knowing the section instantly tells you which server to talk to about that table, without wasting time asking." }
+    },
+    "B4": {
+      "0": { es: "El server puede no notar que la mesa quedó lista, así que le avisas para que no siga vacía.", en: "The server may not notice the table is ready, so you tell them so it doesn't sit empty." },
+      "1": { es: "Si la mesa necesita más tiempo, avisas a cocina/expo para que retengan los platos y no salgan antes.", en: "If a table needs more time, you flag the kitchen/expo so they hold the food instead of firing it early." },
+      "2": { es: "Avisar a tiempo mantiene a todo el equipo sincronizado y el servicio fluyendo.", en: "Timely heads-ups keep the whole team in sync and service flowing." },
+      "3": { es: "El server maneja varias mesas a la vez y no puede vigilarlas todas, por eso el busser capta lo que se le escapa.", en: "The server juggles several tables at once and can't watch them all, so the busser catches what slips by." }
+    },
+    "B5": {
+      "0": { es: "Separar basura de vajilla evita contaminar los platos y mantiene la sanitización.", en: "Separating trash from dishware avoids contaminating the plates and keeps things sanitary." },
+      "1": { es: "Un peligro se reporta de inmediato para que alguien lo atienda antes de que cause un accidente.", en: "A hazard is reported immediately so it gets handled before it causes an accident." },
+      "2": { es: "Cargar bien las bandejas evita derrames que ensucian el piso y ponen en riesgo a todos.", en: "Carrying trays properly prevents spills that mess the floor and put everyone at risk." },
+      "3": { es: "ServSafe marca cambiar el sanitizante cada 2–4 horas, o antes si se ve sucio, para que siga desinfectando.", en: "ServSafe calls for changing sanitizer every 2–4 hours, or sooner if it looks dirty, so it keeps working." },
+      "4": { es: "Una toalla sucia se retira y se cambia por una limpia para no arrastrar suciedad frente al huésped.", en: "A soiled towel is retired for a fresh one so you don't spread grime in front of the guest." }
+    },
+    "B6": {
+      "0": { es: "Reabastecer las estaciones al cierre evita que el turno siguiente encuentre una estación vacía en pleno servicio.", en: "Restocking stations at close keeps the next shift from hitting an empty station mid-service." },
+      "1": { es: "Antes de marcar salida confirmas que todas las secciones quedaron montadas, no solo tu mesa.", en: "Before clocking out you confirm every section is reset, not just your own table." },
+      "2": { es: "Los contenedores de bussing se vacían y limpian para dejarlos listos y sin residuos.", en: "Bus bins are broken down and cleaned so they're ready and residue-free." },
+      "3": { es: "Los residuos de comida durante la noche atraen plagas y generan olores, por eso se limpia todo antes de irse.", en: "Food debris left overnight attracts pests and creates odors, so everything gets cleaned before you leave." }
+    },
+    "B7": {
+      "0": { es: "La Soda Station & Glassware es la estación asignada específicamente al busser.", en: "The Soda Station & Glassware is the station assigned specifically to the busser." },
+      "1": { es: "Si el dispensador de soda falla, lo reportas al supervisor de turno en vez de intentar repararlo tú.", en: "If the soda dispenser malfunctions, you report it to the shift supervisor instead of trying to fix it yourself." },
+      "2": { es: "El running side work se mantiene durante todo el servicio activo, no solo al cierre.", en: "Running side work is kept up throughout active service, not only at closing." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #2 Explicaciones "por qué" — track SERVER (generado, revisar) */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "S1": {
+      "0": { es: "La misión no es competir por precio o rapidez, sino la hospitalidad y los momentos memorables; ese es el estándar contra el que se mide cada visita.", en: "The mission isn't to compete on price or speed, but on hospitality and memorable moments; that's the standard every visit is measured against." },
+      "1": { es: "La cocina combina influencias mexicanas y peruanas con sabores latinos, así que describirla como fusión mexicana-peruana refleja de verdad lo que sale de la cocina.", en: "The kitchen blends Mexican and Peruvian influences with Latin flavors, so calling it Mexican-Peruvian fusion truly reflects what comes out of the kitchen." },
+      "2": { es: "Los fines de semana el lugar cierra a las 2am, no antes; conocer el horario real evita rechazar o apurar a un huésped por error.", en: "On weekends the venue runs until 2am, not earlier; knowing the real hours keeps you from turning away or rushing a guest by mistake." },
+      "3": { es: "La mesa 48 es la redonda de 8 junto al podio de host, así que ubicarla bien te deja sentar y encontrar grupos sin dar vueltas.", en: "Table 48 is the round 8-top by the host stand, so placing it right lets you seat and find parties without wandering." },
+      "4": { es: "El miércoles tiene su propio gancho — DJ con tema pink night y karaoke en Santa Diabla — que puedes vender como un plan, no una noche cualquiera.", en: "Wednesday has its own hook — a pink night DJ plus karaoke in Santa Diabla — that you can sell as a plan, not just any night." },
+      "5": { es: "El sábado la banda en vivo toca de 7 a 10pm antes del DJ, así que puedes decirle al huésped exactamente qué música encontrará y a qué hora.", en: "On Saturday the live band plays 7 to 10pm before the DJ, so you can tell a guest exactly what music they'll find and when." },
+      "6": { es: "Taco Tuesday se vende como la ocasión de probar varios sabores en una sola visita, lo que sube el valor percibido en vez de reducirlo a un descuento.", en: "Taco Tuesday sells as a chance to sample several flavors in one visit, which raises perceived value instead of reducing it to a discount." },
+      "7": { es: "Llevas al menos $100 en cambio propio para poder dar vuelto al instante y no hacer esperar a un huésped que paga en efectivo.", en: "You carry at least $100 in your own change so you can make change instantly and never leave a cash-paying guest waiting." },
+      "8": { es: "La ley aplica sin importar la apariencia, así que se pide identificación siempre que alguien ordena alcohol, no solo cuando se ven jóvenes.", en: "The law applies regardless of looks, so you check ID any time someone orders alcohol, not just when they seem young." }
+    },
+    "S2": {
+      "0": { es: "Si rechazan el agua embotellada, ofreces sodas, agua de jamaica o chicha morada antes de rendirte, porque siempre hay una venta de bebida sin alcohol disponible.", en: "If they pass on bottled water, you offer sodas, agua de jamaica, or chicha morada before giving up, because there's always a non-alcoholic sale on the table." },
+      "1": { es: "Se menciona el postre a unas tres cuartas partes del plato fuerte, cuando aún hay hambre y tiempo para decir que sí, ni muy pronto ni tras pagar.", en: "You mention dessert about three-quarters through the entrée, while there's still appetite and time to say yes, not too early or after they pay." },
+      "2": { es: "El guacamole con chips llena el tiempo mientras se preparan las bebidas, así que la mesa disfruta algo de inmediato y sube el ticket.", en: "Fresh guac and chips fill the wait while drinks are made, so the table enjoys something right away and the check grows." },
+      "3": { es: "Camarones Saltados y Steak Frites son los ejemplos que se dan para el check-up, así que tienes recomendaciones concretas listas en vez de una pregunta vaga.", en: "Camarones Saltados and Steak Frites are the given check-up examples, so you have concrete picks ready instead of a vague question." },
+      "4": { es: "Ser descriptivo significa pintar un platillo favorito con palabras en lugar de solo preguntar qué quieren, porque una descripción rica antoja.", en: "Being descriptive means painting a favorite dish in words rather than just asking what they want, because a rich description creates craving." },
+      "5": { es: "Ser asumidor consiste en ofrecer opciones de plato fuerte dando por hecho que pedirán uno, lo que guía la decisión en vez de abrir la puerta a un no.", en: "Being assumptive means offering entrée options as if they'll order one, which guides the decision instead of inviting a no." },
+      "6": { es: "Emparejar una bebida con el postre mueve dos artículos a la vez, así que la sugerencia sube ambas ventas en un solo momento.", en: "Pairing a drink with dessert moves two items at once, so the suggestion lifts both sales in a single moment." }
+    },
+    "S3": {
+      "0": { es: "Las bebidas salen dentro de 6 minutos porque ese es el punto donde el huésped todavía siente el servicio ágil y no abandonado.", en: "Drinks land within 6 minutes because that's the point where the guest still feels the service is quick, not neglected." },
+      "1": { es: "La comida se entrega en la ventana de 20 a 25 minutos, tiempo suficiente para cocinar bien sin que la mesa sienta que la olvidaron.", en: "Food is delivered in the 20 to 25 minute window, long enough to cook it right without the table feeling forgotten." },
+      "2": { es: "Las 4 P — Producto, Preparación, Presentación, Precio — dan una estructura completa para vender un platillo, no solo mencionar cuánto cuesta.", en: "The 4 Ps — Product, Preparation, Presentation, Price — give a full structure to sell a dish, not just name its cost." },
+      "3": { es: "El pago se procesa dentro de 3 minutos de pedido, porque hacer esperar a alguien que ya quiere irse borra una buena experiencia entera.", en: "Payment is processed within 3 minutes of the request, because making someone who's ready to leave wait can erase an otherwise great visit." },
+      "4": { es: "Los pedidos se toman por posición de asiento y se repiten para confirmar, así la comida llega a la persona correcta y sin errores.", en: "Orders are taken by seat position and repeated back to confirm, so food reaches the right person with no mix-ups." }
+    },
+    "S5": {
+      "0": { es: "Las quesadillas solo llevan pollo, short rib, vegetariana o filete, así que no existe la de camarón y debes ofrecer una alternativa real.", en: "Quesadilla fillings are only chicken, short rib, vegetarian, or filet, so there's no shrimp option and you offer a real alternative." },
+      "1": { es: "Las ostras nunca esperan más de 25 minutos por seguridad alimentaria, así que se descartan pasado ese tiempo en vez de arriesgar al huésped.", en: "Oysters never wait past 25 minutes for food safety, so they're discarded after that instead of risking the guest." },
+      "2": { es: "El Guacamole con Chips no se modifica, así que se sirve tal cual y evitas prometer cambios que la cocina no hará.", en: "The Guac and Chips Bowl can't be modified, so it's served as-is and you avoid promising changes the kitchen won't make." },
+      "3": { es: "Las Alitas Mexicanas siempre llevan el sabor del marinado, así que nunca son del todo solas y conviene avisarlo antes de que llegue.", en: "The Mexican Wings always carry the marinade flavor, so they're never fully plain and it's worth flagging before it arrives." },
+      "4": { es: "Los Tacos Filetón solo se venden en set de tres, así que se ofrecen como set y no uno por uno.", en: "Filetón Tacos are sold only as a set of three, so you offer them as a set rather than one at a time." }
+    },
+    "S6": {
+      "0": { es: "El agua de la casa es Saratoga, así que nombrar la marca correcta hace que la oferta suene deliberada y premium.", en: "The house water is Saratoga, so naming the right brand makes the offer sound deliberate and premium." },
+      "1": { es: "The Old Fashioned lleva Bulleit Rye y fue votado el mejor de Miami por los regulares, un dato que lo vuelve fácil de recomendar con confianza.", en: "The Old Fashioned uses Bulleit Rye and was voted best in Miami by regulars, a detail that makes it easy to recommend with confidence." },
+      "2": { es: "El café es de Coffee Papis Co., tostado en el sur de Florida, así que puedes ofrecerlo como un producto local con historia.", en: "The coffee is Coffee Papis Co., roasted in South Florida, so you can offer it as a local product with a story." },
+      "3": { es: "Siempre ofreces cócteles sin alcohol como opción, porque incluye a quien no bebe y aún así suma una venta de bebida.", en: "You always offer zero-proof cocktails as an option, because it includes non-drinkers and still adds a drink sale." },
+      "4": { es: "El flight Ballers reúne Don Julio Añejo, 70 Aniversario y 1942, así que sabes exactamente qué tequilas de alta gama incluye.", en: "The Ballers flight pours Don Julio Añejo, 70th Anniversary, and 1942, so you know exactly which top-shelf tequilas it includes." },
+      "5": { es: "Smoke Some usa mezcal con chile ancho y piña ahumada, así que es la opción ahumada e intensa para quien busca más carácter.", en: "Smoke Some uses mezcal with ancho chile and smoked pineapple, making it the smoky, bold pick for someone wanting more character." }
+    },
+    "S7": {
+      "0": { es: "Confirmas que estás bajo tu propio nombre de server justo al iniciar sesión, para que ventas y propinas queden ligadas a la persona correcta.", en: "You confirm you're under your own server name right after logging in, so sales and tips are tied to the correct person." },
+      "1": { es: "Divides por asiento cuando cada huésped paga lo suyo, lo que ordena la cuenta sin cobrar de más a nadie.", en: "You split by seat when each guest pays their own items, which keeps the check clean and no one overcharged." },
+      "2": { es: "La propina automática aplica desde grupos de 6 o más, así que la ingresas correctamente y proteges el servicio en mesas grandes.", en: "Auto-gratuity applies at parties of 6 or more, so you enter it correctly and protect service on large tables." },
+      "3": { es: "Las transacciones con tarjeta llevan un recargo de procesamiento del 3%, un dato que debes poder explicar con claridad si el huésped pregunta.", en: "Card transactions carry a 3% processing fee, a detail you should be able to explain clearly if a guest asks." },
+      "4": { es: "Anulaciones, cortesías y descuentos siempre pasan por un manager, porque son decisiones que requieren autorización y no se hacen por cuenta propia.", en: "Voids, comps, and discounts always go through a manager, because they require authorization and aren't done on your own." }
+    },
+    "S9": {
+      "0": { es: "Son 4 turnos de server de 8 horas cada uno, así que sabes cuánta práctica real incluye la certificación antes de estar solo.", en: "There are 4 server shifts of 8 hours each, so you know how much real practice the certification includes before you're on your own." },
+      "1": { es: "La evaluación final se hace en la mesa de un manager tratada como una mesa normal, así que demuestras el servicio real, no un examen teórico.", en: "The final assessment happens at a manager's table treated as a regular table, so you show real service, not a paper test." },
+      "2": { es: "El Examen de Pre-Contratación exige 80% o más, el mínimo que marca que dominas lo esencial antes de atender huéspedes.", en: "The Pre-Hiring Exam requires 80% or higher, the minimum that shows you've mastered the essentials before serving guests." },
+      "3": { es: "El Día 2 debes vender dos cócteles, blancos por copa, dos entradas y cuatro bebidas sin alcohol, para practicar el upselling de verdad en el bar.", en: "On Day 2 you must sell two cocktails, whites by the glass, two appetizers, and four NA beverages, to practice real upselling at the bar." },
+      "4": { es: "El Día 1 se dedica a acompañar al chef en expo y aprender los platos y las alergias, porque conocer la comida es la base de todo lo demás.", en: "Day 1 is spent shadowing the chef on expo and learning the dishes and allergies, because knowing the food is the foundation for everything else." }
+    },
+    "S10": {
+      "0": { es: "El running side work aplica durante todo el servicio activo, incluso en las horas más movidas, porque mantener la estación no es opcional.", en: "Running side work applies through all active service, even the busiest hours, because keeping your station stocked isn't optional." },
+      "1": { es: "La Coffee Station y los sugar caddies están en el Center Room, así que sabes dónde ir sin perder tiempo buscando.", en: "The Coffee Station and sugar caddies are in the Center Room, so you know where to go without wasting time searching." },
+      "2": { es: "La Water Station del Florida Room la cubre el server asignado a esa sección, así que la responsabilidad es tuya, no de nadie en general.", en: "The Florida Room Water Station is covered by the server assigned to that section, so the responsibility is yours, not everyone's in general." },
+      "3": { es: "La POS Station se reabastece con papel de impresora, sobres de propina y bolígrafos, para que nunca falte lo básico al cobrar.", en: "The POS Station gets restocked with printer paper, tip envelopes, and pens, so the basics are never missing at checkout." },
+      "4": { es: "Si no puedes cubrir tu estación, avisas al supervisor o arreglas un relevo, para que nunca quede desatendida a mitad del servicio.", en: "If you can't cover your station, you tell the supervisor or arrange a hand-off, so it's never left unattended mid-service." }
+    },
+    "S11": {
+      "0": { es: "Ante un comentario de precio no te defiendes: reconoces con calidez y resaltas calidad y valor sin presionar, lo que baja la tensión en vez de subirla.", en: "When a guest calls it pricey you don't get defensive: you acknowledge warmly and highlight quality and value without pressure, which lowers tension instead of raising it." },
+      "1": { es: "Ante una espera larga te disculpas, consultas a la cocina por una actualización real y mantienes informada a la mesa, porque la honestidad recupera la confianza.", en: "For a long wait you apologize, check the kitchen for a real update, and keep the table informed, because honesty rebuilds trust." },
+      "2": { es: "Ante un cabello en la comida te disculpas, retiras el plato y avisas al manager de inmediato, porque es un tema que requiere acción rápida y supervisión.", en: "For a hair in the food you apologize, remove the plate, and notify a manager at once, because it needs quick action and oversight." },
+      "3": { es: "Tomas seis modificaciones una a una y repites cada una para confirmar, así evitas errores costosos cuando hay muchos cambios en juego.", en: "You take six modifications one at a time and repeat each back, avoiding costly errors when many changes are in play." },
+      "4": { es: "Ante la petición de 'la más fuerte' preguntas la preferencia de licor e involucras al bartender, para dar una recomendación adecuada en vez de solo servir lo más cargado.", en: "For 'the strongest drink' you ask their spirit preference and bring in the bartender, giving a proper recommendation instead of just pouring the highest-proof." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #2 Explicaciones "por qué" — track BARTENDER (generado, revisar) */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "BT1": {
+      "0": { es: "Montar antes de abrir deja hielo, guarniciones y herramientas listos para que en la hora pico no tengas que detenerte a preparar.", en: "Setting up before opening puts ice, garnishes and tools in place so you never have to stop and prep during the rush." },
+      "1": { es: "Cuando todo está siempre en el mismo lugar, tus manos encuentran el jigger o el limón sin pensar, lo que te hace más rápido y más seguro bajo presión.", en: "When everything is always in the same spot, your hands find the jigger or lime without thinking, which makes you faster and safer under pressure." },
+      "2": { es: "Hielo, guarniciones, cristalería y herramientas son lo que usas en cada bebida, así que deben estar al alcance para no perder pasos.", en: "Ice, garnishes, glassware and tools are what you reach for on every drink, so they must be within reach to avoid lost steps." },
+      "3": { es: "Un posavaso protege la barra y mantiene la presentación limpia, mientras que una servilleta se pega al vaso y se ve descuidada.", en: "A coaster protects the bar and keeps the presentation clean, while a napkin sticks to the glass and looks sloppy." },
+      "4": { es: "Esperar a tener el reemplazo en la mano evita quedarte sin producto a mitad de un pedido durante el servicio.", en: "Waiting until the replacement is in hand keeps you from running dry mid-order during service." }
+    },
+    "BT2": {
+      "0": { es: "Las listas de ingredientes ya están confirmadas para cada cóctel, así que puedes armar cada bebida con seguridad.", en: "The ingredient lists are already confirmed for every cocktail, so you can build each drink with confidence." },
+      "1": { es: "Lo único que falta definir son las medidas exactas en onzas y la cristalería específica de cada cóctel.", en: "The only things still to be defined are the exact pour sizes in ounces and the specific glassware per cocktail." },
+      "2": { es: "Hasta que se finalicen onzas y cristalería, las tarjetas de receta impresas en la barra te dan la medida correcta sin adivinar.", en: "Until pours and glassware are finalized, the printed recipe cards at the bar give you the correct measure without guessing." },
+      "3": { es: "El Old Fashioned lleva Bulleit Rye, demerara, Angostura y bitters de naranja, y conocer esa fórmula te deja hacerlo igual siempre.", en: "The Old Fashioned is Bulleit Rye, demerara, Angostura and orange bitters, and knowing that formula lets you make it the same every time." }
+    },
+    "BT3": {
+      "0": { es: "El Super Bucket combina cerveza con shots de tequila de la casa, y saberlo te deja recomendarlo sin dudar.", en: "The Super Bucket pairs beer with house tequila shots, and knowing that lets you recommend it without hesitation." },
+      "1": { es: "El flight Beginners cubre Blanco, Reposado y Añejo, mientras que Ballers es la línea top de gama, así que guías al huésped según su nivel.", en: "The Beginners flight covers Blanco, Reposado and Añejo, while Ballers is the top-shelf line, so you guide the guest by their level." },
+      "2": { es: "Round for the Kitchen es un detalle que el huésped le manda al equipo de cocina, no una bebida del menú.", en: "Round for the Kitchen is a treat the guest sends to the kitchen team, not a menu drink." },
+      "3": { es: "Moët & Chandon Imperial Brut es nuestra opción top en burbujas, así que es la que ofreces cuando el huésped busca lo premium.", en: "Moët & Chandon Imperial Brut is our top bubbles option, so it's the one you offer when a guest wants premium." },
+      "4": { es: "Conocer las bebidas te permite recomendar según el gusto del huésped en lugar de esperar a que pregunte.", en: "Knowing the drinks lets you recommend based on the guest's taste instead of waiting for them to ask." }
+    },
+    "BT4": {
+      "1": { es: "Los modificadores como 'sin hielo' o 'extra limón' aseguran que el huésped reciba exactamente la bebida que pidió.", en: "Modifiers like 'no ice' or 'extra lime' ensure the guest gets exactly the drink they ordered." },
+      "0": { es: "Registrar cada bebida al hacerla mantiene las cuentas precisas y respalda la política de alcohol.", en: "Ringing in every drink as it's made keeps tabs accurate and supports the alcohol policy." },
+      "2": { es: "Registrar cada bebida deja un rastro de cuánto alcohol se ha servido, que es lo que sostiene la política de alcohol.", en: "Ringing in every drink leaves a record of how much alcohol has been served, which is what backs the alcohol policy." },
+      "3": { es: "Un doble lleva el doble de alcohol, así que registrarlo dos veces mantiene el conteo real y la cuenta correcta.", en: "A double has twice the alcohol, so ringing it twice keeps the count accurate and the tab correct." },
+      "4": { es: "No se puede dejar propina en una tarjeta o certificado de regalo, así que avisarle al huésped al pagar evita confusiones.", en: "You can't tip on a gift card or gift certificate, so telling the guest at payment time avoids confusion." }
+    },
+    "BT5": {
+      "0": { es: "Nuestra marca de agua es Saratoga, y saber el nombre importa cuando un huésped pregunta.", en: "Our water brand is Saratoga, and knowing the name matters when a guest asks." },
+      "1": { es: "Saratoga viene sin gas o con gas, así que siempre puedes ofrecer ambas opciones.", en: "Saratoga comes still or sparkling, so you can always offer both options." },
+      "2": { es: "En una barra de cócteles el agua es parte del servicio premium, así que presentarla bien es parte del trabajo.", en: "At a cocktail bar the water is part of the premium service, so presenting it well is part of the job." },
+      "3": { es: "Nombrar la marca refuerza que el agua es una elección deliberada y premium del menú, no agua de la llave.", en: "Naming the brand reinforces that the water is a deliberate, premium menu choice, not tap water." }
+    },
+    "BT6": {
+      "0": { es: "Separar los depósitos de hielo de las botellas evita que el hielo, que va en las bebidas, se contamine.", en: "Keeping ice bins separate from bottle wells prevents the ice, which goes in drinks, from getting contaminated." },
+      "1": { es: "Un paño mojado mucho tiempo cría bacterias, así que cambiarlos con frecuencia mantiene la barra limpia.", en: "A rag left wet too long breeds bacteria, so changing them often keeps the bar clean." },
+      "2": { es: "El jugo y los aceites de cítricos derramados dejan una película pegajosa, así que barra y herramientas deben limpiarse regularmente.", en: "Spilled juice and citrus oils leave a sticky film, so the bar top and tools need regular wiping." },
+      "3": { es: "El hielo va directo en las bebidas de los huéspedes, por eso la ley lo trata como alimento que no puede contaminarse.", en: "Ice goes straight into guests' drinks, which is why the law treats it as a food item that can't be cross-contaminated." }
+    },
+    "BT7": {
+      "0": { es: "Agrupar bebidas similares reduce cuánto cambias de herramienta y botella, ahorrando tiempo en la hora pico.", en: "Batching similar drinks cuts how often you switch tools and bottles, saving time during a rush." },
+      "1": { es: "Pre-abastecer guarniciones antes de la hora pico evita cortar cítricos justo cuando más pedidos llegan.", en: "Pre-stocking garnishes before a rush avoids cutting citrus right when the most orders hit." },
+      "2": { es: "Comunicar los pedidos con claridad mantiene al equipo coordinado para que nadie duplique ni pierda una bebida.", en: "Calling out orders clearly keeps the team coordinated so no one doubles up or drops a drink." },
+      "3": { es: "Cambiar de herramienta y botella es donde se pierden segundos, así que agrupar bebidas similares recupera ese tiempo en la hora pico.", en: "Switching tools and bottles is where seconds are lost, so batching similar drinks wins that time back during a rush." }
+    },
+    "BT9": {
+      "0": { es: "Contar y registrar las botellas al cierre es como el negocio rastrea el costo de las bebidas y detecta pérdidas.", en: "Counting and logging bottles at close is how the business tracks pour cost and catches losses." },
+      "1": { es: "Hacer check-out con un manager cierra tu turno de forma oficial y confirma que todo cuadra.", en: "Checking out with a manager officially closes your shift and confirms everything squares up." },
+      "2": { es: "Asegurar la barra antes de irte protege el alcohol y el inventario cuando no hay nadie vigilando.", en: "Securing the bar before you leave protects the alcohol and inventory when no one's watching." },
+      "3": { es: "Un conteo preciso rastrea el costo de las bebidas y detecta sobre-servido o pérdidas, protegiéndote a ti y al negocio.", en: "An accurate count tracks pour cost and catches over-pouring or shrinkage, protecting both you and the business." }
+    },
+    "BT10": {
+      "0": { es: "Saludar dentro de 30 segundos le dice al huésped que fue visto desde el momento en que llegó a la barra.", en: "Greeting within 30 seconds tells the guest they were seen the moment they reached the bar." },
+      "1": { es: "El mini saludo es hacer contacto visual y avisarle al huésped que lo atenderás pronto cuando estás muy ocupado.", en: "The mini greet is making eye contact and letting the guest know you'll be right with them when you're slammed." },
+      "2": { es: "Entregar las bebidas dentro de 6 minutos mantiene el ritmo del servicio y la experiencia del huésped.", en: "Delivering drinks within 6 minutes keeps the pace of service and the guest experience on track." },
+      "3": { es: "Abrir la cuenta en cuanto se pide el primer artículo evita perder consumos y agiliza el pago al final.", en: "Starting the tab as soon as the first item is ordered avoids missed items and speeds up payment at the end." },
+      "4": { es: "Cerrar la cuenta dentro de 2 minutos de solicitada respeta el tiempo del huésped cuando ya está listo para irse.", en: "Closing the tab within 2 minutes of the request respects the guest's time when they're ready to leave." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #2 Explicaciones "por qué" — track HOST (generado, revisar) */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "H1": {
+      "0": { es: "El huésped ve al host al llegar y al irse, así que ese contacto enmarca todo el recuerdo de la visita.", en: "The guest sees the host on the way in and on the way out, so that contact frames the whole memory of the visit." },
+      "1": { es: "El host controla el flujo del comedor: asientos, reservaciones y lista de espera, no la barra ni la cocina.", en: "The host controls the dining-room flow: seating, reservations and the waitlist, not the bar or the kitchen." },
+      "2": { es: "Una bienvenida cálida en la puerta marca el tono desde el primer segundo y hace sentir esperado al huésped.", en: "A warm welcome at the door sets the tone from the first second and makes the guest feel expected." },
+      "3": { es: "El Maître D dirige todo el frente de la casa y a los servers, un alcance mayor que el del host en la puerta.", en: "The Maître D runs the entire front-of-house and the server staff, a wider scope than the host at the door." }
+    },
+    "H2": {
+      "0": { es: "Sentar por turno reparte mesas y propinas de forma justa y evita que un solo server quede saturado.", en: "Seating by rotation shares tables and tips fairly and keeps any one server from getting swamped." },
+      "1": { es: "La mesa redonda de 8 (la 48) vive en Centro, dentro del rango 41 a 48.", en: "The round 8-top (table 48) lives in Centro, within the 41 to 48 range." },
+      "2": { es: "Los rangos 401 a 410 y 501 a 510 pertenecen a la sección Exterior en el plano del piso.", en: "The 401 to 410 and 501 to 510 ranges belong to the Exterior section on the floor plan." },
+      "3": { es: "Cargar demasiados huéspedes a la misma sección de golpe rompe la rotación y ahoga a ese server.", en: "Dropping too many guests on the same section at once breaks the rotation and buries that server." },
+      "4": { es: "Como el host causó la sobrecarga, echa una mano con agua o la orden de bebidas para que el server se ponga al día.", en: "Since the host caused the overload, pitch in with water or a drink order so the server can catch up." }
+    },
+    "H3": {
+      "0": { es: "Reunir todos los datos (grupo, necesidades, dieta, ocasión, fecha y contacto) permite preparar la mesa correcta sin sorpresas.", en: "Collecting every detail (party, needs, diet, occasion, date and contact) lets you prep the right table with no surprises." },
+      "1": { es: "Ante una duda de reservación acudes al manager, que tiene la información y la autoridad para resolver bien.", en: "For an uncertain reservation you turn to the manager, who has the info and the authority to resolve it correctly." },
+      "2": { es: "Chela's lleva reservaciones y asientos en Toast Tables, no de memoria ni en papel suelto.", en: "Chela's runs reservations and seating in Toast Tables, not from memory or loose paper." },
+      "3": { es: "Revisar las reservaciones del día, los mensajes pendientes y Hostie al inicio evita empezar el turno a ciegas.", en: "Checking the day's reservations, pending messages and Hostie at the start keeps you from opening the shift blind." },
+      "4": { es: "Una silla extra nunca debe tapar una ruta de salida de emergencia, por seguridad de todos.", en: "An extra chair must never block an emergency exit route, for everyone's safety." }
+    },
+    "H4": {
+      "0": { es: "El saludo en el instante en que entran confirma que se les vio y evita que se sientan ignorados.", en: "Greeting the moment they enter confirms they were seen and keeps them from feeling ignored." },
+      "1": { es: "El contacto visual y la sonrisa transmiten calidez genuina antes de decir una sola palabra.", en: "Eye contact and a smile convey genuine warmth before a single word is said." },
+      "2": { es: "Se saluda aunque estés ocupado, porque el huésped no debe esperar por tu atención en la puerta.", en: "You greet even when busy, because the guest shouldn't wait for your attention at the door." },
+      "3": { es: "Si te alejas, pides a alguien que cubra el podio para que nadie entre sin ser recibido.", en: "If you step away, you ask someone to cover the stand so no one walks in unwelcomed." },
+      "4": { es: "Sentar por orden de llegada es lo justo y transparente, no según propina ni tamaño del grupo.", en: "Seating first come, first served is fair and transparent, not based on tips or party size." }
+    },
+    "H5": {
+      "0": { es: "Un tiempo de espera realista cumple lo prometido y evita huéspedes molestos por una estimación falsa.", en: "A realistic wait time keeps your promise and avoids guests upset by a false estimate." },
+      "1": { es: "La lista se actualiza en tiempo real para reflejar las mesas que van quedando libres al instante.", en: "The waitlist updates in real time to reflect tables freeing up right as it happens." },
+      "2": { es: "Avisar sin que pregunten mantiene al huésped tranquilo y demuestra que no se le olvidó.", en: "Updating before they ask keeps the guest at ease and shows they haven't been forgotten." },
+      "3": { es: "\"Primera disponible\" quiere decir que sin preferencia de mesa el huésped se sienta más rápido.", en: "\"First available\" means that with no table preference the guest gets seated faster." },
+      "4": { es: "Indicar a los bussers qué mesas limpiar primero acelera sentar a quienes ya llevan más rato esperando.", en: "Telling bussers which tables to clear first speeds up seating whoever has waited longest." }
+    },
+    "H6": {
+      "0": { es: "Contestar en 3 timbres evita que quien llama cuelgue y reserve en otro lugar.", en: "Answering within 3 rings keeps the caller from hanging up and booking somewhere else." },
+      "1": { es: "Confirmar los detalles antes de colgar evita reservaciones mal tomadas y confusiones después.", en: "Confirming the details before hanging up prevents botched bookings and later confusion." },
+      "2": { es: "Saludar con calidez y el nombre del restaurante da una primera impresión profesional por teléfono.", en: "Greeting warmly with the restaurant name gives a professional first impression over the phone." },
+      "3": { es: "La llamada ocurre antes de que el huésped llegue, así que es su primer contacto con Chela's.", en: "The call happens before the guest arrives, so it's their first contact with Chela's." }
+    },
+    "H7": {
+      "0": { es: "Avisar de grupos grandes, VIPs y ocasiones da al equipo tiempo de reorganizarse antes de que lleguen.", en: "Flagging large parties, VIPs and occasions gives the team time to regroup before they arrive." },
+      "1": { es: "Servers y managers necesitan saber del VIP para prepararle la atención adecuada.", en: "Servers and managers need to know about the VIP to prepare the right level of care." },
+      "2": { es: "Unos segundos de aviso permiten que el equipo se prepare, como reacomodar mesas o poner la vela.", en: "A few seconds of notice let the team prepare, like rearranging tables or setting up the candle." },
+      "3": { es: "Los hosts se mantienen sincronizados para no asignar la misma mesa dos veces al sentar a la vez.", en: "Hosts stay in sync so they don't hand the same table to two parties when seating at once." }
+    },
+    "H8": {
+      "0": { es: "Los clientes de para llevar también preguntan del menú, así que el host debe dominarlo como un server.", en: "Takeout customers ask menu questions too, so the host must know it as well as a server." },
+      "1": { es: "Verificar cada plato y los extras evita entregar pedidos incompletos o equivocados.", en: "Checking every dish and the extras prevents handing out incomplete or wrong orders." },
+      "2": { es: "Quedarse sin papel de recibos a media hora pico frena el cobro justo cuando más rápido debes ir.", en: "Running out of receipt paper mid-rush stalls checkout right when you need to move fastest." },
+      "3": { es: "Revisar los billetes grandes por falsificación protege la caja de pérdidas por dinero falso.", en: "Checking large bills for counterfeits protects the till from losses on fake cash." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #2 Explicaciones "por qué" — track KITCHEN (generado, revisar) */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "K1": {
+      "0": { es: "La cocina funciona como un solo equipo de tres roles que dependen entre sí: Línea, Preparadores y Jefe de Cocina.", en: "The kitchen runs as one team of three interdependent roles: Línea, Preparadores, and the Jefe de Cocina." },
+      "1": { es: "Línea es quien termina y envía cada plato, así que su tarea principal es la presentación, calidad y exactitud antes de que salga.", en: "Línea finishes and sends each plate, so its core job is presentation, quality, and accuracy before anything leaves." },
+      "2": { es: "Un plato 'más o menos' bien igual sale con un error visible para el huésped, por eso se corrige antes de enviarlo.", en: "A plate that's only 'more or less' right still reaches the guest with a visible flaw, so it gets fixed before it goes out." },
+      "3": { es: "Prep existe para dejar todo listo con anticipación, con calidad consistente y porciones correctas, para que la Línea pueda trabajar rápido.", en: "Prep exists to have everything ready ahead of time with consistent quality and correct portions so Línea can move fast." },
+      "4": { es: "El trabajo pendiente se pierde si nadie lo asume, por eso el Jefe asigna responsable, tarea y tiempo, y da seguimiento.", en: "Pending work gets lost when nobody owns it, so the Jefe assigns who, what, and by when, and follows up." }
+    },
+    "K2": {
+      "0": { es: "Las tres cosas importan por igual: presentación, calidad y exactitud, porque un plato perfecto con la modificación equivocada sigue siendo un error.", en: "All three matter equally — presentation, quality, and accuracy — because a perfect-looking plate with the wrong modification is still wrong." },
+      "1": { es: "Si se acaba una prep esencial se repone de inmediato o se pide apoyo, para no frenar ni mandar platos incompletos en plena hora pico.", en: "If an essential prep runs out you restock it immediately or ask for support, so service doesn't stall or send incomplete plates mid-rush." },
+      "2": { es: "Los chips se fríen, escurren, sazonan y se mantienen crujientes en el momento, así que son una preparación que ocurre en la propia línea.", en: "Chips are fried, drained, seasoned, and kept crisp on the spot, making them a preparation done directly on the line." },
+      "3": { es: "El volumen sube el fin de semana, por eso el lunes corre con niveles base y viernes a domingo con niveles altos.", en: "Volume rises on weekends, so Monday runs base levels and Fri/Sat/Sun run high levels." },
+      "4": { es: "La estación se deja completamente lista para el siguiente turno con limpieza profunda y reposición definida, no a medias para que otro cargue con ello.", en: "The station is left fully ready for the next shift with a deep clean and defined restock, not half-done for someone else to carry." }
+    },
+    "K3": {
+      "0": { es: "La etiqueta lleva nombre, fecha y hora e iniciales del preparador para poder rastrear frescura y responsabilidad de cada lote.", en: "The label carries product name, date and time, and preparer's initials so freshness and accountability of each batch can be traced." },
+      "1": { es: "FIFO asegura que lo más antiguo se use primero, evitando desperdicio y producto vencido.", en: "FIFO ensures the oldest product is used first, preventing waste and spoiled stock." },
+      "2": { es: "Cambiar una receta 'a ojo' rompe la consistencia del sabor, y aquí la consistencia importa más que la velocidad.", en: "Changing a recipe 'by eye' breaks flavor consistency, and here consistency matters more than speed." },
+      "3": { es: "Un mensaje escrito en el grupo deja constancia exacta de lo pendiente, algo que un recado verbal se olvida.", en: "A written message in the group chat leaves an exact record of what's pending, which a verbal note gets forgotten." },
+      "4": { es: "El mensaje detalla producto, avance, estado, ubicación y pasos exactos para que el siguiente turno continúe sin adivinar.", en: "The message spells out product, progress, state, location, and exact next steps so the next shift continues without guessing." },
+      "5": { es: "Sin comunicación clara la Línea pierde tiempo, se estresa, baja la calidad y se atrasan los tickets.", en: "Without clear communication Línea loses time, gets stressed, quality drops, and tickets fall behind." }
+    },
+    "K4": {
+      "0": { es: "Las asignaciones se basan en el volumen esperado, las habilidades del personal y las prioridades del menú para que la línea rinda según el día.", en: "Assignments are based on expected volume, staff skills, and menu priorities so the line performs for the day it faces." },
+      "1": { es: "El Jefe de Cocina es el único punto de contacto directo entre BOH y FOH para tiempos de espera y productos 86.", en: "The Jefe de Cocina is the single direct link between BOH and FOH for wait times and 86'd items." },
+      "2": { es: "Antes del servicio el encargado pregunta '¿estamos listos o no?', revisando mise en place y par levels para arrancar sin sorpresas.", en: "Before service the lead asks 'are we ready or not?', checking mise en place and par levels to start without surprises." },
+      "3": { es: "Las prácticas inseguras o inconsistentes se corrigen en el momento, porque dejarlas para 'después' las vuelve costumbre.", en: "Unsafe or inconsistent practices are corrected in the moment, because leaving them for 'later' turns them into habit." },
+      "4": { es: "El trabajo pendiente recibe persona responsable, prioridad y tiempo con seguimiento, para que nada se quede sin dueño.", en: "Pending work gets a responsible person, a priority, and a time with follow-up, so nothing is left ownerless." }
+    },
+    "K5": {
+      "0": { es: "El jalapeño en cubos es lo que aporta el picante al Pico de Gallo, un ingrediente fijo e invariable de la receta.", en: "Diced jalapeño is what gives Pico de Gallo its heat, a fixed and unchanging ingredient of the recipe." },
+      "1": { es: "La Salsa de Aceitunas Botija se define por su base de mayonesa y aceitunas botija peruanas.", en: "Olivo Sauce is defined by its base of mayonnaise and Peruvian Botija olives." },
+      "2": { es: "El ají amarillo es de color amarillo-naranja, y por eso da ese tono a la salsa que lleva su nombre.", en: "The ají amarillo pepper is yellow-orange, which is why it gives that color to the sauce named after it." },
+      "3": { es: "Tanto la Salsa Roja como la Verde comparten caldo de pollo o agua caliente como líquido base de cocción.", en: "Both Salsa Roja and Salsa Verde share chicken stock or hot water as their base cooking liquid." },
+      "4": { es: "La Salsa para Atún se distingue por sumar azúcar morena, jugo de limón y jugo de piña, que la de Lomo no lleva.", en: "Tuna Sauce stands apart by adding brown sugar, lemon juice, and pineapple juice, which Lomo Sauce lacks." }
+    },
+    "K6": {
+      "0": { es: "El Aioli de Trufa se distingue por el aceite de trufa blanca y los champiñones frescos, ausentes en el de Chipotle.", en: "Truffle Aioli is set apart by white truffle oil and fresh mushrooms, absent from the Chipotle version." },
+      "1": { es: "La pasta de achiote es lo que da al recado su color rojo ladrillo característico.", en: "Achiote paste is what gives the recado its signature brick-red color." },
+      "2": { es: "El Filet se marina con líquido sazonador oscuro, jugo de limón y jugo de naranja, una mezcla fija de la receta.", en: "The Filet is marinated with dark savory seasoning liquid, lime juice, and orange juice, a fixed recipe mix." },
+      "3": { es: "El sazonador Bijol junto con la salsa de ají amarillo dan al arroz su color distintivo.", en: "Bijol seasoning together with ají amarillo sauce give the rice its distinctive color." },
+      "4": { es: "Los Frijoles de Chela's combinan específicamente frijoles pintos y frijoles negros.", en: "Chela's Beans specifically combine pinto beans and black beans." }
+    },
+    "K7": {
+      "0": { es: "El estándar de camarón en todas las recetas de mariscos es 21/25, para mantener tamaño y porción consistentes.", en: "The shrimp standard across all seafood recipes is 21/25, to keep size and portion consistent." },
+      "1": { es: "El Catch of the Day usa mahi mahi como su proteína definida.", en: "Catch of the Day uses mahi mahi as its defined protein." },
+      "2": { es: "El Ceviche Mixto se compone de cobia, pulpo, aros de calamar y camarón con cola.", en: "Mixto Ceviche is made up of cobia, octopus, calamari rings, and tail-on shrimp." },
+      "3": { es: "La Cochinita Pibil se cocina tradicionalmente envuelta en hoja de plátano con recado de achiote.", en: "Cochinita Pibil is traditionally cooked wrapped in banana leaf with achiote recado." },
+      "4": { es: "En la opción Vegana los champiñones en rodajas reemplazan a la carne.", en: "In the Vegan option sliced mushrooms replace the meat." },
+      "5": { es: "El líquido sazonador oscuro es un concentrado tipo Maggi, distinto de la salsa de soya y de la salsa de pescado, algo clave para responder sobre alergias.", en: "The dark savory seasoning liquid is a Maggi-style concentrate, different from soy sauce and fish sauce, which matters for allergy questions." }
+    },
+    "K8": {
+      "0": { es: "Las flores de jamaica (hibisco) secas son las que dan al agua su color rojo profundo.", en: "Dried hibiscus flowers are what give the agua its deep red color." },
+      "1": { es: "El maíz morado peruano es el que aporta a la Chicha Morada su color morado natural.", en: "Peruvian purple corn is what gives Chicha Morada its natural purple color." },
+      "2": { es: "La Sopa de Carne lleva elote, zanahoria, papa y apio además de la costilla de res.", en: "Beef Soup includes corn, carrots, potatoes, and celery besides the beef short-rib." },
+      "3": { es: "Los tres líquidos base del Flan son huevos enteros, leche entera y leche condensada endulzada.", en: "The three core wet ingredients in Flan are whole eggs, whole milk, and sweetened condensed milk." },
+      "4": { es: "La Mezcla para French Toast lleva canela molida y nuez moscada molida como sus especias.", en: "French Toast Mix uses ground cinnamon and ground nutmeg as its spices." }
+    },
+    "K9": {
+      "0": { es: "Las limpiezas profundas semanales son responsabilidad compartida de todo el equipo, no de una sola persona.", en: "The weekly deep cleanings are a shared responsibility of the whole team, not one person." },
+      "1": { es: "Los turnos de la mañana también pueden y deben empezar las limpiezas, para que el trabajo quede completo al final del día.", en: "Morning shifts can and should start the cleanings too, so the work is genuinely complete by end of day." },
+      "2": { es: "Además de la foto de inventario, esa persona firma el control y confirma que la estación quedó limpia según el plan.", en: "Besides the inventory photo, that person signs the control sheet and confirms the station is clean per plan." },
+      "3": { es: "Se requieren guantes resistentes a químicos y calzado antideslizante para trabajar seguro con productos de limpieza.", en: "Chemical-resistant gloves and non-slip footwear are required to work safely with cleaning products." },
+      "4": { es: "El Supervisor de Cocina o el GM verifican que la limpieza del día se haya hecho correctamente, así no queda sin revisión.", en: "The Kitchen Supervisor or GM verify the day's cleaning was done correctly, so it isn't left unchecked." }
+    },
+    "K10": {
+      "0": { es: "El lunes se limpia la Estación 1: freidoras, mesa de apoyo y nevera de ceviche, según el reparto de una estación por día.", en: "Monday cleans Station 1 — fryers, support table, and ceviche fridge — under the one-station-per-day split." },
+      "1": { es: "El domingo (Estación 7) es una revisión general de las estaciones 1-6 más drenajes, paredes y zócalos.", en: "Sunday (Station 7) is a general review of stations 1-6 plus drains, walls, and baseboards." },
+      "2": { es: "Antes de mover freidoras o el flat top se corta y bloquea la energía y se deja enfriar el aceite, para evitar quemaduras y descargas.", en: "Before moving fryers or the flat top you cut and lock out power and let the oil cool, to avoid burns and shocks." },
+      "3": { es: "Al reacomodar producto se aplica FIFO: lo más antiguo adelante y lo nuevo atrás, para que se use en orden.", en: "When restocking, FIFO applies — oldest in front, newest in back — so product is used in order." },
+      "4": { es: "Todo debe quedar completamente seco antes de devolverlo al congelador para evitar la formación de hielo.", en: "Everything must be fully dry before going back in the freezer to avoid ice buildup." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #2 Explicaciones "por qué" — track MANAGER (generado, revisar) */
+(function(){
+  if (typeof QUIZ_EXPLANATIONS === "undefined") return;
+  var ADD = {
+    "MG1": {
+      "0": { es: "El manager fija el ambiente del turno porque el equipo sigue lo que ve en quien dirige.", en: "The manager sets the shift's climate because the team follows what it sees in whoever leads." },
+      "1": { es: "Un estándar solo funciona si se aplica igual cada día, no cuando conviene.", en: "A standard only works if it is applied the same every day, not when convenient." },
+      "2": { es: "Liderar con el ejemplo es modelar la conducta que pides, porque el equipo copia acciones más que palabras.", en: "Leading by example means modeling the conduct you ask for, because the team copies actions more than words." },
+      "3": { es: "Estar visible en el piso le permite al AGM resolver cualquier eventualidad con clientes o equipo en el momento.", en: "Being visible on the floor lets the AGM handle any guest or team situation the moment it arises." },
+      "4": { es: "Un informe diario de incidencias, ventas y rendimiento le da al AGM datos para mejorar el siguiente turno.", en: "A daily report on incidents, sales, and performance gives the AGM data to improve the next shift." }
+    },
+    "MG2": {
+      "0": { es: "Terminar CORE más el track de rol asegura que el empleado domine lo básico y lo específico antes de operar solo.", en: "Finishing CORE plus the role track ensures the hire masters the basics and role specifics before working alone." },
+      "1": { es: "El progreso en Chela's Academy da un registro objetivo del avance, en vez de suposiciones.", en: "Chela's Academy progress gives an objective record of advancement instead of guesswork." },
+      "2": { es: "La supervisión del entrenamiento recae en los managers porque son quienes responden por la preparación del equipo.", en: "Training oversight falls to managers because they are accountable for the team's readiness." },
+      "3": { es: "Un error de reloj se notifica a Recursos Humanos porque afecta el pago y debe corregirse por el canal correcto.", en: "A clock error goes to HR because it affects pay and must be fixed through the proper channel." },
+      "4": { es: "Garantizar cobertura adecuada en cada turno, incluso festivos, evita quedar corto de personal cuando más se necesita.", en: "Ensuring adequate coverage on every shift, holidays included, avoids being short-staffed when it matters most." }
+    },
+    "MG3": {
+      "0": { es: "Recorrer el piso y revisar personal y stock al abrir detecta problemas antes de que empiece el servicio.", en: "Walking the floor and checking staffing and stock at open catches problems before service begins." },
+      "1": { es: "Asegurar efectivo y alcohol al cierre protege los activos de mayor riesgo de pérdida o robo.", en: "Securing cash and alcohol at close protects the assets most at risk of loss or theft." },
+      "2": { es: "Conciliar el POS al cierre confirma que las ventas cuadren con el dinero recibido.", en: "Reconciling the POS at close confirms that sales match the money taken in." },
+      "3": { es: "Verificar la entrega contra la factura confirma que llegó lo pedido antes de pagarlo.", en: "Checking the delivery against the invoice confirms what was ordered actually arrived before paying." },
+      "4": { es: "Monitorear porciones, desperdicio y rotación FIFO protege los márgenes controlando el costo real de cada plato.", en: "Monitoring portions, waste, and FIFO rotation protects margins by controlling the true cost of each dish." }
+    },
+    "MG4": {
+      "0": { es: "Atender las quejas escaladas en persona y con calma desescala la situación y recupera al huésped.", en: "Handling escalated complaints in person and calmly de-escalates the situation and recovers the guest." },
+      "1": { es: "Empoderar al equipo para resolver problemas pequeños agiliza el servicio y libera al manager para lo grave.", en: "Empowering the team to solve small issues speeds service and frees the manager for the serious ones." },
+      "2": { es: "Documentar problemas recurrentes revela patrones que se pueden corregir de raíz.", en: "Documenting recurring problems reveals patterns you can fix at the root." },
+      "3": { es: "La música, la limpieza y la presentación del espacio forman parte de la experiencia del huésped que el manager cuida.", en: "Music, cleanliness, and the space's presentation are part of the guest experience the manager safeguards." },
+      "4": { es: "Dar seguimiento respetuoso a las reseñas que nombran a alguien convierte la retroalimentación pública en coaching útil.", en: "Following up respectfully on reviews that name someone turns public feedback into useful coaching." }
+    },
+    "MG5": {
+      "0": { es: "Los managers procesan anulaciones, cortesías y anulaciones especiales porque esa autoridad existe para la recuperación de servicio y correcciones legítimas.", en: "Managers process voids, comps, and overrides because that authority exists for service recovery and legitimate corrections." },
+      "1": { es: "Registrar siempre la razón deja constancia de que la anulación fue por una necesidad real del negocio.", en: "Always logging the reason leaves a record that the void answered a real business need." },
+      "2": { es: "La autoridad de anulación se limita a necesidades legítimas, no a la conveniencia, para no encubrir errores ni fraude.", en: "Override authority is limited to legitimate needs, not convenience, so it never masks errors or fraud." },
+      "3": { es: "Toast registra quién y por qué para proteger al restaurante y al manager como prueba de uso legítimo.", en: "Toast logs who and why to protect the restaurant and the manager as proof of legitimate use." }
+    },
+    "MG7": {
+      "0": { es: "Confirmar que la factura coincide antes de aceptar evita pagar por producto que no llegó.", en: "Confirming the invoice matches before accepting avoids paying for product that never arrived." },
+      "1": { es: "Pedir de forma proactiva, según niveles de stock, evita quedarse sin producto en el momento más ocupado.", en: "Ordering proactively based on stock levels avoids running out during the busiest moment." },
+      "2": { es: "Revisar los niveles de stock varias veces por semana detecta faltantes antes de que se agoten.", en: "Checking stock levels several times a week catches shortfalls before items run out." },
+      "3": { es: "Aceptar sin revisar contra la factura arriesga pagar de más por producto faltante o dañado sin poder disputarlo.", en: "Accepting without checking against the invoice risks overpaying for short or damaged product with no way to dispute it." }
+    },
+    "MG8": {
+      "0": { es: "La tabla 'Progreso' reúne la finalización de módulos de todo el equipo en un solo lugar.", en: "The 'Progreso' table gathers every team member's module completion in one place." },
+      "1": { es: "Exportar el progreso como CSV crea un registro guardable para archivo y seguimiento.", en: "Exporting progress as CSV creates a savable record for filing and follow-up." },
+      "2": { es: "La integración opcional con Google Sheet sincroniza el progreso de forma centralizada.", en: "The optional Google Sheet integration syncs progress centrally." },
+      "3": { es: "Revisar de verdad el progreso detecta temprano a un trainee con dificultades antes de que se vuelva un problema de servicio.", en: "Actually reviewing progress catches a struggling trainee early before it becomes a service problem." }
+    },
+    "MG9": {
+      "0": { es: "El % de Costo de Comida compara el costo de los ingredientes con los ingresos por venta de comida para medir la rentabilidad del menú.", en: "Food Cost % compares ingredient cost to food sales revenue to measure the menu's profitability." },
+      "1": { es: "Un costo de mano de obra de 25 a 30% es el rango sano que equilibra dotación de personal y ganancia.", en: "A labor cost of 25 to 30% is the healthy range that balances staffing with profit." },
+      "2": { es: "FIFO, Primero en Entrar Primero en Salir, reduce desperdicio al usar primero el producto más viejo.", en: "FIFO, First In First Out, reduces waste by using the oldest product first." },
+      "3": { es: "El Costo Primo suma costo de comida y de mano de obra, los dos gastos controlables más grandes.", en: "Prime Cost adds food and labor cost together, the two largest controllable expenses." },
+      "4": { es: "La varianza de inventario expone desperdicio, robo o mala gestión al comparar lo esperado con lo real.", en: "Inventory variance exposes waste, theft, or mismanagement by comparing expected against actual." }
+    },
+    "MG10": {
+      "0": { es: "La meta de 90%+ de satisfacción fija un estándar claro contra el cual medir cada turno.", en: "The 90%+ satisfaction goal sets a clear standard to measure every shift against." },
+      "1": { es: "La meta de 4.5+ estrellas mantiene la reputación en línea que atrae a nuevos huéspedes.", en: "The 4.5+ star target maintains the online reputation that draws new guests." },
+      "2": { es: "Comunicarte de inmediato con cocina y FOH identifica el cuello de botella antes de que los tiempos empeoren.", en: "Communicating immediately with kitchen and FOH pinpoints the bottleneck before ticket times worsen." },
+      "3": { es: "Mover el producto a almacenamiento seguro de inmediato evita que se eche a perder cuando falla el cooler.", en: "Moving product to safe storage immediately prevents spoilage when the cooler fails." },
+      "4": { es: "Responder con profesionalismo, disculpa y solución fuera de línea repara la relación sin discutir en público.", en: "Responding professionally, with an apology and an offline fix, repairs the relationship without arguing in public." }
+    },
+    "MG11": {
+      "0": { es: "Liderar con el ejemplo es demostrar el profesionalismo y la ética de trabajo que esperas del equipo.", en: "Leading by example is demonstrating the professionalism and work ethic you expect from the team." },
+      "1": { es: "Empezar con una conversación privada aborda la tardanza con respeto y busca la causa raíz antes de escalar.", en: "Starting with a private conversation addresses lateness respectfully and seeks the root cause before escalating." },
+      "2": { es: "Mejor entrenamiento, cultura positiva, pago competitivo y reconocimiento reducen la rotación al dar razones para quedarse.", en: "Better training, positive culture, competitive pay, and recognition reduce turnover by giving reasons to stay." },
+      "3": { es: "Separar el conflicto de inmediato protege la experiencia del huésped antes de resolver la disputa en privado.", en: "Separating the conflict immediately protects the guest experience before resolving the dispute in private." }
+    }
+  };
+  for (var id in ADD){
+    QUIZ_EXPLANATIONS[id] = QUIZ_EXPLANATIONS[id] || {};
+    for (var qi in ADD[id]){
+      if (QUIZ_EXPLANATIONS[id][qi] === undefined) QUIZ_EXPLANATIONS[id][qi] = ADD[id][qi];
+    }
+  }
+})();
+
+/* #3 Preguntas nuevas — track CORE (generado, revisar precisión) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+  add("C0", [
+    {
+      q: { es: "¿A quién aplican estas políticas generales de salón?", en: "Who do these general floor policies apply to?" },
+      options: [
+        { es: "Solo a los meseros", en: "Only to servers" },
+        { es: "Solo a bartenders y hosts", en: "Only to bartenders and hosts" },
+        { es: "A todo el personal de salón: meseros, hosts, bartenders y bussers", en: "To all floor staff: servers, hosts, bartenders and bussers" },
+        { es: "Solo a la gerencia", en: "Only to management" }
+      ],
+      correct: 2,
+      explanation: { es: "Las políticas aplican a todo el personal de salón por igual.", en: "The policies apply to all floor staff equally." }
+    },
+    {
+      q: { es: "¿Quién puede actualizar los procedimientos cuando cambian las necesidades operativas?", en: "Who can update procedures when operational needs change?" },
+      options: [
+        { es: "La gerencia", en: "Management" },
+        { es: "Cualquier mesero por su cuenta", en: "Any server on their own" },
+        { es: "Solo los clientes frecuentes", en: "Only regular customers" },
+        { es: "Nadie, nunca cambian", en: "No one, they never change" }
+      ],
+      correct: 0,
+      explanation: { es: "La gerencia actualiza los procedimientos y cada empleado sigue la versión vigente.", en: "Management updates procedures and each employee follows the current version." }
+    }
+  ]);
+  add("C1", [
+    {
+      q: { es: "¿Cuáles son los cuatro pilares de la cultura de Chela's?", en: "What are the four pillars of Chela's culture?" },
+      options: [
+        { es: "Precio bajo, rapidez, cantidad y volumen", en: "Low price, speed, quantity and volume" },
+        { es: "Hospitalidad cálida, trabajo en equipo, puntualidad y orgullo en los detalles", en: "Warm hospitality, teamwork, punctuality and pride in the details" },
+        { es: "Marketing, redes sociales, descuentos y promociones", en: "Marketing, social media, discounts and promotions" },
+        { es: "Uniformes, horarios, propinas y descansos", en: "Uniforms, schedules, tips and breaks" }
+      ],
+      correct: 1,
+      explanation: { es: "La cultura se apoya en esos cuatro pilares.", en: "The culture rests on those four pillars." }
+    },
+    {
+      q: { es: "¿Por qué importa la puntualidad según la lección?", en: "Why does punctuality matter according to the lesson?" },
+      options: [
+        { es: "Porque el side work y el montaje están sincronizados y una llegada tarde puede retrasar toda la apertura", en: "Because side work and setup are synchronized and one late arrival can delay the whole opening" },
+        { es: "Porque se descuenta del sueldo automáticamente", en: "Because it is automatically deducted from pay" },
+        { es: "Porque los clientes cuentan quién llega tarde", en: "Because customers count who arrives late" },
+        { es: "Porque no importa realmente", en: "Because it does not really matter" }
+      ],
+      correct: 0,
+      explanation: { es: "Todo está sincronizado para que el piso esté listo antes de abrir puertas.", en: "Everything is synchronized so the floor is ready before doors open." }
+    },
+    {
+      q: { es: "¿Qué tracks de rol existen además de CORE?", en: "What role tracks exist besides CORE?" },
+      options: [
+        { es: "Cocina, limpieza y seguridad", en: "Kitchen, cleaning and security" },
+        { es: "Ventas, marketing y finanzas", en: "Sales, marketing and finance" },
+        { es: "Server, Bartender, Busser, Host o Manager", en: "Server, Bartender, Busser, Host or Manager" },
+        { es: "Solo un track general para todos", en: "Only one general track for everyone" }
+      ],
+      correct: 2,
+      explanation: { es: "Cada empleado ve CORE más el track de su rol específico.", en: "Each employee sees CORE plus their specific role track." }
+    }
+  ]);
+  add("C2", [
+    {
+      q: { es: "Un huésped asume que las papas fritas son libres de gluten. ¿Qué debes hacer?", en: "A guest assumes the fries are gluten-free. What should you do?" },
+      options: [
+        { es: "Corregir esa suposición de forma proactiva porque comparten freidora con productos con gluten", en: "Proactively correct that assumption because they share a fryer with gluten products" },
+        { es: "Confirmar que son libres de gluten", en: "Confirm they are gluten-free" },
+        { es: "Esperar a que el huésped pregunte primero", en: "Wait for the guest to ask first" },
+        { es: "Ignorarlo, no es tu responsabilidad", en: "Ignore it, it is not your responsibility" }
+      ],
+      correct: 0,
+      explanation: { es: "La freidora sin mariscos se comparte con gluten, así que las papas no son libres de gluten.", en: "The no-seafood fryer is shared with gluten, so the fries are not gluten-free." }
+    },
+    {
+      q: { es: "Aunque un huésped con alergia parezca tomárselo con calma, ¿cómo debes tratar la mención de alergia?", en: "Even if an allergy guest seems relaxed about it, how should you treat the allergy mention?" },
+      options: [
+        { es: "Como algo opcional", en: "As something optional" },
+        { es: "Como una preferencia más", en: "As just another preference" },
+        { es: "Solo si insisten dos veces", en: "Only if they insist twice" },
+        { es: "Como importante, siempre", en: "As important, always" }
+      ],
+      correct: 3,
+      explanation: { es: "El ingrediente equivocado puede provocar una reacción seria sin importar la actitud del huésped.", en: "The wrong ingredient can cause a serious reaction regardless of the guest's attitude." }
+    }
+  ]);
+  add("C3", [
+    {
+      q: { es: "¿Cuánto tiempo toma lavarse bien las manos según la lección?", en: "How long does washing your hands properly take according to the lesson?" },
+      options: [
+        { es: "5 minutos", en: "5 minutes" },
+        { es: "20 segundos", en: "20 seconds" },
+        { es: "2 minutos", en: "2 minutes" },
+        { es: "1 hora", en: "1 hour" }
+      ],
+      correct: 1,
+      explanation: { es: "Toma 20 segundos y previene problemas que tardan días en resolverse.", en: "It takes 20 seconds and prevents problems that take days to resolve." }
+    },
+    {
+      q: { es: "Al barrer vidrio roto, ¿qué área debes cubrir?", en: "When sweeping up broken glass, what area should you cover?" },
+      options: [
+        { es: "Solo donde están las piezas grandes visibles", en: "Only where the large visible pieces are" },
+        { es: "Toda el área, incluyendo debajo de muebles cercanos", en: "The whole area, including under nearby furniture" },
+        { es: "Solo el centro del derrame", en: "Only the center of the spill" },
+        { es: "No hace falta barrer si usas guantes", en: "No need to sweep if you wear gloves" }
+      ],
+      correct: 1,
+      explanation: { es: "Fragmentos pequeños invisibles pueden quedar cerca o bajo los muebles.", en: "Small invisible fragments can remain nearby or under furniture." }
+    }
+  ]);
+  add("C4", [
+    {
+      q: { es: "¿Cómo debes agradecer a los huéspedes cuando se van, cuando sea posible?", en: "How should you thank guests as they leave, when possible?" },
+      options: [
+        { es: "Por su nombre, e invitarlos a regresar", en: "By name, and invite them back" },
+        { es: "Solo entregarles el recibo", en: "Just hand them the receipt" },
+        { es: "Con un simple gesto de la mano", en: "With a simple wave" },
+        { es: "No es necesario despedirse", en: "No need to say goodbye" }
+      ],
+      correct: 0,
+      explanation: { es: "Un huésped que se siente genuinamente agradecido es más probable que regrese y recomiende Chela's.", en: "A guest who feels genuinely thanked is more likely to return and recommend Chela's." }
+    },
+    {
+      q: { es: "Una pareja en una cita tranquila y un grupo de diez celebrando un cumpleaños, ¿cómo debes tratarlos?", en: "A couple on a quiet date and a group of ten celebrating a birthday, how should you treat them?" },
+      options: [
+        { es: "Exactamente igual, con el mismo ritmo", en: "Exactly the same, with the same pace" },
+        { es: "Ajustando tu tono y frecuencia de revisión a lo que cada mesa necesita", en: "Adjusting your tone and check-in frequency to what each table needs" },
+        { es: "Ignorando a la pareja para atender al grupo grande", en: "Ignoring the couple to serve the large group" },
+        { es: "Siempre con la máxima energía posible", en: "Always with maximum possible energy" }
+      ],
+      correct: 1,
+      explanation: { es: "Leer la mesa importa tanto como seguir un guion.", en: "Reading the table matters as much as following a script." }
+    }
+  ]);
+  add("C5", [
+    {
+      q: { es: "¿Por qué debes abrir la mesa antes de ingresar cualquier pedido?", en: "Why should you open the table before entering any order?" },
+      options: [
+        { es: "Para vincular cada artículo a la mesa y número de huéspedes correctos desde el inicio", en: "To link each item to the correct table and guest count from the start" },
+        { es: "Para que el pedido sea gratis", en: "To make the order free" },
+        { es: "Porque la cocina lo exige antes de cocinar", en: "Because the kitchen requires it before cooking" },
+        { es: "No es necesario abrir la mesa antes", en: "There is no need to open the table first" }
+      ],
+      correct: 0,
+      explanation: { es: "Vincular la mesa desde el inicio importa para dividir cuentas y conciliar ventas.", en: "Linking the table from the start matters for splitting checks and reconciling sales." }
+    },
+    {
+      q: { es: "¿Qué bebidas deben registrarse en Toast?", en: "Which drinks must be recorded in Toast?" },
+      options: [
+        { es: "Solo las bebidas con alcohol", en: "Only alcoholic drinks" },
+        { es: "Solo las bebidas que el huésped pague", en: "Only drinks the guest pays for" },
+        { es: "Toda bebida, con o sin alcohol, sin excepciones", en: "Every drink, alcoholic or not, no exceptions" },
+        { es: "Solo las bebidas después de la tercera ronda", en: "Only drinks after the third round" }
+      ],
+      correct: 2,
+      explanation: { es: "Registrar cada bebida es requerido por la política de servicio responsable de alcohol.", en: "Recording every drink is required by the responsible alcohol service policy." }
+    }
+  ]);
+  add("CESC", [
+    {
+      q: { es: "Un cliente se va sin pagar su cuenta (walk-out). ¿Qué debes hacer?", en: "A customer leaves without paying their bill (walk-out). What should you do?" },
+      options: [
+        { es: "Perseguirlo tú mismo hasta la calle", en: "Chase them into the street yourself" },
+        { es: "Involucrar a un manager de inmediato", en: "Involve a manager immediately" },
+        { es: "Pagar la cuenta de tu propio bolsillo", en: "Pay the bill out of your own pocket" },
+        { es: "Ignorarlo y seguir trabajando", en: "Ignore it and keep working" }
+      ],
+      correct: 1,
+      explanation: { es: "Una cuenta no pagada es una situación que requiere involucrar a un manager de inmediato.", en: "An unpaid bill is a situation that requires involving a manager immediately." }
+    },
+    {
+      q: { es: "Cuando dudas si una situación califica para involucrar a un manager, ¿qué debes hacer?", en: "When you doubt whether a situation qualifies for involving a manager, what should you do?" },
+      options: [
+        { es: "Tratarla como si calificara y avisar a un manager", en: "Treat it as if it qualifies and tell a manager" },
+        { es: "Esperar a ver si empeora", en: "Wait to see if it gets worse" },
+        { es: "Preguntar a otro compañero primero", en: "Ask another coworker first" },
+        { es: "Resolverla tú mismo para no molestar", en: "Handle it yourself to avoid bothering anyone" }
+      ],
+      correct: 0,
+      explanation: { es: "Es mejor avisar de más que quedarte callado en el momento equivocado.", en: "It is better to over-report than to stay silent at the wrong moment." }
+    }
+  ]);
+})();
+
+/* #3 Preguntas nuevas — track SERVER (generado, revisar precision) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+
+  add("S1", [
+    { q:{es:"¿En qué horario es el Happy Hour?", en:"When is Happy Hour?"},
+      options:[
+        {es:"Todos los días de 5pm a 8pm", en:"Every day from 5pm to 8pm"},
+        {es:"Solo los viernes de 4pm a 7pm", en:"Only Fridays from 4pm to 7pm"},
+        {es:"De lunes a sábado, de 4pm a 7pm", en:"Monday to Saturday, 4pm to 7pm"},
+        {es:"De lunes a domingo, de 12pm a 4pm", en:"Monday to Sunday, 12pm to 4pm"}
+      ], correct:2,
+      explanation:{es:"El Happy Hour es de lunes a sábado, de 4pm a 7pm.", en:"Happy Hour runs Monday to Saturday, 4pm to 7pm."} },
+    { q:{es:"¿Qué es el Jueves de Despecho?", en:"What is Jueves de Despecho (Thursday)?"},
+      options:[
+        {es:"Clases gratis de salsa desde las 9pm", en:"Free salsa classes starting at 9pm"},
+        {es:"Ladies Night, con menú con descuento desde las 8pm", en:"Ladies Night, with a discounted menu from 8pm"},
+        {es:"DJ en vivo con tema musical de pink night", en:"Live DJ with a pink night music theme"},
+        {es:"Brunch con mimosas ilimitadas", en:"Brunch with bottomless mimosas"}
+      ], correct:1,
+      explanation:{es:"El jueves es Ladies Night con menú con descuento desde las 8pm.", en:"Thursday is Ladies Night with a discounted menu starting at 8pm."} },
+    { q:{es:"Además del cambio, ¿qué más debes llevar contigo en cada turno?", en:"Besides change, what else should you carry each shift?"},
+      options:[
+        {es:"Un cargador de teléfono", en:"A phone charger"},
+        {es:"Un cuaderno de reservaciones", en:"A reservations notebook"},
+        {es:"Un juego de llaves del bar", en:"A set of bar keys"},
+        {es:"Un destapador de vino y cerveza, un radio, y un encendedor", en:"A wine and beer opener, a radio, and a lighter"}
+      ], correct:3,
+      explanation:{es:"Cada turno debes llevar un destapador, un radio funcionando, y un encendedor, además del cambio.", en:"Each shift you should carry an opener, a working radio, and a lighter, plus change."} }
+  ]);
+
+  add("S2", [
+    { q:{es:"En el Opener para un huésped que regresa, ¿qué se recomienda?", en:"In the Opener for a returning guest, what do you recommend?"},
+      options:[
+        {es:"El cóctel Bajapanty y el especial del chef", en:"The Bajapanty cocktail and the chef's special"},
+        {es:"El guacamole con chicharrones", en:"The guacamole with chicharrones"},
+        {es:"El pastel de chocolate de 5 capas", en:"The 5-layer chocolate cake"},
+        {es:"Un Espresso Martini", en:"An Espresso Martini"}
+      ], correct:0,
+      explanation:{es:"A un huésped que regresa se le recomienda el cóctel Bajapanty y el especial del chef.", en:"A returning guest is recommended the Bajapanty cocktail and the chef's special."} },
+    { q:{es:"Si el huésped acepta el guacamole, ¿qué le preguntas?", en:"If the guest accepts the guacamole, what do you ask?"},
+      options:[
+        {es:"¿Lo quieren picante o suave?", en:"Do you want it spicy or mild?"},
+        {es:"¿Con queso o sin queso?", en:"With cheese or without?"},
+        {es:"¿Lo quieren con chicharrones, o solo?", en:"Do you want it with chicharrones, or plain?"},
+        {es:"¿Para cuántas personas?", en:"For how many people?"}
+      ], correct:2,
+      explanation:{es:"Al aceptar el guacamole, preguntas si lo quieren con chicharrones o solo.", en:"When they accept the guacamole, you ask whether they want it with chicharrones or plain."} },
+    { q:{es:"Con el postre, ¿qué bebida después de la cena puedes ofrecer?", en:"With dessert, what after-dinner drink can you offer?"},
+      options:[
+        {es:"Una cerveza de barril", en:"A draft beer"},
+        {es:"Un Espresso Martini o un Carajillo Chela's", en:"An Espresso Martini or a Carajillo Chela's"},
+        {es:"Una Corona-Rita", en:"A Corona-Rita"},
+        {es:"Una copa de sangría", en:"A glass of sangria"}
+      ], correct:1,
+      explanation:{es:"Después de la cena se ofrece una bebida como un Espresso Martini o un Carajillo Chela's.", en:"After dinner you offer a drink such as an Espresso Martini or a Carajillo Chela's."} }
+  ]);
+
+  add("S3", [
+    { q:{es:"¿En cuánto tiempo deben darse el saludo y el agua?", en:"Within how long should the greeting and water happen?"},
+      options:[
+        {es:"3 minutos", en:"3 minutes"},
+        {es:"2 minutos", en:"2 minutes"},
+        {es:"6 minutos", en:"6 minutes"},
+        {es:"4 minutos", en:"4 minutes"}
+      ], correct:1,
+      explanation:{es:"El saludo y el agua deben darse dentro de 2 minutos.", en:"The greeting and water should happen within 2 minutes."} },
+    { q:{es:"¿Cuántos menús de postre se presentan?", en:"How many dessert menus do you present?"},
+      options:[
+        {es:"Uno por huésped", en:"One per guest"},
+        {es:"Uno por mesa", en:"One per table"},
+        {es:"Uno por cada dos huéspedes", en:"One for every two guests"},
+        {es:"Uno por cada cuatro huéspedes", en:"One for every four guests"}
+      ], correct:2,
+      explanation:{es:"Se presenta un menú de postre por cada dos huéspedes.", en:"You present one dessert menu for every two guests."} },
+    { q:{es:"¿En cuánto tiempo debes levantar la mesa después de que terminen?", en:"How soon should you clear the table after they finish?"},
+      options:[
+        {es:"Dentro de 4 minutos de terminar", en:"Within 4 minutes of finishing"},
+        {es:"Dentro de 10 minutos", en:"Within 10 minutes"},
+        {es:"Solo al presentar la cuenta", en:"Only when presenting the check"},
+        {es:"Dentro de 2 minutos", en:"Within 2 minutes"}
+      ], correct:0,
+      explanation:{es:"La mesa se levanta dentro de 4 minutos de que los huéspedes terminen.", en:"The table is cleared within 4 minutes of guests finishing."} }
+  ]);
+
+  add("S4", [
+    { q:{es:"¿Cuál de estos artículos contiene gluten?", en:"Which of these items contains gluten?"},
+      options:[
+        {es:"Ceviche clásico", en:"Classic ceviche"},
+        {es:"Coctel de camarón", en:"Shrimp cocktail"},
+        {es:"Poke bowl", en:"Poke bowl"},
+        {es:"Churros y sopaipillas", en:"Churros and sopaipillas"}
+      ], correct:3,
+      explanation:{es:"Los churros y las sopaipillas contienen gluten.", en:"Churros and sopaipillas contain gluten."} },
+    { q:{es:"¿Cuál es un síntoma de una reacción alérgica severa?", en:"What is a symptom of a severe allergic reaction?"},
+      options:[
+        {es:"Dificultad para respirar u opresión en la garganta", en:"Difficulty breathing or throat tightness"},
+        {es:"Somnolencia leve después de comer", en:"Mild drowsiness after eating"},
+        {es:"Sed excesiva", en:"Excessive thirst"},
+        {es:"Dolor de cabeza leve", en:"A mild headache"}
+      ], correct:0,
+      explanation:{es:"La dificultad para respirar o la opresión en la garganta es un síntoma de reacción severa.", en:"Difficulty breathing or throat tightness is a symptom of a severe reaction."} },
+    { q:{es:"En el POS, ¿a qué artículos se agrega el modificador ALLERGY?", en:"In the POS, which items get the ALLERGY modifier?"},
+      options:[
+        {es:"Solo al plato principal", en:"Only the main dish"},
+        {es:"Solo a las entradas", en:"Only the appetizers"},
+        {es:"A cada artículo afectado, incluyendo platos compartidos", en:"Every affected item, including shared dishes"},
+        {es:"Solo a las bebidas", en:"Only the drinks"}
+      ], correct:2,
+      explanation:{es:"El modificador ALLERGY se agrega a cada artículo afectado, incluyendo los platos compartidos.", en:"The ALLERGY modifier is added to every affected item, including shared dishes."} }
+  ]);
+
+  add("S5", [
+    { q:{es:"¿Cuáles son los rellenos disponibles de quesadilla?", en:"What are the available quesadilla fillings?"},
+      options:[
+        {es:"Camarón, pollo, y filete", en:"Shrimp, chicken, and steak"},
+        {es:"Pollo, short rib, vegetariana, o filete", en:"Chicken, short rib, vegetarian, or steak"},
+        {es:"Solo pollo y vegetariana", en:"Only chicken and vegetarian"},
+        {es:"Short rib y camarón", en:"Short rib and shrimp"}
+      ], correct:1,
+      explanation:{es:"Los rellenos de quesadilla son pollo, short rib, vegetariana, o filete.", en:"Quesadilla fillings are chicken, short rib, vegetarian, or steak."} },
+    { q:{es:"¿En qué tipo de tortilla se sirve el Three Taco Deal?", en:"What tortilla is the Three Taco Deal served in?"},
+      options:[
+        {es:"Tortilla de harina", en:"Flour tortilla"},
+        {es:"Tortilla mixta", en:"Mixed tortilla"},
+        {es:"Tortilla de trigo integral", en:"Whole wheat tortilla"},
+        {es:"Tortilla 100% de maíz", en:"100% corn tortilla"}
+      ], correct:3,
+      explanation:{es:"El Three Taco Deal se sirve en tortillas 100% de maíz.", en:"The Three Taco Deal is served in 100% corn tortillas."} },
+    { q:{es:"¿Cómo se venden los Catch of the Day Tacos?", en:"How are the Catch of the Day Tacos sold?"},
+      options:[
+        {es:"Solo en set de tres, sin sustituciones", en:"Only in a set of three, no substitutions"},
+        {es:"Individualmente", en:"Individually"},
+        {es:"En pares", en:"In pairs"},
+        {es:"Con sustituciones libres", en:"With free substitutions"}
+      ], correct:0,
+      explanation:{es:"Los Catch of the Day Tacos se venden solo en set de tres, sin sustituciones.", en:"Catch of the Day Tacos are sold only in a set of three, with no substitutions."} }
+  ]);
+
+  add("S6", [
+    { q:{es:"¿Cómo se describe el cóctel Bajapanty?", en:"How is the Bajapanty cocktail described?"},
+      options:[
+        {es:"Ahumado y picante, con mezcal", en:"Smoky and spicy, with mezcal"},
+        {es:"Rico y para tomar despacio, añejado en barril", en:"Rich and slow-sipping, barrel-aged"},
+        {es:"Floral y refrescante, con lychee y flor de mariposa", en:"Floral and refreshing, with lychee and butterfly flower"},
+        {es:"Con energía incluida, lleva Red Bull", en:"Energy included, made with Red Bull"}
+      ], correct:2,
+      explanation:{es:"El Bajapanty es floral y refrescante, con lychee y flor de mariposa, un buen cóctel de entrada.", en:"The Bajapanty is floral and refreshing, with lychee and butterfly flower, a good starter cocktail."} },
+    { q:{es:"¿Qué es la Corona-Rita?", en:"What is the Corona-Rita?"},
+      options:[
+        {es:"Una margarita congelada de fresa", en:"A frozen strawberry margarita"},
+        {es:"Un Tommy's tamaño jumbo con una Coronita encima", en:"A jumbo-sized Tommy's with a Coronita on top"},
+        {es:"Una cerveza de barril con limón", en:"A draft beer with lime"},
+        {es:"Un flight de tequila", en:"A tequila flight"}
+      ], correct:1,
+      explanation:{es:"La Corona-Rita es un Tommy's tamaño jumbo con una Coronita encima, ideal para compartir.", en:"The Corona-Rita is a jumbo-sized Tommy's with a Coronita on top, great for sharing."} },
+    { q:{es:"¿Qué tequila usa el Super Bucket Premium?", en:"What tequila does the Premium Super Bucket use?"},
+      options:[
+        {es:"Tequila de la casa", en:"House tequila"},
+        {es:"Campo Bravo", en:"Campo Bravo"},
+        {es:"Los Vecinos", en:"Los Vecinos"},
+        {es:"Don Julio", en:"Don Julio"}
+      ], correct:3,
+      explanation:{es:"El Super Bucket Premium usa Don Julio, mientras que el House usa tequila de la casa.", en:"The Premium Super Bucket uses Don Julio, while the House one uses house tequila."} }
+  ]);
+
+  add("S7", [
+    { q:{es:"¿En qué casos aplica la propina automática del 20%?", en:"When does the 20% automatic gratuity apply?"},
+      options:[
+        {es:"Solo a grupos de 10 o más", en:"Only groups of 10 or more"},
+        {es:"A cuentas de $100 o más", en:"Checks of $100 or more"},
+        {es:"A grupos de 6 o más personas, o cuentas de $300 o más", en:"Groups of 6 or more, or checks of $300 or more"},
+        {es:"A todas las cuentas pagadas con tarjeta", en:"All checks paid by card"}
+      ], correct:2,
+      explanation:{es:"La propina automática del 20% aplica a grupos de 6 o más, o cuentas de $300 o más.", en:"The 20% automatic gratuity applies to groups of 6 or more, or checks of $300 or more."} },
+    { q:{es:"¿Cuándo divides una cuenta 'por cuenta'?", en:"When do you split a check 'by check'?"},
+      options:[
+        {es:"Para repartir la cuenta en partes iguales", en:"To split the check evenly"},
+        {es:"Cuando cada huésped paga lo suyo", en:"When each guest pays for their own"},
+        {es:"Cuando hay una sola tarjeta", en:"When there is only one card"},
+        {es:"Al finalizar el turno", en:"At the end of the shift"}
+      ], correct:0,
+      explanation:{es:"Divides por cuenta para repartir el total en partes iguales.", en:"You split by check to divide the total evenly."} },
+    { q:{es:"¿Qué dice la buena práctica sobre las cuentas al terminar tu turno?", en:"What does best practice say about accounts at the end of your shift?"},
+      options:[
+        {es:"Puedes dejarlas para el siguiente turno", en:"You can leave them for the next shift"},
+        {es:"No dejes cuentas abiertas después de tu turno", en:"Do not leave accounts open after your shift"},
+        {es:"Ciérralas solo si el manager lo pide", en:"Close them only if the manager asks"},
+        {es:"Déjalas abiertas para acumular propinas", en:"Leave them open to accumulate tips"}
+      ], correct:1,
+      explanation:{es:"No debes dejar cuentas abiertas después de tu turno.", en:"You should not leave accounts open after your shift."} }
+  ]);
+
+  add("S8", [
+    { q:{es:"¿En cuánto tiempo deben los managers completar el entrenamiento RVA?", en:"How soon must managers complete the RVA training?"},
+      options:[
+        {es:"30 días", en:"30 days"},
+        {es:"60 días", en:"60 days"},
+        {es:"4 meses", en:"4 months"},
+        {es:"15 días", en:"15 days"}
+      ], correct:3,
+      explanation:{es:"Los managers deben completar el RVA en 15 días desde su contratación.", en:"Managers must complete the RVA within 15 days of hire."} },
+    { q:{es:"¿Cuál es una señal de intoxicación de un huésped?", en:"What is a sign of guest intoxication?"},
+      options:[
+        {es:"Habla arrastrada y problemas de equilibrio al caminar", en:"Slurred speech and balance problems while walking"},
+        {es:"Pedir agua con frecuencia", en:"Frequently asking for water"},
+        {es:"Hablar en voz baja", en:"Speaking quietly"},
+        {es:"Pedir la cuenta rápido", en:"Asking for the check quickly"}
+      ], correct:0,
+      explanation:{es:"El habla arrastrada y los problemas de equilibrio son señales de intoxicación.", en:"Slurred speech and balance problems are signs of intoxication."} },
+    { q:{es:"Si un huésped tiene problemas recurrentes de intoxicación, ¿qué puede hacer la gerencia?", en:"If a guest has recurring intoxication problems, what can management do?"},
+      options:[
+        {es:"Nada, debe seguir sirviéndole igual", en:"Nothing, they must keep serving them"},
+        {es:"Limitar o rechazar el servicio en el futuro", en:"Limit or refuse service in the future"},
+        {es:"Cobrarle una tarifa extra", en:"Charge them an extra fee"},
+        {es:"Prohibirle la entrada de por vida automáticamente", en:"Automatically ban them for life"}
+      ], correct:1,
+      explanation:{es:"La gerencia puede limitar o rechazar el servicio en el futuro según las leyes locales y la política.", en:"Management may limit or refuse future service per local laws and policy."} }
+  ]);
+
+  add("S9", [
+    { q:{es:"¿En qué consiste el entrenamiento completo?", en:"What does the full training consist of?"},
+      options:[
+        {es:"Solo 4 turnos de server", en:"Only 4 server shifts"},
+        {es:"2 de cocina, 2 de bar, y 4 de server", en:"2 kitchen, 2 bar, and 4 server"},
+        {es:"1 de Cocina/Expo, 1 de Bar, 1 de Busser, y 4 de Server", en:"1 Kitchen/Expo, 1 Bar, 1 Busser, and 4 Server"},
+        {es:"3 de bar y 3 de server", en:"3 bar and 3 server"}
+      ], correct:2,
+      explanation:{es:"El entrenamiento es 1 turno de Cocina/Expo, 1 de Bar, 1 de Busser, y 4 de Server.", en:"Training is 1 Kitchen/Expo shift, 1 Bar, 1 Busser, and 4 Server shifts."} },
+    { q:{es:"¿En qué se enfoca el Día 3?", en:"What does Day 3 focus on?"},
+      options:[
+        {es:"Atender una mesa durante todo el turno mientras el entrenador supervisa", en:"Serving a table the whole shift while the trainer supervises"},
+        {es:"Acompañar al chef en la línea de expo", en:"Shadowing the chef on the expo line"},
+        {es:"Side work y catas en el bar", en:"Side work and tastings at the bar"},
+        {es:"La evaluación del manager", en:"The manager evaluation"}
+      ], correct:0,
+      explanation:{es:"El Día 3 el trainee atiende una mesa todo el turno mientras el entrenador supervisa.", en:"On Day 3 the trainee serves a table the whole shift while the trainer supervises."} },
+    { q:{es:"¿Qué cubre el Examen de Pre-Contratación?", en:"What does the Pre-Hire Exam cover?"},
+      options:[
+        {es:"Solo el menú", en:"Only the menu"},
+        {es:"Solo el protocolo de alergias", en:"Only the allergy protocol"},
+        {es:"La historia del restaurante", en:"The restaurant's history"},
+        {es:"Menú, pasos de servicio, protocolo de alergias, y venta sugestiva", en:"Menu, steps of service, allergy protocol, and suggestive selling"}
+      ], correct:3,
+      explanation:{es:"El examen cubre menú, pasos de servicio, protocolo de alergias, y venta sugestiva.", en:"The exam covers menu, steps of service, allergy protocol, and suggestive selling."} }
+  ]);
+
+  add("S10", [
+    { q:{es:"¿Dónde está el Mexican Sodas & Waters Fridge?", en:"Where is the Mexican Sodas & Waters Fridge?"},
+      options:[
+        {es:"Florida Room", en:"Florida Room"},
+        {es:"Jungle Room", en:"Jungle Room"},
+        {es:"Center Room", en:"Center Room"},
+        {es:"Bar", en:"Bar"}
+      ], correct:1,
+      explanation:{es:"El Mexican Sodas & Waters Fridge está en el Jungle Room.", en:"The Mexican Sodas & Waters Fridge is in the Jungle Room."} },
+    { q:{es:"¿De quién es la estación Soda Station & Glassware?", en:"Whose station is the Soda Station & Glassware?"},
+      options:[
+        {es:"Del server de Florida Room", en:"The Florida Room server's"},
+        {es:"Del manager", en:"The manager's"},
+        {es:"Del busser, aunque los servers deben reportar problemas ahí", en:"The busser's, though servers should report problems there"},
+        {es:"De nadie en particular", en:"No one in particular"}
+      ], correct:2,
+      explanation:{es:"La Soda Station & Glassware es la estación del busser, pero los servers también reportan problemas ahí.", en:"The Soda Station & Glassware is the busser's station, but servers also report problems there."} },
+    { q:{es:"¿Qué debe mantenerse disponible en la Water Station del Florida Room?", en:"What must stay available at the Florida Room Water Station?"},
+      options:[
+        {es:"Jarras frías, vasos limpios, y hielo", en:"Cold pitchers, clean glasses, and ice"},
+        {es:"Café caliente y sugar caddies", en:"Hot coffee and sugar caddies"},
+        {es:"Sodas mexicanas y jarritos", en:"Mexican sodas and jarritos"},
+        {es:"Papel de impresora y sobres de propina", en:"Printer paper and tip envelopes"}
+      ], correct:0,
+      explanation:{es:"La Water Station debe tener jarras frías, vasos limpios, y hielo disponibles de forma constante.", en:"The Water Station must keep cold pitchers, clean glasses, and ice constantly available."} }
+  ]);
+
+  add("S11", [
+    { q:{es:"¿Cuál es el principio general para cualquier queja?", en:"What is the general principle for any complaint?"},
+      options:[
+        {es:"Ofrecer siempre un descuento de inmediato", en:"Always offer an immediate discount"},
+        {es:"Llamar al 911", en:"Call 911"},
+        {es:"Ignorar la queja hasta que el huésped se calme", en:"Ignore the complaint until the guest calms down"},
+        {es:"Escuchar sin interrumpir, disculparse, involucrar a un manager, y dar seguimiento", en:"Listen without interrupting, apologize, involve a manager, and follow up"}
+      ], correct:3,
+      explanation:{es:"Ante cualquier queja debes escuchar sin interrumpir, disculparte, involucrar a un manager, y dar seguimiento.", en:"For any complaint you should listen without interrupting, apologize, involve a manager, and follow up."} },
+    { q:{es:"Tras disculparte y retirar el plato con un cabello, ¿qué sigue?", en:"After apologizing and removing the plate with a hair, what comes next?"},
+      options:[
+        {es:"Debatir con el huésped sobre el cabello", en:"Debate the hair with the guest"},
+        {es:"Notificar a un manager de inmediato", en:"Notify a manager immediately"},
+        {es:"Cobrar el plato de todas formas", en:"Charge for the plate anyway"},
+        {es:"Servir otro plato sin avisar a nadie", en:"Serve another plate without telling anyone"}
+      ], correct:1,
+      explanation:{es:"Después de disculparte y retirar el plato, notificas a un manager de inmediato.", en:"After apologizing and removing the plate, you notify a manager immediately."} },
+    { q:{es:"¿Cómo ayuda el equipo a prevenir quejas comunes?", en:"How does the team help prevent common complaints?"},
+      options:[
+        {es:"Comunicándose con claridad y anticipando necesidades", en:"By communicating clearly and anticipating needs"},
+        {es:"Ofreciendo cortesías a todas las mesas", en:"By offering comps to every table"},
+        {es:"Evitando hablar con los huéspedes", en:"By avoiding talking to guests"},
+        {es:"Sirviendo más rápido sin revisar los pedidos", en:"By serving faster without checking orders"}
+      ], correct:0,
+      explanation:{es:"El equipo previene quejas comunicándose con claridad y anticipando necesidades.", en:"The team prevents complaints by communicating clearly and anticipating needs."} }
+  ]);
+
+})();
+
+/* #3 Preguntas nuevas — track BARTENDER (generado, revisar precision) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+
+  add("BT1", [
+    {
+      q:{ es:"¿Qué se le da a un huésped que está de pie, alejado de la barra?", en:"What is given to a standing guest away from the bar?" },
+      options:[
+        { es:"Un posavaso", en:"A coaster" },
+        { es:"Una servilleta", en:"A napkin" },
+        { es:"Nada", en:"Nothing" },
+        { es:"Un individual", en:"A placemat" }
+      ],
+      correct:1,
+      explanation:{ es:"Las servilletas son solo para huéspedes de pie, alejados de la barra, no sentados en ella.", en:"Napkins are only for standing guests away from the bar, not those seated at it." }
+    },
+    {
+      q:{ es:"¿Qué debes hacer con una botella vacía cuando la apartas?", en:"What should you do with an empty bottle when you set it aside?" },
+      options:[
+        { es:"Tirarla de inmediato al bote", en:"Throw it in the trash immediately" },
+        { es:"Guardarla en tu bolsillo", en:"Keep it in your pocket" },
+        { es:"Apartarla para que el bar-back la reabastezca", en:"Set it aside for the bar-back to restock" },
+        { es:"Dejarla en el piso detrás de la barra", en:"Leave it on the floor behind the bar" }
+      ],
+      correct:2,
+      explanation:{ es:"Nunca tires una botella vacía a menos que tengas el reemplazo en la mano; apártala para que el bar-back la reabastezca.", en:"Never throw out an empty bottle unless you have the replacement in hand; set it aside for the bar-back to restock." }
+    },
+    {
+      q:{ es:"¿Por qué importa mantener una barra limpia y organizada durante la hora pico?", en:"Why does keeping a clean, organized bar matter during peak hour?" },
+      options:[
+        { es:"Es más rápida y segura", en:"It is faster and safer" },
+        { es:"Solo para verse profesional", en:"Only to look professional" },
+        { es:"Para usar menos hielo", en:"To use less ice" },
+        { es:"No tiene ningún efecto real", en:"It has no real effect" }
+      ],
+      correct:0,
+      explanation:{ es:"Una barra limpia y organizada es más rápida y segura durante la hora pico, no solo para verse profesional.", en:"A clean, organized bar is faster and safer during peak hour, not just to look professional." }
+    }
+  ]);
+
+  add("BT2", [
+    {
+      q:{ es:"¿Qué licor base lleva el cóctel Smoke Some?", en:"What base spirit is in the Smoke Some cocktail?" },
+      options:[
+        { es:"Ron Tanduay", en:"Tanduay rum" },
+        { es:"Vodka Ketel One", en:"Ketel One vodka" },
+        { es:"Mezcal The Lost Explorer", en:"The Lost Explorer mezcal" },
+        { es:"Bulleit Rye Whiskey", en:"Bulleit Rye Whiskey" }
+      ],
+      correct:2,
+      explanation:{ es:"Smoke Some lleva mezcal The Lost Explorer, chile ancho, piña ahumada, cítricos y tajín.", en:"Smoke Some is made with The Lost Explorer mezcal, ancho chile, smoked pineapple, citrus and tajin." }
+    },
+    {
+      q:{ es:"¿Qué lleva el Chela's Carajillo?", en:"What is in the Chela's Carajillo?" },
+      options:[
+        { es:"Licor 43, espresso de Coffee Papis Co., cáscara de naranja, hielo grande", en:"Licor 43, Coffee Papis Co. espresso, orange peel, large ice" },
+        { es:"Vodka infusionado con vainilla y licor de café Mr. Black", en:"Vanilla-infused vodka and Mr. Black coffee liqueur" },
+        { es:"Ron Tanduay y néctar de lychee", en:"Tanduay rum and lychee nectar" },
+        { es:"Bulleit Rye y azúcar demerara", en:"Bulleit Rye and demerara sugar" }
+      ],
+      correct:0,
+      explanation:{ es:"El Chela's Carajillo lleva Licor 43, espresso de Coffee Papis Co., cáscara de naranja y hielo grande.", en:"The Chela's Carajillo is made with Licor 43, Coffee Papis Co. espresso, orange peel and large ice." }
+    },
+    {
+      q:{ es:"¿Qué debes hacer si una receta o copa no está publicada en la barra?", en:"What should you do if a recipe or glass is not posted at the bar?" },
+      options:[
+        { es:"Adivinar la medida", en:"Guess the measurement" },
+        { es:"Preguntar a un manager", en:"Ask a manager" },
+        { es:"Usar cualquier copa disponible", en:"Use any available glass" },
+        { es:"Servir a ojo", en:"Pour by eye" }
+      ],
+      correct:1,
+      explanation:{ es:"Si una receta o copa no está publicada, pregunta a un manager; nunca adivines.", en:"If a recipe or glass is not posted, ask a manager; never guess." }
+    }
+  ]);
+
+  add("BT3", [
+    {
+      q:{ es:"¿Qué es la Corona-Rita?", en:"What is the Corona-Rita?" },
+      options:[
+        { es:"Un flight de tequila Don Julio", en:"A Don Julio tequila flight" },
+        { es:"Un Tommy's tamaño jumbo con una Coronita encima", en:"A jumbo-sized Tommy's with a Coronita on top" },
+        { es:"Una margarita sin alcohol", en:"A non-alcoholic margarita" },
+        { es:"Una sangría por jarra", en:"A sangria by the pitcher" }
+      ],
+      correct:1,
+      explanation:{ es:"La Corona-Rita es un Tommy's tamaño jumbo con una Coronita encima, ideal para compartir.", en:"The Corona-Rita is a jumbo-sized Tommy's with a Coronita on top, ideal for sharing." }
+    },
+    {
+      q:{ es:"¿Cuáles son opciones sin alcohol del menú?", en:"Which are non-alcoholic options on the menu?" },
+      options:[
+        { es:"Strawberryta, Yellow Bull, Ponche, Botánico", en:"Strawberryta, Yellow Bull, Ponche, Botanico" },
+        { es:"Bajapanty, Smoke Some, Como La Flor", en:"Bajapanty, Smoke Some, Como La Flor" },
+        { es:"Modelo Especial, Pacifico, Guinness", en:"Modelo Especial, Pacifico, Guinness" },
+        { es:"Diora Pinot Noir, San Simeon Cabernet", en:"Diora Pinot Noir, San Simeon Cabernet" }
+      ],
+      correct:0,
+      explanation:{ es:"Strawberryta, Yellow Bull, Ponche y Botánico son las opciones sin alcohol; ofrécelas siempre.", en:"Strawberryta, Yellow Bull, Ponche and Botanico are the non-alcoholic options; always offer them." }
+    },
+    {
+      q:{ es:"¿Qué combina el Super Bucket Premium?", en:"What does the Super Bucket Premium combine?" },
+      options:[
+        { es:"Cervezas con shots de tequila de la casa", en:"Beers with house tequila shots" },
+        { es:"Cervezas con shots Don Julio", en:"Beers with Don Julio shots" },
+        { es:"Vino con burbujas", en:"Wine with sparkling" },
+        { es:"Margaritas frozen", en:"Frozen margaritas" }
+      ],
+      correct:1,
+      explanation:{ es:"El Premium combina cervezas con shots Don Julio, mientras que el House usa shots de tequila de la casa.", en:"The Premium combines beers with Don Julio shots, while the House uses house tequila shots." }
+    }
+  ]);
+
+  add("BT4", [
+    {
+      q:{ es:"En Toast, ¿cómo se finalizan las propinas de tarjeta?", en:"In Toast, how are card tips finalized?" },
+      options:[
+        { es:"Server, Mis Mesas, Propinas, tipo de tarjeta, buscar por últimos 4 dígitos, ingresar monto", en:"Server, My Tables, Tips, card type, search by last 4 digits, enter amount" },
+        { es:"Cerrar cuenta y seleccionar efectivo", en:"Close check and select cash" },
+        { es:"Dividir por asiento en pantalla", en:"Split by seat on screen" },
+        { es:"Abrir cuenta e ingresar número de huéspedes", en:"Open check and enter guest count" }
+      ],
+      correct:0,
+      explanation:{ es:"Para finalizar propinas de tarjeta: número de server, Mis Mesas, Propinas, tipo de tarjeta, buscar por últimos 4 dígitos e ingresar el monto.", en:"To finalize card tips: server number, My Tables, Tips, card type, search by last 4 digits and enter the amount." }
+    },
+    {
+      q:{ es:"¿Dónde deben estar las cuentas de los huéspedes sentados en la barra?", en:"Where should the checks of guests seated at the bar be?" },
+      options:[
+        { es:"Guardadas en el POS", en:"Stored in the POS" },
+        { es:"Siempre frente a ellos", en:"Always in front of them" },
+        { es:"Con el manager", en:"With the manager" },
+        { es:"En el bolsillo del bartender", en:"In the bartender's pocket" }
+      ],
+      correct:1,
+      explanation:{ es:"Los huéspedes en la barra deben tener siempre su cuenta frente a ellos.", en:"Guests at the bar should always have their check in front of them." }
+    },
+    {
+      q:{ es:"¿Qué pasa si un bartender quiere exceder su límite de cortesía por turno?", en:"What happens if a bartender wants to exceed their per-shift comp limit?" },
+      options:[
+        { es:"Nunca debe excederlo sin aprobación de un manager", en:"They must never exceed it without manager approval" },
+        { es:"Puede excederlo libremente", en:"They may exceed it freely" },
+        { es:"Debe cerrar la barra", en:"They must close the bar" },
+        { es:"Debe pagarlo de su propina", en:"They must pay it from their tips" }
+      ],
+      correct:0,
+      explanation:{ es:"Cada bartender tiene un límite de cortesía por turno y nunca debe excederlo sin aprobación de un manager.", en:"Each bartender has a per-shift comp limit and must never exceed it without manager approval." }
+    }
+  ]);
+
+  add("BT5", [
+    {
+      q:{ es:"¿Cómo debes ofrecer el agua a un huésped?", en:"How should you offer water to a guest?" },
+      options:[
+        { es:"Preguntando vagamente '¿agua sin gas o con gas?'", en:"Vaguely asking 'still or sparkling water?'" },
+        { es:"Nombrando la marca: '¿Saratoga sin gas o con gas?'", en:"Naming the brand: 'Saratoga still or sparkling?'" },
+        { es:"Sirviendo agua de la llave sin preguntar", en:"Serving tap water without asking" },
+        { es:"Ofreciendo solo agua con gas", en:"Offering only sparkling water" }
+      ],
+      correct:1,
+      explanation:{ es:"Siempre ofrece ambas opciones por nombre, como '¿Saratoga sin gas o con gas?', para reforzar que es una elección deliberada del menú.", en:"Always offer both options by name, like 'Saratoga still or sparkling?', to reinforce it is a deliberate menu choice." }
+    },
+    {
+      q:{ es:"¿Cómo debes servir y presentar el agua?", en:"How should you serve and present the water?" },
+      options:[
+        { es:"De cualquier forma rápida", en:"Any quick way" },
+        { es:"De la misma forma que un cóctel: vaso limpio, hielo si se pide, servida en la mesa", en:"The same way as a cocktail: clean glass, ice if requested, served at the table" },
+        { es:"En el mismo vaso que la bebida anterior", en:"In the same glass as the previous drink" },
+        { es:"Solo cuando el huésped insista", en:"Only when the guest insists" }
+      ],
+      correct:1,
+      explanation:{ es:"Sirve y presenta el agua igual que un cóctel: vaso limpio, hielo si se pide, servida en la mesa cuando sea posible.", en:"Serve and present water like a cocktail: clean glass, ice if requested, served at the table when possible." }
+    }
+  ]);
+
+  add("BT6", [
+    {
+      q:{ es:"¿Qué forman el jugo, jarabe y aceites de cítricos derramados?", en:"What do spilled juice, syrup and citrus oils form?" },
+      options:[
+        { es:"Una película pegajosa que atrae moscas de fruta", en:"A sticky film that attracts fruit flies" },
+        { es:"Una capa protectora en la barra", en:"A protective coating on the bar" },
+        { es:"Nada de importancia", en:"Nothing of concern" },
+        { es:"Un aroma agradable para los huéspedes", en:"A pleasant aroma for guests" }
+      ],
+      correct:0,
+      explanation:{ es:"El jugo, jarabe y aceites de cítricos derramados forman una película pegajosa que atrae moscas de fruta.", en:"Spilled juice, syrup and citrus oils form a sticky film that attracts fruit flies." }
+    },
+    {
+      q:{ es:"¿Qué paño debe estar separado del que usas en la barra?", en:"Which cloth should be kept separate from the one used on the bar?" },
+      options:[
+        { es:"Un paño dedicado para cristalería/manos", en:"A dedicated cloth for glassware/hands" },
+        { es:"Un paño para el piso", en:"A cloth for the floor" },
+        { es:"Un paño para las botellas", en:"A cloth for the bottles" },
+        { es:"No hace falta separar paños", en:"No need to separate cloths" }
+      ],
+      correct:0,
+      explanation:{ es:"Ten un paño dedicado para cristalería/manos separado del que usas en la barra.", en:"Keep a dedicated glassware/hands cloth separate from the one used on the bar." }
+    }
+  ]);
+
+  add("BT7", [
+    {
+      q:{ es:"¿Cómo se comunican los pedidos con claridad a los compañeros?", en:"How should orders be communicated clearly to teammates?" },
+      options:[
+        { es:"Solo con señas de mano", en:"Only with hand signals" },
+        { es:"En voz alta y específica, ej. 'dos Old Fashioned, un Margarita en el rail'", en:"Out loud and specific, e.g. 'two Old Fashioneds, one Margarita on the rail'" },
+        { es:"Trabajando en silencio", en:"Working in silence" },
+        { es:"Escribiéndolos en un cuaderno", en:"Writing them in a notebook" }
+      ],
+      correct:1,
+      explanation:{ es:"Comunica los pedidos en voz alta y específica, como 'dos Old Fashioned, un Margarita en el rail', para que nada se repita ni se olvide.", en:"Communicate orders out loud and specifically, like 'two Old Fashioneds, one Margarita on the rail', so nothing is repeated or forgotten." }
+    },
+    {
+      q:{ es:"Durante la hora pico, una barra silenciosa suele ser señal de qué?", en:"During peak hour, a silent bar is usually a sign of what?" },
+      options:[
+        { es:"Una barra muy eficiente", en:"A very efficient bar" },
+        { es:"Una barra desorganizada", en:"A disorganized bar" },
+        { es:"Huéspedes satisfechos", en:"Satisfied guests" },
+        { es:"Un turno tranquilo", en:"A slow shift" }
+      ],
+      correct:1,
+      explanation:{ es:"Durante la hora pico, una barra silenciosa suele ser una barra desorganizada; la comunicación clara mantiene bajos los tiempos.", en:"During peak hour a silent bar is usually a disorganized bar; clear communication keeps times low." }
+    }
+  ]);
+
+  add("BT8", [
+    {
+      q:{ es:"¿En cuánto tiempo deben los NO managers completar el entrenamiento RVA?", en:"Within how long must NON-managers complete RVA training?" },
+      options:[
+        { es:"15 días desde la contratación", en:"15 days from hire" },
+        { es:"30 días desde la contratación", en:"30 days from hire" },
+        { es:"60 días desde la contratación", en:"60 days from hire" },
+        { es:"El mismo día de la contratación", en:"The same day of hire" }
+      ],
+      correct:1,
+      explanation:{ es:"Los NO managers deben completar el entrenamiento RVA en 30 días desde su contratación; los managers en 15 días.", en:"Non-managers must complete RVA training within 30 days of hire; managers within 15 days." }
+    },
+    {
+      q:{ es:"¿Se permiten bebidas personales del bartender detrás de la barra?", en:"Are the bartender's personal drinks allowed behind the bar?" },
+      options:[
+        { es:"Sí, siempre que no sean alcohólicas", en:"Yes, as long as they are non-alcoholic" },
+        { es:"No, nunca se permiten bebidas personales alcohólicas detrás de la barra", en:"No, personal alcoholic drinks are never allowed behind the bar" },
+        { es:"Solo al final del turno", en:"Only at the end of the shift" },
+        { es:"Solo con propina del huésped", en:"Only with a guest's tip" }
+      ],
+      correct:1,
+      explanation:{ es:"No se permiten bebidas gratis, pours no autorizados, ni bebidas personales alcohólicas detrás de la barra, nunca.", en:"No free drinks, unauthorized pours, or personal alcoholic drinks behind the bar are ever allowed." }
+    },
+    {
+      q:{ es:"Si un huésped intoxicado insiste en manejar y la situación escala, ¿qué debe pasar?", en:"If an intoxicated guest insists on driving and the situation escalates, what must happen?" },
+      options:[
+        { es:"El bartender lo maneja solo", en:"The bartender handles it alone" },
+        { es:"El manager debe intervenir con firmeza pero con respeto", en:"The manager must intervene firmly but respectfully" },
+        { es:"Se le entregan sus llaves y se le deja ir", en:"His keys are handed over and he is let go" },
+        { es:"Se le sirve un último trago", en:"He is served one last drink" }
+      ],
+      correct:1,
+      explanation:{ es:"Si la situación escala o el huésped insiste en manejar, el manager debe intervenir con firmeza pero con respeto.", en:"If the situation escalates or the guest insists on driving, the manager must intervene firmly but respectfully." }
+    }
+  ]);
+
+  add("BT9", [
+    {
+      q:{ es:"¿Qué debes reabastecer para el siguiente turno antes de irte?", en:"What should you restock for the next shift before leaving?" },
+      options:[
+        { es:"Guarniciones preparadas, depósitos de hielo llenos, botellas de respaldo", en:"Prepped garnishes, full ice wells, backup bottles" },
+        { es:"Solo el efectivo de la caja", en:"Only the cash drawer" },
+        { es:"Nada, lo hace quien abre", en:"Nothing, the opener does it" },
+        { es:"Solo las servilletas", en:"Only the napkins" }
+      ],
+      correct:0,
+      explanation:{ es:"Reabastece guarniciones preparadas, depósitos de hielo llenos y botellas de respaldo para que quien abra no tenga que hacer tu side work.", en:"Restock prepped garnishes, full ice wells and backup bottles so the opener doesn't have to do your side work." }
+    },
+    {
+      q:{ es:"¿Qué implica asegurar la barra antes de irte?", en:"What does securing the bar before leaving involve?" },
+      options:[
+        { es:"Licor cerrado o cubierto, caja conciliada y depositada, equipo apagado", en:"Liquor closed or covered, cash reconciled and deposited, equipment off" },
+        { es:"Solo apagar las luces", en:"Just turning off the lights" },
+        { es:"Dejar todo como está", en:"Leaving everything as is" },
+        { es:"Solo cerrar la puerta", en:"Just locking the door" }
+      ],
+      correct:0,
+      explanation:{ es:"Asegurar la barra implica el licor cerrado o cubierto según la política, la caja conciliada y depositada, y el equipo apagado.", en:"Securing the bar means liquor closed or covered per policy, cash reconciled and deposited, and equipment off." }
+    }
+  ]);
+
+  add("BT10", [
+    {
+      q:{ es:"¿Qué son las 4 P que usas al recomendar al huésped?", en:"What are the 4 Ps used when recommending to a guest?" },
+      options:[
+        { es:"Producto, Preparación, Presentación, Precio", en:"Product, Preparation, Presentation, Price" },
+        { es:"Persona, Postre, Propina, Pago", en:"Person, Dessert, Tip, Payment" },
+        { es:"Plato, Pedido, Propina, Postre", en:"Dish, Order, Tip, Dessert" },
+        { es:"Precio, Promoción, Plaza, Producto", en:"Price, Promotion, Place, Product" }
+      ],
+      correct:0,
+      explanation:{ es:"Las 4 P son Producto, Preparación, Presentación y Precio, y se usan al recomendar antes de irte.", en:"The 4 Ps are Product, Preparation, Presentation and Price, used when recommending before you leave." }
+    },
+    {
+      q:{ es:"¿Cuándo debe ofrecerse la segunda venta de bebida?", en:"When should the second drink sale be offered?" },
+      options:[
+        { es:"Después del postre", en:"After dessert" },
+        { es:"Antes de que llegue la comida, preguntando si puedes renovar su bebida", en:"Before the food arrives, asking if you can refresh their drink" },
+        { es:"Al cerrar la cuenta", en:"When closing the check" },
+        { es:"Solo si el huésped la pide", en:"Only if the guest asks" }
+      ],
+      correct:1,
+      explanation:{ es:"Antes de que llegue la comida, siempre pregunta si puedes renovar su bebida.", en:"Before the food arrives, always ask if you can refresh their drink." }
+    },
+    {
+      q:{ es:"¿En cuánto tiempo debe entregarse la comida?", en:"Within how long should the food be delivered?" },
+      options:[
+        { es:"6 minutos", en:"6 minutes" },
+        { es:"20–25 minutos", en:"20–25 minutes" },
+        { es:"2 minutos", en:"2 minutes" },
+        { es:"45 minutos", en:"45 minutes" }
+      ],
+      correct:1,
+      explanation:{ es:"La entrega de comida es de 20 a 25 minutos; ayuda al runner cuando sea posible.", en:"Food delivery is 20 to 25 minutes; help the runner when possible." }
+    }
+  ]);
+
+  add("BT11", [
+    {
+      q:{ es:"Si un huésped reporta una alergia, ¿qué debes pedirle?", en:"If a guest reports an allergy, what should you ask them?" },
+      options:[
+        { es:"Que sea específico, ej. ¿tomate crudo o cocido/salsa?", en:"To be specific, e.g. raw tomato or cooked/sauce?" },
+        { es:"Que elija otro plato", en:"To choose another dish" },
+        { es:"Que firme una exención", en:"To sign a waiver" },
+        { es:"Nada, solo quita el ingrediente", en:"Nothing, just remove the ingredient" }
+      ],
+      correct:0,
+      explanation:{ es:"Si es alergia, pide al huésped que sea específico, ya que pequeñas diferencias de ingredientes pueden salvarle la vida.", en:"If it is an allergy, ask the guest to be specific, since small ingredient differences can save their life." }
+    },
+    {
+      q:{ es:"¿Qué prioridad tiene la etiqueta ALLERGY en el POS?", en:"What priority does the ALLERGY tag have in the POS?" },
+      options:[
+        { es:"Prioridad sobre cualquier otro etiquetado", en:"Priority over any other labeling" },
+        { es:"La misma que un modificador normal", en:"The same as a normal modifier" },
+        { es:"Menor prioridad que 'sin hielo'", en:"Lower priority than 'no ice'" },
+        { es:"Solo aplica al primer tiempo", en:"Only applies to the first course" }
+      ],
+      correct:0,
+      explanation:{ es:"El etiquetado ALLERGY – [Alérgeno] – Mesa # tiene prioridad sobre cualquier otro etiquetado y aplica a todos los tiempos.", en:"The ALLERGY – [Allergen] – Table # labeling takes priority over any other and applies to all courses." }
+    }
+  ]);
+
+})();
+
+/* #3 Preguntas nuevas — track BUSSER (generado, revisar precision) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+
+  add("B1", [
+    {
+      q: { es: "Según la lección, ¿qué pasa en todo el comedor si las mesas quedan sucias?", en: "According to the lesson, what happens to the whole dining room if tables are left dirty?" },
+      options: [
+        { es: "El comedor se atasca sin importar qué tan eficientes sean el host o los servers", en: "The dining room backs up no matter how efficient the host or servers are" },
+        { es: "Solo se afecta la sección del bar", en: "Only the bar section is affected" },
+        { es: "La cocina deja de preparar comida", en: "The kitchen stops preparing food" },
+        { es: "No pasa nada mientras el host trabaje rápido", en: "Nothing happens as long as the host works fast" }
+      ],
+      correct: 0,
+      explanation: { es: "Si las mesas quedan sucias, todo el comedor se atasca sin importar qué tan eficientes sean el host o los servers.", en: "If tables stay dirty, the whole dining room backs up regardless of how efficient the host or servers are." }
+    },
+    {
+      q: { es: "¿Cómo debe verse el busser dentro de la experiencia del huésped?", en: "How should the busser see themselves within the guest experience?" },
+      options: [
+        { es: "Como parte de la experiencia del huésped, no solo alguien detrás de escena", en: "As part of the guest experience, not just someone behind the scenes" },
+        { es: "Como alguien invisible que el huésped nunca nota", en: "As someone invisible the guest never notices" },
+        { es: "Como responsable únicamente de la cocina", en: "As responsible only for the kitchen" },
+        { es: "Como reemplazo del host en la puerta", en: "As a replacement for the host at the door" }
+      ],
+      correct: 0,
+      explanation: { es: "El busser es parte de la experiencia del huésped; un busser amable que levanta la mesa con una sonrisa influye en si el huésped regresa.", en: "The busser is part of the guest experience; a friendly busser clearing with a smile affects whether the guest returns." }
+    }
+  ]);
+
+  add("B2", [
+    {
+      q: { es: "En el orden de limpieza, ¿qué debes hacer justo después de acercarte con una sonrisa?", en: "In the clearing order, what should you do right after approaching with a smile?" },
+      options: [
+        { es: "Confirmar que terminaron antes de retirar", en: "Confirm they are finished before clearing" },
+        { es: "Sanitizar la mesa de inmediato", en: "Sanitize the table immediately" },
+        { es: "Apilar todos los vasos juntos", en: "Stack all the glasses together" },
+        { es: "Montar la vajilla nueva primero", en: "Set the new place settings first" }
+      ],
+      correct: 0,
+      explanation: { es: "El orden empieza acercándote con una sonrisa amable y confirmando que terminaron antes de retirar platos.", en: "The order begins by approaching with a friendly smile and confirming they are finished before clearing plates." }
+    },
+    {
+      q: { es: "¿Qué suministros debes reunir antes de empezar a hacer bussing?", en: "What supplies should you gather before starting to bus?" },
+      options: [
+        { es: "Un bus tub o bandeja grande, un balde de sanitizante y toallas de limpieza", en: "A bus tub or large tray, a sanitizer bucket, and cleaning towels" },
+        { es: "Solo una toalla y un menú", en: "Just a towel and a menu" },
+        { es: "Una escoba y bolsas de basura únicamente", en: "Only a broom and trash bags" },
+        { es: "Cubiertos extra y servilletas nada más", en: "Only extra cutlery and napkins" }
+      ],
+      correct: 0,
+      explanation: { es: "Antes de empezar debes reunir un bus tub o bandeja grande, un balde de sanitizante y toallas de limpieza.", en: "Before starting you gather a bus tub or large tray, a sanitizer bucket, and cleaning towels." }
+    },
+    {
+      q: { es: "¿Por qué es un error dejar la mesa húmeda al montarla?", en: "Why is leaving the table wet when setting it a mistake?" },
+      options: [
+        { es: "La mesa debe estar completamente seca antes de montarla; una mesa húmeda es un error común", en: "The table must be completely dry before setting it; a wet table is a common mistake" },
+        { es: "El agua ayuda a que la vajilla se mantenga en su lugar", en: "Water helps the place settings stay in place" },
+        { es: "Solo importa si la mesa es de madera", en: "It only matters if the table is wooden" },
+        { es: "No es un problema si el huésped no lo nota", en: "It is not a problem if the guest doesn't notice" }
+      ],
+      correct: 0,
+      explanation: { es: "Debes asegurarte de que la mesa esté completamente seca antes de montarla, ya que una mesa húmeda es un error común.", en: "You must ensure the table is completely dry before setting it, since a wet table is a common mistake." }
+    }
+  ]);
+
+  add("B3", [
+    {
+      q: { es: "¿Qué sección cubre las mesas 401–410 y 501–510?", en: "Which section covers tables 401–410 and 501–510?" },
+      options: [
+        { es: "Florida Room", en: "Florida Room" },
+        { es: "Jungle", en: "Jungle" },
+        { es: "Exterior", en: "Exterior" },
+        { es: "Centro", en: "Center" }
+      ],
+      correct: 2,
+      explanation: { es: "Las mesas 401–410 y 501–510 pertenecen a la sección Exterior.", en: "Tables 401–410 and 501–510 belong to the Exterior section." }
+    },
+    {
+      q: { es: "¿Qué sección cubre las mesas 101–109?", en: "Which section covers tables 101–109?" },
+      options: [
+        { es: "Bar", en: "Bar" },
+        { es: "Florida Room", en: "Florida Room" },
+        { es: "Jungle", en: "Jungle" },
+        { es: "Exterior", en: "Exterior" }
+      ],
+      correct: 1,
+      explanation: { es: "Las mesas 101–109 corresponden a la sección Florida Room.", en: "Tables 101–109 correspond to the Florida Room section." }
+    },
+    {
+      q: { es: "Según la lección, ¿por qué la numeración de las mesas no es aleatoria?", en: "According to the lesson, why is the table numbering not random?" },
+      options: [
+        { es: "Está agrupada por salón, así un número como 401 ya indica que es de Exterior", en: "It is grouped by room, so a number like 401 already indicates it is in Exterior" },
+        { es: "Se asigna según el tamaño de la mesa", en: "It is assigned by table size" },
+        { es: "Sigue el orden en que se limpian las mesas", en: "It follows the order in which tables are cleaned" },
+        { es: "Cambia cada semana según el server", en: "It changes each week depending on the server" }
+      ],
+      correct: 0,
+      explanation: { es: "La numeración está agrupada por salón, así que un número por sí solo como 401 le dice a un busser con experiencia que está en la sección Exterior.", en: "The numbering is grouped by room, so a number alone like 401 tells an experienced busser it is in the Exterior section." }
+    }
+  ]);
+
+  add("B4", [
+    {
+      q: { es: "¿Por qué no debes asumir que el server se dará cuenta solo de que una mesa está lista?", en: "Why shouldn't you assume the server will notice on their own that a table is ready?" },
+      options: [
+        { es: "Un server con varias mesas puede no notar el momento exacto y la mesa queda vacía más tiempo del necesario", en: "A server with several tables may not notice the exact moment and the table sits empty longer than necessary" },
+        { es: "Los servers siempre ven todas las mesas al mismo tiempo", en: "Servers always see all tables at once" },
+        { es: "El host ya se encarga de avisar siempre", en: "The host already always takes care of notifying" },
+        { es: "Las mesas se montan solas cuando están listas", en: "Tables set themselves when they are ready" }
+      ],
+      correct: 0,
+      explanation: { es: "Un server manejando varias mesas puede no notar el momento exacto en que una mesa queda disponible, y sin aviso se queda vacía más tiempo del necesario.", en: "A server handling several tables may not notice the exact moment a table opens up, and without a heads-up it sits empty longer than needed." }
+    },
+    {
+      q: { es: "¿Qué problema crea que la comida llegue antes de que la mesa esté realmente lista?", en: "What problem does food arriving before the table is truly ready create?" },
+      options: [
+        { es: "Crea un momento apresurado y descuidado que el huésped va a recordar", en: "It creates a rushed, sloppy moment the guest will remember" },
+        { es: "Hace que la cocina trabaje más lento", en: "It makes the kitchen work slower" },
+        { es: "Mejora la experiencia porque la comida llega caliente", en: "It improves the experience because the food arrives hot" },
+        { es: "No afecta al huésped de ninguna forma", en: "It doesn't affect the guest in any way" }
+      ],
+      correct: 0,
+      explanation: { es: "Que la comida llegue antes de que la mesa esté lista crea un momento apresurado y descuidado que el huésped va a recordar.", en: "Food arriving before the table is ready creates a rushed, sloppy moment the guest will remember." }
+    }
+  ]);
+
+  add("B5", [
+    {
+      q: { es: "Además de cada 2–4 horas, ¿cuándo debes cambiar el balde de sanitizante?", en: "Besides every 2–4 hours, when should you change the sanitizer bucket?" },
+      options: [
+        { es: "Antes si el agua se ve visiblemente sucia", en: "Sooner if the water looks visibly dirty" },
+        { es: "Solo al final del turno", en: "Only at the end of the shift" },
+        { es: "Únicamente cuando lo pida el supervisor", en: "Only when the supervisor asks" },
+        { es: "Cada 8 horas sin excepción", en: "Every 8 hours without exception" }
+      ],
+      correct: 0,
+      explanation: { es: "Los baldes de sanitizante se cambian cada 2–4 horas según ServSafe, o antes si el agua se ve visiblemente sucia.", en: "Sanitizer buckets are changed every 2–4 hours per ServSafe, or sooner if the water looks visibly dirty." }
+    },
+    {
+      q: { es: "¿Por qué debes tener un delantal de repuesto a la mano?", en: "Why should you keep a spare apron on hand?" },
+      options: [
+        { es: "Para cambiarlo si se mancha, ya que los bussers deben verse limpios y ordenados", en: "To change it if it gets stained, since bussers must look clean and tidy" },
+        { es: "Para prestárselo a los servers", en: "To lend it to the servers" },
+        { es: "Para guardar cubiertos extra", en: "To store extra cutlery" },
+        { es: "Porque es obligatorio usar dos a la vez", en: "Because wearing two at once is required" }
+      ],
+      correct: 0,
+      explanation: { es: "Debes tener un delantal de repuesto y cambiarlo si se mancha, ya que los bussers trabajan en el piso y deben verse limpios y ordenados.", en: "You keep a spare apron and change it if it gets stained, since bussers work on the floor and must look clean and tidy." }
+    }
+  ]);
+
+  add("B6", [
+    {
+      q: { es: "¿Por qué debes recorrer el piso una vez más antes de marcar salida?", en: "Why should you walk the floor once more before clocking out?" },
+      options: [
+        { es: "El side work de cierre es el último punto de control; si algo se pasa, nadie lo detectará hasta el siguiente turno", en: "Closing side work is the last checkpoint; if something is missed, no one will catch it until the next shift" },
+        { es: "Para saludar a los últimos huéspedes", en: "To greet the last guests" },
+        { es: "Porque el supervisor lo exige aunque no sirva", en: "Because the supervisor demands it even though it's pointless" },
+        { es: "Para contar cuántas mesas se usaron", en: "To count how many tables were used" }
+      ],
+      correct: 0,
+      explanation: { es: "El side work de cierre es el último punto de control de la noche; si algo se pasa por alto, nadie lo detectará hasta el siguiente turno.", en: "Closing side work is the night's last checkpoint; if something is overlooked, no one will catch it until the next shift." }
+    },
+    {
+      q: { es: "Según la lección, ¿qué significa un contenedor de bussing casi limpio?", en: "According to the lesson, what does an almost-clean bussing container mean?" },
+      options: [
+        { es: "No está limpio; debe vaciarse y limpiarse por completo", en: "It is not clean; it must be fully emptied and cleaned" },
+        { es: "Está lo suficientemente limpio para el día siguiente", en: "It is clean enough for the next day" },
+        { es: "Puede dejarse con residuos hasta la mañana", en: "It can be left with residue until morning" },
+        { es: "Solo importa si huele mal", en: "It only matters if it smells bad" }
+      ],
+      correct: 0,
+      explanation: { es: "Un contenedor casi limpio no está limpio; la comida que queda de un día para otro atrae plagas y crea problemas de olor.", en: "An almost-clean container is not clean; leftover food overnight attracts pests and creates odor problems." }
+    }
+  ]);
+
+  add("B7", [
+    {
+      q: { es: "¿Qué debes hacer si no puedes cubrir tu estación de soda temporalmente?", en: "What should you do if you can't cover your soda station temporarily?" },
+      options: [
+        { es: "Avisar al supervisor o arreglar un relevo con un compañero", en: "Notify the supervisor or arrange a relief with a coworker" },
+        { es: "Cerrar la estación hasta que regreses", en: "Close the station until you return" },
+        { es: "Dejar que los huéspedes se sirvan solos", en: "Let the guests serve themselves" },
+        { es: "Esperar hasta el cierre para atenderla", en: "Wait until closing to handle it" }
+      ],
+      correct: 0,
+      explanation: { es: "Si no puedes cubrir tu estación temporalmente, debes avisar al supervisor o arreglar un relevo con un compañero.", en: "If you can't cover your station temporarily, you should notify the supervisor or arrange relief with a coworker." }
+    },
+    {
+      q: { es: "¿Qué estaciones normalmente están asignadas a servers pero los bussers también deben reportar problemas?", en: "Which stations are normally assigned to servers but bussers must still report problems at?" },
+      options: [
+        { es: "Mexican Sodas & Waters Fridge, Coffee Station y Water Station", en: "Mexican Sodas & Waters Fridge, Coffee Station, and Water Station" },
+        { es: "Solo la Soda Station del Busser Station", en: "Only the Busser Station's Soda Station" },
+        { es: "La cocina y el bar", en: "The kitchen and the bar" },
+        { es: "El podio de host y la entrada", en: "The host podium and the entrance" }
+      ],
+      correct: 0,
+      explanation: { es: "Mexican Sodas & Waters Fridge, Coffee Station y Water Station suelen ser de servers, pero los bussers también deben reportar problemas ahí.", en: "Mexican Sodas & Waters Fridge, Coffee Station, and Water Station are usually servers', but bussers must also report problems there." }
+    }
+  ]);
+
+})();
+
+/* #3 Preguntas nuevas — track HOST (generado, revisar precision) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+
+  add("H1", [
+    {
+      q: { es: "Además de dar la bienvenida en la puerta, ¿qué otras tareas pueden realizar los hosts?", en: "Besides welcoming guests at the door, what other tasks can hosts perform?" },
+      options: [
+        { es: "Contestar teléfonos, cobrar cuentas y empacar pedidos para llevar", en: "Answer phones, process payments, and pack to-go orders" },
+        { es: "Preparar cocteles en la barra", en: "Prepare cocktails at the bar" },
+        { es: "Cocinar los platillos de la cocina", en: "Cook the kitchen dishes" },
+        { es: "Contratar y despedir personal", en: "Hire and fire staff" }
+      ],
+      correct: 0,
+      explanation: { es: "Los hosts también pueden contestar teléfonos, cobrar cuentas y empacar pedidos para llevar.", en: "Hosts can also answer phones, process payments, and pack to-go orders." }
+    },
+    {
+      q: { es: "En Chela's, ¿en qué se enfoca principalmente el rol de Host?", en: "At Chela's, what does the Host role mainly focus on?" },
+      options: [
+        { es: "En supervisar a todo el personal de servers", en: "On supervising all the server staff" },
+        { es: "En la puerta, la asignación de mesas y el flujo de huéspedes", en: "On the door, table assignment, and guest flow" },
+        { es: "En gestionar el inventario de la cocina", en: "On managing the kitchen inventory" },
+        { es: "En la satisfacción total del frente de la casa", en: "On the total satisfaction of the front of house" }
+      ],
+      correct: 1,
+      explanation: { es: "En Chela's el rol de Host se enfoca en la puerta, la asignación de mesas y el flujo de huéspedes.", en: "At Chela's the Host role focuses on the door, table assignment, and guest flow." }
+    },
+    {
+      q: { es: "¿Con quién coordina de cerca el Host para todo lo demás fuera de su enfoque principal?", en: "Who does the Host coordinate closely with for everything outside their main focus?" },
+      options: [
+        { es: "Con los bartenders", en: "With the bartenders" },
+        { es: "Con los cocineros", en: "With the cooks" },
+        { es: "Con los managers", en: "With the managers" },
+        { es: "Con los bussers", en: "With the bussers" }
+      ],
+      correct: 2,
+      explanation: { es: "El Host coordina de cerca con los managers para todo lo demás.", en: "The Host coordinates closely with the managers for everything else." }
+    }
+  ]);
+
+  add("H2", [
+    {
+      q: { es: "¿Qué números de mesa cubre la sección Florida Room?", en: "Which table numbers does the Florida Room section cover?" },
+      options: [
+        { es: "41–48", en: "41–48" },
+        { es: "101–109", en: "101–109" },
+        { es: "21–24, 31–34, 35", en: "21–24, 31–34, 35" },
+        { es: "51–53, 61–63", en: "51–53, 61–63" }
+      ],
+      correct: 1,
+      explanation: { es: "La sección Florida Room cubre las mesas 101–109.", en: "The Florida Room section covers tables 101–109." }
+    },
+    {
+      q: { es: "¿Qué debe hacer un host respecto al turno de un server?", en: "What should a host do regarding a server's shift?" },
+      options: [
+        { es: "Saber cuándo termina y evitar sentar su sección justo antes de eso", en: "Know when it ends and avoid seating their section right before then" },
+        { es: "Sentar la mayor cantidad de mesas posible antes de que se vaya", en: "Seat as many tables as possible before they leave" },
+        { es: "Ignorar el horario de los servers al asignar mesas", en: "Ignore the servers' schedule when assigning tables" },
+        { es: "Pedirle al server que se quede más tiempo", en: "Ask the server to stay longer" }
+      ],
+      correct: 0,
+      explanation: { es: "El host debe saber cuándo termina el turno de un server y evitar sentar su sección justo antes de eso.", en: "The host should know when a server's shift ends and avoid seating their section right before then." }
+    },
+    {
+      q: { es: "¿Por qué el double-seating se ve mal?", en: "Why does double-seating look bad?" },
+      options: [
+        { es: "Porque llena el estacionamiento demasiado rápido", en: "Because it fills the parking lot too fast" },
+        { es: "Porque afecta las propinas del server y el nivel de servicio que puede dar", en: "Because it hurts the server's tips and the level of service they can give" },
+        { es: "Porque los huéspedes prefieren siempre el exterior", en: "Because guests always prefer the exterior" },
+        { es: "Porque la cocina se retrasa con los postres", en: "Because the kitchen falls behind on desserts" }
+      ],
+      correct: 1,
+      explanation: { es: "El double-seating afecta las propinas de ese server y el nivel de servicio que puede dar.", en: "Double-seating hurts that server's tips and the level of service they can provide." }
+    }
+  ]);
+
+  add("H3", [
+    {
+      q: { es: "¿Qué debes tener en cuenta al agregar una silla extra para un huésped inesperado?", en: "What should you keep in mind when adding an extra chair for an unexpected guest?" },
+      options: [
+        { es: "Las rutas de salida de emergencia, para no bloquearlas nunca", en: "The emergency exit routes, so they are never blocked" },
+        { es: "Que la silla sea del mismo color que la mesa", en: "That the chair matches the table's color" },
+        { es: "Cobrar un cargo adicional por la silla", en: "Charge an extra fee for the chair" },
+        { es: "Pedir permiso a la cocina primero", en: "Ask the kitchen for permission first" }
+      ],
+      correct: 0,
+      explanation: { es: "Una silla extra agregada nunca debe bloquear las rutas de salida de emergencia.", en: "An extra chair added should never block the emergency exit routes." }
+    },
+    {
+      q: { es: "Sobre el tamaño máximo de grupo sin reservación y la política de no-show, ¿qué debes hacer por ahora?", en: "Regarding max walk-in party size and the no-show policy, what should you do for now?" },
+      options: [
+        { es: "Aplicar tu propio criterio sin consultar", en: "Apply your own judgment without asking" },
+        { es: "Consultar con un manager, ya que siguen pendientes de confirmación", en: "Check with a manager, since they are still pending confirmation" },
+        { es: "Rechazar a todos los grupos grandes", en: "Turn away all large parties" },
+        { es: "Cobrar un depósito a cada grupo", en: "Charge every party a deposit" }
+      ],
+      correct: 1,
+      explanation: { es: "El tamaño máximo sin reservación y la política de no-show siguen pendientes, así que por ahora consulta con un manager.", en: "The max walk-in size and no-show policy are still pending, so for now check with a manager." }
+    },
+    {
+      q: { es: "Además de las reservaciones del día, ¿qué más debe revisar el host al inicio del turno?", en: "Besides the day's reservations, what else should the host check at the start of the shift?" },
+      options: [
+        { es: "El inventario de la barra", en: "The bar inventory" },
+        { es: "La app de Hostie y regresar las llamadas pendientes", en: "The Hostie app and return pending calls" },
+        { es: "Las propinas del turno anterior", en: "The previous shift's tips" },
+        { es: "El menú de postres del día", en: "The dessert menu of the day" }
+      ],
+      correct: 1,
+      explanation: { es: "Al inicio del turno el host también revisa la app de Hostie y regresa las llamadas pendientes.", en: "At the start of the shift the host also checks the Hostie app and returns pending calls." }
+    }
+  ]);
+
+  add("H4", [
+    {
+      q: { es: "En cuanto a acercarse a la puerta, ¿qué debe hacer un host proactivo?", en: "Regarding approaching the door, what should a proactive host do?" },
+      options: [
+        { es: "Esperar a que el huésped llegue a la puerta", en: "Wait for the guest to reach the door" },
+        { es: "Abrir la puerta en vez de esperar a que el huésped llegue a ella", en: "Open the door instead of waiting for the guest to reach it" },
+        { es: "Llamar a un manager para que reciba", en: "Call a manager to greet them" },
+        { es: "Quedarse siempre detrás del podio", en: "Always stay behind the podium" }
+      ],
+      correct: 1,
+      explanation: { es: "Ser proactivo significa abrir la puerta en vez de esperar a que el huésped llegue a ella.", en: "Being proactive means opening the door instead of waiting for the guest to reach it." }
+    },
+    {
+      q: { es: "¿Por qué se debe evitar platicar de temas personales con compañeros cuando hay huéspedes presentes?", en: "Why should you avoid chatting about personal topics with coworkers when guests are present?" },
+      options: [
+        { es: "Porque te puede distraer de notar a alguien entrando", en: "Because it can distract you from noticing someone coming in" },
+        { es: "Porque está prohibido hablar en el trabajo", en: "Because talking at work is forbidden" },
+        { es: "Porque los managers lo penalizan con multas", en: "Because managers penalize it with fines" },
+        { es: "Porque hace ruido en la cocina", en: "Because it makes noise in the kitchen" }
+      ],
+      correct: 0,
+      explanation: { es: "Platicar de temas personales puede distraerte de notar a alguien entrando, y los huéspedes deben sentirse como la prioridad.", en: "Chatting about personal topics can distract you from noticing someone coming in, and guests must feel like the priority." }
+    },
+    {
+      q: { es: "Al saludar a los huéspedes, ¿cómo debe ser el saludo?", en: "When greeting guests, how should the greeting be?" },
+      options: [
+        { es: "Idéntico cada vez para mantener consistencia", en: "Identical every time to keep consistency" },
+        { es: "Genuino y variado para que no suene robótico", en: "Genuine and varied so it does not sound robotic" },
+        { es: "Breve y en voz baja", en: "Brief and in a low voice" },
+        { es: "Solo un gesto con la mano", en: "Just a wave of the hand" }
+      ],
+      correct: 1,
+      explanation: { es: "Se debe saludar genuinamente y variar el saludo para que no suene robótico.", en: "Greet genuinely and vary the greeting so it does not sound robotic." }
+    }
+  ]);
+
+  add("H5", [
+    {
+      q: { es: "En una noche ocupada, ¿cómo se recomienda organizar a los hosts?", en: "On a busy night, how is it recommended to organize the hosts?" },
+      options: [
+        { es: "Todos en el comedor sentando huéspedes", en: "All in the dining room seating guests" },
+        { es: "Uno en la puerta anotando nombres y otro supervisando el comedor y sentando", en: "One at the door taking names and another overseeing the dining room and seating" },
+        { es: "Un solo host haciendo todo", en: "A single host doing everything" },
+        { es: "Todos en la puerta saludando", en: "All at the door greeting" }
+      ],
+      correct: 1,
+      explanation: { es: "En una noche ocupada, asigna un host a la puerta para anotar nombres mientras otro supervisa el comedor y sienta a los huéspedes.", en: "On a busy night, assign one host to the door to take names while another oversees the dining room and seats guests." }
+    },
+    {
+      q: { es: "Cuando las mesas están llenas y empiezas a tomar nombres, ¿qué datos anotas?", en: "When tables are full and you start taking names, what details do you record?" },
+      options: [
+        { es: "Nombre del huésped, tamaño del grupo y preferencia de asiento", en: "Guest name, party size, and seating preference" },
+        { es: "Nombre, número de tarjeta y correo electrónico", en: "Name, card number, and email" },
+        { es: "Solo el nombre y la hora de llegada", en: "Just the name and arrival time" },
+        { es: "Platillo favorito y bebida", en: "Favorite dish and drink" }
+      ],
+      correct: 0,
+      explanation: { es: "Al tomar nombres se anota el nombre del huésped, el tamaño del grupo y la preferencia de asiento.", en: "When taking names, record the guest's name, party size, and seating preference." }
+    },
+    {
+      q: { es: "¿Cómo estimas tiempos de espera realistas para cada mesa?", en: "How do you estimate realistic wait times for each table?" },
+      options: [
+        { es: "Preguntando directamente a cada server cuánto falta", en: "By asking each server directly how long is left" },
+        { es: "Observando el flujo de servicio: bebidas, pedido y etapa de pago", en: "By observing the service flow: drinks, order, and payment stage" },
+        { es: "Usando un temporizador fijo de 45 minutos por mesa", en: "By using a fixed 45-minute timer per table" },
+        { es: "Calculando según el tamaño del grupo únicamente", en: "By calculating based on party size only" }
+      ],
+      correct: 1,
+      explanation: { es: "Observa el flujo de servicio (bebidas, pedido, etapa de pago) en cada mesa para estimar tiempos de espera realistas.", en: "Observe the service flow (drinks, order, payment stage) at each table to estimate realistic wait times." }
+    }
+  ]);
+
+  add("H6", [
+    {
+      q: { es: "¿Qué puede pasar si el teléfono se tarda demasiado en contestar?", en: "What can happen if the phone takes too long to be answered?" },
+      options: [
+        { es: "Algunos que llaman cuelgan y llaman o reservan en otro lugar", en: "Some callers hang up and call or book elsewhere" },
+        { es: "El sistema bloquea la línea automáticamente", en: "The system blocks the line automatically" },
+        { es: "La llamada se transfiere a la cocina", en: "The call transfers to the kitchen" },
+        { es: "Se cobra una tarifa por la espera", en: "A fee is charged for the wait" }
+      ],
+      correct: 0,
+      explanation: { es: "Si se tarda demasiado en contestar, algunos que llaman cuelgan y simplemente llaman o reservan en otro lugar.", en: "If answering takes too long, some callers hang up and just call or book elsewhere." }
+    },
+    {
+      q: { es: "¿Por qué es importante confirmar cada detalle antes de colgar?", en: "Why is it important to confirm every detail before hanging up?" },
+      options: [
+        { es: "Para que la llamada dure más tiempo", en: "So the call lasts longer" },
+        { es: "Porque un detalle mal escuchado se convierte en un problema real más difícil de arreglar después", en: "Because a misheard detail becomes a real problem that is harder to fix later" },
+        { es: "Porque el manager lo exige por ley", en: "Because the manager requires it by law" },
+        { es: "Para grabar la conversación completa", en: "To record the full conversation" }
+      ],
+      correct: 1,
+      explanation: { es: "Un detalle mal escuchado por teléfono se convierte en un problema real que es mucho más difícil de arreglar una vez que termina la llamada.", en: "A misheard detail on the phone becomes a real problem that is much harder to fix once the call ends." }
+    },
+    {
+      q: { es: "Al hablar por teléfono con ruido de fondo, ¿cómo debes hablar?", en: "When talking on the phone with background noise, how should you speak?" },
+      options: [
+        { es: "Con claridad y lo suficientemente despacio para que se te entienda", en: "Clearly and slowly enough to be understood" },
+        { es: "Lo más rápido posible para no tardar", en: "As fast as possible to save time" },
+        { es: "En voz muy baja para no molestar", en: "Very quietly so as not to bother anyone" },
+        { es: "Repitiendo cada palabra tres veces", en: "Repeating each word three times" }
+      ],
+      correct: 0,
+      explanation: { es: "Habla con claridad y lo suficientemente despacio para que se te entienda sobre el ruido de fondo.", en: "Speak clearly and slowly enough to be understood over the background noise." }
+    }
+  ]);
+
+  add("H7", [
+    {
+      q: { es: "Si un server se entera de una mesa de 10 personas solo cuando llegan, ¿cuál es el problema?", en: "If a server only learns about a party of 10 when they arrive, what is the problem?" },
+      options: [
+        { es: "No tiene tiempo de reorganizar sus otras mesas", en: "They have no time to rearrange their other tables" },
+        { es: "Debe pagar la cuenta del grupo", en: "They must pay the party's bill" },
+        { es: "Tiene que llamar a la policía", en: "They have to call the police" },
+        { es: "Pierde su turno de rotación", en: "They lose their rotation turn" }
+      ],
+      correct: 0,
+      explanation: { es: "Un server que se entera tarde de una mesa de 10 no tiene tiempo de reorganizar sus otras mesas.", en: "A server who learns late about a party of 10 has no time to rearrange their other tables." }
+    },
+    {
+      q: { es: "Si dos hosts sientan a la misma mesa por falta de sincronización, ¿qué ocurre?", en: "If two hosts seat the same table due to lack of sync, what happens?" },
+      options: [
+        { es: "Es vergonzoso frente a los huéspedes y crea un apuro para arreglarlo", en: "It is embarrassing in front of guests and creates a scramble to fix it" },
+        { es: "El POS lo corrige automáticamente", en: "The POS corrects it automatically" },
+        { es: "Se gana una propina doble", en: "A double tip is earned" },
+        { es: "No pasa nada relevante", en: "Nothing relevant happens" }
+      ],
+      correct: 0,
+      explanation: { es: "Que dos hosts sienten la misma mesa es vergonzoso frente a los huéspedes y crea un apuro para arreglarlo.", en: "Two hosts seating the same table is embarrassing in front of guests and creates a scramble to fix it." }
+    },
+    {
+      q: { es: "Según la lección, ¿qué convierte a un grupo de individuos en un equipo?", en: "According to the lesson, what turns a group of individuals into a team?" },
+      options: [
+        { es: "Mantenerse en comunicación con el FOH durante todo el turno para anticipar problemas", en: "Staying in communication with the FOH all shift to anticipate problems" },
+        { es: "Trabajar cada uno por su cuenta sin distraerse", en: "Each working on their own without distraction" },
+        { es: "Competir por las mejores mesas", en: "Competing for the best tables" },
+        { es: "Esperar instrucciones del manager para todo", en: "Waiting for manager instructions for everything" }
+      ],
+      correct: 0,
+      explanation: { es: "Mantenerse en comunicación con el FOH durante todo el turno es lo que convierte a un grupo de individuos en un equipo que anticipa problemas.", en: "Staying in communication with the FOH all shift is what turns a group of individuals into a team that anticipates problems." }
+    }
+  ]);
+
+  add("H8", [
+    {
+      q: { es: "Al empacar un pedido para llevar, ¿qué extras no debes olvidar?", en: "When packing a to-go order, what extras should you not forget?" },
+      options: [
+        { es: "Popotes, cubiertos y aderezos", en: "Straws, utensils, and dressings" },
+        { es: "Servilletas de tela y velas", en: "Cloth napkins and candles" },
+        { es: "Un menú impreso y una carta de vinos", en: "A printed menu and a wine list" },
+        { es: "Cupones de descuento para la próxima visita", en: "Discount coupons for the next visit" }
+      ],
+      correct: 0,
+      explanation: { es: "No olvides los extras como popotes, cubiertos y aderezos — los huéspedes notan cuando faltan.", en: "Do not forget extras like straws, utensils, and dressings — guests notice when they are missing." }
+    },
+    {
+      q: { es: "En la estación de cobro, ¿qué debes saber sobre el papel de recibos?", en: "At the payment station, what should you know about the receipt paper?" },
+      options: [
+        { es: "Mantenerlo abastecido y saber recargarlo rápido", en: "Keep it stocked and know how to reload it quickly" },
+        { es: "Guardarlo bajo llave todo el turno", en: "Keep it locked up all shift" },
+        { es: "Usar el mismo rollo para toda la semana", en: "Use the same roll for the whole week" },
+        { es: "Pedirlo a la cocina cada vez", en: "Request it from the kitchen each time" }
+      ],
+      correct: 0,
+      explanation: { es: "Mantén el papel de recibos correcto abastecido y sabe recargarlo rápido para no quedarte sin papel en hora pico.", en: "Keep the correct receipt paper stocked and know how to reload it quickly so you do not run out during peak hours." }
+    },
+    {
+      q: { es: "Sobre las campañas de cupones y descuentos activas, ¿qué debe conocer el host?", en: "Regarding active coupon and discount campaigns, what should the host know?" },
+      options: [
+        { es: "Todas las campañas activas y cómo aplicarlas correctamente a la cuenta", en: "All active campaigns and how to apply them correctly to the bill" },
+        { es: "Solo los descuentos para empleados", en: "Only the employee discounts" },
+        { es: "Nada, eso lo maneja únicamente el manager", en: "Nothing, only the manager handles that" },
+        { es: "Únicamente los cupones de cumpleaños", en: "Only the birthday coupons" }
+      ],
+      correct: 0,
+      explanation: { es: "El host debe conocer todas las campañas de cupones/descuentos activas y cómo aplicarlas correctamente a la cuenta del huésped.", en: "The host must know all active coupon/discount campaigns and how to apply them correctly to the guest's bill." }
+    }
+  ]);
+
+})();
+
+/* #3 Preguntas nuevas — track KITCHEN (generado, revisar precision) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+
+  add("K1", [
+    {
+      q:{ es:"¿Cuál es el propósito principal del Jefe de Cocina?", en:"What is the Head Chef's main purpose?" },
+      options:[
+        { es:"Coordinar al equipo, distribuir responsabilidades y garantizar que el servicio salga con calidad y a tiempo", en:"Coordinate the team, assign responsibilities, and ensure service comes out with quality and on time" },
+        { es:"Únicamente cocinar en la línea durante toda la hora pico", en:"Only cook on the line during the entire rush" },
+        { es:"Hacer las compras con los proveedores cada mañana", en:"Do the purchasing with suppliers every morning" },
+        { es:"Encargarse solo de la limpieza al cierre", en:"Handle only the closing cleanup" }
+      ],
+      correct:0,
+      explanation:{ es:"El propósito del Jefe de Cocina es coordinar al equipo, distribuir responsabilidades pendientes y garantizar calidad a tiempo.", en:"The Head Chef's purpose is to coordinate the team, assign pending responsibilities, and guarantee quality on time." }
+    },
+    {
+      q:{ es:"Según la lección, ¿por qué cada rol depende de los otros dos?", en:"According to the lesson, why does each role depend on the other two?" },
+      options:[
+        { es:"Porque todos cobran el mismo salario", en:"Because everyone earns the same salary" },
+        { es:"Porque una gran Línea no puede trabajar rápido si Prep no se adelantó, y el trabajo de Prep se desperdicia sin una buena coordinación", en:"Because a great Line can't work fast if Prep didn't get ahead, and Prep's work is wasted without good coordination" },
+        { es:"Porque solo hay una estación en la cocina", en:"Because there is only one station in the kitchen" },
+        { es:"Porque el Jefe de Cocina hace todo el trabajo solo", en:"Because the Head Chef does all the work alone" }
+      ],
+      correct:1,
+      explanation:{ es:"La Línea no puede ir rápido sin que Prep se adelante, y el trabajo de Prep se desperdicia si el Jefe de Cocina no distribuye las tareas con claridad.", en:"The Line can't be fast unless Prep gets ahead, and Prep's work is wasted if the Head Chef doesn't assign tasks clearly." }
+    },
+    {
+      q:{ es:"¿Qué significa que Prep haga las bases y componentes 'al estándar' y no 'a ojo'?", en:"What does it mean for Prep to make bases and components 'to standard' and not 'by eye'?" },
+      options:[
+        { es:"Que puede improvisar las porciones si tiene prisa", en:"That they can improvise portions if in a hurry" },
+        { es:"Que las salsas, aderezos, proteínas y guarniciones se hacen con calidad y porciones consistentes", en:"That sauces, dressings, proteins, and garnishes are made with consistent quality and portions" },
+        { es:"Que solo Línea revisa la calidad", en:"That only the Line checks quality" },
+        { es:"Que Prep decide el menú del día", en:"That Prep decides the day's menu" }
+      ],
+      correct:1,
+      explanation:{ es:"Prep debe dejar bases y componentes hechos al estándar con porciones correctas, nunca 'a ojo'.", en:"Prep must leave bases and components made to standard with correct portions, never 'by eye'." }
+    }
+  ]);
+
+  add("K2", [
+    {
+      q:{ es:"Durante la hora pico, ¿cómo debe mantener el ritmo la Línea?", en:"During the rush, how should the Line keep pace?" },
+      options:[
+        { es:"Priorizando los tickets por orden y por tiempo, y comunicando constantemente", en:"Prioritizing tickets by order and by time, and communicating constantly" },
+        { es:"Sacando primero los platos más fáciles sin importar el ticket", en:"Sending the easiest dishes first regardless of the ticket" },
+        { es:"Esperando en silencio a que se acaben los productos", en:"Waiting silently until products run out" },
+        { es:"Trabajando cada quien por su cuenta sin avisar nada", en:"Everyone working alone without announcing anything" }
+      ],
+      correct:0,
+      explanation:{ es:"Se mantiene el ritmo priorizando tickets por orden y tiempo y comunicando constantemente para que el equipo siga coordinado.", en:"Pace is kept by prioritizing tickets by order and time and communicating constantly so the team stays coordinated." }
+    },
+    {
+      q:{ es:"¿Qué principio se aplica para evitar cuellos de botella en la línea?", en:"What principle applies to avoid bottlenecks on the line?" },
+      options:[
+        { es:"Reponer solo al final del turno", en:"Restock only at the end of the shift" },
+        { es:"Reponer antes de quedar en cero, no después", en:"Restock before hitting zero, not after" },
+        { es:"Esperar a que un ticket regrese con '86'", en:"Wait until a ticket comes back with '86'" },
+        { es:"Guardar todo el producto para el día siguiente", en:"Save all the product for the next day" }
+      ],
+      correct:1,
+      explanation:{ es:"Se trabaja con anticipación reponiendo antes de quedar en cero, no después.", en:"You work ahead by restocking before reaching zero, not after." }
+    },
+    {
+      q:{ es:"El lunes, ¿con qué par levels corre la cocina?", en:"On Monday, what par levels does the kitchen run on?" },
+      options:[
+        { es:"Niveles altos por alta demanda", en:"High levels due to high demand" },
+        { es:"Niveles base por baja demanda", en:"Base levels due to low demand" },
+        { es:"Sin par levels definidos", en:"No defined par levels" },
+        { es:"Los mismos que el sábado", en:"The same as Saturday" }
+      ],
+      correct:1,
+      explanation:{ es:"El lunes corre con niveles base por baja demanda, mientras que viernes, sábado y domingo necesitan niveles altos.", en:"Monday runs on base levels due to low demand, while Friday, Saturday, and Sunday need high levels." }
+    }
+  ]);
+
+  add("K3", [
+    {
+      q:{ es:"En el trabajo de producción de Prep, ¿qué importa más que la velocidad?", en:"In Prep's production work, what matters more than speed?" },
+      options:[
+        { es:"La consistencia", en:"Consistency" },
+        { es:"La cantidad de envases usados", en:"The number of containers used" },
+        { es:"El tamaño de las porciones extra", en:"The size of extra portions" },
+        { es:"La decoración del plato", en:"The plating decoration" }
+      ],
+      correct:0,
+      explanation:{ es:"En la producción de Prep la consistencia importa más que la velocidad; nunca se cambia una receta 'a ojo'.", en:"In Prep's production, consistency matters more than speed; you never change a recipe 'by eye'." }
+    },
+    {
+      q:{ es:"Según el ejemplo del mensaje de prep pendiente, ¿qué usó el cocinero cuando no había paprika para el fish taco?", en:"Per the example pending-prep message, what did the cook use when there was no paprika for the fish taco?" },
+      options:[
+        { es:"Comino y ajo", en:"Cumin and garlic" },
+        { es:"Sal y limón", en:"Salt and lime" },
+        { es:"Chile en polvo", en:"Chili powder" },
+        { es:"Nada, lo dejó sin sazón", en:"Nothing, left it unseasoned" }
+      ],
+      correct:1,
+      explanation:{ es:"En el ejemplo, al no haber paprika se usó sal y limón en las primeras porciones, y se reportó el problema.", en:"In the example, with no paprika, salt and lime were used on the first portions and the problem was reported." }
+    },
+    {
+      q:{ es:"¿Cómo deben mantenerse los envases de producto que Prep deja para Línea?", en:"How should the product containers Prep leaves for the Line be kept?" },
+      options:[
+        { es:"Abiertos y sin etiqueta para agarrarlos rápido", en:"Open and unlabeled for quick grabbing" },
+        { es:"Cerrados, limpios y con sus utensilios asignados", en:"Closed, clean, and with their assigned utensils" },
+        { es:"Amontonados donde haya espacio", en:"Piled up wherever there is space" },
+        { es:"Solo en la nevera principal", en:"Only in the main fridge" }
+      ],
+      correct:1,
+      explanation:{ es:"Los envases se mantienen cerrados, limpios y con sus utensilios asignados, y cada producto en el lugar correcto para que Línea lo use sin buscarlo.", en:"Containers are kept closed, clean, and with their assigned utensils, each product in the right place so the Line can use it without searching." }
+    }
+  ]);
+
+  add("K4", [
+    {
+      q:{ es:"Durante la hora pico, ¿qué hace el encargado con la línea en tiempo real?", en:"During the rush, what does the manager do with the line in real time?" },
+      options:[
+        { es:"La deja fija sin cambios hasta el cierre", en:"Leaves it fixed with no changes until closing" },
+        { es:"La rebalancea: mueve personas, simplifica el flujo y elimina cuellos de botella", en:"Rebalances it: moves people, simplifies flow, and eliminates bottlenecks" },
+        { es:"Detiene el servicio para reorganizar", en:"Stops service to reorganize" },
+        { es:"Envía a todos a break al mismo tiempo", en:"Sends everyone on break at the same time" }
+      ],
+      correct:1,
+      explanation:{ es:"El encargado rebalancea la línea en tiempo real moviendo personas, simplificando el flujo y eliminando cuellos de botella antes de que sean un problema.", en:"The manager rebalances the line in real time by moving people, simplifying flow, and eliminating bottlenecks before they become a problem." }
+    },
+    {
+      q:{ es:"¿Qué debe confirmar el encargado al revisar el mise en place antes de abrir?", en:"What must the manager confirm when reviewing mise en place before opening?" },
+      options:[
+        { es:"Que haya suficiente personal para el cierre", en:"That there is enough staff for closing" },
+        { es:"Par levels y reposiciones críticas, y que cada estación tenga utensilios, contenedores y producto listo", en:"Par levels and critical restocks, and that each station has utensils, containers, and product ready" },
+        { es:"Que el salón esté decorado", en:"That the dining room is decorated" },
+        { es:"Que los precios del menú estén actualizados", en:"That the menu prices are updated" }
+      ],
+      correct:1,
+      explanation:{ es:"Antes de abrir confirma par levels y reposiciones críticas y verifica que cada estación tenga utensilios, contenedores y producto listo.", en:"Before opening he confirms par levels and critical restocks and verifies each station has utensils, containers, and product ready." }
+    },
+    {
+      q:{ es:"Como líder durante la hora pico, ¿qué se espera del encargado?", en:"As a leader during the rush, what is expected of the manager?" },
+      options:[
+        { es:"Dar instrucciones claras y mantener la calma", en:"Give clear instructions and stay calm" },
+        { es:"Levantar la voz para apurar al equipo", en:"Raise his voice to hurry the team" },
+        { es:"Dejar que cada quien decida solo", en:"Let everyone decide on their own" },
+        { es:"Salir de la cocina hasta que baje la presión", en:"Leave the kitchen until pressure drops" }
+      ],
+      correct:0,
+      explanation:{ es:"Liderazgo significa dar instrucciones claras y mantener la calma durante la hora pico, además de entrenar al equipo en el estándar.", en:"Leadership means giving clear instructions and staying calm during the rush, plus training the team on the standard." }
+    }
+  ]);
+
+  add("K5", [
+    {
+      q:{ es:"¿Para qué sirve conocer el conjunto exacto de ingredientes de cada receta?", en:"What is the purpose of knowing each recipe's exact set of ingredients?" },
+      options:[
+        { es:"Para cocinar más rápido sin revisar tickets", en:"To cook faster without checking tickets" },
+        { es:"Para detectar errores antes de que salgan, informar a FOH sobre alergias y mantener el mismo sabor siempre", en:"To catch errors before they leave, inform FOH about allergies, and keep the same flavor every time" },
+        { es:"Para poder cambiar las recetas cada semana", en:"To be able to change recipes every week" },
+        { es:"Solo para presentar un examen escrito", en:"Only to pass a written test" }
+      ],
+      correct:1,
+      explanation:{ es:"Conocer los ingredientes permite detectar errores antes de que salgan, decirle a FOH qué lleva un plato ante una alergia y mantener cada lote con el mismo sabor.", en:"Knowing the ingredients lets you catch errors before they leave, tell FOH what a dish contains for an allergy, and keep every batch tasting the same." }
+    },
+    {
+      q:{ es:"Según las tarjetas de ingredientes, ¿qué debes hacer con cada una para estudiarla?", en:"According to the ingredient cards, what should you do with each one to study it?" },
+      options:[
+        { es:"Voltearla y decir los ingredientes en voz alta", en:"Flip it and say the ingredients out loud" },
+        { es:"Memorizarla en silencio una sola vez", en:"Memorize it silently just once" },
+        { es:"Guardarla sin abrirla", en:"Store it without opening it" },
+        { es:"Copiarla en un cuaderno y descartarla", en:"Copy it in a notebook and discard it" }
+      ],
+      correct:0,
+      explanation:{ es:"La lección indica voltear cada tarjeta, decir los ingredientes en voz alta y pensar cómo se ve y huele cada uno en tu estación.", en:"The lesson says to flip each card, say the ingredients out loud, and think about how each looks and smells at your station." }
+    }
+  ]);
+
+  add("K7", [
+    {
+      q:{ es:"¿En qué recetas aparece la pasta de ajo y jengibre?", en:"In which recipes does the garlic-ginger paste appear?" },
+      options:[
+        { es:"Pescado del Día, Leche de Tigre y Chicharrón de Mariscos", en:"Catch of the Day, Leche de Tigre, and Chicharrón de Mariscos" },
+        { es:"Solo en el Ceviche Mixto", en:"Only in Ceviche Mixto" },
+        { es:"Cochinita Pibil y Flan", en:"Cochinita Pibil and Flan" },
+        { es:"Únicamente en las Alitas Mexicanas", en:"Only in the Mexican Wings" }
+      ],
+      correct:0,
+      explanation:{ es:"La pasta de ajo y jengibre, una mezcla picada de color claro, aparece en Pescado del Día, Leche de Tigre y Chicharrón de Mariscos.", en:"The garlic-ginger paste, a light-colored minced blend, appears in Catch of the Day, Leche de Tigre, and Chicharrón de Mariscos." }
+    },
+    {
+      q:{ es:"El líquido sazonador oscuro tipo Maggi, ¿en qué preparaciones aparece?", en:"The dark Maggi-type seasoning liquid appears in which preparations?" },
+      options:[
+        { es:"Solo en el Ceviche Mixto", en:"Only in Ceviche Mixto" },
+        { es:"Marinación de Filet, Marinación de Alitas Mexicanas y Chicharrón de Mariscos", en:"Filet marinade, Mexican Wings marinade, and Chicharrón de Mariscos" },
+        { es:"Agua de Jamaica y Chicha Morada", en:"Agua de Jamaica and Chicha Morada" },
+        { es:"En todas las salsas frías", en:"In all cold sauces" }
+      ],
+      correct:1,
+      explanation:{ es:"El sazonador concentrado tipo Maggi aparece en la Marinación de Filet, la Marinación de Alitas Mexicanas y el Chicharrón de Mariscos; no es soya ni salsa de pescado.", en:"The concentrated Maggi-type seasoning appears in the Filet marinade, the Mexican Wings marinade, and Chicharrón de Mariscos; it is not soy or fish sauce." }
+    },
+    {
+      q:{ es:"Conocer las tres especificaciones repetidas (camarón 21/25, pasta de ajo y jengibre, sazonador oscuro) te evita dudar en aproximadamente, ¿cuánto de las proteínas y mariscos?", en:"Knowing the three repeated specs (21/25 shrimp, garlic-ginger paste, dark seasoning) saves you from hesitating on roughly how much of the proteins and seafood?" },
+      options:[
+        { es:"Cerca de un tercio", en:"About a third" },
+        { es:"La mitad exacta", en:"Exactly half" },
+        { es:"Todas ellas", en:"All of them" },
+        { es:"Casi ninguna", en:"Almost none" }
+      ],
+      correct:0,
+      explanation:{ es:"La lección señala que conocer esas tres especificaciones te evita dudar en cerca de un tercio de las proteínas y mariscos de la lista.", en:"The lesson notes that knowing those three specs saves you from hesitating on about a third of the proteins and seafood on the list." }
+    }
+  ]);
+
+  add("K9", [
+    {
+      q:{ es:"¿Qué químicos aprobados se usan en las limpiezas profundas?", en:"Which approved chemicals are used in deep cleanings?" },
+      options:[
+        { es:"Solo agua caliente", en:"Only hot water" },
+        { es:"Desengrasante grado cocina, detergente neutro para acero inoxidable y sanitizante", en:"Kitchen-grade degreaser, neutral detergent for stainless steel, and sanitizer" },
+        { es:"Cloro y amoníaco mezclados", en:"Bleach and ammonia mixed together" },
+        { es:"Cualquier limpiador del supermercado", en:"Any supermarket cleaner" }
+      ],
+      correct:1,
+      explanation:{ es:"Los químicos aprobados son desengrasante grado cocina, detergente neutro para acero inoxidable y sanitizante, nunca mezclados entre sí.", en:"Approved chemicals are kitchen-grade degreaser, neutral detergent for stainless steel, and sanitizer, never mixed together." }
+    },
+    {
+      q:{ es:"¿Por qué se exige calzado antideslizante y guantes resistentes a químicos en estas limpiezas?", en:"Why are non-slip footwear and chemical-resistant gloves required in these cleanings?" },
+      options:[
+        { es:"Porque involucran desengrasantes y pisos mojados", en:"Because they involve degreasers and wet floors" },
+        { es:"Porque es solo cuestión de apariencia", en:"Because it's just a matter of appearance" },
+        { es:"Porque lo pide el proveedor de comida", en:"Because the food supplier requires it" },
+        { es:"Porque se trabaja con cuchillos filosos", en:"Because you work with sharp knives" }
+      ],
+      correct:0,
+      explanation:{ es:"El EPP es obligatorio sin excepciones porque estas limpiezas involucran desengrasantes y pisos mojados.", en:"PPE is mandatory without exception because these cleanings involve degreasers and wet floors." }
+    },
+    {
+      q:{ es:"¿Cuándo se sugiere hacer estas limpiezas y quién las ejecuta?", en:"When are these cleanings suggested and who carries them out?" },
+      options:[
+        { es:"Al cierre, ejecutadas por un cocinero o miembro de Prep designado con apoyo de un busser o mantenimiento", en:"At closing, carried out by a designated cook or Prep member with support from a busser or maintenance" },
+        { es:"A media hora pico, por cualquier cliente disponible", en:"Mid-rush, by any available customer" },
+        { es:"Solo una vez al mes, por el GM únicamente", en:"Only once a month, by the GM alone" },
+        { es:"Nunca hay un horario definido", en:"There is never a defined schedule" }
+      ],
+      correct:0,
+      explanation:{ es:"El horario sugerido es al cierre, ajustado según la operación; la tarea la ejecuta un cocinero o miembro de Prep con apoyo de busser o mantenimiento y verificación del supervisor o GM.", en:"The suggested schedule is at closing, adjusted to operations; the task is done by a cook or Prep member with busser or maintenance support and supervisor or GM verification." }
+    }
+  ]);
+
+  add("K10", [
+    {
+      q:{ es:"¿Qué estación se limpia el sábado?", en:"Which station is cleaned on Saturday?" },
+      options:[
+        { es:"Estación 6 (nevera y congelador)", en:"Station 6 (fridge and freezer)" },
+        { es:"Estación 1 (freidoras y nevera de ceviche)", en:"Station 1 (fryers and ceviche fridge)" },
+        { es:"Estación 3 (horno y estanterías)", en:"Station 3 (oven and ingredient shelving)" },
+        { es:"Estación 5 (flat top y neveras laterales)", en:"Station 5 (flat top and side fridges)" }
+      ],
+      correct:0,
+      explanation:{ es:"El sábado corresponde a la Estación 6: nevera y congelador.", en:"Saturday is Station 6: fridge and freezer." }
+    },
+    {
+      q:{ es:"Antes de terminar una tarea de limpieza, ¿qué debe hacer quien la ejecutó respecto a daños?", en:"Before finishing a cleaning task, what must the person who did it do about damage?" },
+      options:[
+        { es:"Reportar cualquier daño (gas, eléctrico, equipo) antes de terminar, nunca 'después'", en:"Report any damage (gas, electrical, equipment) before finishing, never 'later'" },
+        { es:"Esperar a la revisión del domingo para reportarlo", en:"Wait for Sunday's review to report it" },
+        { es:"Reportarlo solo si otra persona lo nota", en:"Report it only if someone else notices" },
+        { es:"Arreglarlo por su cuenta sin avisar", en:"Fix it alone without telling anyone" }
+      ],
+      correct:0,
+      explanation:{ es:"Quien hace la tarea marca la hoja de control y reporta cualquier daño antes de terminar, nunca 'después'.", en:"Whoever does the task marks the control sheet and reports any damage before finishing, never 'later'." }
+    },
+    {
+      q:{ es:"¿Cuál es el propósito específico de la revisión general del domingo?", en:"What is the specific purpose of Sunday's general review?" },
+      options:[
+        { es:"Detectar lo que alguna estación de días anteriores dejó pasar", en:"Catch what an earlier day's station missed" },
+        { es:"Repetir toda la limpieza de la semana desde cero", en:"Repeat the whole week's cleaning from scratch" },
+        { es:"Preparar el menú de la semana siguiente", en:"Prepare next week's menu" },
+        { es:"Descansar sin limpiar nada", en:"Rest without cleaning anything" }
+      ],
+      correct:0,
+      explanation:{ es:"La revisión del domingo existe para detectar lo que alguna estación de días anteriores dejó pasar, y así cerrar la semana completamente limpia.", en:"Sunday's review exists to catch what an earlier day's station missed, closing the week completely clean." }
+    }
+  ]);
+
+  add("K11", [
+    {
+      q:{ es:"¿Después de tocar qué cosas debes lavarte las manos según la lección?", en:"After touching which things must you wash your hands per the lesson?" },
+      options:[
+        { es:"Teléfonos, dinero, platos sucios, basura, tu cara o tu cabello", en:"Phones, money, dirty dishes, trash, your face, or your hair" },
+        { es:"Solo después de usar el baño", en:"Only after using the restroom" },
+        { es:"Únicamente al inicio del turno", en:"Only at the start of the shift" },
+        { es:"Solo si un manager lo pide", en:"Only if a manager asks" }
+      ],
+      correct:0,
+      explanation:{ es:"Debes lavarte las manos según sea requerido y después de tocar teléfonos, dinero, platos sucios, basura, tu cara o tu cabello.", en:"You must wash your hands as required and after touching phones, money, dirty dishes, trash, your face, or your hair." }
+    },
+    {
+      q:{ es:"¿Está permitido el uso personal del teléfono y los audífonos mientras trabajas?", en:"Is personal phone and headphone use allowed while working?" },
+      options:[
+        { es:"No, salvo emergencias o uso autorizado por un manager", en:"No, except emergencies or use authorized by a manager" },
+        { es:"Sí, siempre que sea a bajo volumen", en:"Yes, as long as it's at low volume" },
+        { es:"Sí, durante la hora pico", en:"Yes, during the rush" },
+        { es:"Sí, en la estación de prep", en:"Yes, at the prep station" }
+      ],
+      correct:0,
+      explanation:{ es:"El uso personal del teléfono y audífonos no está permitido mientras trabajas, salvo emergencias o uso autorizado por un manager.", en:"Personal phone and headphone use is not allowed while working, except emergencies or manager-authorized use." }
+    },
+    {
+      q:{ es:"Al manejar un ticket de alergia en cocina, ¿qué nunca debes hacer?", en:"When handling an allergy ticket in the kitchen, what must you never do?" },
+      options:[
+        { es:"Adivinar cuál es el alérgeno", en:"Guess what the allergen is" },
+        { es:"Confirmar la modificación antes de cocinar", en:"Confirm the modification before cooking" },
+        { es:"Usar herramientas y superficies limpias", en:"Use clean tools and surfaces" },
+        { es:"Verificar el ticket contra el plato terminado", en:"Verify the ticket against the finished dish" }
+      ],
+      correct:0,
+      explanation:{ es:"Nunca debes adivinar cuál es el alérgeno; confirma la modificación, usa herramientas limpias y verifica el ticket contra el plato antes de que salga.", en:"You must never guess the allergen; confirm the modification, use clean tools, and verify the ticket against the dish before it leaves." }
+    }
+  ]);
+
+})();
+
+/* #3 Preguntas nuevas — track MANAGER (generado, revisar precision) */
+(function(){
+  if (typeof MODULES === "undefined") return;
+  function add(id, qs){
+    var m = MODULES.find(function(x){ return x.id===id; });
+    if(!m || !m.quiz) return;
+    if(m.quizShow === undefined) m.quizShow = m.quiz.length;
+    Array.prototype.push.apply(m.quiz, qs);
+  }
+
+  add("MG1", [
+    {
+      q:{ es:"¿Con quién debe el AGM mantener comunicación constante sobre temas operativos y de personal?", en:"With whom should the AGM keep constant communication about operational and staff matters?" },
+      options:[
+        { es:"Con el Manager General", en:"With the General Manager" },
+        { es:"Solo con los clientes", en:"Only with customers" },
+        { es:"Con los proveedores", en:"With the suppliers" },
+        { es:"Con nadie en particular", en:"With no one in particular" }
+      ],
+      correct:0,
+      explanation:{ es:"El AGM mantiene comunicación constante con el Manager General sobre temas operativos, personal y eventos especiales.", en:"The AGM keeps constant communication with the General Manager about operational, staff and special-event matters." }
+    },
+    {
+      q:{ es:"¿Qué debe monitorear el AGM y coordinar el seguimiento con los servers mencionados por nombre?", en:"What should the AGM monitor and coordinate follow-up on with servers mentioned by name?" },
+      options:[
+        { es:"Las reseñas en línea", en:"Online reviews" },
+        { es:"Los horarios de autobús", en:"Bus schedules" },
+        { es:"El clima del día", en:"The day's weather" },
+        { es:"Los precios de la competencia", en:"Competitor prices" }
+      ],
+      correct:0,
+      explanation:{ es:"El AGM monitorea las reseñas en línea y coordina el seguimiento con los servers mencionados por nombre.", en:"The AGM monitors online reviews and coordinates follow-up with servers mentioned by name." }
+    },
+    {
+      q:{ es:"¿Qué debe hacer el AGM durante las horas pico si surgen conflictos?", en:"What should the AGM do during peak hours if conflicts arise?" },
+      options:[
+        { es:"Apoyar al equipo e intervenir para resolver conflictos", en:"Support the team and step in to resolve conflicts" },
+        { es:"Retirarse a la oficina hasta que pase", en:"Retreat to the office until it passes" },
+        { es:"Esperar a que el Manager General regrese", en:"Wait for the General Manager to return" },
+        { es:"Cerrar temporalmente el restaurante", en:"Temporarily close the restaurant" }
+      ],
+      correct:0,
+      explanation:{ es:"El AGM apoya al equipo durante horas pico e interviene para resolver conflictos si surgen.", en:"The AGM supports the team during peak hours and steps in to resolve conflicts if they arise." }
+    }
+  ]);
+
+  add("MG2", [
+    {
+      q:{ es:"¿Quién crea y publica los horarios semanales del personal FOH y BOH?", en:"Who creates and publishes the weekly FOH and BOH staff schedules?" },
+      options:[
+        { es:"Cada empleado por su cuenta", en:"Each employee on their own" },
+        { es:"El manager", en:"The manager" },
+        { es:"Recursos Humanos únicamente", en:"HR only" },
+        { es:"El proveedor de nómina", en:"The payroll vendor" }
+      ],
+      correct:1,
+      explanation:{ es:"El manager crea y publica los horarios semanales del personal FOH y BOH, asegurando cobertura adecuada.", en:"The manager creates and publishes the weekly FOH and BOH schedules, ensuring adequate coverage." }
+    },
+    {
+      q:{ es:"¿Qué debe verificar el manager en los registros de reloj?", en:"What should the manager verify in the time-clock records?" },
+      options:[
+        { es:"Que todos registren correctamente entradas, salidas y descansos", en:"That everyone correctly clocks in, out and breaks" },
+        { es:"Solo las entradas de los turnos nocturnos", en:"Only night-shift clock-ins" },
+        { es:"Únicamente las horas extra", en:"Only overtime hours" },
+        { es:"Nada, el sistema lo hace solo", en:"Nothing, the system does it alone" }
+      ],
+      correct:0,
+      explanation:{ es:"El manager verifica que todos los empleados registren correctamente sus entradas, salidas y descansos en el sistema.", en:"The manager verifies that all employees correctly record their clock-ins, clock-outs and breaks in the system." }
+    },
+    {
+      q:{ es:"¿Cuándo debe reforzarse el entrenamiento en estándares de servicio, limpieza y hospitalidad?", en:"When should training on service, cleanliness and hospitality standards be reinforced?" },
+      options:[
+        { es:"De forma continua, no solo durante el onboarding", en:"Continuously, not only during onboarding" },
+        { es:"Solo durante el onboarding", en:"Only during onboarding" },
+        { es:"Una vez al año", en:"Once a year" },
+        { es:"Solo cuando hay una queja", en:"Only when there is a complaint" }
+      ],
+      correct:0,
+      explanation:{ es:"Los estándares de servicio, limpieza y hospitalidad se refuerzan de forma continua, no solo durante el onboarding.", en:"Service, cleanliness and hospitality standards are reinforced continuously, not only during onboarding." }
+    }
+  ]);
+
+  add("MG3", [
+    {
+      q:{ es:"¿Qué debe hacer un manager durante la apertura del turno?", en:"What should a manager do during shift opening?" },
+      options:[
+        { es:"Recorrer el piso, revisar personal y stock", en:"Walk the floor, check staff and stock" },
+        { es:"Conciliar el POS y guardar el efectivo", en:"Reconcile the POS and secure the cash" },
+        { es:"Enviar el informe diario a RRHH", en:"Send the daily report to HR" },
+        { es:"Apagar todas las luces del local", en:"Turn off all the lights in the venue" }
+      ],
+      correct:0,
+      explanation:{ es:"En la apertura el manager recorre el piso y revisa el personal y el stock.", en:"At opening the manager walks the floor and checks staff and stock." }
+    },
+    {
+      q:{ es:"¿Contra qué debe verificarse que el inventario se reciba y registre correctamente?", en:"Against what should received inventory be verified and recorded correctly?" },
+      options:[
+        { es:"Contra las facturas", en:"Against the invoices" },
+        { es:"Contra el menú del día", en:"Against the day's menu" },
+        { es:"Contra las reseñas en línea", en:"Against online reviews" },
+        { es:"Contra el horario del personal", en:"Against the staff schedule" }
+      ],
+      correct:0,
+      explanation:{ es:"El manager verifica que el inventario se reciba y registre correctamente contra las facturas.", en:"The manager verifies that inventory is received and recorded correctly against the invoices." }
+    },
+    {
+      q:{ es:"¿Qué método de rotación de productos ayuda a apoyar el control de costos?", en:"Which product rotation method helps support cost control?" },
+      options:[
+        { es:"FIFO (Primero en Entrar, Primero en Salir)", en:"FIFO (First In, First Out)" },
+        { es:"LIFO (Último en Entrar, Primero en Salir)", en:"LIFO (Last In, First Out)" },
+        { es:"Rotación aleatoria", en:"Random rotation" },
+        { es:"No rotar el producto", en:"Not rotating product at all" }
+      ],
+      correct:0,
+      explanation:{ es:"El control de costos incluye monitorear la rotación de productos con FIFO para proteger los márgenes.", en:"Cost control includes monitoring product rotation with FIFO to protect margins." }
+    }
+  ]);
+
+  add("MG4", [
+    {
+      q:{ es:"¿Para qué debe empoderarse al equipo según la política de manejo de quejas?", en:"What should the team be empowered to do under the complaint-handling policy?" },
+      options:[
+        { es:"Para resolver problemas pequeños", en:"To resolve small problems" },
+        { es:"Para procesar anulaciones en Toast", en:"To process voids in Toast" },
+        { es:"Para crear los horarios semanales", en:"To create the weekly schedules" },
+        { es:"Para hacer pedidos a proveedores", en:"To place supplier orders" }
+      ],
+      correct:0,
+      explanation:{ es:"El manager empodera al equipo para resolver problemas pequeños y atiende personalmente las quejas escaladas.", en:"The manager empowers the team to resolve small problems and personally handles escalated complaints." }
+    },
+    {
+      q:{ es:"Además de las quejas, ¿qué aspecto de la experiencia general del huésped debe supervisar el manager?", en:"Besides complaints, what aspect of the overall guest experience should the manager oversee?" },
+      options:[
+        { es:"El ambiente: música, limpieza y presentación del espacio", en:"The ambiance: music, cleanliness and presentation of the space" },
+        { es:"Las tarifas de estacionamiento cercanas", en:"Nearby parking rates" },
+        { es:"El costo de mano de obra semanal", en:"The weekly labor cost" },
+        { es:"El horario de entrega de proveedores", en:"The supplier delivery schedule" }
+      ],
+      correct:0,
+      explanation:{ es:"El manager supervisa el ambiente (música, limpieza, presentación del espacio) y la presentación del equipo.", en:"The manager oversees the ambiance (music, cleanliness, presentation of the space) and the team's presentation." }
+    },
+    {
+      q:{ es:"Al monitorear reseñas en línea, ¿con qué tipo de menciones se debe coordinar seguimiento?", en:"When monitoring online reviews, which type of mentions require follow-up?" },
+      options:[
+        { es:"Tanto positivas como negativas", en:"Both positive and negative" },
+        { es:"Solo las negativas", en:"Only negative ones" },
+        { es:"Solo las positivas", en:"Only positive ones" },
+        { es:"Ninguna, no se les da seguimiento", en:"None, they are not followed up" }
+      ],
+      correct:0,
+      explanation:{ es:"Se coordina un seguimiento respetuoso con cualquier miembro mencionado por nombre, ya sea la mención positiva o negativa.", en:"A respectful follow-up is coordinated with any member mentioned by name, whether the mention is positive or negative." }
+    }
+  ]);
+
+  add("MG5", [
+    {
+      q:{ es:"¿Para qué existe específicamente la autoridad de anulaciones y cortesías del manager?", en:"What specifically is the manager's void and comp authority for?" },
+      options:[
+        { es:"Para recuperación de servicio y correcciones legítimas", en:"For service recovery and legitimate corrections" },
+        { es:"Para agilizar el turno cuando hay mucho movimiento", en:"To speed up the shift when it's busy" },
+        { es:"Para dar bebidas gratis a los amigos", en:"To give free drinks to friends" },
+        { es:"Para evitar registrar ventas", en:"To avoid recording sales" }
+      ],
+      correct:0,
+      explanation:{ es:"Esta autoridad existe específicamente para recuperación de servicio y correcciones legítimas, no como función de conveniencia.", en:"This authority exists specifically for service recovery and legitimate corrections, not as a convenience function." }
+    },
+    {
+      q:{ es:"Dar bebidas de cortesía a amigos sin ningún problema de servicio, ¿qué representa?", en:"Comping drinks to friends with no service problem represents what?" },
+      options:[
+        { es:"Un mal uso que se nota en los reportes y erosiona la confianza", en:"A misuse that shows in reports and erodes trust" },
+        { es:"Una práctica recomendada de hospitalidad", en:"A recommended hospitality practice" },
+        { es:"Un uso legítimo de la autoridad", en:"A legitimate use of the authority" },
+        { es:"Una forma de agilizar el turno", en:"A way to speed up the shift" }
+      ],
+      correct:0,
+      explanation:{ es:"Dar cortesías a amigos sin problema de servicio no es buen criterio y esos patrones se notan en los reportes y erosionan la confianza.", en:"Comping friends with no service issue is poor judgment and such patterns show in reports and erode trust." }
+    },
+    {
+      q:{ es:"¿A quién protege el registro de la razón de una anulación en Toast?", en:"Whom does recording the reason for a void in Toast protect?" },
+      options:[
+        { es:"Tanto al restaurante como al manager personalmente", en:"Both the restaurant and the manager personally" },
+        { es:"Solo al cliente", en:"Only the customer" },
+        { es:"Solo al proveedor de Toast", en:"Only the Toast vendor" },
+        { es:"A nadie, es solo un trámite", en:"No one, it's just paperwork" }
+      ],
+      correct:0,
+      explanation:{ es:"El registro protege al restaurante contra abuso interno y al manager como prueba de que la anulación fue por una razón legítima.", en:"The record protects the restaurant against internal abuse and the manager as proof the void was for a legitimate reason." }
+    }
+  ]);
+
+  add("MG6", [
+    {
+      q:{ es:"Según la política FOH-BAR-ALC-001, ¿en disputas de identificación quién es la autoridad final?", en:"Under policy FOH-BAR-ALC-001, who is the final authority in ID disputes?" },
+      options:[
+        { es:"Los managers", en:"The managers" },
+        { es:"El bartender de mayor antigüedad", en:"The most senior bartender" },
+        { es:"El host de la entrada", en:"The front-door host" },
+        { es:"El cliente que presenta la identificación", en:"The customer presenting the ID" }
+      ],
+      correct:0,
+      explanation:{ es:"Los managers son la autoridad final en disputas de identificación y anulaciones de corte.", en:"Managers are the final authority in ID disputes and cut-off overrides." }
+    },
+    {
+      q:{ es:"¿Cuáles son señales de intoxicación que el manager debe confirmar?", en:"What are signs of intoxication the manager must confirm?" },
+      options:[
+        { es:"Habla arrastrada, problemas de equilibrio y fuerte olor a alcohol", en:"Slurred speech, balance problems and strong smell of alcohol" },
+        { es:"Pedir agua y comida", en:"Asking for water and food" },
+        { es:"Pagar la cuenta con tarjeta", en:"Paying the bill by card" },
+        { es:"Llegar temprano al restaurante", en:"Arriving early at the restaurant" }
+      ],
+      correct:0,
+      explanation:{ es:"Las señales incluyen habla arrastrada, problemas de equilibrio, comportamiento agresivo, dificultad para enfocarse y fuerte olor a alcohol.", en:"Signs include slurred speech, balance problems, aggressive behavior, trouble focusing and a strong smell of alcohol." }
+    },
+    {
+      q:{ es:"Si un huésped intoxicado piensa manejar, ¿qué debe ofrecer el equipo?", en:"If an intoxicated guest plans to drive, what should the team offer?" },
+      options:[
+        { es:"Ayudarle a conseguir un viaje (Uber/Lyft/taxi)", en:"Help arranging a ride (Uber/Lyft/taxi)" },
+        { es:"Otra bebida para calmarlo", en:"Another drink to calm them" },
+        { es:"Las llaves de su auto de inmediato", en:"Their car keys immediately" },
+        { es:"Un descuento en su próxima visita", en:"A discount on their next visit" }
+      ],
+      correct:0,
+      explanation:{ es:"El equipo ofrece agua y comida, y si el huésped piensa manejar, recomienda que no lo haga y ayuda a conseguir un viaje.", en:"The team offers water and food, and if the guest plans to drive, recommends against it and helps arrange a ride." }
+    }
+  ]);
+
+  add("MG7", [
+    {
+      q:{ es:"¿Con qué frecuencia conviene hacer una revisión rápida de los niveles de stock?", en:"How often is it advisable to do a quick check of stock levels?" },
+      options:[
+        { es:"Varias veces por semana, no solo cuando algo se acaba", en:"Several times a week, not only when something runs out" },
+        { es:"Solo cuando un artículo ya se agotó", en:"Only when an item has already run out" },
+        { es:"Una vez al mes", en:"Once a month" },
+        { es:"Solo al final del año", en:"Only at year end" }
+      ],
+      correct:0,
+      explanation:{ es:"Una revisión rápida varias veces por semana detecta faltantes antes de que se conviertan en un artículo agotado.", en:"A quick check several times a week catches shortages before they become an out-of-stock item." }
+    },
+    {
+      q:{ es:"Con un proveedor que tarda 3 días en entregar, ¿cuándo debe hacerse el pedido?", en:"With a supplier that takes 3 days to deliver, when should the order be placed?" },
+      options:[
+        { es:"3 días o más antes de quedarse sin producto", en:"3 days or more before running out of product" },
+        { es:"El mismo día que el estante queda vacío", en:"The same day the shelf is empty" },
+        { es:"Un día después de agotarse", en:"One day after running out" },
+        { es:"Solo cuando el proveedor llama", en:"Only when the supplier calls" }
+      ],
+      correct:0,
+      explanation:{ es:"Un proveedor que tarda 3 días necesita que el pedido se haga 3 días o más antes de quedarse realmente sin producto.", en:"A supplier that takes 3 days needs the order placed 3 days or more before actually running out of product." }
+    },
+    {
+      q:{ es:"¿Qué se debe hacer al verificar una entrega contra la factura?", en:"What should be done when verifying a delivery against the invoice?" },
+      options:[
+        { es:"Contar cantidades, revisar el producto e inspeccionar por daños", en:"Count quantities, check the product and inspect for damage" },
+        { es:"Firmar de inmediato sin revisar", en:"Sign immediately without checking" },
+        { es:"Pagar y guardar todo sin contar", en:"Pay and store everything without counting" },
+        { es:"Dejar que el conductor descargue solo", en:"Let the driver unload alone" }
+      ],
+      correct:0,
+      explanation:{ es:"Al verificar una entrega se cuentan las cantidades, se revisa que el producto coincida con lo pedido y se inspecciona por daños o descomposición.", en:"When verifying a delivery you count quantities, confirm the product matches the order and inspect for damage or spoilage." }
+    }
+  ]);
+
+  add("MG8", [
+    {
+      q:{ es:"¿Qué señal en el progreso de un trainee debe detectarse y atenderse temprano?", en:"What sign in a trainee's progress should be caught and addressed early?" },
+      options:[
+        { es:"Estar atorado dos semanas en el mismo módulo o ir apresurado sin aprobar", en:"Being stuck two weeks on the same module or rushing without passing" },
+        { es:"Completar los módulos en orden", en:"Completing modules in order" },
+        { es:"Aprobar cada módulo al primer intento", en:"Passing each module on the first try" },
+        { es:"Iniciar sesión desde su teléfono", en:"Logging in from their phone" }
+      ],
+      correct:0,
+      explanation:{ es:"Un empleado atorado dos semanas en el mismo módulo, o que va apresurado sin aprobar, es algo que se quiere detectar y atender temprano.", en:"An employee stuck two weeks on the same module, or rushing without passing, is something to catch and address early." }
+    },
+    {
+      q:{ es:"¿En qué formato se exporta el progreso para documentación y archivos de RRHH?", en:"In what format is progress exported for documentation and HR files?" },
+      options:[
+        { es:"Un archivo CSV", en:"A CSV file" },
+        { es:"Un video de repaso", en:"A review video" },
+        { es:"Una foto del piso", en:"A photo of the floor" },
+        { es:"Un mensaje de voz", en:"A voice message" }
+      ],
+      correct:0,
+      explanation:{ es:"Se exporta un CSV para los registros, por ejemplo para verificar que un módulo crítico se completó antes de un turno sin supervisión.", en:"A CSV is exported for records, for example to verify a critical module was completed before an unsupervised shift." }
+    },
+    {
+      q:{ es:"¿Qué se debe revisar para los pasos de configuración de la sincronización con Google Sheet?", en:"What should be checked for the Google Sheet sync setup steps?" },
+      options:[
+        { es:"El README", en:"The README" },
+        { es:"La factura del proveedor", en:"The supplier invoice" },
+        { es:"El menú de cócteles", en:"The cocktail menu" },
+        { es:"El horario semanal", en:"The weekly schedule" }
+      ],
+      correct:0,
+      explanation:{ es:"Si se configuró la sincronización con Google Sheet el progreso se actualiza allí automáticamente; el README tiene los pasos de configuración.", en:"If Google Sheet sync is set up, progress updates there automatically; the README has the setup steps." }
+    }
+  ]);
+
+  add("MG9", [
+    {
+      q:{ es:"¿Qué combina el Costo Primo?", en:"What does Prime Cost combine?" },
+      options:[
+        { es:"Costo de comida más costo de mano de obra", en:"Food cost plus labor cost" },
+        { es:"Ingresos más gastos", en:"Revenue plus expenses" },
+        { es:"Ventas más propinas", en:"Sales plus tips" },
+        { es:"Desperdicio más robo", en:"Waste plus theft" }
+      ],
+      correct:0,
+      explanation:{ es:"El Costo Primo es el costo de comida más el costo de mano de obra combinados.", en:"Prime Cost is food cost plus labor cost combined." }
+    },
+    {
+      q:{ es:"Si el costo de comida sube, ¿qué se debe investigar?", en:"If food cost rises, what should be investigated?" },
+      options:[
+        { es:"Desperdicio, control de porciones, robo y precios de proveedores", en:"Waste, portion control, theft and supplier prices" },
+        { es:"Solo la música del local", en:"Only the venue's music" },
+        { es:"El color de los uniformes", en:"The color of the uniforms" },
+        { es:"El horario de apertura", en:"The opening schedule" }
+      ],
+      correct:0,
+      explanation:{ es:"Si el costo de comida sube se investiga desperdicio, control de porciones, robo, precios de proveedores, conteos incorrectos y sobre-pedidos.", en:"If food cost rises, investigate waste, portion control, theft, supplier prices, incorrect counts and over-ordering." }
+    },
+    {
+      q:{ es:"¿Qué muestra un Estado de P&L (Pérdidas y Ganancias)?", en:"What does a P&L (Profit and Loss) statement show?" },
+      options:[
+        { es:"Ingresos, gastos y rentabilidad", en:"Revenue, expenses and profitability" },
+        { es:"Solo las propinas del personal", en:"Only staff tips" },
+        { es:"El horario de los turnos", en:"The shift schedule" },
+        { es:"Las reseñas en línea", en:"Online reviews" }
+      ],
+      correct:0,
+      explanation:{ es:"Un Estado de P&L muestra ingresos, gastos y rentabilidad.", en:"A P&L statement shows revenue, expenses and profitability." }
+    }
+  ]);
+
+  add("MG10", [
+    {
+      q:{ es:"Al responder a una reseña negativa en línea, ¿qué actitud se debe evitar?", en:"When responding to a negative online review, what attitude should be avoided?" },
+      options:[
+        { es:"Ponerse a la defensiva", en:"Getting defensive" },
+        { es:"Disculparse con el huésped", en:"Apologizing to the guest" },
+        { es:"Invitar al huésped a regresar", en:"Inviting the guest back" },
+        { es:"Ofrecer resolverlo fuera de línea", en:"Offering to resolve it offline" }
+      ],
+      correct:0,
+      explanation:{ es:"Al responder a una reseña negativa se responde profesionalmente y se evita ponerse a la defensiva.", en:"When responding to a negative review you respond professionally and avoid getting defensive." }
+    },
+    {
+      q:{ es:"Si un bartender no se presenta, ¿qué acción es apropiada?", en:"If a bartender doesn't show up, what action is appropriate?" },
+      options:[
+        { es:"Conseguir cobertura y simplificar temporalmente el menú de cócteles si es necesario", en:"Get coverage and temporarily simplify the cocktail menu if needed" },
+        { es:"Cerrar el bar por el resto de la noche", en:"Close the bar for the rest of the night" },
+        { es:"Dejar de atender a los huéspedes", en:"Stop serving guests" },
+        { es:"Ignorar la ausencia hasta el día siguiente", en:"Ignore the absence until the next day" }
+      ],
+      correct:0,
+      explanation:{ es:"Si un bartender no se presenta se busca cobertura, se reasigna personal entrenado y se simplifica temporalmente el menú de cócteles si es necesario.", en:"If a bartender no-shows, get coverage, reassign trained staff and temporarily simplify the cocktail menu if needed." }
+    },
+    {
+      q:{ es:"Ante una reservación VIP perdida, ¿qué se debe hacer primero?", en:"With a lost VIP reservation, what should be done first?" },
+      options:[
+        { es:"Mantener la calma, disculparse y priorizar una solución de asiento", en:"Stay calm, apologize and prioritize a seating solution" },
+        { es:"Culpar al host frente al huésped", en:"Blame the host in front of the guest" },
+        { es:"Pedir al huésped que regrese otro día", en:"Ask the guest to come back another day" },
+        { es:"Ignorar al huésped hasta que haya mesa", en:"Ignore the guest until a table opens" }
+      ],
+      correct:0,
+      explanation:{ es:"Ante una reservación VIP perdida se mantiene la calma, se disculpa y se prioriza encontrar una solución de asiento.", en:"With a lost VIP reservation, stay calm, apologize and prioritize finding a seating solution." }
+    }
+  ]);
+
+  add("MG11", [
+    {
+      q:{ es:"¿Cuál es un paso al manejar a un empleado que llega tarde constantemente?", en:"What is a step when handling an employee who is consistently late?" },
+      options:[
+        { es:"Dar una advertencia verbal y documentarla", en:"Give a verbal warning and document it" },
+        { es:"Despedirlo de inmediato sin conversación", en:"Fire them immediately without conversation" },
+        { es:"Ignorar el retraso por completo", en:"Ignore the lateness entirely" },
+        { es:"Anunciarlo frente a todo el equipo", en:"Announce it in front of the whole team" }
+      ],
+      correct:0,
+      explanation:{ es:"Se tiene una conversación privada, se da una advertencia verbal y se documenta, entendiendo la causa raíz.", en:"You have a private conversation, give a verbal warning and document it, understanding the root cause." }
+    },
+    {
+      q:{ es:"Cuando dos empleados discuten durante el servicio, ¿dónde debe abordarse el problema?", en:"When two employees argue during service, where should the issue be addressed?" },
+      options:[
+        { es:"En privado, no en el piso", en:"In private, not on the floor" },
+        { es:"En el piso frente a los huéspedes", en:"On the floor in front of guests" },
+        { es:"En redes sociales", en:"On social media" },
+        { es:"En la próxima reunión mensual", en:"At the next monthly meeting" }
+      ],
+      correct:0,
+      explanation:{ es:"Se separa el conflicto de inmediato y se aborda el problema en privado, no en el piso.", en:"You separate the conflict immediately and address the issue in private, not on the floor." }
+    },
+    {
+      q:{ es:"¿Qué ayuda a reducir la rotación de personal?", en:"What helps reduce staff turnover?" },
+      options:[
+        { es:"Mejor entrenamiento, cultura positiva y horarios consistentes", en:"Better training, positive culture and consistent schedules" },
+        { es:"Reducir el pago por debajo del mercado", en:"Cutting pay below market" },
+        { es:"Eliminar las oportunidades de crecimiento", en:"Eliminating growth opportunities" },
+        { es:"Cambiar los horarios sin aviso", en:"Changing schedules without notice" }
+      ],
+      correct:0,
+      explanation:{ es:"Para reducir la rotación se invierte en mejor entrenamiento, cultura positiva, pago competitivo, reconocimiento, crecimiento y horarios consistentes.", en:"To reduce turnover, invest in better training, positive culture, competitive pay, recognition, growth and consistent schedules." }
+    }
+  ]);
+
+})();

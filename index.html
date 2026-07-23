@@ -1215,6 +1215,54 @@ function renderModuleList(){
     }
     listEl.appendChild(row);
   });
+
+  // #5 Examen final del track — visible cuando el track está 100% completo (sin filtro/búsqueda).
+  if(activeFilter === "Todos" && !searchQuery && total > 0 && passed === total){
+    const doneFinal = localStorage.getItem("chelas_final_" + activeTrack + "_" + currentUser.email) === "1";
+    const fcard = document.createElement("div");
+    fcard.className = "module-card";
+    fcard.style.cursor = "pointer";
+    fcard.style.borderColor = "var(--header)";
+    fcard.style.background = "#eef4f3";
+    fcard.innerHTML = `
+      <div class="icon ${doneFinal ? "done" : "open"}">🎓</div>
+      <div class="info">
+        <div class="t">${lang==="es" ? "Examen final del track" : "Final track exam"} ${doneFinal ? `<span class="pill">${lang==="es"?"Aprobado":"Passed"}</span>` : ""}</div>
+        <div class="s">${doneFinal
+          ? (lang==="es" ? "Ya lo aprobaste — puedes repetirlo para repasar." : "Already passed — you can retake it to review.")
+          : (lang==="es" ? "Preguntas al azar de todos los módulos del track. 80% para aprobar." : "Random questions from every module in the track. 80% to pass.")}</div>
+      </div>`;
+    fcard.addEventListener("click", () => startFinalExam(activeTrack));
+    listEl.appendChild(fcard);
+  }
+}
+
+// #5 Arranca el examen final: mezcla preguntas al azar de todos los módulos del track.
+function startFinalExam(track){
+  const pool = [];
+  getModulesForTrack(track).forEach(mm => (mm.quiz || []).forEach((q, qi) => {
+    pool.push(Object.assign({}, q, { explanation: getQuizExplanation(mm, qi) }));
+  }));
+  if(!pool.length) return;
+  const sample = shuffleArray(pool).slice(0, Math.min(10, pool.length));
+  activeModule = {
+    id: "FINAL_" + track, isFinal: true, finalTrack: track,
+    title: { es: "Examen final — " + t(TRACK_LABEL[track]), en: "Final exam — " + t(TRACK_LABEL[track]) },
+    quiz: sample, pass: 80, critical: false, lessons: [], flashcards: []
+  };
+  lessonIdx = 0; flashIdx = 0; quizAnswers = {};
+  if(_lessonTimer){ clearInterval(_lessonTimer); _lessonTimer = null; }
+  $("view-dashboard").classList.add("hidden");
+  $("view-admin").classList.add("hidden");
+  $("view-onboarding").classList.add("hidden");
+  $("view-review").classList.add("hidden");
+  $("view-module").classList.remove("hidden");
+  $("track-tabs").classList.add("hidden");
+  $("mod-title").textContent = t(activeModule.title);
+  $("mod-lessons").classList.add("hidden");
+  $("mod-flash").classList.add("hidden");
+  $("mod-policy").classList.add("hidden");
+  startQuiz();
 }
 
 $("search-input").addEventListener("input", renderModuleList);
@@ -1479,6 +1527,7 @@ function shuffleArray(arr){
 }
 
 let quizOptionOrder = [];
+let activeQuiz = [];   // #3 preguntas realmente mostradas (subconjunto al azar del banco)
 
 // Devuelve la explicación del "porqué" de una pregunta: primero inline (q.explanation),
 // si no, la tabla QUIZ_EXPLANATIONS[moduleId][indicePregunta]. null si no hay.
@@ -1499,10 +1548,18 @@ function startQuiz(){
     ? `Necesitas ${m.pass}% para aprobar.` + (m.critical ? " Este módulo es crítico y requiere 100%." : "")
     : `You need ${m.pass}% to pass.` + (m.critical ? " This is a critical module requiring 100%." : ""));
   quizAnswers = {};
-  quizOptionOrder = m.quiz.map(q => shuffleArray(q.options.map((_, i) => i)));
+  // #3 Banco + subconjunto al azar: muestra quizShow preguntas (o todas si no está definido),
+  // elegidas al azar del banco. Cada intento reordena, así que reintentar no es el mismo examen.
+  const bank = m.quiz || [];
+  const showN = (typeof m.quizShow === "number" && m.quizShow > 0) ? Math.min(m.quizShow, bank.length) : bank.length;
+  const chosen = shuffleArray(bank.map((_, i) => i)).slice(0, showN);
+  activeQuiz = chosen.map(oi => ({
+    q: bank[oi].q, options: bank[oi].options, correct: bank[oi].correct, explanation: getQuizExplanation(m, oi)
+  }));
+  quizOptionOrder = activeQuiz.map(q => shuffleArray(q.options.map((_, i) => i)));
   const body = $("quiz-body");
   body.innerHTML = "";
-  m.quiz.forEach((q, qi) => {
+  activeQuiz.forEach((q, qi) => {
     const block = document.createElement("div");
     block.className = "q-block";
     block.innerHTML = `<div class="q-title">${qi+1}. ${t(q.q)}</div>`;
@@ -1525,33 +1582,38 @@ function startQuiz(){
 
 $("btn-quiz-submit").addEventListener("click", () => {
   const m = activeModule;
-  if(Object.keys(quizAnswers).length < m.quiz.length){
+  if(Object.keys(quizAnswers).length < activeQuiz.length){
     alert(lang==="es" ? "Responde todas las preguntas." : "Answer all questions.");
     return;
   }
   let correct = 0;
   const missed = [];
   const blocks = document.querySelectorAll("#quiz-body .q-block");
-  m.quiz.forEach((q, qi) => {
+  activeQuiz.forEach((q, qi) => {
     if(quizAnswers[qi] === q.correct){ correct++; }
     else { missed.push({ question: t(q.q), answer: t(q.options[q.correct]) }); }
   });
-  const score = Math.round((correct / m.quiz.length) * 100);
+  const score = Math.round((correct / activeQuiz.length) * 100);
   const passed = score >= m.pass;
+  const isFinal = !!m.isFinal;   // #5 examen final del track
   // #1 Solo se revelan respuestas al APROBAR o en módulos críticos.
   // Un módulo normal reprobado NO muestra las respuestas: se manda a repasar (así no se memoriza).
   const reveal = passed || !!m.critical;
-  saveProgress(currentUser.email, m.id, passed, score, !!m.critical);
+  if(isFinal){
+    if(passed) localStorage.setItem("chelas_final_" + m.finalTrack + "_" + currentUser.email, "1");
+  } else {
+    saveProgress(currentUser.email, m.id, passed, score, !!m.critical);
+  }
 
   if(reveal){
-    m.quiz.forEach((q, qi) => {
+    activeQuiz.forEach((q, qi) => {
       const opts = blocks[qi].querySelectorAll(".opt");
       opts.forEach((o, displayIdx) => {
         const realIdx = quizOptionOrder[qi][displayIdx];
         if(realIdx === q.correct) o.classList.add("correct");
         else if(realIdx === quizAnswers[qi] && realIdx !== q.correct) o.classList.add("wrong");
       });
-      const expl = getQuizExplanation(m, qi);
+      const expl = q.explanation;
       if(expl && !blocks[qi].querySelector(".quiz-expl")){
         const d = document.createElement("div");
         d.className = "quiz-expl";
@@ -1581,8 +1643,12 @@ $("btn-quiz-submit").addEventListener("click", () => {
   // Módulo normal reprobado: aviso de repaso en vez de respuestas.
   const reviewPrompt = (!passed && !m.critical)
     ? `<div class="review-prompt">${lang==="es"
-        ? "No te mostramos las respuestas a propósito. Repasa la lección y las tarjetas, y vuelve a intentarlo — así de verdad se te queda."
-        : "We're not showing the answers on purpose. Review the lesson and cards, then try again — that's how it really sticks."}</div>`
+        ? (isFinal
+            ? "No te mostramos las respuestas a propósito. Repasa los módulos del track y vuelve a intentar el examen final."
+            : "No te mostramos las respuestas a propósito. Repasa la lección y las tarjetas, y vuelve a intentarlo — así de verdad se te queda.")
+        : (isFinal
+            ? "We're not showing the answers on purpose. Review the track's modules and retake the final exam."
+            : "We're not showing the answers on purpose. Review the lesson and cards, then try again — that's how it really sticks.")}</div>`
     : "";
 
   const result = $("quiz-result");
@@ -1595,19 +1661,23 @@ $("btn-quiz-submit").addEventListener("click", () => {
         : (lang==="es" ? "No aprobado — ¡inténtalo de nuevo!" : "Not passed — try again!")}
     </div>
     <div style="font-size:13px;color:var(--muted);margin-bottom:14px">
-      ${correct} / ${m.quiz.length} ${lang==="es" ? "correctas" : "correct"}
+      ${correct} / ${activeQuiz.length} ${lang==="es" ? "correctas" : "correct"}
     </div>
     ${reveal ? missedHtml : reviewPrompt}
-    ${passed ? trackCompleteBanner(m.track) : ""}
+    ${passed && isFinal ? `<div style="margin:14px 0;padding:14px 16px;background:#eef4f3;border:1px solid var(--border);border-radius:12px;font-weight:700">🎓 ${lang==="es" ? "¡Aprobaste el examen final de " + t(TRACK_LABEL[m.finalTrack]) + "!" : "You passed the " + t(TRACK_LABEL[m.finalTrack]) + " final exam!"}</div>` : ""}
+    ${passed && !isFinal ? trackCompleteBanner(m.track) : ""}
     ${passed ? `
       <button class="btn" style="width:100%" id="btn-quiz-continue">${lang==="es" ? "Continuar" : "Continue"}</button>
+    ` : (isFinal ? `
+      <button class="btn" style="width:100%" id="btn-final-retry">${lang==="es" ? "Reintentar" : "Retry"}</button>
+      <button class="btn secondary" style="width:100%;margin-top:8px" id="btn-quiz-continue">${lang==="es" ? "Volver al inicio" : "Back to start"}</button>
     ` : (m.critical ? `
       <button class="btn" style="width:100%" id="btn-quiz-retry">${lang==="es" ? "Reintentar" : "Retry"}</button>
       ${m.flashcards && m.flashcards.length ? `<button class="btn secondary" style="width:100%;margin-top:8px" id="btn-review-cards">${lang==="es" ? "Repasar tarjetas" : "Review flashcards"}</button>` : ""}
     ` : `
       <button class="btn" style="width:100%" id="btn-quiz-review-lesson">${lang==="es" ? "Repasar lección" : "Review lesson"}</button>
       <button class="btn secondary" style="width:100%;margin-top:8px" id="btn-quiz-retry-only">${lang==="es" ? "Reintentar sin repasar" : "Retry without reviewing"}</button>
-    `)}
+    `))}
   `;
   $("btn-quiz-submit").classList.add("hidden");
   const bCont = document.getElementById("btn-quiz-continue");
@@ -1618,6 +1688,8 @@ $("btn-quiz-submit").addEventListener("click", () => {
   if(bReviewLesson) bReviewLesson.addEventListener("click", () => openModule(m));
   const bRetryOnly = document.getElementById("btn-quiz-retry-only");
   if(bRetryOnly) bRetryOnly.addEventListener("click", startQuiz);
+  const bFinalRetry = document.getElementById("btn-final-retry");
+  if(bFinalRetry) bFinalRetry.addEventListener("click", () => startFinalExam(m.finalTrack));
   const btnReview = document.getElementById("btn-review-cards");
   if(btnReview) btnReview.addEventListener("click", () => {
     flashIdx = 0;

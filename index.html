@@ -2157,6 +2157,7 @@ function renderRosterPanel() {
               🔑 ${pinSet ? "•".repeat(u.pin.length) : "sin PIN"}
             </span>
             <button class="btn secondary small" onclick="togglePinForm('${safeId}')">Cambiar PIN</button>
+            <button class="btn secondary small" onclick="toggleOnbForm('${safeId}')">🔗 Link onboarding</button>
           </div>
 
           <!-- PIN change form (hidden) -->
@@ -2165,6 +2166,20 @@ function renderRosterPanel() {
                    inputmode="numeric" style="max-width:110px;text-align:center;font-family:monospace;letter-spacing:3px;font-size:15px;padding:6px 10px;border-radius:8px;border:1px solid var(--border)">
             <button class="btn small" onclick="savePinEdit('${u.email}','${safeId}')">Guardar</button>
             <button class="btn secondary small" onclick="closePinForm('${safeId}')">✕</button>
+          </div>
+
+          <!-- Onboarding link form (hidden) -->
+          <div class="onb-link-form hidden" id="onbform-${safeId}" style="margin-top:8px;display:flex;flex-direction:column;gap:6px;max-width:320px">
+            <input type="hidden" id="onb-name-${safeId}" value="${u.name}">
+            <div style="font-size:11px;color:var(--muted)">Códigos para ${u.name} (se ponen en el link, no se guardan):</div>
+            <input type="text" id="onb-assoc-${safeId}" placeholder="Associate ID (ADP)" style="font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--border)">
+            <input type="text" id="onb-prc-${safeId}" placeholder="PRC Code (ADP)" style="font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--border)">
+            <input type="text" id="onb-punch-${safeId}" placeholder="Punch ID / PIN de Toast" style="font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--border)">
+            <div style="display:flex;gap:6px">
+              <button class="btn small" onclick="copyOnbLink('${safeId}')">📋 Copiar link</button>
+              <button class="btn secondary small" onclick="toggleOnbForm('${safeId}')">✕</button>
+            </div>
+            <div id="onb-msg-${safeId}" style="font-size:11px;color:var(--good);line-height:1.5"></div>
           </div>
 
           <!-- Edit form (hidden) -->
@@ -2224,6 +2239,31 @@ function togglePinForm(safeId) {
   $("delconf-" + safeId).classList.remove("show");
 }
 function closePinForm(safeId) { $("pinform-" + safeId).classList.add("hidden"); }
+
+/* ===== Link de onboarding personalizado (chelas-onboarding) ===== */
+function toggleOnbForm(safeId){
+  const f = $("onbform-" + safeId);
+  f.classList.toggle("hidden");
+  if(!f.classList.contains("hidden")){ const a=$("onb-assoc-"+safeId); if(a) a.focus(); }
+}
+function copyOnbLink(safeId){
+  const name  = ($("onb-name-"+safeId)  || {}).value || "";
+  const assoc = (($("onb-assoc-"+safeId) || {}).value || "").trim();
+  const prc   = (($("onb-prc-"+safeId)   || {}).value || "").trim();
+  const punch = (($("onb-punch-"+safeId) || {}).value || "").trim();
+  const p = new URLSearchParams();
+  if(name)  p.set("name", name);
+  if(assoc) p.set("associate", assoc);
+  if(prc)   p.set("prc", prc);
+  if(punch) p.set("punch", punch);
+  const url = "https://chelas-onboarding.pages.dev/?" + p.toString();
+  const msg = $("onb-msg-"+safeId);
+  function shown(){ if(msg) msg.innerHTML = "✓ Link copiado — pégalo en WhatsApp/texto.<br><span style='color:var(--muted);word-break:break-all'>" + url + "</span>"; }
+  function manual(){ if(msg) msg.innerHTML = "Copia este link manualmente:<br><span style='color:var(--muted);word-break:break-all'>" + url + "</span>"; }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(shown).catch(manual);
+  } else { manual(); }
+}
 
 async function savePinEdit(email, safeId) {
   const newPin = $("epin-" + safeId).value.trim();

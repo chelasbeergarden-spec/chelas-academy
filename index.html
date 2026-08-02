@@ -2171,6 +2171,8 @@ function renderRosterPanel() {
           <!-- Onboarding link form (hidden) -->
           <div class="onb-link-form hidden" id="onbform-${safeId}" style="margin-top:8px;display:flex;flex-direction:column;gap:6px;max-width:320px">
             <input type="hidden" id="onb-name-${safeId}" value="${u.name}">
+            <input type="hidden" id="onb-email-${safeId}" value="${u.email}">
+            <input type="hidden" id="onb-pin-${safeId}" value="${u.pin || ''}">
             <div style="font-size:11px;color:var(--muted)">Códigos para ${u.name} (se ponen en el link, no se guardan):</div>
             <input type="text" id="onb-assoc-${safeId}" placeholder="Associate ID (ADP)" style="font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--border)">
             <input type="text" id="onb-prc-${safeId}" placeholder="PRC Code (ADP)" style="font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--border)">
@@ -2248,6 +2250,8 @@ function toggleOnbForm(safeId){
 }
 function copyOnbLink(safeId){
   const name  = ($("onb-name-"+safeId)  || {}).value || "";
+  const email = ($("onb-email-"+safeId) || {}).value || "";
+  const pin   = ($("onb-pin-"+safeId)   || {}).value || "";
   const assoc = (($("onb-assoc-"+safeId) || {}).value || "").trim();
   const prc   = (($("onb-prc-"+safeId)   || {}).value || "").trim();
   const punch = (($("onb-punch-"+safeId) || {}).value || "").trim();
@@ -2256,12 +2260,19 @@ function copyOnbLink(safeId){
   if(assoc) p.set("associate", assoc);
   if(prc)   p.set("prc", prc);
   if(punch) p.set("punch", punch);
+  if(email) p.set("email", email);
+  if(pin)   p.set("pin", pin);
   const url = "https://chelas-onboarding.pages.dev/?" + p.toString();
+  const message =
+    "👋 Welcome to the Chela's team, " + name + "! / ¡Bienvenido/a al equipo de Chela's, " + name + "!\n\n" +
+    "Open this link — it has your personal codes and everything you need to get started before your first shift.\n" +
+    "Abre este link — tiene tus códigos personales y todo lo que necesitas para empezar antes de tu primer turno.\n\n" +
+    url;
   const msg = $("onb-msg-"+safeId);
-  function shown(){ if(msg) msg.innerHTML = "✓ Link copiado — pégalo en WhatsApp/texto.<br><span style='color:var(--muted);word-break:break-all'>" + url + "</span>"; }
-  function manual(){ if(msg) msg.innerHTML = "Copia este link manualmente:<br><span style='color:var(--muted);word-break:break-all'>" + url + "</span>"; }
+  function ok(){ if(msg) msg.innerHTML = "✓ Mensaje de bienvenida copiado — pégalo en WhatsApp o texto."; }
+  function manual(){ if(msg) msg.innerHTML = "Copia este mensaje manualmente:<br><textarea readonly style='width:100%;height:100px;font-size:11px;margin-top:4px'>" + message.replace(/</g,"&lt;") + "</textarea>"; }
   if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(url).then(shown).catch(manual);
+    navigator.clipboard.writeText(message).then(ok).catch(manual);
   } else { manual(); }
 }
 

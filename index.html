@@ -1141,7 +1141,9 @@ function showDashboard(){
   $("btn-logout").classList.remove("hidden");
   $("header-username").classList.remove("hidden");
   $("header-username").textContent = currentUser.name;
-  $("btn-go-admin").classList.toggle("hidden", currentUser.role !== "Admin");
+  // Botón "Progreso" del encabezado OCULTO siempre: el acceso a progreso va dentro del
+  // panel de Admin (⚙ → pestaña Progreso). (Para reactivar: toggle por rol Admin.)
+  $("btn-go-admin").classList.add("hidden");
   // Onboarding desactivado: se administra todo desde el Roster. (Para reactivar: volver a toggle por rol Admin.)
   $("btn-go-onboarding").classList.add("hidden");
 

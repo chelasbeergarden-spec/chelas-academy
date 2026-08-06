@@ -652,8 +652,13 @@ async function syncAccessRecord(email, name, role){
         if(data.status && data.status !== localRec.status){
           users[emailLow].status = data.status;           changed = true;
         }
+        if(data.retrainAt && data.retrainAt !== localRec.retrainAt){
+          users[emailLow].retrainAt = data.retrainAt;     changed = true;
+        }
       }
       if(changed) saveUsers(users);
+      // Retraining: invalidate modules passed before retrainAt (staff must retake)
+      applyRetrain(emailLow);
       // Push updated name/role back to Sheets
       const cur = users[emailLow] || localRec || {};
       fetch(REPORT_URL, {
@@ -694,9 +699,35 @@ async function fetchAllAccessRecords(){
       if(r.status && r.status !== users[emailLow].status){
         users[emailLow].status = r.status; changed = true;
       }
+      if(r.retrainAt && r.retrainAt !== users[emailLow].retrainAt){
+        users[emailLow].retrainAt = r.retrainAt; changed = true;
+      }
     });
     if(changed) saveUsers(users);
   } catch(err){}
+}
+
+/* Retraining: cuando llega un retrainAt más nuevo que el visto, invalida (borra localmente)
+   los módulos aprobados en o antes de esa fecha, para que la persona los rehaga en SU
+   dispositivo. Los pases posteriores a retrainAt se conservan. El log del Sheet no se toca. */
+function applyRetrain(emailLow){
+  const users = loadUsers();
+  const rec = users[emailLow];
+  if(!rec || !rec.retrainAt) return;
+  const rt = new Date(rec.retrainAt).getTime();
+  if(isNaN(rt)) return;
+  const seen = rec.retrainSeen ? new Date(rec.retrainSeen).getTime() : 0;
+  if(!(rt > seen)) return; // ya aplicado
+  const prog = rec.progress || {};
+  Object.keys(prog).forEach(mid => {
+    const p = prog[mid];
+    const pd = (p && p.date) ? new Date(p.date).getTime() : 0;
+    if(pd <= rt) delete prog[mid];
+  });
+  rec.progress = prog;
+  rec.retrainSeen = rec.retrainAt;
+  rec.updated = new Date().toISOString();
+  saveUsers(users);
 }
 
 function checkUserAccess(email){
@@ -2158,6 +2189,17 @@ function renderRosterPanel() {
             </span>
             <button class="btn secondary small" onclick="togglePinForm('${safeId}')">Cambiar PIN</button>
             <button class="btn secondary small" onclick="toggleOnbForm('${safeId}')">🔗 Link onboarding</button>
+            <button class="btn secondary small" onclick="showRetrainConfirm('${safeId}')">↻ Retraining</button>
+          </div>
+
+          <!-- Retraining confirm (hidden) -->
+          <div class="del-confirm" id="retrainconf-${safeId}">
+            <span>¿Mandar a <strong>${u.name}</strong> a retraining? En su próximo ingreso tendrá que volver a hacer <strong>todo el curso</strong>.</span>
+            <div style="display:flex;gap:6px">
+              <button class="btn small" onclick="confirmRetraining('${u.email}','${safeId}')">Sí, reiniciar curso</button>
+              <button class="btn secondary small" onclick="closeRetrainConfirm('${safeId}')">No</button>
+            </div>
+            <div id="retrain-msg-${safeId}" style="font-size:11px;color:var(--good);line-height:1.5;margin-top:4px"></div>
           </div>
 
           <!-- PIN change form (hidden) -->
@@ -2231,6 +2273,39 @@ function showDelConfirm(safeId) {
   $("edit-" + safeId).classList.remove("show");
 }
 function closeDelConfirm(safeId) { $("delconf-" + safeId).classList.remove("show"); }
+
+// Retraining (reinicia el curso completo de una persona, sincronizado por el Sheet)
+function showRetrainConfirm(safeId) {
+  $("retrainconf-" + safeId).classList.add("show");
+  $("edit-" + safeId).classList.remove("show");
+  $("delconf-" + safeId).classList.remove("show");
+}
+function closeRetrainConfirm(safeId) { $("retrainconf-" + safeId).classList.remove("show"); }
+function confirmRetraining(email, safeId) {
+  const key = (email || "").toLowerCase();
+  const u   = adminRosterData.find(x => (x.email || "").toLowerCase() === key) || {};
+  const now = new Date().toISOString();
+  // Reflejar en este dispositivo si hay copia local (fuerza re-aplicar en el próximo uso)
+  const users = loadUsers();
+  if (users[key]) {
+    users[key].retrainAt = now;
+    delete users[key].retrainSeen;
+    users[key].updated = now;
+    saveUsers(users);
+    applyRetrain(key);
+  }
+  // Escribir retrainAt en el Sheet (fuente de verdad para todos los dispositivos)
+  if (REPORT_URL) {
+    fetch(REPORT_URL, {
+      method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "setAccess", email: key,
+        name: u.name || "", role: u.role || "", retrainAt: now })
+    }).catch(() => {});
+  }
+  const msg = $("retrain-msg-" + safeId);
+  if (msg) msg.textContent = "✓ " + (u.name || "La persona") + " fue enviada a retraining. En su próximo ingreso tendrá que rehacer todo el curso.";
+}
 
 // PIN forms
 function togglePinForm(safeId) {

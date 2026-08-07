@@ -536,6 +536,8 @@ let lessonIdx = 0, flashIdx = 0;
 let quizAnswers = {};
 let _lessonTimer = null;          // #4 temporizador de lectura mínima por página
 let lessonSeenIdx = new Set();    // #4 páginas ya vistas en el módulo actual (no re-bloquear)
+let _moduleStart = 0;             // Etapa 2: inicio del módulo (para medir tiempo)
+let _lessonPagesViewed = new Set(); // Etapa 2: páginas de lección abiertas (revisó vs saltó)
 
 /* ================= Helpers ================= */
 const $ = (id) => document.getElementById(id);
@@ -568,18 +570,21 @@ function upsertUserRecord(email, name, role){
   saveUsers(users);
   return users[key];
 }
-function saveProgress(email, moduleId, passed, score, critical){
+function saveProgress(email, moduleId, passed, score, critical, extra){
+  extra = extra || {};
   const users = loadUsers();
   const key = email.toLowerCase();
   if(!users[key]) return;
-  users[key].progress[moduleId] = { passed, score, critical, date: new Date().toISOString() };
+  users[key].progress[moduleId] = { passed, score, critical, date: new Date().toISOString(),
+    durationSec: extra.durationSec, reviewed: extra.reviewed, answersJson: extra.answersJson };
   users[key].updated = new Date().toISOString();
   saveUsers(users);
   if(REPORT_URL){
     fetch(REPORT_URL, {
       method: "POST", mode: "no-cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: key, name: users[key].name, role: users[key].role, moduleId, passed, score, critical, date: users[key].updated })
+      body: JSON.stringify({ email: key, name: users[key].name, role: users[key].role, moduleId, passed, score, critical, date: users[key].updated,
+        durationSec: (extra.durationSec != null ? extra.durationSec : ""), reviewed: (extra.reviewed || ""), answersJson: (extra.answersJson || "") })
     }).catch(()=>{});
   }
   // Auto-hold if all modules now passed
@@ -1440,6 +1445,8 @@ function openModule(m){
   activeModule = m;
   lessonIdx = 0; flashIdx = 0; quizAnswers = {};
   lessonSeenIdx = new Set();
+  _moduleStart = Date.now();          // Etapa 2: arranca el cronómetro del módulo
+  _lessonPagesViewed = new Set();     // Etapa 2: reinicia páginas vistas
   if(_lessonTimer){ clearInterval(_lessonTimer); _lessonTimer = null; }
   $("view-dashboard").classList.add("hidden");
   $("view-admin").classList.add("hidden");
@@ -1459,6 +1466,7 @@ function openModule(m){
 
 function renderLesson(){
   const m = activeModule;
+  _lessonPagesViewed.add(lessonIdx);   // Etapa 2: registra que abrió esta página de lección
   $("lesson-text").textContent = t(m.lessons[lessonIdx]);
   const dots = $("lesson-dots");
   dots.innerHTML = "";
@@ -1580,6 +1588,7 @@ function shuffleArray(arr){
 
 let quizOptionOrder = [];
 let activeQuiz = [];   // #3 preguntas realmente mostradas (subconjunto al azar del banco)
+let activeQuizOrig = []; // Etapa 2: índice original en m.quiz de cada pregunta mostrada
 
 // Devuelve la explicación del "porqué" de una pregunta: primero inline (q.explanation),
 // si no, la tabla QUIZ_EXPLANATIONS[moduleId][indicePregunta]. null si no hay.
@@ -1605,6 +1614,7 @@ function startQuiz(){
   const bank = m.quiz || [];
   const showN = (typeof m.quizShow === "number" && m.quizShow > 0) ? Math.min(m.quizShow, bank.length) : bank.length;
   const chosen = shuffleArray(bank.map((_, i) => i)).slice(0, showN);
+  activeQuizOrig = chosen;   // Etapa 2: guarda el índice original de cada pregunta mostrada
   activeQuiz = chosen.map(oi => ({
     q: bank[oi].q, options: bank[oi].options, correct: bank[oi].correct, explanation: getQuizExplanation(m, oi)
   }));
@@ -1651,10 +1661,16 @@ $("btn-quiz-submit").addEventListener("click", () => {
   // #1 Solo se revelan respuestas al APROBAR o en módulos críticos.
   // Un módulo normal reprobado NO muestra las respuestas: se manda a repasar (así no se memoriza).
   const reveal = passed || !!m.critical;
+  // Etapa 2: capturar tiempo, revisó/saltó y respuestas por pregunta
+  const durationSec = _moduleStart ? Math.max(1, Math.round((Date.now() - _moduleStart) / 1000)) : "";
+  const lessonsTotal = (m.lessons || []).length;
+  const reviewed = lessonsTotal ? (_lessonPagesViewed.size + "/" + lessonsTotal) : "";
+  const answersArr = activeQuiz.map((q, qi) => ({ o: activeQuizOrig[qi], c: (quizAnswers[qi] != null ? quizAnswers[qi] : -1), k: q.correct }));
+  const answersJson = JSON.stringify(answersArr);
   if(isFinal){
     if(passed) localStorage.setItem("chelas_final_" + m.finalTrack + "_" + currentUser.email, "1");
   } else {
-    saveProgress(currentUser.email, m.id, passed, score, !!m.critical);
+    saveProgress(currentUser.email, m.id, passed, score, !!m.critical, { durationSec, reviewed, answersJson });
   }
 
   if(reveal){
@@ -2108,7 +2124,8 @@ async function loadAdminProgress() {
         const mods = u.modules || {};
         Object.keys(mods).forEach(mid => {
           const md = mods[mid]; const ts = new Date(md.date || 0).getTime();
-          umap[e].modules[mid] = { passed: md.passed, score: md.score, _ts: ts, date: md.date };
+          umap[e].modules[mid] = { passed: md.passed, score: md.score, _ts: ts, date: md.date,
+            durationSec: md.durationSec, reviewed: md.reviewed, attempts: md.attempts, answersJson: md.answersJson };
         });
         if (u.lastActive) umap[e].lastActive = u.lastActive;
       });
@@ -2185,7 +2202,37 @@ async function loadAdminProgress() {
 
 function backToProgressList(){ $("admin-panel-progress").innerHTML = adminProgressListHtml || admLoading("Cargando…",3,true); }
 
-function openProgressProfile(email){
+let profEmail = null;    // Etapa 2: persona del perfil abierto
+let profOpenMod = null;  // Etapa 2: módulo con respuestas expandidas
+
+function fmtDur(sec){ sec = +sec; if(!sec || isNaN(sec)) return "—"; const m = Math.floor(sec/60), s = sec%60; return m>0 ? (m+"m "+s+"s") : (s+"s"); }
+function reviewedChip(reviewed){
+  if(!reviewed) return `<span style="color:var(--muted)">—</span>`;
+  const p = (reviewed+"").split("/"); const v = +p[0], tot = +p[1];
+  if(isNaN(v) || isNaN(tot) || tot===0) return `<span style="color:var(--muted)">—</span>`;
+  if(v>=tot) return `<span class="chip ok">Revisó</span>`;
+  if(v===0) return `<span class="chip no">Saltó</span>`;
+  return `<span class="chip" style="background:#fff2ec;color:#b0552f">Parcial ${v}/${tot}</span>`;
+}
+function answersDetail(m, rec){
+  if(!rec || !rec.answersJson) return `<div style="font-size:12px;color:var(--muted);padding:4px 0">Sin detalle de respuestas (entrenamiento anterior a esta función).</div>`;
+  let arr; try{ arr = JSON.parse(rec.answersJson); }catch(e){ arr = null; }
+  if(!arr || !arr.length) return `<div style="font-size:12px;color:var(--muted);padding:4px 0">Sin detalle de respuestas.</div>`;
+  const quiz = m.quiz || [];
+  return `<div style="font-size:12px;font-weight:800;color:var(--header);margin-bottom:2px">Respuestas del examen</div>` + arr.map((a, qi) => {
+    const q = quiz[(a.o != null ? a.o : qi)]; if(!q) return "";
+    const chosen  = (a.c != null && a.c >= 0 && q.options[a.c] != null) ? t(q.options[a.c]) : "(sin responder)";
+    const correct = (q.options[a.k] != null) ? t(q.options[a.k]) : "?";
+    const ok = (a.c === a.k);
+    return `<div style="margin-top:6px;font-size:12.5px;line-height:1.45"><b>${qi+1}.</b> ${t(q.q)}<br>
+      <span style="color:${ok?'var(--good)':'var(--bad)'};font-weight:700">${ok?'✓':'✗'} ${chosen}</span>${ok?'':` <span style="color:var(--muted)">· correcta: ${correct}</span>`}</div>`;
+  }).join("");
+}
+function toggleProfMod(mid){ profOpenMod = (profOpenMod===mid) ? null : mid; renderProgressProfile(); }
+function openProgressProfile(email){ profEmail = email; profOpenMod = null; renderProgressProfile(); }
+
+function renderProgressProfile(){
+  const email = profEmail;
   const panel = $("admin-panel-progress");
   const u = adminProgressMap[email];
   if (!u) { loadAdminProgress(); return; }
@@ -2201,7 +2248,6 @@ function openProgressProfile(email){
     dueLbl = due.toLocaleDateString("es-US", { month:"short", day:"numeric", year:"numeric" });
   }
 
-  // Módulos del track de la persona (deduplicados)
   const tracks = getUserTracks(u.role, email);
   const seen = {}; const mods = [];
   tracks.flatMap(getModulesForTrack).forEach(m => { if (!seen[m.id]) { seen[m.id] = 1; mods.push(m); } });
@@ -2210,16 +2256,21 @@ function openProgressProfile(email){
   mods.forEach(m => {
     const rec = u.modules[m.id];
     const name = t(m.title);
-    let estado, calif = "—", fecha = "—";
-    if (rec) {
-      calif = (rec.score != null ? rec.score : "—") + (rec.score != null ? "%" : "");
-      estado = rec.passed ? `<span class="chip ok">Aprobado</span>` : `<span class="chip no">Reprobó</span>`;
-      if (rec.date) fecha = new Date(rec.date).toLocaleDateString("es-US", { month:"short", day:"numeric" });
-    } else {
-      estado = `<span style="color:var(--muted)">Sin iniciar</span>`;
-    }
     const critTag = m.critical ? ` <span style="font-size:10px;font-weight:800;color:#8a2b1e;background:#fdecea;border:1px solid #f0c3bc;border-radius:6px;padding:1px 5px">CRÍTICO</span>` : "";
-    rows += `<tr><td>${name}${critTag}</td><td><b>${calif}</b></td><td>${estado}</td><td style="color:var(--muted);font-size:12px">${fecha}</td></tr>`;
+    if (!rec) {
+      rows += `<tr><td>${name}${critTag}</td><td>—</td><td><span style="color:var(--muted)">Sin iniciar</span></td><td>—</td><td>—</td><td style="text-align:center">—</td><td>—</td></tr>`;
+      return;
+    }
+    const calif = (rec.score != null ? rec.score + "%" : "—");
+    const estado = rec.passed ? `<span class="chip ok">Aprobado</span>` : `<span class="chip no">Reprobó</span>`;
+    const fecha = rec.date ? new Date(rec.date).toLocaleDateString("es-US", { month:"short", day:"numeric" }) : "—";
+    const timeCell = fmtDur(rec.durationSec);
+    const revCell = reviewedChip(rec.reviewed);
+    const attCell = rec.attempts != null ? rec.attempts : 1;
+    const open = (profOpenMod === m.id);
+    const caret = open ? "▾" : "▸";
+    rows += `<tr class="prof-click" onclick="toggleProfMod('${m.id}')"><td>${caret} ${name}${critTag}</td><td><b>${calif}</b></td><td>${estado}</td><td style="font-size:12px">${timeCell}</td><td>${revCell}</td><td style="text-align:center">${attCell}</td><td style="color:var(--muted);font-size:12px">${fecha}</td></tr>`;
+    if (open) rows += `<tr><td colspan="7" style="background:#f7faf9">${answersDetail(m, rec)}</td></tr>`;
   });
 
   panel.innerHTML = `
@@ -2239,10 +2290,10 @@ function openProgressProfile(email){
       <span>Críticos: <b>${u.critTotal ? (u.critOk ? "✅ OK" : "❌ pendiente") : "—"}</b></span>
     </div>
     <b style="color:var(--header);font-size:14px">Calificaciones por módulo</b>
+    <span style="font-size:12px;color:var(--muted)"> — toca un módulo para ver sus respuestas</span>
     <div style="overflow-x:auto;margin-top:8px"><table>
-      <thead><tr><th>Módulo</th><th>Calif.</th><th>Estado</th><th>Fecha</th></tr></thead>
-      <tbody>${rows}</tbody></table></div>
-    <p style="font-size:12px;color:var(--muted);margin-top:12px">El tiempo por sección, si revisó o saltó, y el detalle de respuestas se agregarán en la Etapa 2 (se registran a partir de que se activen).</p>`;
+      <thead><tr><th>Módulo</th><th>Calif.</th><th>Estado</th><th>Tiempo</th><th>¿Revisó?</th><th>Intentos</th><th>Fecha</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
 }
 
 // ── TAB: Roster ──
@@ -2550,14 +2601,17 @@ async function addRosterUser() {
 async function renderAccessPanel() {
   const panel = $("admin-panel-access");
   // Show loading state while we fetch from Sheets
-  panel.innerHTML = `<p style="padding:20px;color:var(--muted);text-align:center">⏳ Cargando datos…</p>`;
+  panel.innerHTML = admLoading("Cargando control de acceso…", 4);
+  try {
   await fetchAllAccessRecords();   // merge Sheets → localStorage
   const users = loadUsers();
   const now = new Date();
 
-  const rows = Object.values(users).map(u => {
-    // Skip only QA/Admin unlimited accounts
-    if(isQAUser(u.email)) return null;
+  const maxDaysDefault = getMaxAccessDays();
+  const rows = Object.entries(users).map(([uKey, u]) => {
+    const email = u.email || uKey || "";
+    // Skip only QA/Admin unlimited accounts, o registros sin correo válido
+    if(!email || isQAUser(email)) return null;
     const status = u.status || "active";
     const maxDays = getMaxAccessDays(u.role);
     let daysLeft = null;
@@ -2569,9 +2623,10 @@ async function renderAccessPanel() {
       expiresLabel = expiresAt.toLocaleDateString();
     }
     const firstLoginLabel = u.firstLogin ? new Date(u.firstLogin).toLocaleDateString() : "—";
-    const tracks = getUserTracks(u.role, u.email);
+    const tracks = getUserTracks(u.role, email);
     const allMods = tracks.flatMap(getModulesForTrack);
-    const passedCount = allMods.filter(m => u.progress[m.id] && u.progress[m.id].passed).length;
+    const prog = u.progress || {};
+    const passedCount = allMods.filter(m => prog[m.id] && prog[m.id].passed).length;
     const progressPct = allMods.length ? Math.round((passedCount / allMods.length) * 100) : 0;
 
     let daysPill = "";
@@ -2586,21 +2641,21 @@ async function renderAccessPanel() {
       status === "active" ? "Activo" : status === "hold" ? "En pausa" : "Expirado"
     }</span>`;
 
-    const safeId = u.email.replace(/[^a-z0-9]/gi, "_");
+    const safeId = email.replace(/[^a-z0-9]/gi, "_");
     const canReactivate = status !== "active";
     const canHold       = status === "active";
 
     return `<tr>
-      <td><strong>${u.name}</strong><br><span style="font-size:11px;color:var(--muted)">${u.email}</span></td>
-      <td>${u.role}</td>
+      <td><strong>${u.name || "—"}</strong><br><span style="font-size:11px;color:var(--muted)">${email}</span></td>
+      <td>${u.role || "—"}</td>
       <td>${statusBadge}</td>
       <td>${firstLoginLabel}</td>
       <td>${expiresLabel}</td>
       <td>${daysPill}</td>
       <td style="font-size:12px">${passedCount}/${allMods.length} (${progressPct}%)</td>
       <td style="white-space:nowrap">
-        ${canReactivate ? `<button class="btn small" onclick="adminReactivate('${u.email}')">🔓 Reactivar</button>` : ""}
-        ${canHold ? `<button class="btn secondary small" style="margin-left:4px" onclick="adminHold('${u.email}')">⏸ Hold</button>` : ""}
+        ${canReactivate ? `<button class="btn small" onclick="adminReactivate('${email}')">🔓 Reactivar</button>` : ""}
+        ${canHold ? `<button class="btn secondary small" style="margin-left:4px" onclick="adminHold('${email}')">⏸ Hold</button>` : ""}
       </td>
     </tr>`;
   }).filter(Boolean);
@@ -2609,7 +2664,7 @@ async function renderAccessPanel() {
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
       <div>
         <h3 style="margin:0 0 2px;color:var(--header)">🔐 Control de Acceso</h3>
-        <p style="margin:0;font-size:13px;color:var(--muted)">Ventana activa: <strong>${maxDays} días</strong> desde el primer login · Ajústala en ⚙️ Config</p>
+        <p style="margin:0;font-size:13px;color:var(--muted)">Ventana activa: <strong>${maxDaysDefault} días</strong> desde el primer login · Ajústala en ⚙️ Config</p>
       </div>
     </div>
     ${rows.length === 0
@@ -2624,6 +2679,9 @@ async function renderAccessPanel() {
           </table>
         </div>`}
   `;
+  } catch(e){
+    panel.innerHTML = `<p style="color:var(--bad);text-align:center;padding:20px 0">No se pudo cargar el control de acceso.<br><span style="font-size:12px;color:var(--muted)">${(e&&e.message)||e}</span></p>`;
+  }
 }
 
 function adminReactivate(email){

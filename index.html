@@ -264,6 +264,22 @@
   .quiz-expl b{color:var(--header)}
   .module-card .icon.recert{background:#c98a1f;color:#fff}
   .pill.recert{background:#f4e3c4;color:#8a5a12}
+  /* Loading indicator + profile (admin) */
+  .adm-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 0 8px;gap:12px}
+  .adm-spin{width:32px;height:32px;border-radius:50%;border:4px solid #e4e9e7;border-top-color:var(--header);animation:admspin .8s linear infinite}
+  @keyframes admspin{to{transform:rotate(360deg)}}
+  .adm-loading .adm-lbl{color:var(--muted);font-size:13.5px;font-weight:600}
+  .adm-skel{background:linear-gradient(90deg,#eee 25%,#f6f6f4 37%,#eee 63%);background-size:400% 100%;animation:admsh 1.2s ease-in-out infinite;border-radius:8px}
+  @keyframes admsh{0%{background-position:100% 0}100%{background-position:-100% 0}}
+  .adm-skel-row{height:60px;margin-bottom:10px}
+  .adm-skel-stat{height:66px;border-radius:12px}
+  tr.prof-click{cursor:pointer} tr.prof-click:hover{background:#f7faf9}
+  .prof-head{display:flex;gap:14px;align-items:center;margin:6px 0}
+  .prof-av{width:46px;height:46px;border-radius:50%;background:var(--header);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+  .prof-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:8px 0 14px}
+  .prof-meta b{color:var(--text)}
+  .chip{display:inline-block;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700}
+  .chip.ok{background:#e7f6ee;color:var(--good)} .chip.no{background:#fdecea;color:var(--bad)}
 </style>
 </head>
 <body>
@@ -2045,88 +2061,121 @@ function switchAdminTab(tab) {
   if (tab === "config")   renderConfigPanel();
 }
 
-// ── TAB: Progreso ──
+// ── Indicador de carga reutilizable (spinner + filas fantasma) ──
+function admLoading(msg, rows, withStats){
+  let s = `<div class="adm-loading"><div class="adm-spin"></div><div class="adm-lbl">${msg||"Cargando…"}</div></div>`;
+  if (withStats) s += `<div class="stat-grid"><div class="adm-skel adm-skel-stat"></div><div class="adm-skel adm-skel-stat"></div><div class="adm-skel adm-skel-stat"></div><div class="adm-skel adm-skel-stat"></div></div>`;
+  for (let i=0;i<(rows||3);i++) s += `<div class="adm-skel adm-skel-row"></div>`;
+  return s;
+}
+
+// ── TAB: Progreso (rápido + perfil por persona) ──
+let adminProgressMap = {};   // email -> { name, role, modules:{id:{passed,score,_ts,date}}, lastActive, pct, passed, total, critOk, critTotal }
+let adminAccessMap   = {};   // email -> { status, firstLogin, retrainAt }
+let adminProgressListHtml = "";
+
 async function loadAdminProgress() {
   const panel = $("admin-panel-progress");
-  panel.innerHTML = `<p class="muted center" style="padding:28px 0">Cargando datos del equipo…</p>`;
+  panel.innerHTML = admLoading("Cargando datos del equipo…", 4, true);
   try {
     const _tk = "&token=" + encodeURIComponent(getAdminToken());
-    const [progRes, rosterRes] = await Promise.all([
-      fetch(REPORT_URL + "?action=allProgress" + _tk),
-      fetch(REPORT_URL + "?action=roster" + _tk)
+    const [sumRes, rosterRes, accRes] = await Promise.all([
+      fetch(REPORT_URL + "?action=progressSummary" + _tk).catch(() => null),
+      fetch(REPORT_URL + "?action=roster" + _tk),
+      fetch(REPORT_URL + "?action=getAllAccess").catch(() => null)
     ]);
-    const { progress = [] } = await progRes.json();
-    const { roster   = [] } = await rosterRes.json();
 
-    // Agregar por usuario: email -> { name, role, modules{}, lastActive }
+    let summaryUsers = null;
+    try { const sj = sumRes ? await sumRes.json() : null; if (sj && Array.isArray(sj.users)) summaryUsers = sj.users; } catch (e) {}
+    const { roster = [] } = await rosterRes.json();
+    let accRecords = [];
+    try { if (accRes) { const aj = await accRes.json(); accRecords = aj.records || []; } } catch (e) {}
+
+    // Fallback si el backend aún no tiene progressSummary: usar historial completo.
+    let progressRows = null;
+    if (!summaryUsers) {
+      const pr = await fetch(REPORT_URL + "?action=allProgress" + _tk);
+      const pj = await pr.json(); progressRows = pj.progress || [];
+    }
+
+    // Construir umap: email -> { name, role, modules{}, lastActive }
     const umap = {};
-    roster.forEach(r => {
-      umap[r.email] = { name: r.name, role: r.role, modules: {}, lastActive: null };
-    });
-    progress.forEach(p => {
-      if (!umap[p.email]) umap[p.email] = { name: p.name, role: p.role, modules: {}, lastActive: null };
-      const ex = umap[p.email].modules[p.moduleId];
-      const ts = new Date(p.date || p.timestamp).getTime();
-      if (!ex || ts > new Date(ex._ts || 0).getTime())
-        umap[p.email].modules[p.moduleId] = { passed: p.passed, score: p.score, _ts: ts };
-      if (!umap[p.email].lastActive || ts > new Date(umap[p.email].lastActive).getTime())
-        umap[p.email].lastActive = p.date || p.timestamp;
-    });
+    roster.forEach(r => { umap[r.email] = { name: r.name, role: r.role, modules: {}, lastActive: null }; });
+    if (summaryUsers) {
+      summaryUsers.forEach(u => {
+        const e = u.email; if (!e) return;
+        if (!umap[e]) umap[e] = { name: u.name, role: u.role, modules: {}, lastActive: null };
+        const mods = u.modules || {};
+        Object.keys(mods).forEach(mid => {
+          const md = mods[mid]; const ts = new Date(md.date || 0).getTime();
+          umap[e].modules[mid] = { passed: md.passed, score: md.score, _ts: ts, date: md.date };
+        });
+        if (u.lastActive) umap[e].lastActive = u.lastActive;
+      });
+    } else {
+      progressRows.forEach(p => {
+        if (!umap[p.email]) umap[p.email] = { name: p.name, role: p.role, modules: {}, lastActive: null };
+        const ex = umap[p.email].modules[p.moduleId];
+        const ts = new Date(p.date || p.timestamp).getTime();
+        if (!ex || ts > new Date(ex._ts || 0).getTime())
+          umap[p.email].modules[p.moduleId] = { passed: p.passed, score: p.score, _ts: ts, date: p.date || p.timestamp };
+        if (!umap[p.email].lastActive || ts > new Date(umap[p.email].lastActive).getTime())
+          umap[p.email].lastActive = p.date || p.timestamp;
+      });
+    }
 
-    const entries = Object.entries(umap);
-    const stats = entries.map(([email, u]) => {
+    // Mapa de acceso
+    adminAccessMap = {};
+    accRecords.forEach(r => { if (r.email) adminAccessMap[(r.email + "").toLowerCase()] = { status: r.status || "active", firstLogin: r.firstLogin, retrainAt: r.retrainAt }; });
+
+    // Calcular stats por persona
+    const stats = Object.entries(umap).map(([email, u]) => {
       const tracks   = getUserTracks(u.role, email);
       const allMods  = tracks.flatMap(getModulesForTrack);
       const passed   = allMods.filter(m => u.modules[m.id] && u.modules[m.id].passed).length;
       const critMods = allMods.filter(m => m.critical);
       const critOk   = critMods.length > 0 && critMods.every(m => u.modules[m.id] && u.modules[m.id].passed && !recertDueForDate(m, u.modules[m.id]._ts));
       const pct      = allMods.length ? Math.round((passed / allMods.length) * 100) : 0;
+      u.pct = pct; u.passed = passed; u.total = allMods.length; u.critOk = critOk; u.critTotal = critMods.length;
       return { email, name: u.name, role: u.role, passed, total: allMods.length, pct, critOk, critTotal: critMods.length, lastActive: u.lastActive };
     }).sort((a, b) => b.pct - a.pct);
 
-    const initiated   = stats.filter(u => Object.keys(umap[u.email].modules).length > 0).length;
-    const completed   = stats.filter(u => u.pct === 100).length;
-    const avgPct      = stats.length ? Math.round(stats.reduce((s, u) => s + u.pct, 0) / stats.length) : 0;
+    adminProgressMap = umap;
+
+    const initiated = stats.filter(u => Object.keys(umap[u.email].modules).length > 0).length;
+    const completed = stats.filter(u => u.pct === 100).length;
+    const avgPct    = stats.length ? Math.round(stats.reduce((s, u) => s + u.pct, 0) / stats.length) : 0;
 
     let html = `
       <div class="stat-grid">
-        <div class="stat-box"><div class="sv">${entries.length}</div><div class="sl">En Roster</div></div>
+        <div class="stat-box"><div class="sv">${stats.length}</div><div class="sl">En Roster</div></div>
         <div class="stat-box"><div class="sv">${initiated}</div><div class="sl">Iniciaron</div></div>
         <div class="stat-box"><div class="sv">${completed}</div><div class="sl">Completaron</div></div>
         <div class="stat-box"><div class="sv">${avgPct}%</div><div class="sl">Promedio</div></div>
       </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Toca una persona para ver su perfil completo.</div>
       <div style="overflow-x:auto">
       <table>
-        <thead><tr>
-          <th>Nombre</th>
-          <th>Rol</th>
-          <th>Progreso</th>
-          <th style="text-align:center">Críticos</th>
-          <th>Última actividad</th>
-        </tr></thead>
+        <thead><tr><th>Nombre</th><th>Rol</th><th>Progreso</th><th style="text-align:center">Críticos</th><th>Última actividad</th></tr></thead>
         <tbody>`;
-
     stats.forEach(u => {
-      const color    = u.pct === 100 ? "var(--good)" : u.pct >= 50 ? "var(--header)" : "var(--muted)";
+      const color = u.pct === 100 ? "var(--good)" : u.pct >= 50 ? "var(--header)" : "var(--muted)";
       const critBadge = u.critTotal === 0 ? "<span style='color:var(--muted)'>—</span>"
                       : u.critOk ? "<span style='color:var(--good);font-size:15px'>✅</span>"
                                  : "<span style='color:var(--bad);font-size:15px'>❌</span>";
-      const lastDate  = u.lastActive
-        ? new Date(u.lastActive).toLocaleDateString("es-US", { month: "short", day: "numeric" }) : "—";
-      html += `<tr>
+      const lastDate = u.lastActive ? new Date(u.lastActive).toLocaleDateString("es-US", { month: "short", day: "numeric" }) : "—";
+      html += `<tr class="prof-click" onclick="openProgressProfile('${u.email}')">
         <td style="font-weight:700">${u.name}<br><span style="font-size:11px;color:var(--muted);font-weight:400">${u.email}</span></td>
         <td><span class="role-tag">${u.role}</span></td>
-        <td>
-          <span class="prog-bar-wrap"><span class="prog-bar" style="width:${u.pct}%"></span></span>
+        <td><span class="prog-bar-wrap"><span class="prog-bar" style="width:${u.pct}%"></span></span>
           <span style="font-size:12px;font-weight:700;color:${color}">${u.pct}%</span>
-          <span style="font-size:11px;color:var(--muted)"> (${u.passed}/${u.total})</span>
-        </td>
+          <span style="font-size:11px;color:var(--muted)"> (${u.passed}/${u.total})</span></td>
         <td style="text-align:center">${critBadge}</td>
-        <td style="font-size:12px;color:var(--muted)">${lastDate}</td>
+        <td style="font-size:12px;color:var(--muted)">${lastDate} ›</td>
       </tr>`;
     });
-
     html += `</tbody></table></div>`;
+    adminProgressListHtml = html;
     panel.innerHTML = html;
 
   } catch (err) {
@@ -2134,10 +2183,72 @@ async function loadAdminProgress() {
   }
 }
 
+function backToProgressList(){ $("admin-panel-progress").innerHTML = adminProgressListHtml || admLoading("Cargando…",3,true); }
+
+function openProgressProfile(email){
+  const panel = $("admin-panel-progress");
+  const u = adminProgressMap[email];
+  if (!u) { loadAdminProgress(); return; }
+  const initials = (u.name || "?").split(" ").slice(0,2).map(w => w[0] || "").join("").toUpperCase();
+  const acc = adminAccessMap[(email + "").toLowerCase()] || {};
+  const statusTxt = acc.status === "hold" ? "En pausa" : acc.status === "expired" ? "Expirado" : "Activo";
+  const maxDays = getMaxAccessDays(u.role);
+  let firstLbl = "—", dueLbl = "—";
+  if (acc.firstLogin) {
+    const fl = new Date(acc.firstLogin);
+    firstLbl = fl.toLocaleDateString("es-US", { month:"short", day:"numeric", year:"numeric" });
+    const due = new Date(fl.getTime() + maxDays*24*60*60*1000);
+    dueLbl = due.toLocaleDateString("es-US", { month:"short", day:"numeric", year:"numeric" });
+  }
+
+  // Módulos del track de la persona (deduplicados)
+  const tracks = getUserTracks(u.role, email);
+  const seen = {}; const mods = [];
+  tracks.flatMap(getModulesForTrack).forEach(m => { if (!seen[m.id]) { seen[m.id] = 1; mods.push(m); } });
+
+  let rows = "";
+  mods.forEach(m => {
+    const rec = u.modules[m.id];
+    const name = t(m.title);
+    let estado, calif = "—", fecha = "—";
+    if (rec) {
+      calif = (rec.score != null ? rec.score : "—") + (rec.score != null ? "%" : "");
+      estado = rec.passed ? `<span class="chip ok">Aprobado</span>` : `<span class="chip no">Reprobó</span>`;
+      if (rec.date) fecha = new Date(rec.date).toLocaleDateString("es-US", { month:"short", day:"numeric" });
+    } else {
+      estado = `<span style="color:var(--muted)">Sin iniciar</span>`;
+    }
+    const critTag = m.critical ? ` <span style="font-size:10px;font-weight:800;color:#8a2b1e;background:#fdecea;border:1px solid #f0c3bc;border-radius:6px;padding:1px 5px">CRÍTICO</span>` : "";
+    rows += `<tr><td>${name}${critTag}</td><td><b>${calif}</b></td><td>${estado}</td><td style="color:var(--muted);font-size:12px">${fecha}</td></tr>`;
+  });
+
+  panel.innerHTML = `
+    <button class="btn secondary small" onclick="backToProgressList()">‹ Volver a la lista</button>
+    <div class="prof-head" style="margin-top:12px">
+      <div class="prof-av">${initials}</div>
+      <div><div style="font-size:18px;font-weight:800">${u.name}</div>
+        <div style="color:var(--muted);font-size:13px">${u.role} · ${email}</div></div>
+      <div style="margin-left:auto;text-align:right"><div style="font-size:26px;font-weight:800;color:var(--header)">${u.pct}%</div>
+        <div style="font-size:11px;color:var(--muted)">completado</div></div>
+    </div>
+    <div class="prof-meta">
+      <span>Estado: <b>${statusTxt}</b></span>
+      <span>Primer login: <b>${firstLbl}</b></span>
+      <span>Vence: <b>${dueLbl}</b></span>
+      <span>Módulos: <b>${u.passed}/${u.total}</b></span>
+      <span>Críticos: <b>${u.critTotal ? (u.critOk ? "✅ OK" : "❌ pendiente") : "—"}</b></span>
+    </div>
+    <b style="color:var(--header);font-size:14px">Calificaciones por módulo</b>
+    <div style="overflow-x:auto;margin-top:8px"><table>
+      <thead><tr><th>Módulo</th><th>Calif.</th><th>Estado</th><th>Fecha</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px">El tiempo por sección, si revisó o saltó, y el detalle de respuestas se agregarán en la Etapa 2 (se registran a partir de que se activen).</p>`;
+}
+
 // ── TAB: Roster ──
 async function loadAdminRoster() {
   const panel = $("admin-panel-roster");
-  panel.innerHTML = `<p class="muted center" style="padding:28px 0">Cargando roster…</p>`;
+  panel.innerHTML = admLoading("Cargando roster…", 4);
   try {
     const res = await fetch(REPORT_URL + "?action=roster&token=" + encodeURIComponent(getAdminToken()));
     const data = await res.json();
